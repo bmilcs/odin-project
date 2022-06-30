@@ -26,14 +26,10 @@ An atomic commit is a commit that includes *changes related to only one feature 
 * Pushing: the action of taking local Git commits (and whatever work these encompass) and putting them online on Github
 * Pulling: the action of taking online Github commits and bringing them into your local machine
 * Master (branch): the “trunk” of the commit history “tree”; contains all approved content/code
-
-Feature branch: an isolated location, based off of master, where you can write a new piece of work safely before reincorporating said changes back to master
-
-Pull Request: a Github tool that allows users to easily see the changes (the difference or “diff”) that a feature branch is proposing as well as discuss any tweaks that said branch might require before it is merged into master
-
-Merging: the action of taking the commits from a feature branch and adding them to the top of master’s history
-
-Checking out: the action of moving from one branch to another
+* Feature branch: an isolated location, based off of master, where you can write a new piece of work safely before reincorporating said changes back to master
+* Pull Request: a Github tool that allows users to easily see the changes (the difference or “diff”) that a feature branch is proposing as well as discuss any tweaks that said branch might require before it is merged into master
+* Merging: the action of taking the commits from a feature branch and adding them to the top of master’s history
+* Checking out: the action of moving from one branch to another
 
 
 ## Cheatsheet
