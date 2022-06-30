@@ -1,2 +1,1 @@
-# op
-odin project repo
+# op / bryan's odin project repo
