@@ -1,4 +1,7 @@
 ``` sh
+# Best Practices
+# Atomic commits and leveraging those atomic commits to make your commit messages more useful to future collaborators.
+
 # SSH Key Generation
 ssh-keygen -t ed25519 -C bmilcs@yahoo.com
 
