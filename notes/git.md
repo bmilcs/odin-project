@@ -1,7 +1,16 @@
-``` sh
-# Best Practices
-# Atomic commits and leveraging those atomic commits to make your commit messages more useful to future collaborators.
+# Git Notes
 
+URL: https://www.theodinproject.com/lessons/foundations-git-basics#origin-push
+
+## Best Practices
+
+Atomic commits and leveraging those atomic commits to make your commit messages more useful to future collaborators.
+
+## Misc.
+origin = remote connection's default name
+main = branch
+
+``` sh
 # SSH Key Generation
 ssh-keygen -t ed25519 -C bmilcs@yahoo.com
 
