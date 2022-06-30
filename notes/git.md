@@ -4,11 +4,16 @@ URL: https://www.theodinproject.com/lessons/foundations-git-basics#origin-push
 
 ## Best Practices
 
-Atomic commits and leveraging those atomic commits to make your commit messages more useful to future collaborators.
+*Atomic commits* and leveraging those atomic commits to make your commit messag*es more useful to future collaborators.
+
+An atomic commit is a commit that includes *changes related to only one feature or task of your program.* There are two main reasons for doing this: 
+
+  * first, if something you change turns out to cause some problems, it is easy to revert the specific change without losing other changes
+  * second, it enables you to write better commit messages.
 
 ## Misc.
-origin = remote connection's default name
-main = branch
+* origin = remote connection's default name
+* main = branch
 
 ``` sh
 # SSH Key Generation
