@@ -119,6 +119,7 @@
 * Elements within other elements are indented
   * Aka nesting elements
 * Creates parent and child relationship
+* Siblings: Elements at the same level
 
 ## HTML Comments
 
