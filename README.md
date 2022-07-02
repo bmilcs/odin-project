@@ -8,6 +8,10 @@ Welcome to Bryan Miller's walkthrough of [The Odin Project](https://www.theodinp
 git clone git@github.com:bmilcs/op.git
 ```
 
+## Project List
+
+* **Recipe Project**: [GitHub](https://github.com/bmilcs/odin-recipes) | [Live Demo](https://bmilcs.github.io/odin-recipes/)
+
 ## Goal
 
 By the end of the year 2022, my goals are: 
