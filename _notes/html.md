@@ -1,19 +1,25 @@
-# HTML
+# HTML, CSS & JavaScript
+
+HTML notes from the Odin Project curriculum.
+
+## HTML
 * Is a language that determines how documents & web pages are displayed
 * Building blocks of any web site
 	
-### CSS		
+## CSS		
 * Style sheet language, how document written in HTML is styled
 * Font styles, colors, layout, responsive features
 
-### JAVASCRIPT 
+## JAVASCRIPT 
 * Allows you change CSS & HTML elements after site is loaded.
 * Interactive, engaging for users
+
+---
 
 # HTML Fundamentals
 
 ## TAGS	
-* Used to create ELEMENTS `<p> </p>` 
+* Used to create ELEMENTS `<p></p>` 
 * Important to use the correct tags for content.
 * Determines rank in search engines.
 * Affects accessibility to users who rely on assistive technologies
@@ -228,21 +234,21 @@ Images are displayed with the `<img>` tag. The `<img>` tag is *empty*, meaning i
 
 The four main image formats on the web are:
 
-* JPG
+* **JPG**
   * Handle large color pallettes without huge file sizes
   * Used for photos/images with lots of gradients
   * NO transparency
-* GIF
+* **GIF**
   * Simple animations
   * Limited in color palette
   * Transparency is binary: Full or Opaque, no semi-opaque pixels
-* PNG
+* **PNG**
   * Great for non-animated, non-photo
   * Larger than equivalent JPG for photos
   * Opacity is not an issue
   * Don't have color palette limitations
   * Best use: icons, technical diagrams, logos, etc.
-* SVG
+* **SVG**
   * Vector-based graphics format
   * Scale up/down to any dimension without loss of quality
   * Great for responsive designs
@@ -273,7 +279,7 @@ If you want to reference `/images/dog.jpg` from `/pages/about.html`:
 Define where to display a page when user clicks a link.
 
 * Default: Replace current page w/ new one
-* `target="_blank"` specfies a new tab
+* `target="_blank"` specifies a new tab
 
 ## Naming Conventions
 
