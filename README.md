@@ -1,6 +1,6 @@
-# Odin Project Walkthrough
+# Odin Project Walk-through
 
-Welcome to Bryan Miller's walkthrough of [The Odin Project](https://www.theodinproject.com). 
+Welcome to Bryan Miller's walk-through of [The Odin Project](https://www.theodinproject.com). T.O.P. is a free, open source curriculum that helps aspiring students become full stack web developers.
 
 ## Deployment
 
@@ -16,7 +16,7 @@ git clone git@github.com:bmilcs/op.git
 
 By the end of the year 2022, my goals are: 
 
-* To complete The Odin Project cirriculum.
+* To complete The Odin Project curriculum.
 * To improve my writing and communication skills.
 * To become a full stack web developer.
 * To create a personal web page and portfolio.
