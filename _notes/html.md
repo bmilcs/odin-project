@@ -281,3 +281,9 @@ Best practices:
 
 * All lower case
 * Hyphens `-` instead of spaces
+
+# DIV
+
+DIV is one of the most basic HTML elements.
+
+* Empty container for other elements
