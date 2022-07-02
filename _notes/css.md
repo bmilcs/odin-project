@@ -90,7 +90,79 @@ div {
 }
 ```
 
-### Grouping Selector
+### Grouping Selectors
 
-* Used with two groups of elements that share style declarations
-* 
+* Used with multiple groups of elements that share style declarations
+
+``` css
+.read,
+.unread {
+  color: white;
+  background-color: black;
+}
+
+.read {
+  /* several unique declarations */
+}
+
+.unread {
+  /* several unique declarations */
+}
+```
+
+### Chaining Selectors
+
+* Used to apply styles to a specific combo of selectors
+* Must contain all selectors in order for rules to apply
+* No space between selectors
+* Can't chain multiple `type` selectors (ie: div, p, h1)
+  * Because that would give you `divph1`
+
+``` html
+<div>
+  <div class="subsection header">Latest Posts</div>
+  <p class="subsection preview">This is where a preview for a post might go.</p>
+</div>
+```
+
+``` css
+/* elements that contain both classes */
+.subsection.header {
+  color: red;
+}
+/* can mix classes and id's*/
+.subsection#preview {
+  color: blue;
+}
+```
+
+### Descendant Combinator
+
+* Allow you to combine multiple selectors by their relationship between them
+* There are **4** types of combinators in total
+* Represented by single space between selectors
+* Matches the **last selector only**
+  * If they also have an ancestor (parent, grandparent, etc.) that matches the previous selector
+* `.ancestor .child` would select the class `child` if it has the ancestor with the class `ancestor`
+  * If it is **nested** inside of ancestor
+
+``` html
+<!-- index.html -->
+<div class="ancestor"> <!-- A -->
+  <div class="contents"> <!-- B -->
+    <div class="contents"> <!-- C -->
+    </div>
+  </div>
+</div>
+
+<div class="contents"></div> <!-- D -->
+```
+In this example, **BOTH B & C** would be selected.
+
+``` css
+/* styles.css */
+.ancestor .contents {
+  /* some declarations */
+}
+```
+
