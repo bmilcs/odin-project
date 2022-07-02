@@ -258,7 +258,7 @@ Every image should contain the `alt` (alternative text) attribute.
 * Used in place of the image **if it can't be loaded**
 * Used with screen readers to describe image for the visually impaired
 
-`<img src="images/dog.jpg" alt="A picture of a dog">
+`<img src="images/dog.jpg" alt="A picture of a dog">`
 
 ## Parent Directories
 
@@ -266,7 +266,7 @@ To reference paths one level out of the current directory, you need to use `../`
 
 If you want to reference `/images/dog.jpg` from `/pages/about.html`:
 
-`<img src="../images/dog.jpg">
+`<img src="../images/dog.jpg">`
 
 ## Link Targets
 
