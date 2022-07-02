@@ -62,6 +62,12 @@ git push or git push origin main (Both accomplish the same goal in this context)
 git add .
 git commit -m "A message describing what you have done to make this snapshot different"
 
+# Remove file from staging area
+git reset -- path/to/file
+
+# Clear all changes & reset to last commit (destructive)
+git reset --hard
+
 # Commands related to checking status or log history
 git status
 git log
