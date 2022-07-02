@@ -288,9 +288,22 @@ DIV is one of the most basic HTML elements.
 
 * Empty container for other elements
 
+``` html
+<div>
+  Welcome to the machine.
+</div>
+```
+
 # Classes
 
 * Attributes that you place in an HTML element
 * Case sensitive
 * Multiple classes can be added to a single element
 * Classes can be reused on as many elements as you want
+  * Whitespace is used to separate multiple classes
+
+``` html
+<div class="alert-text pink-floyd">
+  Welcome to the machine.
+</div>
+```
