@@ -53,7 +53,14 @@ When you finally get something just right, it is the perfect time to commit. 30 
      2. If applied, this commit will `<insert commit message here>`
   6. Wrap body at 72 characters.
   7. Use body to explain *what* and *why* -- *not how*
+## Commit Verbs
 
+* **Add** some feature
+* **Remove** class whatever
+* **Update** dependency x
+* **Refactor** function y
+* **Fix** crazy bug
+  
 ## Best Practices
 
 `Atomic commits` and leveraging those atomic commits to make your commit messages more useful to **future collaborators**.
