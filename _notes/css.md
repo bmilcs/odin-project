@@ -290,7 +290,17 @@ p {
 * `font-family` can be single value, or comma-separated list for fonts
 * Falls into 1 of 2 categories:
   * Font Family Name: `Times New Roman`
-  * Generic Family Name: `sans-serif`
+  * Generic Family Name: 
+    * `sans-serif` have clean lines, modern, minimal
+      * ie: Arial, Verdana, Helvetica
+    * `serif` are formal, elegant, have small stroke at edge of each char
+      * ie: Times New Roman, Georgia, Garamond
+    * `monospace` have fixed width, mechanical look
+      * ie: Courier New, Lucida Console, Monaco
+    * `cursive` imitate human handwriting
+      * ie: Brush Script MT, Lucida Handwriting
+    * `fantasy` are decorative, playful
+      * ie: Copperplate, Papyrus
 * If browser can't find 1st font in list, it will use the next one
 * **Best Practice:** Include list of values, starting with top preference, and ending with least preferred
 
