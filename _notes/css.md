@@ -359,7 +359,7 @@ img {
   * If `height` & `width` are not included & the image takes longer to load than the rest of the page, the **image will not take up any space on page at first**
   * Will suddenly cause a drastic shift of the other page contents once loaded
 
-## The Cascade of CSS
+## [The Cascade of CSS](https://wattenberger.com/blog/css-cascade)
 
 * Sometimes rules conflict with one another
 * CSS does what we tell it to do
@@ -367,6 +367,18 @@ img {
   * *Default styles* vary from browser to browser
     * ie: Large gaps between elements, button styles, etc. can appear on it's "own"
   * Not understanding `the cascade` or how a `property` works 
+* **The CSS Cascade is the way our browsers resolve competing CSS declarations.**
+  1. **Importance**
+     1. ***transition*** - active transitions are #1
+     2. `!important` - reserve for overriding 3rd party libraries
+     3. ***animation*** - active animation
+     4. ***normal*** - bulk of rules
+  2. **Origin**, where rules are defined
+     1. ***website***: in your control as web developer
+     2. ***user***
+     3. ***browser***: each browser has its own set of default styles
+  3. **[Specificity](#specificity)**
+  4. **Position**, rule order
 
 ## Specificity
 
@@ -376,9 +388,10 @@ img {
 * Specificity only matters when elements have *multiple, conflicting declarations* (a tie breaker):
 * Hierarchy
   1. **Inline** `<h1 style="color: white">`
-  2. **ID** selectors `#navbar`
-  3. **Class** & **Attribute** selectors `.class` or `:hover` or `[href]`
-  4. **Type** or **Element** selectors `h1` or `:before`
+  2. **Layers** unlayered > layered `@layers one, two;`
+  3. **ID** selectors `#navbar`
+  4. **Class** `.class`, **Attribute Selectors** `[href]` or `[checked]`, **Pseudo Selectors** `:hover` or `:first-of-type`
+  5. **Type** or **Pseudo-eEement** selectors `h1` or `:before`
 
 ---
 
