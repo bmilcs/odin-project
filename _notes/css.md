@@ -5,10 +5,10 @@ CSS is used to stylize HTML documents.
 ## Basic Syntax
 
 * CSS is made up of rules
-  1. Selector
-  2. Semi-colon
-  3. List of declarations
-     1. Property:Value pair
+  * Selector
+  * Semi-colon
+  * List of declarations
+    * Property:Value pair
 
 ``` css
 /* selector */
@@ -18,10 +18,14 @@ div.bold-text {
 }
 ```
 
+
+
 ## Selector
 
 * Refer to HTML elements to which the CSS rules apply
   * What's being selected for each rule
+
+
 
 ### Universal Selector
 
@@ -31,6 +35,8 @@ div.bold-text {
   color: purple;
 }
 ```
+
+
 
 ### Type Selector
 
@@ -50,6 +56,8 @@ div {
 }
 ```
 
+
+
 ### Class Selector
 
 * Selects elements with the given **class**
@@ -68,6 +76,8 @@ div {
   color: red;
 }
 ```
+
+
 
 ### ID Selector
 
@@ -90,6 +100,8 @@ div {
 }
 ```
 
+
+
 ### Grouping Selectors
 
 * Used with multiple groups of elements that share style declarations
@@ -109,6 +121,8 @@ div {
   /* several unique declarations */
 }
 ```
+
+
 
 ### Chaining Selectors
 
@@ -135,6 +149,8 @@ div {
   color: blue;
 }
 ```
+
+
 
 ### Descendant Combinator
 
@@ -166,7 +182,11 @@ In this example, **BOTH B & C** would be selected.
 }
 ```
 
+
+
 # Properties
+
+
 
 ## Color Values
 
@@ -177,8 +197,6 @@ In this example, **BOTH B & C** would be selected.
   #p1 {background-color: red;}           /* red */
   #p2 {background-color: transparent;}   /* transparent */
 ```
-
----
 
 * **HEX values**
   * ie: `#ff0000` (red)
@@ -203,7 +221,7 @@ In this example, **BOTH B & C** would be selected.
 #p3a {background-color: #0000ff80;}   /* blue transparency */
 ```
 
----
+
 
 * **RGB values**
     *   ie: `rgb(red, green, blue)`
@@ -228,7 +246,7 @@ In this example, **BOTH B & C** would be selected.
 #p3 {background-color: rgba(0, 0, 255, 0.3);}   /* blue with opacity */
 ```
 
----
+
 
 * **HSL values**
   * ie: `hsl(hue, saturation, lightness)`
@@ -265,12 +283,11 @@ In this example, **BOTH B & C** would be selected.
 ```
 
 
+
 ### Color & Background Color
 
 * **Color** property: text color
 * **Background-Color** property: background color of an element
-
-
 
 ``` css
 p {
@@ -283,7 +300,11 @@ p {
 }
 ```
 
+
+
 ## Typography Basics & Text Align
+
+
 
 ### Font Family
 
@@ -311,6 +332,8 @@ font-family: Arial, Helvetica, sans-serif;
 font-family: "Lucida Console", "Courier New", monospace;
 ```
 
+
+
 ### Custom Font Family
 
 * `@font-face` is used for loading custom fonts in browser & present it to site
@@ -326,37 +349,28 @@ font-family: "Lucida Console", "Courier New", monospace;
     font-weight: italic;
 }
 ```
-* Alternatives to `@font-face`
-  * **Linking fonts** in the `<head>` 
+
+* Alternative: **Linking fonts** in the `<head>` 
   
 ``` html
 <head>
   <link href="https://fonts.googleapis.com/css?family=Gayathri&display=swap" rel="stylesheet">
 </head>
-<body>
-  div {
-      font-family: 'Gayathri', sans-serif;
-  }
-</body>
 ```
 
-  * **Importing fonts** using `@import` to css
+* Alternative: **Importing fonts** using `@import` to css
   
 ``` css
 @import url('https://fonts.googleapis.com/css?family=Gayathri&display=swap');
-
-div {
-font-family: 'Gayathri', sans-serif;
-}
-
 ```
 
-### [Google Fonts API](https://developers.google.com/fonts/docs/getting_started)
+* [Google Fonts API](https://developers.google.com/fonts/docs/getting_started)
 
 ``` html
 <link rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Inter">
 ```
+
 
 
 ### Font Size
@@ -365,6 +379,8 @@ font-family: 'Gayathri', sans-serif;
 ``` css
 font-size: 22px;
 ```
+
+
 
 ### Font Weight
 
@@ -378,6 +394,8 @@ font-size: 22px;
 font-weight: 700;
 ```
 
+
+
 ### Text Align
 
 * `text-align` aligns text horizontally within an element
@@ -387,6 +405,8 @@ font-weight: 700;
 ``` css
 text-align: center;
 ```
+
+
 
 ### Image Height & Width
 
@@ -406,6 +426,8 @@ img {
   * Reserves space on the page & will appear blank until image loads
   * If `height` & `width` are not included & the image takes longer to load than the rest of the page, the **image will not take up any space on page at first**
   * Will suddenly cause a drastic shift of the other page contents once loaded
+
+
 
 ## [The Cascade of CSS](https://wattenberger.com/blog/css-cascade)
 
@@ -428,6 +450,8 @@ img {
   3. **[Specificity](#specificity)**
   4. **Position**, rule order
 
+
+
 ## Specificity
 
 * If two or more CSS rules that point to the same element, the selector with the **highest specificity** value will "win", and its style declaration will be applied to that HTML element.
@@ -441,7 +465,6 @@ img {
   4. **Class** `.class`, **Attribute Selectors** `[href]` or `[checked]`, **Pseudo Selectors** `:hover` or `:first-of-type`
   5. **Type** or **Pseudo-eEement** selectors `h1` or `:before`
 
----
 
 
 ``` html
@@ -449,7 +472,10 @@ img {
   <div class="list subsection"></div>
 </div>
 ```
-  **Multiple** classes > **Single** class
+
+
+>  **Multiple** classes > **Single** class
+
 ``` css
 /* rule 1 */ 
 .subsection {
@@ -468,7 +494,10 @@ img {
   <div class="list" id="subsection"></div>
 </div>
 ```
-**ID** selector > **Multiple Class** selectors
+
+
+
+> **ID** selector > **Multiple Class** selectors
 
 ``` css
 /* rule 1 -- MORE SPECIFIC */
@@ -482,7 +511,9 @@ img {
 }
 ```
 
-**1 ID** &  **2 Class** Selectors > **1 ID** & **1 Class** Selector
+
+
+> **1 ID** &  **2 Class** Selectors > **1 ID** & **1 Class** Selector
 
 ``` css
 /* rule 1 */
@@ -496,6 +527,8 @@ img {
   color: red;
 }
 ```
+
+
 
 **Chaining Selector** (*no space*) & **Descendant Combinator** (*empty space*) **DO NOT AFFECT specificity**
 
@@ -512,6 +545,8 @@ img {
 }
 ```
 
+
+
 **Universal selector** `*` and **Combinators** `+`, `~`, `>`, ` ` (*empty space*) **DO NOT ADD specificity**
 
 ``` css
@@ -525,6 +560,8 @@ h1 {
   color: orange;
 }
 ```
+
+
 
 ## Inheritance
 
@@ -555,6 +592,8 @@ h1 {
 }
 ```
 
+
+
 ## Rule Order
 
 * Final factor in a tie-breaker
@@ -575,6 +614,8 @@ h1 {
   color: yellow;
 }
 ```
+
+
 
 ## Adding CSS to HTML
 
@@ -618,6 +659,8 @@ p { /* selector */
 }
 ```
 
+
+
 ## Internal CSS (Embedded)
 
 * Add CSS within HTML doc itself
@@ -642,6 +685,8 @@ p { /* selector */
 <body>...</body>
 ```
 
+
+
 ## Inline CSS
 
 * Add CSS tags directly to HTML elements
@@ -652,10 +697,14 @@ p { /* selector */
   * If you want to share styles among elements, it requires a lot of *copy* and *pasting*
   * Inline CSS ***overrides*** all other methods, causing unexpected results
 
+
+
 ## Inspecting HTML & CSS
 
 * Inspecting & Debugging HTML/CSS is criticial to frontend development
 * **Chrome Dev Tools** is used to see detailed info & assists in finding/fixing problems in code
+
+
 
 
 ### The Inspector
@@ -672,12 +721,16 @@ p { /* selector */
 * HTML: Initial page contents
 * DOM: current page contents
 
+
+
 #### Inspecting Elements (the DOM)
 
 * Blue top left arrow icon: inspect any element on hover
 * Elements: HTML
 * Styles: CSS Rules
   * ~~Strikethrough~~ - overwritten style
+
+
 
 #### Testing Styles
 
@@ -687,6 +740,8 @@ p { /* selector */
 * Changes apply in real-time
 * Does NOT affect source code
 * **Extremely useful** for testing out various attributes & values without having to reload page over and over
+
+
 
 #### [Overview of Chrome DevTools](https://developer.chrome.com/docs/devtools/overview/)
 
@@ -733,6 +788,8 @@ p { /* selector */
   * Mixed content issues
   * Certificate problems, etc.
 
+
+
 #### [CSS Overview](https://www.freecodecamp.org/news/how-to-use-css-overview-in-chrome-developer-tools/)
 * `CTRL+SHIFT+I`, click 3 dot icons > `More tools` > `CSS Overview`
 * Click `Capture Overview`
@@ -754,6 +811,8 @@ p { /* selector */
     * Various widths & screen resolutions used in creating the page
     * ie: `screen` and `(max width:736px)`
 
+
+
 ## The Box Model
 
 * Most important CSS skills: **positioning** & **layout**
@@ -761,16 +820,19 @@ p { /* selector */
 * Every single thing on page is a **rectangular box**
 * Boxes can have other boxes in them and can sit next to one another
 
-Test the box model:
-
 ``` css
-* {
-  border: 2px solid red;
-}
+/* To test the box model: */
+* { border: 2px solid red; }
 ```
 
+
+
 > Parts of a box
+> 
 ![Parts of a box](img/box-parts.png)
+
+
+
 
 * Manipulating boxes & space between them:
   * `border`, space between margin & padding
@@ -793,11 +855,24 @@ Test the box model:
   * Added to universal selector (`* { }`)
   * Ensures `height` and `width` are obeyed 
 
+
+
+
+
 > Standard CSS Box Model
+> 
 ![Box Model](./img/standard-box-model.png)
 
+
+
+
 > Border-Box in CSS
+
 ![Border-Box](./img/border-box.png)
+
+
+
+
 ### Box Types
 
 In CSS, there are two types of boxes. The type refers to how the box behaves in terms of *page flow* and *in relation* to other boxes.
@@ -807,6 +882,7 @@ In CSS, there are two types of boxes. The type refers to how the box behaves in 
   * Appear stacked atop each other
   * Each new element creates a new line
   * Fills available *inline* space of the parent element and *grows* along the *block* dimension to accommodate its content
+  * **Centering** a block: `margin: auto`
 * **Inline**
   * Sizes according to its content
   * Sits inside *content* of *block-level elements*
@@ -819,7 +895,9 @@ In CSS, there are two types of boxes. The type refers to how the box behaves in 
     * Have block-style padding & margin
     * Useful, but `flexbox` is better for lining up boxes
 
-Boxes then have an **inner**and **outer** display type.
+Boxes then have an **inner** and **outer** display type.
+
+
 
 #### Outer Display Type
 
@@ -840,6 +918,8 @@ Boxes then have an **inner**and **outer** display type.
     * WILL push other inline boxes away from the box
   * ie: `<a>`, `<span>`, `<em>`, `<strong>`
 
+
+
 #### Inner Display Type
 
 Inner display types dictate how elements **inside that box** are laid out.
@@ -850,7 +930,9 @@ Inner display types dictate how elements **inside that box** are laid out.
 * Change inner display type with `display: flex;`
   * Still uses *outer* display type `block`
   * *Inner* display type `flex`
-  
+
+
+
 ### DIV's & Spans
 
 * DON'T give meaning to their content
@@ -859,15 +941,21 @@ Inner display types dictate how elements **inside that box** are laid out.
   * Give `id` or `class` to them for CSS styling
   * Grouping related elements under one parent element to *correctly position them* on the page
 
+
+
 #### DIV
 * Block-level element by default
 * Used as a container to group other elements
 * Divs allow us to *divide* pages into blocks and apply styles to those blocks
-  
+
+
+
 #### Span
 * Inline-level element by default
 * Group text content and inline HTML elements for styling
 * Should only be used when no other *semantic* HTML element is appropriate
+
+
 
 ### Normal Flow
 * Default layout of elements in the Box Model
@@ -875,4 +963,3 @@ Inner display types dictate how elements **inside that box** are laid out.
   * `<address><article><aside><blockquote><canvas><dd><div><dl><dt><fieldset><figcaption><figure><footer><form><h1>-<h6><header><hr><li><main><nav><noscript><ol><p><pre><section><table><tfoot><ul><video>`
 * Inline-level elements
   * `<a><abbr><acronym><b><bdo><big><br><button><cite><code><dfn><em><i><img><input><kbd><label><map><object><output><q><samp><script><select><small><span><strong><sub><sup><textarea><time><tt><var>`
-* 
