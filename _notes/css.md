@@ -769,11 +769,71 @@ Test the box model:
 }
 ```
 
+> Parts of a box
+![Parts of a box](img/box-parts.png)
+
 * Manipulating boxes & space between them:
-  * `padding`, space between edge of box & content
-  * `margin`, space between box & any other boxes next to it
   * `border`, space between margin & padding
+  * `padding`, space between edge of box & content
+    * inside the border
+    * includes `background-color`
+  * `margin`, space between box & any other boxes next to it
+    * **collapse** between two elements
+    * highest `margin` value wins
+    * outside of the border
+    * not affected by `background-color`
+  * `height`, `width` size of inner element
+* ["True" height of an element](https://www.youtube.com/watch?v=rIO5326FgPE), add all values:
+  * `padding` top & bottom
+  * `border` top & bottom
+  * `height`
+* `box-sizing: border-box;`
+  * Almost always added to CSS
+  * Makes stylizing easier
+  * Added to universal selector (`* { }`)
+  * Ensures `height` and `width` are obeyed 
 
+> Standard CSS Box Model
+![Box Model](./img/standard-box-model.png)
 
+> Border-Box in CSS
+![Border-Box](./img/border-box.png)
+### Box Types
 
+In CSS, there are two types of boxes. The type refers to how the box behaves in terms of *page flow* and *in relation* to other boxes.
 
+* **Block**
+* **Inline**
+
+Boxes then have an **inner**and **outer** display type.
+
+#### Outer Display Type
+
+* `block` outer display types:
+  * Break onto a **new line**
+  * Width & Height are respected
+  * Other elements will be **pushed away** using padding, margin, border
+  * Box extends in *inline* direction to fill space available in container
+    * Become as wide as it's container, 100% of the space
+  * ie: `<h1>` and `<p>` use `block` by default
+
+* `inline` outer display types:
+  * Will NOT break onto a **new line**
+  * Width & Height are NOT applied
+  * **Vertical** padding, margins, border WILL apply
+    * WON'T push other inline boxes away from the box
+  * **Horizontal** padding, margins, borders WILL apply
+    * WILL push other inline boxes away from the box
+  * ie: `<a>`, `<span>`, `<em>`, `<strong>`
+
+#### Inner Display Type
+
+Inner display types dictate how elements **inside that box** are laid out.
+
+* Default: Elements *inside* a box are laid out in:
+  * **normal flow**
+  * Behave as `block` or `inline`
+* Change inner display type with `display: flex;`
+  * Still uses *outer* display type `block`
+  * *Inner* display type `flex`
+  
