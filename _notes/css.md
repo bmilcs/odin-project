@@ -652,3 +652,104 @@ p { /* selector */
   * If you want to share styles among elements, it requires a lot of *copy* and *pasting*
   * Inline CSS ***overrides*** all other methods, causing unexpected results
 
+## Inspecting HTML & CSS
+
+* Inspecting & Debugging HTML/CSS is criticial to frontend development
+* **Chrome Dev Tools** is used to see detailed info & assists in finding/fixing problems in code
+
+
+### The Inspector
+
+* To access the inspector in Google Chrome
+  * `Right Click` on element & click `Inspect Element`
+  * `CTRL+SHIFT+C` to Inspect Elements on hover
+  * `F12`
+  * `CTRL+SHIFT+I` to open the last panel you had open
+  * `Arrow Keys` to go up/down and expand elements in DOM
+  * `Right Click` on element within DOM and `Scroll into view` to hop to it's location on the page
+  * `H` hides currently selected node
+  * `Delete` deletes currently selected node
+* HTML: Initial page contents
+* DOM: current page contents
+
+#### Inspecting Elements (the DOM)
+
+* Blue top left arrow icon: inspect any element on hover
+* Elements: HTML
+* Styles: CSS Rules
+  * ~~Strikethrough~~ - overwritten style
+
+#### Testing Styles
+
+* [Styles pane allows you to directly edit in your browser](https://developer.chrome.com/docs/devtools/css)
+  * Add new rules
+  * Edit existing rules
+* Changes apply in real-time
+* Does NOT affect source code
+* **Extremely useful** for testing out various attributes & values without having to reload page over and over
+
+#### [Overview of Chrome DevTools](https://developer.chrome.com/docs/devtools/overview/)
+
+* `CTRL+F` Find things in DevTools
+
+##### Device Mode
+  * Simulate mobile devices
+
+##### Elements panel
+* View & change DOM & CSS
+
+##### Console
+* View messages & run JavaScript from the Console
+* `CTRL+SHIFT+J`
+
+##### Sources Panel
+* Debug JavaScript
+* Persist changes made in DevTools across page reloads
+* Save & run snippets of JavaScript
+* Save changes you make in DevTools to disk
+
+##### Network Panel
+* View & debug network activity
+
+##### Performance Panel
+* Find ways to improve load & runtime performance
+
+##### Memory Panel
+* Fix memory problems
+* JavaScript CPU Profiler
+
+##### Application Panel
+* Inspect all resources that are loaded
+  * IndexedDB or Web SQL databases
+  * Local & Session Storage
+  * Cookies
+  * Application Cache
+  * Images
+  * Fonts
+  * Stylesheets
+
+##### Security Panel
+* Debug
+  * Mixed content issues
+  * Certificate problems, etc.
+
+#### [CSS Overview](https://www.freecodecamp.org/news/how-to-use-css-overview-in-chrome-developer-tools/)
+* `CTRL+SHIFT+I`, click 3 dot icons > `More tools` > `CSS Overview`
+* Click `Capture Overview`
+* Menu Options
+  * Overview Summary
+    * Number of Elements used
+    * Selector types
+    * Number of inline style elements
+    * Number of external stylesheets
+  * Colors
+    * Each color is clickable
+    * Shows which elements use each color
+  * Font Info
+    * `font-size`, `line-height`, `font-weight`, `font-family`
+    * Where they're used
+  * Unused declarations
+    * Styles that don't affect the web page
+  * Media Queries
+    * Various widths & screen resolutions used in creating the page
+    * ie: `screen` and `(max width:736px)`
