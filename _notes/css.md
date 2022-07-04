@@ -806,7 +806,10 @@ In CSS, there are two types of boxes. The type refers to how the box behaves in 
   * `display: block`
   * Appear stacked atop each other
   * Each new element creates a new line
+  * Fills available *inline* space of the parent element and *grows* along the *block* dimension to accommodate its content
 * **Inline**
+  * Sizes according to its content
+  * Sits inside *content* of *block-level elements*
   * Do not start a new line
   * Appear *in line* with with elements they are placed beside
   * ie: `<a>`
@@ -865,3 +868,11 @@ Inner display types dictate how elements **inside that box** are laid out.
 * Inline-level element by default
 * Group text content and inline HTML elements for styling
 * Should only be used when no other *semantic* HTML element is appropriate
+
+### Normal Flow
+* Default layout of elements in the Box Model
+* Block-level elements
+  * `<address><article><aside><blockquote><canvas><dd><div><dl><dt><fieldset><figcaption><figure><footer><form><h1>-<h6><header><hr><li><main><nav><noscript><ol><p><pre><section><table><tfoot><ul><video>`
+* Inline-level elements
+  * `<a><abbr><acronym><b><bdo><big><br><button><cite><code><dfn><em><i><img><input><kbd><label><map><object><output><q><samp><script><select><small><span><strong><sub><sup><textarea><time><tt><var>`
+* 
