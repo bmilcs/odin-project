@@ -351,7 +351,13 @@ font-family: 'Gayathri', sans-serif;
 
 ```
 
-* 
+### [Google Fonts API](https://developers.google.com/fonts/docs/getting_started)
+
+``` html
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Inter">
+```
+
 
 ### Font Size
 
