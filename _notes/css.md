@@ -803,7 +803,18 @@ Test the box model:
 In CSS, there are two types of boxes. The type refers to how the box behaves in terms of *page flow* and *in relation* to other boxes.
 
 * **Block**
+  * `display: block`
+  * Appear stacked atop each other
+  * Each new element creates a new line
 * **Inline**
+  * Do not start a new line
+  * Appear *in line* with with elements they are placed beside
+  * ie: `<a>`
+  * Generally, don't add extra padding/margin on inline elements
+  * **Inline-block** elements
+    * Behave like inline elements
+    * Have block-style padding & margin
+    * Useful, but `flexbox` is better for lining up boxes
 
 Boxes then have an **inner**and **outer** display type.
 
@@ -837,3 +848,20 @@ Inner display types dictate how elements **inside that box** are laid out.
   * Still uses *outer* display type `block`
   * *Inner* display type `flex`
   
+### DIV's & Spans
+
+* DON'T give meaning to their content
+* Generic boxes that can do anything
+* Used to *hook* elements
+  * Give `id` or `class` to them for CSS styling
+  * Grouping related elements under one parent element to *correctly position them* on the page
+
+#### DIV
+* Block-level element by default
+* Used as a container to group other elements
+* Divs allow us to *divide* pages into blocks and apply styles to those blocks
+  
+#### Span
+* Inline-level element by default
+* Group text content and inline HTML elements for styling
+* Should only be used when no other *semantic* HTML element is appropriate
