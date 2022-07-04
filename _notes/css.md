@@ -370,12 +370,15 @@ img {
 
 ## Specificity
 
+* If two or more CSS rules that point to the same element, the selector with the **highest specificity** value will "win", and its style declaration will be applied to that HTML element.
+  * Creates a score or ranking system
 * **More specific** CSS declarations > **less specific** CSS declarations
 * Specificity only matters when elements have *multiple, conflicting declarations* (a tie breaker):
-
-1. **ID** selectors (most specific)
-2. **Class** selectors
-3. **Type** selectors
+* Hierarchy
+  1. **Inline** `<h1 style="color: white">`
+  2. **ID** selectors `#navbar`
+  3. **Class** & **Attribute** selectors `.class` or `:hover` or `[href]`
+  4. **Type** or **Element** selectors `h1` or `:before`
 
 ---
 
