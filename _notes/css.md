@@ -753,3 +753,27 @@ p { /* selector */
   * Media Queries
     * Various widths & screen resolutions used in creating the page
     * ie: `screen` and `(max width:736px)`
+
+## The Box Model
+
+* Most important CSS skills: **positioning** & **layout**
+* JavaScript is meaningless if you can't stick elements on the page where you need them
+* Every single thing on page is a **rectangular box**
+* Boxes can have other boxes in them and can sit next to one another
+
+Test the box model:
+
+``` css
+* {
+  border: 2px solid red;
+}
+```
+
+* Manipulating boxes & space between them:
+  * `padding`, space between edge of box & content
+  * `margin`, space between box & any other boxes next to it
+  * `border`, space between margin & padding
+
+
+
+
