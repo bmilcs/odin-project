@@ -311,6 +311,48 @@ font-family: Arial, Helvetica, sans-serif;
 font-family: "Lucida Console", "Courier New", monospace;
 ```
 
+### Custom Font Family
+
+* `@font-face` is used for loading custom fonts in browser & present it to site
+* Must appear **before other styling properties**
+* Requires 2 properties:
+  * `font-family` font name
+  * `src` URL to download the font
+
+``` css
+@font-face {
+    font-family: fontname;
+    src: url(https://fonts.gstatic.com/s/lato/v16/S6u_w4BMUTPHjxsI5wq_Gwftx9897g.woff2);
+    font-weight: italic;
+}
+```
+* Alternatives to `@font-face`
+  * **Linking fonts** in the `<head>` 
+  
+``` html
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Gayathri&display=swap" rel="stylesheet">
+</head>
+<body>
+  div {
+      font-family: 'Gayathri', sans-serif;
+  }
+</body>
+```
+
+  * **Importing fonts** using `@import` to css
+  
+``` css
+@import url('https://fonts.googleapis.com/css?family=Gayathri&display=swap');
+
+div {
+font-family: 'Gayathri', sans-serif;
+}
+
+```
+
+* 
+
 ### Font Size
 
 * `font-size` should contain NO whitespace
