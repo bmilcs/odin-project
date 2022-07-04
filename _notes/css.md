@@ -306,6 +306,9 @@ p {
 
 ``` css
 font-family: "Times New Roman", sans-serif;
+font-family: "Times New Roman", Times, serif;
+font-family: Arial, Helvetica, sans-serif;
+font-family: "Lucida Console", "Courier New", monospace;
 ```
 
 ### Font Size
@@ -314,8 +317,6 @@ font-family: "Times New Roman", sans-serif;
 ``` css
 font-size: 22px;
 ```
-
-
 
 ### Font Weight
 
