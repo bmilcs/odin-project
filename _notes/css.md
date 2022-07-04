@@ -139,7 +139,7 @@ div {
 ### Descendant Combinator
 
 * Allow you to combine multiple selectors by their relationship between them
-* There are **4** types of combinators in total
+* There are [**4** types of combinators](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference#combinators) in total
 * Represented by single space between selectors
 * Matches the **last selector only**
   * If they also have an ancestor (parent, grandparent, etc.) that matches the previous selector
