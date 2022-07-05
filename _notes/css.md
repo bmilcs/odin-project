@@ -963,3 +963,172 @@ Inner display types dictate how elements **inside that box** are laid out.
   * `<address><article><aside><blockquote><canvas><dd><div><dl><dt><fieldset><figcaption><figure><footer><form><h1>-<h6><header><hr><li><main><nav><noscript><ol><p><pre><section><table><tfoot><ul><video>`
 * Inline-level elements
   * `<a><abbr><acronym><b><bdo><big><br><button><cite><code><dfn><em><i><img><input><kbd><label><map><object><output><q><samp><script><select><small><span><strong><sub><sup><textarea><time><tt><var>`
+
+
+
+## Flex Box
+
+* Flexbox is a way to arrange items into *rows* and *columns*
+* Based on simple rules you can define
+* Fill available area w/ *equal width*
+
+``` html
+<div class="flex-container">
+  <div class="one"></div>
+  <div class="two"></div>
+  <div class="three"></div>
+</div>
+```
+
+``` css
+.flex-container {
+  display: flex;
+}
+
+/* this selector selects all divs inside of .flex-container */
+.flex-container div {
+  background: peachpuff;
+  border: 4px solid brown;
+  height: 100px;
+  flex: 1;
+}
+```
+
+
+
+#### Flex Containers & Flex Items
+
+* Flexbox is a **toolbox** of properties to put things where you need them
+* Any element can be a **BOTH** a flex **container** & flex **item**
+* **Flex Containers**: `display:flex`
+* **Flex items**: `flex: 1`
+* Creating/nesting multiple flex containers and items is the primary way we will be building up complex layouts
+
+![Flexbox 1](./img/flexbox-1.png)
+
+![Flexbox 1](./img/flexbox-2.png)
+
+
+
+
+#### Flex Shorthand
+
+* `flex` declaration: **shorthand** for **3 properties**
+  * shorthand: CSS properties that allow you to set values of multiple **other** properties simultaneously
+* `flex: flex-grow, flex-shrink, flex-basis;`
+* `flex: 0, 1, 0%;`
+
+
+
+
+##### Flex-Grow
+
+* `flex: flex-grow, *, *`
+* Single number
+* Flex-item's **Growth Factor**
+  * `flex: 1;` To all DIV's = grow the same amount
+  * `flex: 2;` To 1 DIV = 2x the size as `flex: 1;`
+  
+
+
+##### Flex-Shrink
+
+* Similar to `flex-grow`
+* Flex-item's **Shrink Factor**
+* **Only applied** if size of ALL flex items is **larger** than their parent
+* Default: `flex-shrink: 1;`
+  * ie: all items shrink evenly
+* If 3 DIV's had `width: 100px;` and their container was *smaller* than `300px`, the DIV's would have to shrink to fit
+* **NO Shrink**: `flex-shrink: 0;`
+* **Faster Shrink**: `flex-shrink: 2(+);`
+
+> `flex-grow` and `flex-shrink` do NOT necessarily obey width rules  (ie: `250px`)
+>> if parent is big enough, they grow to fill it
+>>> if parent is too small, they shrink to fit
+
+
+
+
+##### Flex-Basis
+* Sets initial size of a flex item
+* Grow/shrinking starts from this baseline
+* Default shorthand value: `0%` 
+  * ie: `flex: 1` is equal to `flex: 1 1 0%;`
+* If you want to **only** adjust an item's flex-grow
+* Default value of `flex-basis` is `auto` UNLESS you specify `flex: 1;`
+  * `flex-basis: auto;` checks for a **width declaration**
+* `flex: auto;` is equal to `flex: 1 1 auto;` (check for width)
+* `flex: 1;` is equal to `flex: 1 1 0%` (ignore width)
+
+
+
+
+#### Flex in Practice
+
+``` css
+/* grow evenly */
+flex: 1; 
+/* prevent shrinking */
+flex-shrink: 0;
+```
+
+
+
+
+#### Flex Axes
+
+* Flexbox can work *horizontally* or *vertically*
+  * Rows or Columns
+* Default: horizontal (row)
+  * Alternative: vertical (column)
+    * ie: `css .flex-container { flex-direction: column; }`
+
+``` css
+/* default setting */
+flex-direction: row;
+/* columns/vertical flexbox */
+flex-direction: column;
+```
+
+* When `flex-direction: column;` is used, `flex-basis` refers to `height`
+
+
+
+
+### Alignment
+
+* To space objects out within a container, you would add `justify-content: space-between;`
+
+``` css
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+```
+
+![Center](./img/justify-content-space-between.png)
+
+
+
+
+* To center objects within a container, you would add:
+  * X-axis (horizontally): `justify-content: center;`
+  * Y-axis (vertically): `align-items: center;`
+
+``` css
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+```
+
+![Center](./img/justify-content-center.png)
+
+
+
+
+* `gap` adds space between flex items
+
+![Gap](./img/gap.png)
+
