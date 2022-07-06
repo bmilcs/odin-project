@@ -966,7 +966,7 @@ Inner display types dictate how elements **inside that box** are laid out.
 
 
 
-## Flex Box
+## [Flex Box](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
 
 * Flexbox is a way to arrange items into *rows* and *columns*
 * Based on simple rules you can define
@@ -983,6 +983,12 @@ Inner display types dictate how elements **inside that box** are laid out.
 ``` css
 .flex-container {
   display: flex;
+  /*
+  flex-direction: row
+  > start from edge of main axis
+  > does not grow on main dimension, but can shrink
+  >
+  /*
 }
 
 /* this selector selects all divs inside of .flex-container */
@@ -1003,6 +1009,18 @@ Inner display types dictate how elements **inside that box** are laid out.
 * **Flex Containers**: `display:flex`
 * **Flex items**: `flex: 1`
 * Creating/nesting multiple flex containers and items is the primary way we will be building up complex layouts
+
+``` html
+
+```
+
+``` css
+/* flex containers */
+.container {
+  display: flex;
+  display: inline-flexinline;
+}
+```
 
 ![Flexbox 1](./img/flexbox-1.png)
 
@@ -1086,8 +1104,10 @@ flex-shrink: 0;
 ``` css
 /* default setting */
 flex-direction: row;
+flex-direction: row-reverse;  /* right to left */
 /* columns/vertical flexbox */
 flex-direction: column;
+flex-direction: column-reverse; /* down to up */
 ```
 
 * When `flex-direction: column;` is used, `flex-basis` refers to `height`
@@ -1131,4 +1151,24 @@ flex-direction: column;
 * `gap` adds space between flex items
 
 ![Gap](./img/gap.png)
+
+* Multi-line flex **containers**
+``` css
+/* default */
+flex-wrap: nowrap;
+/* move to item to next line */
+flex-wrap: wrap;`
+```
+
+![flex-wrap](./img/flex-wrap.png)
+
+#### Flex Flow Shorthand
+
+* Combine flex direction & wrap into one line
+
+``` css
+flex-flow: flex-direction, flex-wrap;
+/* example */
+flex-flow: row wrap;
+```
 
