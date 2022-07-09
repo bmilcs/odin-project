@@ -4,19 +4,20 @@ Welcome to Bryan Miller's walk-through of [The Odin Project](https://www.theodin
 
 ## Deployment
 
-``` sh
+```sh
 git clone git@github.com:bmilcs/op.git
 ```
 
 ## Project List
 
-* **Recipe Project**: [GitHub](https://github.com/bmilcs/odin-recipes) | [Live Demo](https://bmilcs.github.io/odin-recipes/)
+- **Landing Page** (Project #2): [GitHub](https://github.com/bmilcs/odin-landing-page) | [Live Demo](https://bmilcs.github.io/odin-landing-page/)
+- **Recipes** (Project #1): [GitHub](https://github.com/bmilcs/odin-recipes) | [Live Demo](https://bmilcs.github.io/odin-recipes/)
 
 ## Goal
 
-By the end of the year 2022, my goals are: 
+By the end of the year 2022, my goals are:
 
-* To complete The Odin Project curriculum.
-* To improve my writing and communication skills.
-* To become a full stack web developer.
-* To create a personal web page and portfolio.
+- To complete The Odin Project curriculum.
+- To improve my writing and communication skills.
+- To become a full stack web developer.
+- To create a personal web page and portfolio.
