@@ -4,18 +4,18 @@ Welcome to Bryan Miller's walk-through of [_The Odin Project_](https://www.theod
 
 The purpose of this repo is to document all progress made toward [_my primary goals_](#goals) and to provide a central location for my web development notes.
 
-## Notes
-
-- [**GIT**](GIT.md)
-- [**HTML**](HTML.md)
-- [**CSS**](CSS.md)
-
 ## Project List
 
 | Project             | URL                                                      | Source Code                                           |
 | :------------------ | :------------------------------------------------------- | :---------------------------------------------------- |
 | **#2 Landing Page** | [Live Demo](https://bmilcs.github.io/odin-landing-page/) | [GitHub](https://github.com/bmilcs/odin-landing-page) |
 | **#1 Recipes**      | [Live Demo](https://bmilcs.github.io/odin-recipes/)      | [GitHub](https://github.com/bmilcs/odin-recipes)      |
+
+## Notes
+
+- [**GIT**](GIT.md)
+- [**HTML**](HTML.md)
+- [**CSS**](CSS.md)
 
 ## Goals
 
