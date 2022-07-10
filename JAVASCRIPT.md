@@ -6,7 +6,7 @@ To run JS locally, via the browser, you have 2 options.
 
 
 
-1. Inline JavaScript:
+1. Inline JavaScript ([Example](./html/javascript-example.html))
 
 ```html
 /* 1. Within an HTML document */
@@ -23,15 +23,17 @@ To run JS locally, via the browser, you have 2 options.
 2. External Script:
 
 ```html
-/* JavaScript files have the .js extension: */
-<script src="javascript.js"></script>
+<!-- JavaScript files have the .js extension: -->
+<head>
+  <script src="javascript.js"></script>
+</head>
 ```
 
-[Example of Inline JavaScript](./html/javascript-example.html)
 
-`console.log()` is a command that allows you to print something to the developer console in your browser
 
-To view the Console, hit `F12` on a page and click on the Console tab
+`console.log()` is a command that allows you to print something to the developer console in your browser.
+
+To view the Console, hit `F12` while on a page and click on the Console tab.
 
 
 
@@ -41,12 +43,12 @@ Variables are "storage containers" for data in your code
 
 There are 3 ways to create a variable:
   - `let` = modern, preferred method
-    - `var` = original method, similar to `let`, but it has differences
+  - `var` = old method, similar to `let`, but it has differences
   - `constant`
 
 
 
-Declare a variable with the name "message":
+To declare a variable with the name "message":
 
 ```js
 // declaring a variable
@@ -55,7 +57,7 @@ let message;
 
 
 
-To store data, use the **assignment operator** `=`
+To store data, use the **assignment operator** `=`:
 
 ```js
 // store the string 'Hello' in variable named message
@@ -65,7 +67,7 @@ message = "Hello";
 
 
 
-To access the value of a variable, use the `alert` function
+To access the value of a variable, use the `alert` function (message box / popup):
 
 ```js
 // show the variable content
@@ -76,7 +78,7 @@ alert(message);
 
 
 
-Combine declaration & assignment into a single line:
+To combine declaration & assignment into a single line:
 
 ```js
 let message = "Hello!";
@@ -93,20 +95,20 @@ let message = "Hello!";
  All variants do the same thing:
 
 ```js
-// One-liner: not recommended (readability)
+// One-liner, not recommended (poor readability)
 let user = "John", age = 25, message = "Hello";
 
-// Separate lines: better readability
+// Separate lines (better readability)
 let user = "John";
 let age = 25;
 let message = "Hello";
 
-// Combined multi-line option #1
+// Combined multi-line options:
 let user = 'John',
   age = 25,
   message = 'Hello';
 
-// Combined multi-line option #2
+// Or
 let user = 'John'
   , age = 25
   , message = 'Hello';
@@ -178,9 +180,7 @@ let my-name; // can't contain hyphen (-)
 
 
 
-**CaSe matters**
-
-`apple` & `APPLE` are two different variables
+**Case matters**: `apple` & `APPLE` are two different variables
 
 ```js
 let apple = 'red';
@@ -189,9 +189,7 @@ let APPLE = 'green';
 
 
 
-**Reserved Names**
-
-Reserved names are words that **cannot be used** because they are used by the language itself.
+**Reserved Names** are words that **cannot be used** because they are used by the language itself.
 
 ``` js
 let let = 5;  // ERROR, reserved name: let
@@ -237,7 +235,7 @@ myBirthday = '08.08.1988'; // ERROR: can't reassign constant!
 
 #### Constants: Known Before Execution
 
-Use **CAPITAL LETTERS** & **underscores** for constants that contain *difficult-to-remember* values that are known *before execution*. 
+Use CAPITAL LETTERS & underscores for constants that contain *difficult-to-remember* values that are known *before execution*. 
 
 ``` js
 // Web Color Codes in Hexadecimal Format
@@ -247,20 +245,20 @@ const COLOR_BLUE = "#00F";
 const COLOR_ORANGE = "#FF7F00";
 
 // To pick a color:
-let current_color = COLOR_ORANGE;
-alert(color); // #FF7F00
+let currentColor = COLOR_ORANGE;
+alert(currentColor); // #FF7F00
 ```
 
 Benefits:
-- Much easier to remember `COLOR_ORANGE` vs `#FF7F00`
-- Easier to mistype `#FF7F00` vs `COLOR_ORANGE`
+- Much easier to remember: `COLOR_ORANGE`
+- Easier to mistype: `#FF7F00`
 - Reading code: `COLOR_ORANGE` is *more meaningful* than `#FF7F00`
 
 
 
 #### Constants: Calculated in Run-Time 
 
-If a constant is *calculated in run-time* and *unknown before execution*, it should be named normally (**camelCase**). 
+If a constant is *calculated in run-time* and *unknown before execution*, it should be named normally, using camelCase.
 
 ``` js
 const pageLoadTime = // time taken for a webpage to load
@@ -274,25 +272,27 @@ const pageLoadTime = // time taken for a webpage to load
 
 Variables should have a clean, obvious meaning, describing the data that it stores.
 
-It is one of the most important & complex skills in programming. Variable names reveal if code was written by a **beginner** vs. an **experienced developer**.
+It is one of the most important & complex skills in programming. Variable names reveal if code was written by a **beginner vs. an experienced developer**.
 
-In a real project, most of the time is spent *modifying* & *extending* an existing code base -- not writing something new from scratch.
+In a real project, most of the time is spent **modifying & extending** an existing code base -- not writing something new from scratch.
 
 Returning to code after doing something else for a while, it's much easier to find info that's well-labeled, or when variables have *good names.*
 
-**Good-to-follow Rules:**
+*Good-to-follow Rules:*
 
 - Human-readable Names
-  - `userName`, `shoppingCart`
-- Avoid abbreviations or short names
-  - `a`, `b`, `c`, unless you know what you're doing
+  - `userName` `shoppingCart`
+
+- Avoid abbreviations or short names --- *unless you know what you're doing*
+  - `a` `b` `c` 
+
 - Make names *maximally* descriptive & concise
-  - NOT: `data`, `value`
-  - Unless the context of the code makes it *exceptionally obvious* which `data` and `value` are referencing
-- Agree on terms within your *team* or *in your own mind*
-  - If a *site visitor* is called a **"user"**
-  - *Related* variables: `currentUser`, `newUser` 
-    - NOT: `currentVisitor` or `newManInTown`
+  - `data` `value` are bad --- unless the context of the code makes it *exceptionally obvious* what they are referencing
+
+- Agree on terms within your *team OR in your own mind*
+  - If a site visitor is called a `user`, related variable naming options:
+    - Good: `currentUser` `newUser` 
+    - Bad: `currentVisitor` `newManInTown`
 
 
 
