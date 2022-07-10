@@ -1,39 +1,26 @@
-# HTML, CSS & JavaScript
+# HTML
 
-HTML notes from the Odin Project curriculum.
+**HTML** is a language that determines how documents & web pages are displayed. It is
+the building blocks of any web site.
 
-## HTML
-* Is a language that determines how documents & web pages are displayed
-* Building blocks of any web site
-	
-## CSS		
-* Style sheet language, how document written in HTML is styled
-* Font styles, colors, layout, responsive features
+## Tags
 
-## JAVASCRIPT 
-* Allows you change CSS & HTML elements after site is loaded.
-* Interactive, engaging for users
+**Tags** (`<p>`) are used to create **ELEMENTS** `<p>Element</p>`
 
----
+It is important to use the correct tags for content, because they:
 
-# HTML Fundamentals
+- Determine web site ranking in search engines.
+- Affect accessibility to users who rely on assistive technologies, such as screen readers
 
-## TAGS	
-* Used to create ELEMENTS `<p></p>` 
-* Important to use the correct tags for content.
-* Determines rank in search engines.
-* Affects accessibility to users who rely on assistive technologies
-  * Screen readers
+## HTML Boilerplate
 
-## BOILERPLATE
+All HTML documents have the same basic structure or _boilerplate_.
 
-All HTML docs have the same basic structure or boilerplate.
-
-``` html
+```html
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>My First Webpage</title>
   </head>
 
@@ -43,96 +30,119 @@ All HTML docs have the same basic structure or boilerplate.
 </html>
 ```
 
-### The DOCTYPE
-* Declaration, tells browser what version of HTML to render document, default: HTML5 
+**DOCTYPE declaration** (`<!DOCTYPE>`) tells browser what version of HTML to render document in and the default is HTML5.
 
-	`<!DOCTYPE html>`
-
-### HTML element
-
-* Root element of document
-* Becomes important when adding Javascript
-
-``` html
+```html
 <!DOCTYPE html>
-<html lang="en">
-</html>
-```	
-
-* Lang attribute: improves accessibility
-
-### HEAD element
-* Important meta-information about webpages
-* Should NOT contain elements that display anything
-
-### CHARSET META element
-* Always have charset encoding in `<head>`
-* Ensures web page will display symbols & characters of different languages
-* `UTF-8` : Unicode Transformation Format 8-bit
-  * `Unicode` industry standard used for consistency of character encoding
-  * Most popular HTML character encoding since 2008
-  * More than 90% of all websites use UTF-8
-  * Supports many languags
-  * Compatible with ASCII
-  * Natively used by XML
-  * Uses less space than other Unicode encodings
-
-### TITLE element
-* Always have human-readable title
-* Displays in web browser tab
-* Defaults to filename
-
-``` html
-<title>My First Webpage</title>
 ```
 
-### BODY element
-* Final element needed to complete boilerplate
-* Contains text, images, lists, etc.
+**HTML element** (`<html>`) is the root element of the document. It becomes important when _adding Javascript._
 
-# Working with Text
+**Language attribute** (`lang`) of the html element improves accessibility.
 
-## Paragraphs
+```html
+<!DOCTYPE html>
+<html lang="en"></html>
+```
 
-`<p>My first paragraph</p>`
+**HEAD element** (`<head>`) contains important meta-information about webpages.
 
-* Creates a new line after each paragraph element
+> It should _NOT contain elements that display things on a web page_.
 
-## Headings
+**CHARSET META element** (`<meta charset="" />`) goes inside the `<head>` element and it sets the charset encoding. This ensures that the web page will display symbols & characters of different languages.
 
-`<h1><h1>` through `<h6></h6>`
-* Display in bold, larger font
-* Using correct level of heading is important to provide hierachy to content
-* `<h1>` for heading of overall page
-* Lower level headings for content of smaller sections of page
+- _Unicode Transformation Format 8-bit_ or `UTF-8` is the most popular HTML character encoding since 2008.
+- `Unicode` is the industry standard used for _consistency of character encoding_
+- More than 90% of all websites use `UTF-8`
+- Supports many languages, is compatible with ASCII, and is natively used by XML
+- Uses less space than other Unicode encodings
 
-## Strong Element
+```html
+<head>
+  <meta charset="UTF-8" />
+  ...
+</head>
+```
 
-`<strong>` makes text bold
-* Also semantically marks text as important
-* Affects screen readers
-* Affects tone of voice 
-* Used in combination with other elements
-`<p>My name is <strong>Bryan Miller</strong></p>`
+The **TITLE element** (`<title>`) is also placed in the `<head>` element and it should always contain a **human-readable title**. This title displays in **web browser tab.**
 
-## Em Element
+- Defaults to filename of HTML document.
 
-`<em>` makes text italic
-* Also places emphasis on text
-* Affects screen readers
+```html
+<head>
+  ...
+  <title>My First Webpage</title>
+</head>
+```
+
+The **BODY element** (`<body>`) is the final element needed to complete boilerplate and it _contains all content that is displayed to users_
+
+- Text, images, lists, etc.
+
+```html
+<body>
+  <p>Content of page</p>
+</body>
+```
+
+## Working with Text
+
+**Paragraphs** (`<p>`) create a new line after each paragraph element
+
+```html
+<p>My first paragraph</p>
+```
+
+**Headings** (`<h1>`) are displayed in bold, larger font.
+
+- They range from `<h1>` through `<h6>`
+- Using correct level of heading is important to provide hierarchy to content
+- `<h1>` for heading of overall page
+- Lower level headings for content of smaller sections of page
+
+```html
+<h1>Biggest</h1>
+...
+<h6>Smallest</h6>
+```
+
+**Strong Element** (`<strong>`) makes text **bold**.
+
+- Semantically marks text as important
+- Affects screen readers
+- Affects tone of voice
+- Used in combination with other elements
+
+```html
+<p>My name is <strong>Bryan Miller</strong></p>
+```
+
+**Em Element** (`<em>`) makes text _italic_.
+
+- Places emphasis on text
+- Affects screen readers
+
+```html
+<p>My name is <em>Bryan Miller</em></p>
+```
 
 ## Nesting & Indentation
 
-* Elements within other elements are indented
-  * Aka nesting elements
-* Creates parent and child relationship
-* Siblings: Elements at the same level
+Elements within other elements are indented, and are known as **nested elements.**
+
+- Creates parent and child relationship
+- Siblings: Elements at the same level
 
 ## HTML Comments
 
-`<!-- this is a comment -->`
-* Comment on our code for other developers and our future selves
-* Not visible to the browser
+**HTML Comments** allow us to comment on our code for other developers and our future selves. This is to provide context about something that may be unclear in the code.
+
+- Not visible to the browser
+
+```html
+<!-- THIS IS A COMMENT -->
+<p>This is not a comment</p>
+```
 
 ## Lists
 
@@ -142,7 +152,7 @@ All HTML docs have the same basic structure or boilerplate.
 
 Unordered lists are created with the `<ul>` tag, and each item within that list is created with `<li>`
 
-``` html
+```html
 <ul>
   <li>Item 1</li>
   <li>Item 2</li>
@@ -154,7 +164,7 @@ Unordered lists are created with the `<ul>` tag, and each item within that list 
 
 Ordered lists are created with the `<ol>` tag.
 
-``` html
+```html
 <ol>
   <li>Item 1</li>
   <li>Item 2</li>
@@ -164,9 +174,9 @@ Ordered lists are created with the `<ol>` tag.
 
 ## Description Lists
 
-Dictionary-like list used to outline multiple items and their descriptions, such as a glossary.
+Dictionary-like list used to outline multiple items and their descriptions, such as a glossary. The `<dl>` tag creates the list, the `<dt>` tag creates a term, and the `<dd>` creates the definition.
 
-``` html
+```html
 <dl>
   <dt>word</dt>
   <dd>definition</dd>
@@ -175,18 +185,16 @@ Dictionary-like list used to outline multiple items and their descriptions, such
 
 ## Attributes
 
-* Give additional information to an HTML element
-* Goes in element's opening tag
-* Consists of two parts: name & value
+Attributes give additional information to an HTML element.
 
+- Go inside an element's opening tag
+- Consists of two parts: name & value
 
 ## Links & Images
 
-### Anchor Elements
+**Anchor Elements** create a link in HTML using the `<a>` tag. Without an _attribute_, the `<a>` tag will go nowhere.
 
-To create a link in HTML you must use the `<a>` tag. Without an `attribute`, the `<a>` tag will go nowhere.
-
-``` html
+```html
 <a href="https://www.bmilcs.com">Click me</a>
 ```
 
@@ -194,9 +202,9 @@ The `href` attribute is a `hyperlink reference`.
 
 Anchor tags can link to any resource on the internet, not just other HTML documents.
 
-* Videos
-* PDF files
-* Images
+- Videos
+- PDF files
+- Images
 
 Generally there are 2 types of links:
 
@@ -214,8 +222,8 @@ In the above example, `https` is the protocol and the domain is `bmilcs.com`
 
 Links to other pages within a website are called `relative links`.
 
-* Doesn't contain the domain
-* Relative to the `index` file
+- Doesn't contain the domain
+- Relative to the `index` file
 
 `<a href="about.html">About</a>`
 `<a href="pages/about.html">About</a>`
@@ -226,43 +234,43 @@ Links to other pages within a website are called `relative links`.
 
 ## Images
 
-Images are displayed with the `<img>` tag. The `<img>` tag is *empty*, meaning it doesn't have a *closing tag*.
+Images are displayed with the `<img>` tag. The `<img>` tag is _empty_, meaning it doesn't have a _closing tag_.
 
-* Embedding an image requires the `src` attribute.
+- Embedding an image requires the `src` attribute.
 
 `<img src="images/dog.jpg">`
 
 The four main image formats on the web are:
 
-* **JPG**
-  * Handle large color pallettes without huge file sizes
-  * Used for photos/images with lots of gradients
-  * NO transparency
-* **GIF**
-  * Simple animations
-  * Limited in color palette
-  * Transparency is binary: Full or Opaque, no semi-opaque pixels
-* **PNG**
-  * Great for non-animated, non-photo
-  * Larger than equivalent JPG for photos
-  * Opacity is not an issue
-  * Don't have color palette limitations
-  * Best use: icons, technical diagrams, logos, etc.
-* **SVG**
-  * Vector-based graphics format
-  * Scale up/down to any dimension without loss of quality
-  * Great for responsive designs
-  * Same use as PNG, should be used whenever you can.
-  * Issue: for them to display consistently across browsers, you have to convert text fields to outlines using an image editor.
-    * If image contains a lot of text, file size will be big
+- **JPG**
+  - Handle large color pallettes without huge file sizes
+  - Used for photos/images with lots of gradients
+  - NO transparency
+- **GIF**
+  - Simple animations
+  - Limited in color palette
+  - Transparency is binary: Full or Opaque, no semi-opaque pixels
+- **PNG**
+  - Great for non-animated, non-photo
+  - Larger than equivalent JPG for photos
+  - Opacity is not an issue
+  - Don't have color palette limitations
+  - Best use: icons, technical diagrams, logos, etc.
+- **SVG**
+  - Vector-based graphics format
+  - Scale up/down to any dimension without loss of quality
+  - Great for responsive designs
+  - Same use as PNG, should be used whenever you can.
+  - Issue: for them to display consistently across browsers, you have to convert text fields to outlines using an image editor.
+    - If image contains a lot of text, file size will be big
 
 ## Alt Attribute
 
 Every image should contain the `alt` (alternative text) attribute.
 
-* Used to describe an image
-* Used in place of the image **if it can't be loaded**
-* Used with screen readers to describe image for the visually impaired
+- Used to describe an image
+- Used in place of the image **if it can't be loaded**
+- Used with screen readers to describe image for the visually impaired
 
 `<img src="images/dog.jpg" alt="A picture of a dog">`
 
@@ -278,38 +286,34 @@ If you want to reference `/images/dog.jpg` from `/pages/about.html`:
 
 Define where to display a page when user clicks a link.
 
-* Default: Replace current page w/ new one
-* `target="_blank"` specifies a new tab
+- Default: Replace current page w/ new one
+- `target="_blank"` specifies a new tab
 
 ## Naming Conventions
 
 Best practices:
 
-* All lower case
-* Hyphens `-` instead of spaces
+- All lower case
+- Hyphens `-` instead of spaces
 
 # DIV
 
 DIV is one of the most basic HTML elements.
 
-* Empty container for other elements
+- Empty container for other elements
 
-``` html
-<div>
-  Welcome to the machine.
-</div>
+```html
+<div>Welcome to the machine.</div>
 ```
 
 # Classes
 
-* Attributes that you place in an HTML element
-* Case sensitive
-* Multiple classes can be added to a single element
-* Classes can be reused on as many elements as you want
-  * Whitespace is used to separate multiple classes
+- Attributes that you place in an HTML element
+- Case sensitive
+- Multiple classes can be added to a single element
+- Classes can be reused on as many elements as you want
+  - Whitespace is used to separate multiple classes
 
-``` html
-<div class="alert-text pink-floyd">
-  Welcome to the machine.
-</div>
+```html
+<div class="alert-text pink-floyd">Welcome to the machine.</div>
 ```
