@@ -514,6 +514,8 @@ let x = 10;
 let y = 20;
 let z = "30";
 let result = x + y + z; // 3030
+let result = x + y + Number(z) // 60
+
                         // Integer + Integer = 30, Integer + String = Concatenation 3030
 ```
 
@@ -625,3 +627,24 @@ JS interprets numeric constants as hexadecimals if they are preceded by `0x`
 ``` js
 let x = 0xFF; // 255
 ```
+
+
+
+
+**Number Methods**
+
+Restricting decimal places (rounding) w/ `.toFixed()`
+
+``` js
+const lotsOfDecimal = 1.766584958675746364;
+lotsOfDecimal;  // 1.766584958675746364;
+const twoDecimalPlaces = lotsOfDecimal.toFixed(2);
+twoDecimalPlaces; // 1.77
+
+```
+
+
+
+**Comparison Operators**
+
+Left off here: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Math
