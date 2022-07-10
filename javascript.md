@@ -313,3 +313,315 @@ Lazy programmers *reuse* existing variables.
 JavaScript Minifiers & browsers optimize code well enough, so performance issues aren't a concern. 
 
 Using different variable names for different values can *help the engine optimize your code.*
+
+
+
+## Numbers
+
+Numbers are the building blocks of programming logic. 
+
+
+
+### Arithmetic
+
+**Arithmetic operators** perform arithmetic on numbers --- literal or variables.
+
+| Operator | Description |
+| ---: | :-- |
+| + | Addition |
+| - | Subtraction |
+| * | Multiplication |
+| ** | Exponentiation |
+| / | Division |
+| %| Modulus |
+
+Examples
+
+``` js
+// literals
+let x = 100 + 50;
+
+// variables
+let x = a + b;
+
+// expressions
+let x = (100 + 50) * a;
+```
+
+
+
+**Arithmetic operands** are the numbers in an arithmetic operation.
+
+| Operand | Operator | Operand |
+|---|---|---|
+|100|+|50|
+
+
+
+```js
+let x = 5;
+let y = 3;
+
+let z = x + y;  // Addition
+let z = x - y;  // Subtraction
+let z = x * y;  // Multiplication
+let z = x / y;  // Division, produces quotient & remainder
+let z = x % y;  // Modulus, produces remainder in division
+```
+
+
+
+
+**Incrementing** & **Decrementing**
+
+Increment Operator (+1): `++`  
+Decrement operator (-1): `--` 
+
+
+``` js
+let x = 5;
+x++;        // Increment Operator
+x--;        // Decrement Operator
+let z = x;
+```
+
+
+
+
+**Exponentiation**
+
+Exponentiation operator `**` *raises the first operand to the power of the second operand.*
+
+``` js
+let x = 5;
+let z = x ** 2;         // 5^2 = 25
+// OR
+let z = Math.pow(x,2)   // 5^2 = 25
+```
+
+
+
+
+**Operator Precedence** (Order of operations)
+
+Operator precedence is the order in which operations are performed in arithmetic expression.
+
+1. `(`Parenetheses`)`
+1. Multiplication `*` & Division `/`
+1. Addition `+` & Subtraction `-`
+1. Left -> Right
+
+``` js
+let x = 100 + 50 * 3;     // 50 * 3, then +100
+let y = (100 + 50) * 30;  // 100+50, then * 30
+```
+
+
+
+
+**Assignment**
+
+```js
+let x = 10
+let y = 5
+
+x += y  // x = x + y
+x *= y  // x = x * y
+```
+
+
+
+
+**JavaScript Numbers**
+
+JavaScript only has one type of number: with or without decimals
+
+* Always 64-bit floating point
+* Double precision floating point numbers
+* Does not define integers, short, long, floating point, etc.
+
+``` js
+let x = 3.14; // w/ decimals
+let y = 3;    // w/o decimals
+```
+
+
+
+
+Extra large or extra smalls can be written with *scientific (exponent) notation*.
+
+``` js
+let x = 123e5;  // 12,300,000
+let y = 123e-5; // 0.00123
+```
+
+
+
+
+Integer precision, without a period or exponent notation, are accurate up to **15 digits**.
+``` js
+let x = 999999999999999;   // x will be 999999999999999
+let y = 9999999999999999;  // y will be 10000000000000000
+```
+
+
+
+
+Floating point arithmetic is **not always 100% accurate**.
+
+``` js
+let x = 0.2 + 0.1; // 0.30000000000000004
+// To solve this problem, it helps to multiply & divide:
+let x = (0.2 * 10 + 0.1 * 10) / 10; // 0.3
+```
+
+
+
+
+**Adding** Numbers and Strings
+
+> Concatenation & Addition share `+` operator, which causes weird behavior:
+
+``` js
+// Add two numbers, result will be a number
+let x = 10;
+let y = 20;
+let z = x + y;  // 30
+
+// If you add two strings, the result will be a string concatenation:
+let x = "10";
+let y = "20";
+let z = x + y; // 1020
+
+// If you add a string + a number, result will be a string
+let x = "10";
+let y = 20;
+let z = x + y; // 1020
+```
+
+
+
+JavaScript interpreter works *left to right*. Therefore:
+``` js
+// Common mistake #1
+let x = 10;
+let y = 20;
+let z = "The result is: " + x + y;  // The result is: 1020
+                                    // String + Integer = Concatenation
+
+// Common mistake #2
+let x = 10;
+let y = 20;
+let z = "30";
+let result = x + y + z; // 3030
+                        // Integer + Integer = 30, Integer + String = Concatenation 3030
+```
+
+
+
+
+**Numeric Strings**
+
+JavaScript strings can have numeric content, and JS will attempt to convert strings to numbers in all numeric operations.
+
+``` js
+let x = "100";  // string
+let y = "10";   // string
+let z = x / y;  // 10
+
+let x = "100";  // string
+let y = "10";   // string
+let z = x * y;  // 1,000
+
+let x = "100";  // string
+let y = "10";   // string
+let z = x - y;  // 90
+
+let x = "100";  // string
+let y = "10";   // string
+let z = x + y;  // 10020 -> concatenation, 2 strings, won't work
+```
+
+
+
+
+**NaN** - Not a Number
+
+`NaN` is a reserved word indicating that a number **is not a legal number.**
+
+Trying to do arithmetic w/ a non-numeric string will result in `NaN`.
+
+``` js
+let x = 100 / Apple;  // NaN
+let x = 100 / "10";   // 10
+```
+
+`isNaN(x)` is a **global function** to find out if a value is not a number.
+
+```js
+let x = 100 / "Apple";
+isNaN(x);   // true
+```
+
+If `NaN` is used in a mathematical operation, the result will be `NaN`
+``` js
+let x = NaN;    // NaN
+let y = 5;      // Number
+let z = x + y;  // = NaN
+
+let x = NaN;    // NaN
+let y = "5";    // string
+let z = x + y;  // = NaN5
+```
+
+`typeof NaN` returns `number`
+```js
+typeof NaN; // number
+```
+
+
+
+
+**Infinity**
+
+`Infinity` or `-Infinity` is the value JS will return *if you calculate a number outside of the largest possible number*
+
+``` js
+let myNumber = 2;
+// Execute until Infinity
+while (myNumber != Infinity) {
+  myNumber = myNumber * myNumber;
+}
+
+// 4
+// 16
+// 256
+// 65536
+// 4294967296
+// 18446744073709552000
+// 3.402823669209385e+38
+// 1.157920892373162e+77
+// 1.3407807929942597e+154
+// Infinity
+```
+
+Division by 0 (zero) = Infinity
+
+``` js
+let x = 2 / 0;  // infinity
+let y = -2 / 0; // -infinity
+```
+
+`typeof infinity` returns `number`
+``` js
+typeof infinity; // number
+```
+
+
+
+**Hexadecimal**
+
+JS interprets numeric constants as hexadecimals if they are preceded by `0x`
+``` js
+let x = 0xFF; // 255
+```
