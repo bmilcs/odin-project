@@ -48,7 +48,7 @@ There are 3 ways to create a variable:
 
 
 
-To declare a variable with the name "message":
+**Declare a variable** with the name "message":
 
 ```js
 // declaring a variable
@@ -57,7 +57,7 @@ let message;
 
 
 
-To store data, use the **assignment operator** `=`:
+**Store data** using the **assignment operator** `=`:
 
 ```js
 // store the string 'Hello' in variable named message
@@ -67,7 +67,7 @@ message = "Hello";
 
 
 
-To access the value of a variable, use the `alert` function (message box / popup):
+**Access the value of a variable (popup msgbox)** using the `alert` function:
 
 ```js
 // show the variable content
@@ -78,7 +78,7 @@ alert(message);
 
 
 
-To combine declaration & assignment into a single line:
+**Combine declaration & assignment** into a single line:
 
 ```js
 let message = "Hello!";
@@ -86,7 +86,7 @@ let message = "Hello!";
 
 
 
-**There are several ways of declaring multiple variables.**
+**Declaring multiple variables**
 
  You can combine variable declarations into a single line, but it is not recommended because it makes readability difficult. You can also use multiline styles, shown below.
 
@@ -116,7 +116,7 @@ let user = 'John'
 
 
 
-Changing the value of a variable:
+**Change the value** of a variable:
 
 ``` js
 let message;
@@ -127,7 +127,7 @@ alert (message); // "World"
 
 
 
-Copying data from one variable to another:
+**Copy data** from one variable to another:
 
 ``` js
 let hello = 'Hello World!';
@@ -140,7 +140,7 @@ alert(message); // "Hello world!"
 
 
 
-Do not declare a variable twice, as it will cause an error:
+**Do NOT declare a variable twice**, as it will cause an error:
 ``` js
 let message = "This";
 // repeated 'let' = ERROR
@@ -174,7 +174,7 @@ let $ = 1;  // variable name: $
 let _ = 2;  // variable name: _
 
 // *INVALID* examples
-let 1a; // can't start with a digit
+let 1a;      // can't start with a digit
 let my-name; // can't contain hyphen (-)
 ```
 
@@ -267,8 +267,10 @@ const pageLoadTime = // time taken for a webpage to load
 ```
 
 
+---
 
-#### Naming Best Practices
+
+### Naming Best Practices
 
 Variables should have a clean, obvious meaning, describing the data that it stores.
 
