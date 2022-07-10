@@ -13,9 +13,10 @@ The purpose of this repo is to document all progress made toward [_my primary go
 
 ## Notes
 
-- [**GIT**](GIT.md)
-- [**HTML**](HTML.md)
-- [**CSS**](CSS.md)
+- [**GIT**](git.md)
+- [**HTML**](html.md)
+- [**CSS**](css.md)
+- [**JavaScript**](javascript.md)
 
 ## Goals
 
