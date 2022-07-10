@@ -1,5 +1,7 @@
 # JavaScript
 
+**JAVASCRIPT** is a scripting language that allows you change CSS & HTML elements after site is loaded. It makes web pages interactive and engaging for users.
+
 ## Running JavaScript Code
 
 To run JS locally, via the browser, you have 2 options.
