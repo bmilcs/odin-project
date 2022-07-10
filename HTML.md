@@ -64,7 +64,7 @@ All HTML documents have the same basic structure or _boilerplate_.
 </head>
 ```
 
-The **TITLE element** (`<title>`) is also placed in the `<head>` element and it should always contain a **human-readable title**. This title displays in **web browser tab.**
+**TITLE element** (`<title>`) is also placed in the `<head>` element and it should always contain a **human-readable title**. This title displays in **web browser tab.**
 
 - Defaults to filename of HTML document.
 
@@ -75,7 +75,7 @@ The **TITLE element** (`<title>`) is also placed in the `<head>` element and it 
 </head>
 ```
 
-The **BODY element** (`<body>`) is the final element needed to complete boilerplate and it _contains all content that is displayed to users_
+**BODY element** (`<body>`) is the final element needed to complete boilerplate and it _contains all content that is displayed to users_
 
 - Text, images, lists, etc.
 
@@ -190,27 +190,20 @@ Attributes give additional information to an HTML element.
 - Go inside an element's opening tag
 - Consists of two parts: name & value
 
-## Links & Images
+## Links
 
-**Anchor Elements** create a link in HTML using the `<a>` tag. Without an _attribute_, the `<a>` tag will go nowhere.
+**Anchor Elements** (`<a>`) create a link in HTML. Without an _attribute_, the `<a>` tag will go nowhere.
+
+- `href` attribute = _hyperlink reference_ (URL)
+- `<a>` can link to any resource on the internet, not just other HTML documents (_Videos, PDF files, Images, etc._)
 
 ```html
 <a href="https://www.bmilcs.com">Click me</a>
 ```
 
-The `href` attribute is a `hyperlink reference`.
+### Link Types
 
-Anchor tags can link to any resource on the internet, not just other HTML documents.
-
-- Videos
-- PDF files
-- Images
-
-Generally there are 2 types of links:
-
-### Absolute Links
-
-Must contain a protocol and a domain.
+**Absolute Links** must contain a protocol and a domain.
 
 `protocol://domain/path`
 
