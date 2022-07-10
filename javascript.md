@@ -11,7 +11,7 @@ To run JS locally, via the browser, you have 2 options.
 1. Inline JavaScript ([Example](./html/javascript-example.html))
 
 ```html
-/* 1. Within an HTML document */
+<!-- Within an HTML document -->
 <body>
   <script>
     // Your JavaScript goes here!
