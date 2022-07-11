@@ -748,12 +748,28 @@ myNumber = Number(myNumber) + 3;
 
 When you want to run true/false tests, and act conditionally based on the results, you use **comparison operators**.
 
-- `===` Strict equality: *Are two values **identical** to one another?*
-- `!==` Strict non-equality: *Are two values  **NOT identical** to one another?*
+- `==` Loose equality: Converts value to a common type & then checks equality (*Are two values **equal to** one another?*)
+- `!=` Loose inequality: Converts value to a common type & then checks inequality (*Are two values **not equal** to one another?*)
+- `===` Strict equality: *Are two values AND their types **identical** to one another?*
+- `!==` Strict non-equality: *Are two values AND their types **NOT identical** to one another?*
 - ` < ` Less than: *Is the left value **less than** the right value?*
 - `>`   Greater than: *Is the left value **greater than** the right value?*
 - `<=`  Less than: *Is the left value **less than OR equal to** the right value?*
 - `>=`  Less than: *Is the left value **greater than or equal to** the right value?*
+
+``` js
+let x = "5";
+let y = 5;
+x == y;  // true
+x === y; // false
+
+let x = new Number(500);
+let y = new Number(500);
+x == y;  // false: JS Objects cannot be compared
+x === y; // false
+
+
+```
 
 
 **[Testing Knowledge](https://javascript.info/operators)**
