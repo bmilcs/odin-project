@@ -88,6 +88,23 @@ let message = "Hello!";
 
 
 
+**Chaining Assignments**
+
+Chained assignments evaluate from *right* to *left.*
+
+``` js
+let a,b,c;
+a = b = c = 2 + 2;
+
+a; // 4
+b; // 4
+c; // 4
+```
+
+In above example, `2 +2` is evaluated first. It's assigned to `c`, then to `b`, then to `a`.
+
+
+
 **Declaring multiple variables**
 
  You can combine variable declarations into a single line, but it is not recommended because it makes readability difficult. You can also use multiline styles, shown below.
@@ -350,11 +367,29 @@ let x = (100 + 50) * a;
 
 
 
-**Arithmetic operands** are the numbers in an arithmetic operation.
+**Arithmetic operands** are the numbers in an arithmetic operation. 
+
+Operands are what **operators** are applied to.
 
 | Operand | Operator | Operand |
 |---|---|---|
 |100|+|50|
+
+A operator is *unary* if it has a single operand.
+```js
+let x = 1;
+x = -x; // unary operand -
+alert( x ); // -1
+```
+
+An operator is *binary* if it has 2 operands.
+```js
+let x = 1, y = 3;
+alert( y - x ) // 2, binary - operator subtracts values
+```
+
+
+
 
 
 
@@ -374,15 +409,32 @@ let z = x % y;  // Modulus, produces remainder in division
 
 **Incrementing** & **Decrementing**
 
-Increment Operator (+1): `++`  
-Decrement operator (-1): `--` 
+Increment Operator `++` adds 1 to a value `+1`
+
+Decrement operator `--` subtracts 1 from a value `-1`
+
+Operators `++` and `--` can go *before* or *after* a variable, which changes it's behavior:
+- Prefix form:  `++counter` returns the *new* value
+- Postfix form: `counter++` returns the *old* value
 
 
 ``` js
-let x = 5;
-x++;        // Increment Operator
-x--;        // Decrement Operator
-let z = x;
+let counter = 1;
+let a = ++counter; // ++BEFORE: changes the counter AND THEN assigns the variable a its value
+a;                 // 2
+
+let counter = 1;
+let a = counter++; // AFTER++: assigns "a" with old counter value
+                   // THEN increments "counter" variable +1
+a;                 // 1
+counter;           // 2
+
+let counter = 1;
+alert( 2 * ++counter ); // 4 (++counter first then 2*counter)
+
+let counter = 1;
+2 * counter++;         // 2 (2 * counter[1] then counter++)
+counter;               // 2
 ```
 
 
@@ -407,9 +459,10 @@ let z = Math.pow(x,2)   // 5^2 = 25
 Operator precedence is the order in which operations are performed in arithmetic expression.
 
 1. `(`Parenetheses`)`
-1. Multiplication `*` & Division `/`
-1. Addition `+` & Subtraction `-`
-1. Left -> Right
+2. Unary plus `+` & unary negation `-`
+3. Multiplication `*` & Division `/`
+4. Addition `+` & Subtraction `-`
+5. Left -> Right
 
 ``` js
 let x = 100 + 50 * 3;     // 50 * 3, then +100
@@ -419,17 +472,32 @@ let y = (100 + 50) * 30;  // 100+50, then * 30
 
 
 
-**Assignment**
+**Assignment Operators**
+
+The most basic assignment operator is `=`. It assigns the variable on the *left* with the value stated on the right.
+
+There are more complex types, which provide *useful shortcuts* to keep your code *neater & more efficient.* 
+
+> Modify-in-place or "*modify-and-assign*"
 
 ```js
 let x = 10
 let y = 5
 
-x += y  // x = x + y
-x *= y  // x = x * y
+x += y  // Addition Assignment:       x = x + y
+x -= y  // Subtraction Assignment:    x = x - y
+x *= y  // Multiplication Assignment: x = x * y
+x *= y  // Division Assignment:       x = x / y
 ```
 
+Because *modify-and-assign* operators are *operators*, they run *after* most other calculations.
 
+``` js
+let n = 2;
+n *= 3 + 5; // 3+5
+            // n *= 8 ... n = n * 8
+            // 16 -- right part is evaluated first
+```
 
 
 **JavaScript Numbers**
@@ -478,7 +546,7 @@ let x = (0.2 * 10 + 0.1 * 10) / 10; // 0.3
 
 
 
-**Adding** Numbers and Strings
+**Adding Numbers and Strings** (binary +)
 
 > Concatenation & Addition share `+` operator, which causes weird behavior:
 
@@ -517,6 +585,27 @@ let result = x + y + z; // 3030
 let result = x + y + Number(z) // 60
 
                         // Integer + Integer = 30, Integer + String = Concatenation 3030
+```
+
+
+
+**Numeric Conversion** (unary +)
+
+The unary `+` applied to *numbers* doesn't do anything. However, `+` applied to a *string* converts it to a *number*.
+
+``` js
+let x = 1;
+alert( +x ); // 1
+
+let y = -2;
+alert( -x ); // -2
+
+// conversion of non-numbers
+let x = "5"; // string
++x + 5;      // 10
+
++true;  // 1 
++"";    // 0
 ```
 
 
@@ -645,6 +734,51 @@ twoDecimalPlaces; // 1.77
 
 
 
+**Converting to number data types**
+
+To convert a string to a number, use `Number()` constructor.
+
+``` js
+let myNumber = '74';
+myNumber = Number(myNumber) + 3;
+```
+
+
 **Comparison Operators**
 
-Left off here: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/First_steps/Math
+When you want to run true/false tests, and act conditionally based on the results, you use **comparison operators**.
+
+- `===` Strict equality: *Are two values **identical** to one another?*
+- `!==` Strict non-equality: *Are two values  **NOT identical** to one another?*
+- ` < ` Less than: *Is the left value **less than** the right value?*
+- `>`   Greater than: *Is the left value **greater than** the right value?*
+- `<=`  Less than: *Is the left value **less than OR equal to** the right value?*
+- `>=`  Less than: *Is the left value **greater than or equal to** the right value?*
+
+
+**[Testing Knowledge](https://javascript.info/operators)**
+
+``` js
+"" + 1 + 0    // 10
+"" - 1 + 0    // -1
+true + false  // 1
+6 / "3"       // 2
+"2" * "3"     // 6
+4 + 5 + "px"  // "9px"
+"$" + 4 + 5   // "$45"
+"4" - 2       // 2
+"4px" - 2     // NaN
+"  -9  " + 5  // "  -9  5"
+"  -9  " - 5  // -14
+              // whitespace is ignored
+null + 1      // 1
+undefined + 1 // NaN
+              // undefined = NaN when converted to a number
+" \t \n" - 2  //-2
+              // space characters are trimmed off start/end when converted to a #
+
+// fix the addition
+let a = prompt("First number?", 1);   // +prompt()
+let b = prompt("Second number?", 2);  // +prompt()
+alert(a + b);                         // OR alert(+a + +b);
+```
