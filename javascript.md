@@ -798,3 +798,232 @@ let a = prompt("First number?", 1);   // +prompt()
 let b = prompt("Second number?", 2);  // +prompt()
 alert(a + b);                         // OR alert(+a + +b);
 ```
+
+
+
+## Data Types
+
+
+
+### Strings
+
+* Is a simple piece of text and a fundamental building block of any language.
+* Strings must be wrapped in quotes 
+  * Without quotes, it is assumed to be a *variable* name, *property* name, *reversed* word, or similar.
+
+Creating strings:
+
+``` js
+const string = "My name is Jack";
+const copyString = string;
+console.log(string)
+```
+
+Single quotes and Double quotes have very little differences and their use is personal preference.
+``` js
+let doubleString = "Double quoted";
+let singleString = 'Single quoted';
+let nestedQuotes = 'This "works", too';
+```
+
+Escaping characters in a string: `\`
+``` js
+let escapedExample = 'I\'m a tired';
+```
+
+Escape Sequences
+
+* `\0`  nulll character
+* `\\`  backslash
+* `\n`  newline
+* `\r`  carriage return
+* `\v`  vertical tab
+* `\t`  tab
+* `\b`  backspace
+* `\f`  form feed
+
+Concatenating Strings using a ***Template Literal***, which works like a normal string, except you can include variables in it.
+> Use ` instead of " or '
+```js
+const firstName = 'Bryan';
+const lastName = 'Miller';
+const joinedName = `${firstName} ${lastName}`;
+const greeting = `Hello, ${firstName} ${lastName}`; // Hello, Bryan Miller
+const greeting = `Hello, ${joinedName}`; // Hello, Bryan Miller
+```
+
+Including expressions in strings
+``` js
+const song = 'Fight the Youth';
+const score = 9;
+const highestScore = 10;
+const output = `I like the song ${song}. I gave it a score of ${score/highestScore * 100}%.`;
+// "I like the song Fight the Youth. I gave it a score of 90%."
+```
+
+Multi-line strings
+``` js
+const output = `I like the song.
+I gave it a score of 90%.`;
+const output = 'I like the song.\nI gave it a score of 90%.';
+// I like the song.
+// I gave it a score of 90%.
+```
+
+### String Methods & Properties
+
+* A **method** is a bit of functionality that is built into the language or into specific data types.
+* [List](https://www.w3schools.com/jsref/jsref_obj_string.asp)
+* [Exhaustive List](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+
+**String Length**
+
+`length` property returns the length of a string:
+``` js
+let txt = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+let length = txt.length;  // 26
+```
+
+### Extracting Parts of a String
+
+Three methods exist for extracting part of a string:
+1. `slice(start, end)`
+2. `substring(start, end)`
+3. `substr(start, end)`
+
+**Slice**
+
+`slice()` extracts part of a string & returns the extracted part in a new string.
+ This method accepts 2 parameters: start position, end position
+
+> Starting position is 0
+
+ ``` js
+ // positive values go left > right
+let str = "Apple, Banana, Kiwi";
+let part = str.slice(7, 13);  // Banana 
+
+// negative values go right > left
+let part = str.slice(-12, -6); //  Banana: left 12x from end, left 6x from end
+
+// single value  returns everything from the given starting point 
+let part = str.slice(7);  // Banana, Kiwi
+let part = str.slice(-12);  // Banana, Kiwi
+ ```
+
+ **SubString**
+
+ `substring()` is similar to `slice()`, but negative values (anything under 0) are treated as 0.
+
+``` js
+let str = "Apple, Banana, Kiwi";
+let part = str.substring(7, 13);  // Banana
+let part = str.substring(-12, -6);  // ''
+```
+
+**SubStr**
+
+`substr()` is similar to `slice()`, except the second parameter specificies the **length** of the extracted part.
+
+```js
+let str = "Apple, Banana, Kiwi";
+let part = str.substr(7, 6);  // Banana
+
+// single values return everything from the given starting point
+let part = str.substr(7);  // Banana, Kiwi
+
+// negative numbers start from the right
+let part = str.substr(-4);  // Kiwi
+```
+
+### Replacing String Content
+
+`replace()` method replaces a value with another value in a string.
+
+It only replaces the **FIRST** match and it's case sensitive. 
+
+``` js
+let text = "Replace me! No me!";
+let newText = text.replace("me!", "you!");  // Replace you! No me!
+```
+
+To ignore case, use regular expression with an `/i` (insensitive) flag.
+``` js
+let text = "Please visit Microsoft!";
+let newText = text.replace(/MICROSOFT/i, "bmilcs.com"); // Please visit bmilcs!
+```
+
+To replace ALL matches, use regular expression `/g` (global) flag
+``` js
+let text = "Hi Hi Hi";
+let newText = text.replace(/Hi/g, "Hey"); // Hey Hey Hey
+```
+
+### Converting to Upper/Lower Case
+
+To change the case of a string, use `.toUpperCase()` and `.toLowerCase()` methods.
+
+``` js
+let text = "Hello World";
+let text2 = text.toUpperCase(); // HELLO WORLD
+let text3 = text.toLowerCase(); // hello world
+```
+
+### Concatenation Method
+
+Concatenation of strings can be performed with the `concat()` method.
+
+``` js
+let text1 = "Hello";
+let text2 = "World";
+let text3 = text1.concat(" ", text2); // Hello World
+// This can also be done with the plus operator
+let text3 = text1 + " " + text2;  // Hello World
+```
+
+### Trim Whitespace
+
+Use `.trim()` to remove whitespace from both sides of a string.
+
+``` js
+let text = "       Hi   ";
+let text2 = text1.trim(); // "Hi"
+```
+
+### Add Padding to Strings
+
+`padStart()` and `padEnd()` pads a string with another string. The number parameter represents the **max length** of the string: 
+
+``` js
+let text = "Hello";
+let padded = text.padStart(7, "x"); // xxHello
+let padded = text.padEnd(7, "x"); // Helloxx
+
+// To pad numbers, convert the number to a string first
+let number = 5;
+let string = number.toString();
+let padded = string.padStart(4, "0"); // 400
+```
+
+### Return character or unicode character at given position in string
+
+`charAt()` method returns character at a specified index.
+`charCodeAt()` method returns the unicode character at a specified index.
+
+```js
+let text = "HELLO WORLD";
+let char = text.charAt(0);  // H
+let char = text.charCodeAt(0);  // 72
+```
+
+### Converting Strings to Arrays
+
+`split()` method converts strings to arrays. 
+
+``` js
+let text = "a,b,c,d,e,f";
+const myArray = text.split(",");
+// text[0] = a
+// text[1] = b
+// text[1] = c
+```
