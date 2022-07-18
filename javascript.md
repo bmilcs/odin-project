@@ -767,8 +767,6 @@ let x = new Number(500);
 let y = new Number(500);
 x == y;  // false: JS Objects cannot be compared
 x === y; // false
-
-
 ```
 
 
@@ -801,11 +799,11 @@ alert(a + b);                         // OR alert(+a + +b);
 
 
 
-## Data Types
+# Data Types
 
 
 
-### Strings
+## Strings
 
 * Is a simple piece of text and a fundamental building block of any language.
 * Strings must be wrapped in quotes 
@@ -870,7 +868,7 @@ const output = 'I like the song.\nI gave it a score of 90%.';
 // I gave it a score of 90%.
 ```
 
-### String Methods & Properties
+## String Methods & Properties
 
 * A **method** is a bit of functionality that is built into the language or into specific data types.
 * [List](https://www.w3schools.com/jsref/jsref_obj_string.asp)
@@ -1027,3 +1025,407 @@ const myArray = text.split(",");
 // text[1] = b
 // text[1] = c
 ```
+
+
+## Comparison
+
+**Comparison of strings**
+
+To see whether a string is greater than another, JavaScript uses the so-called *dictionary* or *lexicographical* order.
+
+Strings are compared letter-by-better by their *unicode value* (case sensitive). The algorithm is simple:
+
+1. Compare 1st character
+2. If the 1st character is greater/less than, done.
+3. If both characters are same, compare the next character in the string.
+4. Loop until end of string
+5. If both strings are the same length, then they're equal. 
+6. Else, the longer string wins.
+
+
+``` js
+'Z' > 'A';      // true
+'Glow' > 'Glee' // true
+'Bee' > 'Be'    // true
+'Hi' > 'Z'      // false
+```
+
+**Comparison of different types**
+
+When comparing 2 different data types, JS converts values to numbers.
+
+``` js
+'2' > 1; // true, string 2 becomes 2
+'01' == 1; // true, string 01 becomes 1
+true == 1; // true
+false == 0; // true
+
+// boolean conversion:
+let a = 0;
+Boolean(a); // false
+
+let b = "0";
+Boolean(b); // true
+
+a == b; // true!
+
+// null & undefined
+Number(null);       // 0
+Number(undefined);  // NaN
+null == undefined;  // true -- "sweet couple", equal to each other 
+                    // but not any other value
+null === undefined; // false - different TYPES (strict equality)
+```
+
+Comparison `>` `>=`, etc. is different than equality check `==`.
+``` js
+// strange result: null vs 0
+null > 0;     // false  (>)
+null == 0;    // false  (== equality)  
+alert( null >= 0 ); // true (>= comparison)
+```
+
+Undefined should NOT be compared to other values:
+``` js
+undefined > 0; // false (becomes NaN, which returns false to ALL comparisons)
+undefined < 0; // false (becomes NaN, which returns false to ALL comparisons)
+undefined == 0; // false (ONLY equals null & undefined)
+```
+
+## Conditionals
+
+* `if`   condition is true, execute a block of code
+* `else if` tests a new condition, when 1st `if` condition is false
+* `else` executives when `if` / `else if` is false
+* `switch` specify many alternative blocks of code to be executed
+
+### If
+``` js
+if (condition) {
+  //  block of code to be executed if the condition is true
+}
+
+if (hour < 18) {  // If hour is less than 18:00 then
+  greeting = "Good day";
+}
+```
+
+### Else
+
+``` js
+if (condition) {
+// ^ true
+} else {
+// if = false
+}
+
+if (hour < 18) {  // If hour is less than 18:00 then
+  greeting = "Good day";
+} else { // Hour is not less than 18:00
+  greeting = "Good evening";
+}
+```
+
+### Else If
+
+``` js
+if (condition1) {
+  // ^ true
+} else if (condition2) {
+  //  ^ condition2 = true && condition1 = false, 
+} else {
+  //  condition1 & condition = false
+}
+```
+
+### Switch
+
+Switch is an alternative to `if`, `else if`, `else`.
+
+How `switch()` works:
+
+1. Switch expression is evaluated once.
+2. Value of expression is then compared with values of *each case*
+3. If match, the associated block of code is executed.
+4. If no match, the `default` code block is executed.
+
+
+If multiple cases matches a case value, the *first case* is selected.
+
+If no matching cases are found, the program continues to the `default` label.
+
+If no default label is found, the program *continues to the statement(s) after the switch*.
+
+```js
+switch(expression) {
+  case x:
+    // expression returns x > execute me.
+    break;
+  case y:
+    // expression returns y > execute me.
+    break;
+  default:
+    // expression returned something other than x or y
+}
+
+// getDay() returns weekday as a number [0-6]
+switch (new Date().getDay()) {
+  case 0:
+    day = "Sunday";
+    break;
+  case 1:
+    day = "Monday";
+    break;
+  case 2:
+     day = "Tuesday";
+    break;
+  case 3:
+    day = "Wednesday";
+    break;
+  case 4:
+    day = "Thursday";
+    break;
+  case 5:
+    day = "Friday";
+    break;
+  case 6:
+    day = "Saturday";
+}
+
+switch (new Date().getDay()) {
+  default:
+    text = "Looking forward to the Weekend";
+    break;
+  case 6:
+    text = "Today is Saturday";
+    break;
+  case 0:
+    text = "Today is Sunday";
+}
+```
+
+## Logical Operators
+
+There are four logical operators in JavaScript:
+
+* `||` OR
+* `&&` AND
+* `!` NOT
+* `??` Nullish Colaescing
+
+### `||` (OR)
+
+``` js
+result = a || b;
+```
+
+> In classical programming, the logical OR is meant to manipulate boolean values only. If any of its arguments are `true`, it returns `true`, otherwise it returns `false`.
+
+In JavaScript, `||` is **trickier & more powerful.**
+
+``` js
+// booleans:
+// all result in true, except for when both operands are false
+true || true;   // true
+false || true;  // true
+true || false;  // true
+false || false; // false
+
+if (1 || 0) { // works just like if( true || false )
+ 'truthy!';   // 'truthy!'
+}
+```
+
+Most of the time, OR `||` is used in an `if` statement to test if any of the given conditions are true:
+
+``` js
+let hour = 9;
+let isWeekend = true;
+
+// if hour less than 10 or greater than 18 or is weekend
+if (hour < 10 || hour > 18 || isWeekend) {  
+  "office is closed"; // 'office is closed'
+}
+```
+
+**OR `||` finds the first truthy value**
+
+The "extra" features of JavaScript provides the extended algorithm as follows:
+
+``` js
+result = value1 || value2 || value3;
+```
+
+`||` OR operator does the following:
+
+1. Evaluates operands from left to right
+2. Each operand is converted to a boolean.
+   1. If `true`, stops & returns **original value** of the operand.
+3. If all operands have been evaluated and `false`, the *last* operand is returned
+
+``` js
+1 || 0; // 1 (1 is truthy)
+null || 0 || 1; // 1 (1 is first truthy value)
+undefined || null || 0; // 0 (all falsy, last operand is returned)
+```
+**1. Getting first truthy value from list of variables / expressions:**
+``` js
+let firstName = "";
+let lastName = "";
+let nickName = "SuperCoder";
+
+// all variables are optional (can be undefined / falsy values)
+firstName || lastName || nickName || "Anonymous"); // SuperCoder
+
+nickName = "";
+firstName || lastName || nickName || "Anonymous"); // Anonymous
+```
+
+**2. Short-circuit evaluation.**
+
+`||` processes its arguments until first truthy value is reached and then it returns that value immediately, without touching the other arguments.
+
+The importance of this is obvious when an operand isn't just a value: an expression with a side effect, such as a **variable assignment** or **function call.**
+
+``` js
+true || alert("not printed"); // nothing: true's seen & evaluation stops
+false || alert("printed");  // "printed"
+```
+
+Sometimes used to execute commands only if the condition on the left is `false`.
+
+### AND `&&`
+
+In *classical programming*, AND returns `true` if *both operands* are truthy and `false` otherwise:
+
+``` js
+true && true;   // true
+false && true;  // false
+true && false;  // false
+false && false; // false
+```
+
+Example with `if` `&&` 
+``` js
+let hour = 12;
+let minute = 30;
+if (hour == 12 && minute == 30) {
+  "the time is 12:30"; 
+}
+if (1 && 0) { // evaluated as true && false ** NOT POSSIBLE
+  "i'll never be executed! :("; 
+}
+```
+
+**AND `&&` finds the *first falsy***
+
+AND returns the **first falsy** or the last value if none were found:
+
+1. Evaluates operands left to right
+2. Each operand is converted to boolean.
+   1. If result is `false`, stops & returns original value of that operand
+3. If all operands have been evaluated (all were *truthy*), returns the last operand.
+
+> OR returns the **first truthy** or the last value if none were found.
+
+``` js
+1 && 0; // 0
+1 && 5; // 5
+null && 5;  // null
+0 && "no matter what"; // 0
+```
+
+Precedence: AND `&&` is HIGHER than OR `||`
+
+``` js
+aa & bb || c && d;     // is read as:
+(a && b) || (c && d);  //
+```
+**Don't** replace `if` with `||` or `&&`.
+
+If statements are more obvious and more readable, so it is recommended to use every construct for its purpose:
+
+* `if` if we want `if`
+* `&&` if we want `AND`
+
+``` js
+let x = 1;
+(x > 0) && alert( 'Greater than zero!' ); // NOT RECOMMENDED
+if (x > 0) alert( 'Greater than zero!' ); // BETTER! RECOMMENDED.
+
+```
+
+### NOT `!`
+
+The boolean NOT operator `!` accepts a single argument & does the following:
+
+1. Converts the operand to a boolean: `true` / `false`
+2. Returns the *inverse* value
+
+``` js
+// syntax
+result = !value;
+
+// examples
+!true; // false
+!0;    // true
+```
+
+**Double NOT** `!!` is sometimes used for converting a value to a boolean type.
+
+``` js
+!!"non-empty string"; // true
+!!null; // false
+```
+
+### AND, OR, NOT Tasks
+
+``` js
+null || 2 || undefined;  // 2 (first truthy value)
+alert(1) || 2 || alert(3);  // alert pops up, doesn't return a value (undefined)
+                            // 2 is then returned (first truthy)
+null || 2 && 3 || 4;  // 2 && 3: returns 3 (all truthy, returns last truthy)
+                      // null || 3 || 4: returns 3 (first truthy)
+                      // && statements take precedence
+// if condition, age between 14-90, inclusively (can reach the edges of 14-90)
+if (age >= 14 && age <= 90) 
+// if condition, age NOT between 14-90, inclusively
+if (!(age >= 14 && age <= 90))
+if (age < 14 || age > 90)
+
+if (-1 || 0) alert( 'first' );
+// Runs: -1 || 0 = -1, truthy
+
+if (-1 && 0) alert( 'second' );
+// Doesn't run: -1 && 0 = 0, falsy
+
+if (null || -1 && 1) alert( 'third' );
+// Runs: && higher precedence, -1 && 1 executes first:
+// null || -1 && 1 ---> null || 1 ---> 1
+```
+
+[Check the login:](https://javascript.info/logical-operators)
+``` js
+let userName = prompt("Who's there?", "");
+
+if (userName == "Admin") {
+
+  let userPassword = prompt("Password?", "");
+  
+  if (userPassword == "TheMaster") {
+    alert("Welcome!");
+  } else if (userPassword == "" || userPassword == null) {
+    alert("Cancelled");
+  } else {
+    alert("Wrong password!"); 
+  } 
+
+} else if (userName == '' || userName == null ) {
+  alert("Cancelled");
+} else {
+  alert("I don't know you");
+}
+
+```
+
+
