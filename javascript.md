@@ -1204,6 +1204,28 @@ switch (new Date().getDay()) {
 }
 ```
 
+## True Vs False
+
+When testing boolean values, ie `true` or `false`, all values return true EXCEPT for the following:
+
+* `false`
+* `undefined`
+* `null`
+* `0`
+* `NaN`
+* `''` empty string
+
+``` js
+let cheese = 'Cheddar';
+if (cheese) { // true
+  "Time to eat!"
+}
+
+let uploadComplete = false;
+if (uploadComplete) { // don't need to specify `=== true` }
+```
+
+
 ## Logical Operators
 
 There are four logical operators in JavaScript:
@@ -1425,7 +1447,14 @@ if (userName == "Admin") {
 } else {
   alert("I don't know you");
 }
-
 ```
 
 
+### Ternary Operator
+
+The ternary *or conditional* operator is a bit of syntax that tests a condition and returns one value/expression if true & another if false. It takes up a lot less code than `if...else` block.
+
+```js
+( condtion ) ? run this code : run this code instead;
+let greeting = ( isBirthday ) ? 'Happy bday!'' : 'Good day.';
+```
