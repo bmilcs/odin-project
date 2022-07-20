@@ -332,12 +332,56 @@ JavaScript Minifiers & browsers optimize code well enough, so performance issues
 Using different variable names for different values can *help the engine optimize your code.*
 
 
+# Data Types
+
+In JavaScript, there are 8 basic data types.
+
+7 Primitive Types:
+- `number`
+- `bigint`
+- `string`
+- `boolean` 
+- `null`
+- `undefined`
+- `symbol`
+
+1 Non-primitive data type:
+- `object`
+
+`typeof x` or `typeof(x)` is used to see which type is stored in a variable.
+
+
 
 ## Numbers
 
-Numbers are the building blocks of programming logic. 
+Numbers are the building blocks of programming logic.  The *number type* represents both *integer* and *floating point* numbers.
 
+``` js
+let n = 123;
+n = 1.23;
+```
 
+**Special numeric values** 
+
+- `infinity`  Greater than any number
+- `-infinity` Less than any number
+- `NaN` Not a Number
+
+## BigInt
+
+The number type cannot go beyond 2<sup>53</sup>-1 or `9007199254740991`
+
+```js
+9007199254740991 + 1; // 9007199254740992
+9007199254740991 + 9; // 9007199254740992
+```
+
+`BigInt` numbers are rarely needed, but they can store much larger numbers. They are created by adding `n` to the end of a number.
+
+```js
+// the "n" at the end means it's a BigInt
+const bigInt = 1234567890123456789012345678901234567890n;
+```
 
 ### Arithmetic
 
@@ -796,11 +840,6 @@ let a = prompt("First number?", 1);   // +prompt()
 let b = prompt("Second number?", 2);  // +prompt()
 alert(a + b);                         // OR alert(+a + +b);
 ```
-
-
-
-# Data Types
-
 
 
 ## Strings
