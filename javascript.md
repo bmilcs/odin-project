@@ -1321,7 +1321,7 @@ When testing boolean values, ie `true` or `false`, all values return true EXCEPT
 * `null`
 * `0`
 * `NaN`
-* `''` empty string
+* `''` empty string 2 
 
 **Truthy Values**
 * *Everything* else
