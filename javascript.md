@@ -1596,3 +1596,26 @@ The ternary *or conditional* operator is a bit of syntax that tests a condition 
 ( condtion ) ? run this code : run this code instead;
 let greeting = ( isBirthday ) ? 'Happy bday!'' : 'Good day.';
 ```
+
+
+
+## Chrome DevTools
+
+To obtain the JS path of an HTML element in the DOM Tree, right click on it, **Copy > Copy JS Path**
+
+Example: `document.querySelector("#main-content > div.display-flex.gap-top-300.lg\\:gap-top-400 > div > article > div.stack.center-images.stack--block.type > ol:nth-child(63) > li:nth-child(2) > p > code:nth-child(1)")`
+
+To view the currently selected HTML element on the **Console** tab, hit `esc` and type `$0`.
+
+**Logging Messages**
+
+Web developers log messages for 2 main reasons:
+
+- Making sure code is executing in the *right order*
+- Inspecting *values of variables* at a certain moment in time
+
+**Debugging**
+
+`debug(javascriptFunction)` will pause code on the first line of `javascriptFunction` the next time that it's called.
+
+ie: `debug(hideModal)`
