@@ -337,18 +337,21 @@ Using different variable names for different values can *help the engine optimiz
 In JavaScript, there are 8 basic data types.
 
 7 Primitive Types:
-- `number`
-- `bigint`
-- `string`
-- `boolean` 
-- `null`
-- `undefined`
-- `symbol`
+- `number` number or floating point
+- `bigint` integer number of arbitrary length
+- `string` zero or more characters
+- `boolean` true, false
+- `null` unknown values, only value: `null`
+- `undefined` unassigned value, only value: `undefined`
+- `symbol` unique idenitifers
 
 1 Non-primitive data type:
-- `object`
+- `object` complex data structures
+
+**Typeof operator**
 
 `typeof x` or `typeof(x)` is used to see which type is stored in a variable.
+
 
 
 
@@ -907,7 +910,7 @@ const output = 'I like the song.\nI gave it a score of 90%.';
 // I gave it a score of 90%.
 ```
 
-## String Methods & Properties
+### String Methods & Properties
 
 * A **method** is a bit of functionality that is built into the language or into specific data types.
 * [List](https://www.w3schools.com/jsref/jsref_obj_string.asp)
@@ -921,7 +924,7 @@ let txt = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let length = txt.length;  // 26
 ```
 
-### Extracting Parts of a String
+#### Extracting Parts of a String
 
 Three methods exist for extracting part of a string:
 1. `slice(start, end)`
@@ -973,7 +976,7 @@ let part = str.substr(7);  // Banana, Kiwi
 let part = str.substr(-4);  // Kiwi
 ```
 
-### Replacing String Content
+#### Replacing String Content
 
 `replace()` method replaces a value with another value in a string.
 
@@ -996,7 +999,7 @@ let text = "Hi Hi Hi";
 let newText = text.replace(/Hi/g, "Hey"); // Hey Hey Hey
 ```
 
-### Converting to Upper/Lower Case
+#### Converting to Upper/Lower Case
 
 To change the case of a string, use `.toUpperCase()` and `.toLowerCase()` methods.
 
@@ -1006,7 +1009,7 @@ let text2 = text.toUpperCase(); // HELLO WORLD
 let text3 = text.toLowerCase(); // hello world
 ```
 
-### Concatenation Method
+#### Concatenation Method
 
 Concatenation of strings can be performed with the `concat()` method.
 
@@ -1018,7 +1021,7 @@ let text3 = text1.concat(" ", text2); // Hello World
 let text3 = text1 + " " + text2;  // Hello World
 ```
 
-### Trim Whitespace
+#### Trim Whitespace
 
 Use `.trim()` to remove whitespace from both sides of a string.
 
@@ -1042,7 +1045,7 @@ let string = number.toString();
 let padded = string.padStart(4, "0"); // 400
 ```
 
-### Return character or unicode character at given position in string
+#### Return character or unicode character at given position in string
 
 `charAt()` method returns character at a specified index.
 `charCodeAt()` method returns the unicode character at a specified index.
@@ -1053,7 +1056,7 @@ let char = text.charAt(0);  // H
 let char = text.charCodeAt(0);  // 72
 ```
 
-### Converting Strings to Arrays
+#### Converting Strings to Arrays
 
 `split()` method converts strings to arrays. 
 
@@ -1066,9 +1069,7 @@ const myArray = text.split(",");
 ```
 
 
-## Comparison
-
-**Comparison of strings**
+### Comparison (Strings)
 
 To see whether a string is greater than another, JavaScript uses the so-called *dictionary* or *lexicographical* order.
 
@@ -1308,10 +1309,13 @@ switch (month) {
 
 
 
-## True Vs False
+## Boolean (logical type) aka True/False
+
+Boolean type only has 2 values: `true` `false`.
 
 When testing boolean values, ie `true` or `false`, all values return true EXCEPT for the following:
 
+**Falsy Values**
 * `false`
 * `undefined`
 * `null`
@@ -1319,6 +1323,9 @@ When testing boolean values, ie `true` or `false`, all values return true EXCEPT
 * `NaN`
 * `''` empty string
 
+**Truthy Values**
+* *Everything* else
+  
 ``` js
 let cheese = 'Cheddar';
 if (cheese) { // true
@@ -1329,6 +1336,33 @@ let uploadComplete = false;
 if (uploadComplete) { // don't need to specify `=== true` }
 ```
 
+
+## Null Value
+
+The special `null` value is a type of it's own which *only* contains the `null` value.
+
+It simply represents **nothing**, **empty**, or **value unknown**.
+
+## Undefined value
+
+Like `null`, `undefined` stands apart as it's own type.
+
+It means **value is not assigned.** When a variable is declared without a value, it returns `undefined`.
+
+In other words, it is the **default value for unassigned things.**
+
+``` js
+let age;
+alert(age); // shows "undefined"
+```
+
+## Object Type
+
+`object` type is special. It is the only non-primitive data type because they are used to *store collections of data & more complex entities.*
+
+## Symbol Type
+
+`symbol` type is used to *create unique identifiers* for `object`.
 
 ## Logical Operators
 
