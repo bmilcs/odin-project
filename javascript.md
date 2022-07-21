@@ -436,10 +436,6 @@ alert( y - x ) // 2, binary - operator subtracts values
 ```
 
 
-
-
-
-
 ```js
 let x = 5;
 let y = 3;
@@ -450,8 +446,6 @@ let z = x * y;  // Multiplication
 let z = x / y;  // Division, produces quotient & remainder
 let z = x % y;  // Modulus, produces remainder in division
 ```
-
-
 
 
 **Incrementing** & **Decrementing**
@@ -485,8 +479,6 @@ counter;               // 2
 ```
 
 
-
-
 **Exponentiation**
 
 Exponentiation operator `**` *raises the first operand to the power of the second operand.*
@@ -497,8 +489,6 @@ let z = x ** 2;         // 5^2 = 25
 // OR
 let z = Math.pow(x,2)   // 5^2 = 25
 ```
-
-
 
 
 **Operator Precedence** (Order of operations)
@@ -630,7 +620,6 @@ let y = 20;
 let z = "30";
 let result = x + y + z; // 3030
 let result = x + y + Number(z) // 60
-
                         // Integer + Integer = 30, Integer + String = Concatenation 3030
 ```
 
@@ -654,7 +643,6 @@ let x = "5"; // string
 +true;  // 1 
 +"";    // 0
 ```
-
 
 
 
@@ -1603,7 +1591,7 @@ let greeting = ( isBirthday ) ? 'Happy bday!'' : 'Good day.';
 
 To obtain the JS path of an HTML element in the DOM Tree, right click on it, **Copy > Copy JS Path**
 
-Example: `document.querySelector("#main-content > div.display-flex.gap-top-300.lg\\:gap-top-400 > div > article > div.stack.center-images.stack--block.type > ol:nth-child(63) > li:nth-child(2) > p > code:nth-child(1)")`
+Example: `document.querySelector("#main-content > div.display-flex.gap-top-300.lg\\:gap-top-400 > div > article > div.stack.center-images.stzazck--block.type > ol:nth-child(63) > li:nth-child(2) > p > code:nth-child(1)")`
 
 To view the currently selected HTML element on the **Console** tab, hit `esc` and type `$0`.
 
@@ -1619,3 +1607,167 @@ Web developers log messages for 2 main reasons:
 `debug(javascriptFunction)` will pause code on the first line of `javascriptFunction` the next time that it's called.
 
 ie: `debug(hideModal)`
+
+
+
+## Functions
+
+Anytime you see `()`, a pair of parentheses, and you're not using a loop or if/else statement, you're making use of a function.
+
+
+Executing a function is also known as **invoking a function**.
+
+``` js
+function myFunction() {
+  alert('hello');
+}
+
+myFunction(); // INVOKE or call function once
+```
+
+### Function Parameters
+
+Some functions require *perameters* or values that need to be included inside the `()` parentheses, in order to do it's job properly.
+
+``` js
+// replace function parameters: string, string
+string.replace("hi", "hello")
+```
+
+Not all parameters are required. Some are optional.
+
+Default parameters can be specified by using `=`.
+
+``` js
+function hello(name='Bryan') {
+  console.log(`Hey ${name}`);
+}
+
+hello('Dave');  // Hey Dave
+hello();        // Hey Bryan
+```
+
+
+
+### Anonymous Functions
+
+``` js
+function() {
+  alert('hello');
+}
+```
+
+You can create functions *without a name*. Anonymous functions are used when another function expects a function as a parameter, in order to reduce the number of lines of code.
+
+``` js
+function logKey(event) {
+  console.log(`You pressed "${event.key}".`);
+}
+textBox.addEventListener('keydown', logKey);
+
+// Instead of defining logKey(), you can use an anonymous function:
+textBox.addEventListener('keydown', function(event)
+{
+  console.log(`You pressed "${event.key}"`);
+});
+```
+
+### Arrow Functions
+
+Another form of an anonymous function is called the *arrow function*.
+
+Instead of typing `function(event)`, you use `(event) =>`.
+
+Arrow functions are recommended because they make your code:
+
+- more readable
+- shorter
+
+```js
+textBox.addEventListener('keydown', (event) => {
+  console.log(`You pressed "${event.key}".`);
+});
+```
+
+If the function contains a single line, you can skip the `{}`
+```js
+textBox.addEventListener('keydown', (event) => 
+console.log(`You pressed "${event.key}".`));
+```
+
+If the function only takes one parameter, you can skip the `()` around it
+```js
+textBox.addEventListener('keydown', event => 
+console.log(`You pressed "${event.key}".`));
+```
+
+If function needs to return a value, and only contains one line, you can omit the `return` statement.
+```js
+const doubled = originals.map(item => item *2);
+
+// item => item * 2 is equivalent to:
+function doubleItem(item) {
+  return item * 2;
+}
+```
+
+Arrow function live example
+``` html
+<!-- html -->
+<input id="textBox" type="text"></input>
+<div id="output"></div>
+```
+
+``` js
+const textBox = document.querySelector("#textBox");
+const output = document.querySelector("#output");
+
+textBox.addEventListener('keydown', event => output.textContent = `You pressed "${event.key}".`);
+```
+
+
+### Built-in Browser Functions
+
+Array manipulation: `myArray.join(' ')`
+
+Generate random numbers: `Math.random()`
+
+
+### Function Scope & Conflicts
+
+When you create a function, the variables and other things defined within that function are inside their own separate **scope**.
+
+They are locked away in their own compartments and unreachable from code outside the functions.
+
+Top level, outside of your functions, is called the **global scope**.
+
+JavaScript is setup like this for 2 main reasons:
+- Security
+- Organization
+
+
+### Return Values
+
+A function can return a value back into the calling code using `return`.
+
+``` js
+function sum(a, b) {
+  return a + b;
+}
+
+let result = sum(1, 2);
+alert( result ); // 3
+```
+
+You can `return` without a value, which causes the function to exit immediately.
+
+```js
+function showMovie(age) {
+  if ( !checkAge(age) ) {
+    return;
+  }
+
+  alert( "Showing you the movie" ); // (*)
+  // ...
+}
+```
