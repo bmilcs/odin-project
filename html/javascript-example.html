@@ -36,19 +36,36 @@
     // const BIRTHDAY = '18.04.1982';
     // const age = someCode(BIRTHDAY);
 
-    // Assignment: https://www.theodinproject.com/lessons/foundations-fundamentals-part-1
-    console.log("1. Add 23+97: " + (23 + 97));
-    console.log("2. Add sequence of 6 #'s: " + (33 + 1 + 2 + 15 + 11 + 4));
-    console.log("3. Print the solution of (4+6+9)/77 - should be 0.24675: " + ((4 + 6 + 9) / 77).toFixed(5))
-    let a = 10;
-    let b = 7 * a;
-    console.log("4. Print var a (should be 10): " + a);
-    console.log("4. 9 * a (should be 90): " + (9 * a));
-    console.log("4. var b: " + b);
-    const max = 57;
-    let actual = max - 13;
-    let percentage = actual / max;
-    console.log("5. Should see 0.7719: " + percentage.toFixed(4));
+    // // Assignment: https://www.theodinproject.com/lessons/foundations-fundamentals-part-1
+    // console.log("1. Add 23+97: " + (23 + 97));
+    // console.log("2. Add sequence of 6 #'s: " + (33 + 1 + 2 + 15 + 11 + 4));
+    // console.log("3. Print the solution of (4+6+9)/77 - should be 0.24675: " + ((4 + 6 + 9) / 77).toFixed(5))
+    // let a = 10;
+    // let b = 7 * a;
+    // console.log("4. Print var a (should be 10): " + a);
+    // console.log("4. 9 * a (should be 90): " + (9 * a));
+    // console.log("4. var b: " + b);
+    // const max = 57;
+    // let actual = max - 13;
+    // let percentage = actual / max;
+    // console.log("5. Should see 0.7719: " + percentage.toFixed(4));
+
+
+    // Assignment https://javascript.info/function-basics
+    // function min(a, b) {
+    //   return a < b ? a : b;
+    // }
+
+    let num1 = prompt("Number 1");
+    let num2 = prompt("Number 2");
+
+    // console.log(`Between ${num1} and ${num2}, the smallest # is ${min(num1, num2)}`);
+
+    function pow(x, n) {
+      return Math.pow(x, n);
+    }
+
+    console.log(`${num1} to the power of ${num2} is ${pow(num1, num2)}`);
 
 
   </script>

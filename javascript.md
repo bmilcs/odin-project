@@ -1761,6 +1761,8 @@ alert( result ); // 3
 
 You can `return` without a value, which causes the function to exit immediately.
 
+`return;` returns `undefined`, or no value.
+
 ```js
 function showMovie(age) {
   if ( !checkAge(age) ) {
@@ -1770,4 +1772,64 @@ function showMovie(age) {
   alert( "Showing you the movie" ); // (*)
   // ...
 }
+```
+
+### Function Naming
+
+Functions are *actions* and their name is usually a *verb*. Naming should be
+
+- Brief
+- Accurate as possible
+- Describe what the function does
+
+Common verbs used:
+
+- `get...` - return a value
+- `calc...` - calculate something
+- `create...` create something
+- `check...` check something, return a boolean
+
+One function, one action. It should do exactly what's suggested by it's name, **no more**.
+
+Two independent actions deserve two functions. Examples of what *not to do*:
+
+- `getAge` shouldn't `alert` the result. It should only get.
+- `createForm` shouldn't modify the document. It should only create & return.
+- `checkPermission` shouldn't display `access granted/denied`. it should only perform the check & return the result.
+
+**Functions == Comments**
+
+Separate functions are easier to test & debug, and their existence is a great comment.
+
+```js
+// BAD
+function showPrimes(n) {
+  nextPrime: for (let i = 2; i < n; i++) {
+
+    for (let j = 2; j < i; j++) {
+      if (i % j == 0) continue nextPrime;
+    }
+
+    alert( i ); // a prime
+  }
+}
+
+// GOOD 
+function showPrimes(n) {
+
+  for (let i = 2; i < n; i++) {
+    if (!isPrime(i)) continue;
+
+    alert(i);  // a prime
+  }
+}
+
+function isPrime(n) {
+  for (let i = 2; i < n; i++) {
+    if ( n % i == 0) return false;
+  }
+  return true;
+}
+
+
 ```
