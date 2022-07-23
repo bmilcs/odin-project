@@ -2172,3 +2172,95 @@ Consider a basic password loop
 
 Use a compound condition
 - ( tries >=3 ) and guess !=correct
+
+
+## Understanding Errors
+
+Error messages may appear scary but they provide developers with a treasure trove of knowledge and tell you everything you need to know to resolve them.
+
+Being able to parse errors and warnings without fear will enable you to:
+
+- Effectively debug applications
+- Receive meaningful help from others
+- Empower yourself to push forward when faced with an error
+
+### Anatomy of an Error
+
+An error is a type of object built into JS and consists of a **name/type** and **message**.
+
+Example:
+
+```js
+const a = "Hello"
+const b = "World"
+
+console.log(c)
+```
+
+This code will run but it will generate an error.
+
+This is called **throwing** an error.
+
+`Uncaught ReferenceError: c is not defined at script.js:4`
+
+A `ReferenceError` is thrown when one refers to a variable that is **not declared and/or initialized**. 
+
+`ReferenceError` can be caused by many things. ie: `ReferenceError: can't access lexical declaration 'X' before initialization`
+
+The next part of the error tells you where to find the error: `script.js` file and `4` line number. Clicking on the error will navigate to that line of code in the Developer Tools.
+
+**Stack trace** is another important part of an error. It helps you understand **when an error was thrown** and **what functions were called** that led up to that error.
+
+``` js
+const a = 5;
+const b = 10;
+
+function add() {
+  return c;
+}
+
+function print() {
+  add();
+}
+
+print();
+```
+
+Error:
+
+`Uncaught ReferenceError: c is not defined`
+`at add (script.js:5)`
+`at print (script.js:9)`
+`at script.js:12`
+
+This stack trace tells us that:
+
+1. `c is not defined` in scope of `add()`, which is declared on line 5.
+2. `add()` was called by `print()`, which is declared on line 9.
+3. `print()` itself was called on line 12.
+
+### Common Types of Errors
+
+**Syntax Errors** occur when code is not written correctly, in accordance with grammatical rules of JS.
+
+ie: `console.log "Hello world!";`
+
+Error: `Uncaught SyntaxError: Invalid or unexpected token`
+
+**Reference Error** occur when variables you're trying to reference does not exist, within the current scope, or has been spelled incorrectly.
+
+**Type Errors** are thrown for several reasons:
+
+- An operand or error passed to a function is incompatible with the type expected by that operator/function.
+- When attempting to modify a value that can't be changed
+- When attempting to use a value in an inappropriate way
+
+``` js
+const str1 = "Hello";
+const str2 = "World!";
+const message = str1.push(str2);
+```
+
+Error: `Uncaught TypeError: str1.push is not a function`
+
+`.push()` is a function for arrays, but *not for strings*. 
