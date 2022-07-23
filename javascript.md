@@ -1945,3 +1945,230 @@ let sum = function(a,b) {
   return a + b;
 };
 ```
+
+
+
+## Problem Solving
+
+There are three steps to the problem solving process.
+
+### Understanding the Problem
+
+To gain clarity & understanding the problem
+
+- Write it down on paper
+- Reword it in plain english until it makes sense to you
+- Draw diagrams
+
+When you can explain the problem in plain english, you understand it.
+
+### Plan
+
+Before jumping into coding a solution to your problem, you need to create a plan to solve it. Some questions that you need to answer at this stage are:
+
+- Does your program have an interface?
+- What does it look like? 
+- What functionality will the interface have?
+- Sketch it out on paper
+- What inputs will your program have?
+- Will the user enter data or will you get input from somewhere else?
+- What's the desired output?
+- Given your inputs, what are the steps necessary to return the desired output?
+
+### Pseudocode
+
+Pseudocode is writing out the logic for your program in natural language instead of code. It helps you slow down & think through the steps to take to solve the problem.
+
+Example of pseudocode
+```
+When the user inputs a number
+Initialize a counter variable & set it to 0
+While counter is smaller than user inputted number increment counter by 1
+Print the value of the counter variable
+```
+
+Programmers have a great tool to help with this --- **COMMENTS**!
+
+### Divide & Conquer
+
+From your planning you should have identified some **sub-problems** of the big problem you're solving. Each step in pseudocode algorithm above are sub-problems.
+
+Beginners often start on the **big problem.** **DO NOT DO THIS.** If the problem is complex, you'll get tied in knots and make life harder on yourself.
+
+Instead, decompose the problem into smaller and easier to solve sub-problems. **Decomposition** is the main way to deal with complexity, making problems *easier* and *more approachable* to solve and understand.
+
+Then, solve each sub-problem one by one. 
+
+- Begin with the simplest sub-problem: means you know the answer, or are closer to that answer.
+- After that, simplest means *this sub-problem doesn't depend on others being solved.*
+- Once all sub-problems are solved, connect the dots.
+- Connecting all *sub-solutions* will give you the solution to the main problem.
+
+### Getting suck
+
+What if  I can't solve a sub-problem?
+
+- Take a deep breath. 
+- It happens to everyone.
+
+The best programmers & problem-solvers are more curious about bugs and errors than irritated.
+
+Three steps to try when you're stuck:
+
+1. Debug: Go step by step through your solution, trying to find where you went wrong. 
+2. Reassess: Take a step back. Look at the problem from another perspective. 
+   1. Another way is starting anew. Delete everything & begin with fresh eyes.
+3. Research: Google. No matter what problem you have, someone has probably solved it. 
+   1. After solving a problem, do this anyway. You can learn a lot from other people's solutions.
+
+**Don't look for a solution to the big problem.** Only look for solutions to sub-problems. 
+
+Unless you struggle, you won't learn anything.
+
+
+
+### For Loop Example
+
+``` js
+let answer = parseInt(prompt("Please enter the number you would like to FizzBuzz up to: "));
+
+for (let i = 1; i <= answer; i++) {
+  console.log(i);
+}
+```
+
+- Declare var  `i` and assign initial value to `1`
+- `i <= answer` is our condition.
+  - Loop until i is *greater than* answer
+- `i++` means increment `i` +1 every iteration
+  
+### How to begin thinking like a programmer
+
+### **Comments are code**
+
+- Comments explain code to other programmers or your later self.
+- NO!
+- Code explains the comments to the computer
+
+### New variable
+
+**Name:** what do we call this thing?
+**Type:** what type of data does it contain
+**InitVal:** what is it's starting value?
+Scope: when functions are involved
+
+**New Variable algorithm**
+
+Create a variable called **name** of type **type** that starts with the value **initVal**.
+
+### Output
+
+**Message:** Text to write to user
+
+**Output Algorithm**
+
+Output the text **message**.
+
+### Input
+
+**Variable:** where answer from user will be stored
+**Message:** question being asked of the user
+
+It shouldn't be the first line of your algorithm. 
+
+**Input Algorithm**
+
+Ask the user **message** and store the answer in **variable**.
+
+### Example
+
+Ask the user for two numbers & add them. (Algorithm only)
+
+First Try:
+```
+Create an integer variable for x
+Create an integer variable for y
+create an integer variable for sum
+ask the user "X: " and put answer in x
+ask the user "Y: " and put answer in y
+put + y in sum
+tell user "answer is " sum
+```
+
+Convert to comments:
+``` js
+// Create an integer variable for x
+// Create an integer variable for y
+// create an integer variable for sum
+// ask the user "X: " and put answer in x
+// ask the user "Y: " and put answer in y
+// put + y in sum
+// tell user "answer is " sum
+```
+
+Flesh out the comments:
+``` js
+// Create an integer variable for x
+let x;
+// Create an integer variable for y
+let y;
+// create an integer variable for sum
+let sum;
+// ask the user "X: " and put answer in x
+let x = prompt("x: ");
+// ask the user "Y: " and put answer in y
+let y = prompt("y: ");
+// put + y in sum
+sum = x + y;
+// tell user "answer is " sum
+console.log(`sum: ${um}`);
+```
+**Failure is wonderful!**
+
+- It's a normal part of programming
+- Failures are opportunities to **grow**
+- Begin debugging now
+- Did you tell it to do incorrectly?
+  - Or did you tell it to do the **wrong thing**?
+- Most beginners assume it's an implementation problem
+- Usually it's really an algorithm problem
+
+**How to Debug**
+- The best way to debug is to *not have bugs*
+- Bad implementation can be googled
+- Bad algorithms usually cannot
+- What are you not understanding?
+- What tools can you use?
+- DON'T start with a solution
+- You're most likely assuming something that isn't true
+
+``` js
+// Convert to integer code
+sum = +x + +y;
+```
+
+### For Loops
+
+- **Sentry**: integer variable that will control loop
+- **Start**: integer value of sentry at beginning
+- **Finish**: Integer value at end
+- **Change**: Integer to add to sentry at each pass
+
+**For Loop Algorithm**
+Begin with **sentry** at **start** and add **change** to sentry on each pass until **sentry** is larger than or equal to finish.
+
+### Wile Loop
+
+While loops only require a condition.
+
+Good logic requires much more. This is why while loops can be such notorious problems for beginners.
+
+### Multiple Exits
+
+Consider a basic password loop
+
+- It exits with positive result if the user chooses the right password
+- It exits with a negative result if the user is wrong three times.
+
+Use a compound condition
+- ( tries >=3 ) and guess !=correct
