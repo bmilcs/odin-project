@@ -1830,6 +1830,118 @@ function isPrime(n) {
   }
   return true;
 }
+```
+
+### Function Expressions
+
+Function declaration is one way of creating a function:
+```js
+function sayHi() {
+  alert("Hello");
+}
+```
+
+A second syntax for creating a function is called a *Function Expression*. It allows you to create a new function in the *middle of any expression*.
+
+``` js
+let sayHi = function() {
+  alert("Hello");
+};
+```
+
+### Function is a value
+
+No matter how a functions created, it is a *value*.
+
+```js
+function sayHi() {
+  alert( "Hello" );
+}
+
+alert( sayHi ); // shows the function code
+```
+
+Mentioning a function without parentheses does *not* cause it to execute.
+
+Because it's a *value*, we can work with it like other values. We can copy a function to another variable:
+
+```js
+function sayHi() {    // creates a function, storing it in the variable sayHi
+  alert("Hi");
+}
+
+let func = sayHi; // without (), it copies the function itself to func and doesn't invoke it.
+
+func();   // "Hi" alert
+sayHi();  // "Hi" alert
+```
 
 
+### Callback Functions
+
+`ask(question, yes, no)` has three parameters:
+
+`question` text of question
+`yes` function to run if yes
+`no` function to run if no
+
+In the example below, `showOk` and `showCancel` are called **callbacks** OR **callback functions**.
+
+``` js
+function ask(question, yes, no) {
+  if (confirm(question)) yes()
+  else no();
+}
+
+function showOkay() {
+  alert('agreed');
+}
+
+function showCancel() {
+  alert('cancelled');
+}
+
+// Functions showOk and showCancel are passed as parameters
+ask("Do you agree?", showOk, showCancel);
+```
+
+Using Function Expressions, the above code can be condensed to:
+
+``` js
+function ask(question, yes, no) {
+  if (confirm(question)) yes()
+  else no();
+}
+
+ask(
+  "Do you agree?",
+  function() { alert('agreed'); },    // anonymous function
+  function() { alert('cancelled'); }  // anonymous function
+);
+```
+
+### Function Expressions vs Function Declarations
+
+Function Declarations: a function, declared as a separate statement, in the main code flow.
+
+Function Declarations can be called **earlier than it is defined**.
+
+Why? JS looks for *global functions* before running the script and creates them, during the *initialization phase*.
+
+```js
+// Function Declaration
+function sum(a,b) {
+  return a + b;
+}
+```
+
+Function Expression: a function, created inside an expression or inside another syntax construct.
+
+Function Expressions are created when the **execution reaches it and is usable only from that moment**.
+
+``` js
+// Function expression
+let sum = function(a,b) {
+  return a + b;
+};
 ```

@@ -56,17 +56,45 @@
     //   return a < b ? a : b;
     // }
 
-    let num1 = prompt("Number 1");
-    let num2 = prompt("Number 2");
+    // let num1 = prompt("Number 1");
+    // let num2 = prompt("Number 2");
 
-    // console.log(`Between ${num1} and ${num2}, the smallest # is ${min(num1, num2)}`);
+    // // console.log(`Between ${num1} and ${num2}, the smallest # is ${min(num1, num2)}`);
 
-    function pow(x, n) {
-      return Math.pow(x, n);
+    // function pow(x, n) {
+    //   return Math.pow(x, n);
+    // }
+
+    // console.log(`${num1} to the power of ${num2} is ${pow(num1, num2)}`);
+
+    // Assignment https://www.theodinproject.com/lessons/foundations-fundamentals-part-3
+
+    function add7(number) {
+      return number + 7;
     }
 
-    console.log(`${num1} to the power of ${num2} is ${pow(num1, num2)}`);
+    function multiply(number1, number2) {
+      return number1 * number2;
+    }
 
+    function capitalize(string) {
+      let titleCase = string.toLowerCase();
+      let firstLetter = titleCase.charAt();
+      // console.log(`titleCase: ${titleCase}, firstLetter: ${firstLetter}`)
+      return titleCase.replace(/^./, firstLetter.toUpperCase());
+    }
+
+    let stringy = prompt("String?");
+
+    console.log(`Title Case: ${capitalize(stringy)}`)
+
+    // function lastLetter(string) {
+    //   return string.slice(-1);
+    // }
+
+    let lastLetter = (string) => string.slice(-1);
+
+    console.log(`Last letter: ${lastLetter(stringy)}`);
 
   </script>
 </body>
