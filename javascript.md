@@ -2287,6 +2287,23 @@ Node.JS is a JavaScript runtime environment. It allows you to run JavaScript *ou
 
 `npm` Node Package Manager installs various libraries and tools used in JavaScript environments.
 
+Installation:
+
+``` sh
+# install nvm
+sudo apt install curl
+sudo apt update && sudo apt upgrade
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+
+# initialize nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# install node
+nvm install --lts # install long term support
+nvm use --lts
+```
+
 ## Using Node console
 
 To run Node console, run `node` in your terminal. To exit, type `.exit`.
