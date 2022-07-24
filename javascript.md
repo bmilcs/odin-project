@@ -2255,6 +2255,8 @@ Error: `Uncaught SyntaxError: Invalid or unexpected token`
 - When attempting to modify a value that can't be changed
 - When attempting to use a value in an inappropriate way
 
+Pro tip: **TypeError** = Check your data type!
+
 ``` js
 const str1 = "Hello";
 const str2 = "World!";
@@ -2264,3 +2266,38 @@ const message = str1.push(str2);
 Error: `Uncaught TypeError: str1.push is not a function`
 
 `.push()` is a function for arrays, but *not for strings*. 
+
+### Console Methods
+
+Console has other useful methods - not just `console.log()`.
+
+`console.table()` can display the data in a table format. 
+
+```js
+// console.table syntax
+console.table(tabledata, tablecolumns)
+// tabledata: The data to fill the table with.
+// tablecolumns: OPTIONAL: An array with the names of the table columns.
+
+console.table(["Audi", "Volvo", "Ford"]);
+console.table({firstname:"John", lastname:"Doe"});
+
+// Example
+const car1 = {name:"Audi", model:"A4"}
+const car2 = {name:"Volvo", model:"XC90"}
+const car3 = {name:"Ford", model:"Fusion"}
+
+console.table([car1, car2, car3]);  // print every value in table
+console.table([car1, car2, car3], ["model"]); // only print the model column in table
+```
+
+`console.trace()` method displays a trace that show how the code ended up at a certain point.
+
+### Errors vs Warnings
+
+Errors *stop* execution of your program and prevent further action.
+
+Warnings provide you insight on *potential problems* that *may not crash* your program at runtime or at all.
+
+[MDN's JavaScript Error Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors)
+
