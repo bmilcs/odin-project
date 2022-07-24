@@ -2301,3 +2301,103 @@ Warnings provide you insight on *potential problems* that *may not crash* your p
 
 [MDN's JavaScript Error Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors)
 
+# Clean Code
+
+## [Rules of thumb for writing *clean code*:](https://onextrapixel.com/10-principles-for-keeping-your-programming-code-clean/)
+
+- Indentation: Consistency is what matters.
+- Semi-colons: Just use them.
+- Naming Things: Be descriptive.
+  - Single characters are *okay* to use in the context of a **loop** or **callback function**. Otherwise:
+  - Variables: Begin with `noun` or `adjective`
+  - Functions: Begin with `verb`
+- Line length: 80 Characters. Be consistent.
+
+```js 
+// One possible format
+let reallyReallyLongLine =
+  something +
+  somethingElse +
+  anotherThing +
+  howManyTacos +
+  oneMoreReallyLongThing;
+
+// Another possible format
+let anotherReallyReallyLongLine = something + somethingElse + anotherThing +
+                                  howManyTacos + oneMoreReallyLongThing;
+```
+
+**Tips:**
+
+- Revise Your Logic Before Coding:   **flow diagrams** or **written pseudo-code**.
+- Clearly Expose the Structure of the Page: 
+    ```js <div id="main-container">
+        <div id="header">
+            <div id="logo">...</div>
+            <div id="main-menu">...</div>
+        </div>
+        <div id="content">
+            <div id="left-column">...</div>
+            <div id="center-column">...</div>
+            <div id="right-column">...</div>
+        </div>
+        <div id="footer">
+            <div id="footer-menu">...</div>
+            <div id="disclaimer">...</div>
+        </div>
+    </dv> 
+    ```
+- Use the correct **indentation**
+- Write explanatory comments
+  - Avoid **abusing comments**:
+    - Writing explanatory notes to self `/* Will finish this later… */`
+    - Blaming stuff on other people `/* John coded this. Ask him. *`
+    - Writing vague statements `/* This is another math function. */`
+    - **Erasing chunks of code**. Comment it out instead.
+  - Good Comments:
+    - Authoring `/* Coded by Bryan Miller, July 24, 2022*/`
+    - Details on functionality of method/procedure `/* This function validates the login form with the aid of the e-mail check function */`
+    - Quick notifications/labels that state where a change was made: `/* Added e-mail validation procedure */`
+- Avoid XL Functions
+  - Break up functions into smaller ones
+  - Teams can make better use of those repeated procedures through separate functions
+- Use naming standards for functions & variables
+- Treat Changes with Caution
+  - ie: Commenting out code instead of deleting it
+  - Be aware of not meddling with previous efforts for maintaining clean & ordered code.
+  - Maintain indentation, commenting on modifications made or broadening existing comments
+  - Respecting standards in use
+- Avoid mixing of code languages (embedded style property in HTML)
+- Summarize your imports
+  - Don't abuse multiple files for different coding languages
+  - If there are too many files, combine them into one or two
+  - Saves space, makes it look cleaner, saves on loading time & efficiency
+    - **Each imported file is an HTTP request** that affects performance
+
+
+## [Code Tells You How, Comments Tell You Why](https://blog.codinghorror.com/code-tells-you-how-comments-tell-you-why/)
+
+"Programs **must be written for people to read**, and only **incidentally** for **machines to execute**."
+
+Concentrate on explaining to human beings what we want a computer to do --- *not instructing a computer what to do*.
+
+If you write your code *to be consumed by other programmers first*, and by the compiler second, you may find the need for additional **comments** to be **greatly reduced**.
+
+Sometimes **fewer** comments makes code **more readable**.
+
+However, no matter how simple, concise and clear your code may end up being, it's **impossible for code to be completely self-documenting.**
+
+**Comments can never be replaced by code alone:**
+
+**Code can't explain**:
+-  WHY the program is being written
+-  REASON for choosing this or that method
+-  REASON why alternative approaches were taken.
+
+Something that is **common sense** to you may be confusing to another developer without any context.
+
+``` perl
+// You may very well know that
+$string = join('',reverse(split('',$string)));
+// How hard is it to add "# Reverse the string" into your code?
+```
