@@ -2704,4 +2704,290 @@ document.getElementById("demo").innerHTML = fruits.toString();  // Verbose metho
 document.getElementById("demo").innerHTML = fruits; // AUTOMATIC version
 ```
 
+# Loops
+
+Loops are used to make a computer do a repetitive task.
+
+## For ... Of Loop
+
+The basic tool for looping through a collection is the `for ... of` loop.
+
+``` js
+const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+
+
+for (const cat of cats) { // get 1st item in `cats`, assign it to `cat`
+  console.log(cat);       // run the code { } & repeat until end of collection
+}
+```
+
+## Map() & Filter()
+
+These are specialized loops.
+
+`map()` is used to **do something** to every item in a collection and then **create a new collection** with the changed items.
+
+``` js
+const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+
+const upperCats = cats.map(toUpper);  // perform function to every item in cats
+                                      // create new array in upperCats
+
+upperCats; // [ "LEOPARD", "SERVAL", "JAGUAR", "TIGER", "CARACAL", "LION" ]
+
+function toUpper(string) {
+  return string.toUpperCase();
+}
+```
+
+`filter()` is used to **test each item** in a collection and **create a new collection** containing ONLY matching items.
+
+``` js
+const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+
+const filtered = cats.filter(lCat); // test each item with lCat function
+                                    // store matches in filtered
+function lCat(cat) {
+  return cat.startsWith('L'); // boolean: if true, return item
+}
+
+filtered; // [ "Leopard", "Lion" ]
+```
+
+`filter()` and `map()` are often used with **function expressions**:
+
+``` js
+const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+
+//                            parameter of function
+const filtered = cats.filter((cat) => cat.startsWith('L'));
+//                                    code within function
+
+filtered; // [ "Leopard", "Lion" ]
+```
+
+## Standard For Loop
+
+``` js
+for (initializer; condition; final-expression) {
+  // code to run
+}
+```
+- **Initializer** variable to set a number, to be incremented (counter)
+- **Condition** when loop should **stop**. (comparison operator)
+- **Final Expression** evaluated during each run. (increment the variable)
+
+``` js
+for (let i = 1; i < 10; i++)
+{
+  i;  // current value of counter
+}
+```
+- `let i = 1` is the counter variable, starting at 1.
+- `i < 10` keep looping as long as i is less than 10
+- `i++` add 1 to loop each time round the loop
+
+**Looping Through Collections**
+
+``` js
+const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+
+// For...Of loop example
+for (const cat of cats) {
+  console.log(cat);
+}
+
+// *** Standard For Loop ***
+for (let i = 0; i < cats.length; i++) {
+  // First Run: i = 0
+  console.log(cats[i]);
+} // End of 1st Loop, execute this ^
+```
+
+`for...of` didn't exist in the early versions of JavaScript, so the For Loop was the standard way to iterate through an array. 
+
+However, it *increases the chances of bugs* into your code./
+
+**It's BEST to use `for...of` when you can!**
+
+Sometimes, you still need a `for` loop. For example:
+
+``` js
+const cats = ['Pete', 'Biggles', 'Jasmine'];
+let myFavoriteCats = 'My cats are called ';
+```
+
+`for...of` **doesn't work** because there's no way to know when you're on the final loop iteration.
+
+``` js
+for (const cat of cats) {
+  myFavoriteCats += `${cat}, `
+}
+
+myFavoriteCats; // "My cats are called Pete, Biggles, Jasmine, "
+                // Missing ", and" -- not well formed
+```
+`for` loop allows you to know when you're on the last loop iteration:
+
+``` js
+for (let i = 0; i < cats.length; i++) {
+  if (i === cats.length - 1) {   // We are at the end of the array (last item)
+    myFavoriteCats += `and ${cats[i]}.` // add "and "
+  } else {
+    myFavoriteCats += `${cats[i]}, `
+  }
+}
+```
+
+## Exiting Loops `break`
+
+To stop a loop mid-execution, you can use a `break` statement. A `break` statement will *immediately exit the loop* and make the browser move onto any code that follows it.
+
+Example: Search through contacts/phone numbers and return just the first number you want to find.
+
+``` html
+<label for="search">Search by contact name: </label>
+<input id="search" type="text">
+<button>Search</button>
+
+<p></p>
+```
+
+``` js
+const contacts = ['Chris:2232322', 'Sarah:3453456', 'Bill:7654322', 'Mary:9998769', 'Dianne:9384975'];
+const para = document.querySelector('p');
+const input = document.querySelector('input');
+const btn = document.querySelector('button');
+
+btn.addEventListener('click', () => {               // When button is clicked
+  const searchName = input.value.toLowerCase();     // Convert search term to lowercase
+  input.value = '';
+  input.focus();
+  para.textContent = '';
+  for (const contact of contacts) {                 // Loop thru contact list
+    const splitContact = contact.split(':');        // Split current contact into array 
+    if (splitContact[0].toLowerCase() === searchName) {   // If splitContact name is match
+      para.textContent = splitContact[0] + '\'s number is ' + splitContact[1] + '.';  // Update <p> with the above string
+      break;  // Stop loop & move on
+    }
+  }
+  if (para.textContent === '') {
+   para.textContent = 'Contact not found.';
+ }
+});
+```
+
+## Skipping Iterations `continue`
+
+`continue` is similar to `break`, but it skips to the *next iteration* instead of exiting the loop.
+
+Example: Takes a number as input & returns only numbers that are **squares** of integers (whole numbers).
+
+``` html
+<label for="number">Enter number: </label>
+<input id="number" type="text">
+<button>Generate integer squares</button>
+
+<p>Output: </p>
+```
+
+
+``` js
+const para = document.querySelector('p');
+const input = document.querySelector('input');
+const btn = document.querySelector('button');
+
+btn.addEventListener('click', () => {
+  para.textContent = 'Output: ';
+  const num = input.value;
+  input.value = '';
+  input.focus();
+  for (let i = 1; i <= num; i++) {
+    let sqRoot = Math.sqrt(i);            // sqRoot of i, ie:  4
+    // if you round down sqRoot and it's NOT the same as the initial value (integer), ignore number
+    if (Math.floor(sqRoot) !== sqRoot) {  
+      continue; // Skip to next loop iteration
+    }
+    para.textContent += `${i} `;
+  }
+});
+```
+
+## While & Do...While
+
+`while` loops are very similar to `for` loops, except for:
+- the initializer is set *before the loop*
+- the final-expression is included *inside the loop*
+
+Both loops contain the same 3 items and they're defined in the same order. 
+
+``` js 
+initializer
+while (condition) {
+  // code to run
+
+  final-expression
+}
+```
+
+Example:
+
+``` js
+const cats = ['Pete', 'Biggles', 'Jasmine'];
+let myFavoriteCats = 'My cats are called ';
+
+let i = 0;  // initializer
+
+while (i < cats.length) { // condition
+  if (i === cats.length - 1) {
+    myFavoriteCats += `and ${cats[i]}.`;
+  } else {
+    myFavoriteCats += `${cats[i]}, `;
+  }
+  i++; // final-expression
+}
+
+myFavoriteCats;     // "My cats are called Pete, Biggles, and Jasmine."
+```
+
+`do...while` is very similar, but structured slightly different.
+
+**Do...While ALWAYS excutes at LEAST one time** because the condition comes *after* the code.
+
+```js
+initializer
+do {
+  // code to run
+
+  final-expression
+} while (condition)
+```
+
+`do...while` example:
+
+``` js
+const cats = ['Pete', 'Biggles', 'Jasmine'];
+let myFavoriteCats = 'My cats are called ';
+
+let i = 0;  // initializer 
+do {
+  if (i === cats.length - 1) { 
+    myFavoriteCats += `and ${cats[i]}.`;
+  } else {
+    myFavoriteCats += `${cats[i]}, `;
+  }
+
+  i++; // final-expression
+} while (i < cats.length); // condition
+
+myFavoriteCats;     // "My cats are called Pete, Biggles, and Jasmine."
+```
+
+## Choosing the Right Loop
+
+If you're iterating through an **array** or **object** that supports it and you **don't need access to the index position**, use `for...of`. **It's the best choice.**
+
+Otherwise, `for`, `while` or `do...while` are largely interchangeable. 
+
+`for` is recommended to begin with, because it's the easiest for remembering everything.
 
