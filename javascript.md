@@ -1,12 +1,9 @@
 # JavaScript
-
 **JAVASCRIPT** is a scripting language that allows you change CSS & HTML elements after site is loaded. It makes web pages interactive and engaging for users.
 
 ## Running JavaScript Code
 
 To run JS locally, via the browser, you have 2 options.
-
-
 
 1. Inline JavaScript ([Example](./html/javascript-example.html))
 
@@ -20,8 +17,6 @@ To run JS locally, via the browser, you have 2 options.
 </body>
 ```
 
-
-
 2. External Script:
 
 ```html
@@ -31,13 +26,9 @@ To run JS locally, via the browser, you have 2 options.
 </head>
 ```
 
-
-
 `console.log()` is a command that allows you to print something to the developer console in your browser.
 
 To view the Console, hit `F12` while on a page and click on the Console tab.
-
-
 
 ## [Variables](https://javascript.info/variables)
 
@@ -48,16 +39,12 @@ There are 3 ways to create a variable:
   - `var` = old method, similar to `let`, but it has differences
   - `constant`
 
-
-
 **Declare a variable** with the name "message":
 
 ```js
 // declaring a variable
 let message;
 ```
-
-
 
 **Store data** using the **assignment operator** `=`:
 
@@ -66,8 +53,6 @@ let message;
 let message;
 message = "Hello";
 ```
-
-
 
 **Access the value of a variable (popup msgbox)** using the `alert` function:
 
@@ -78,15 +63,11 @@ message = "Hello";
 alert(message);
 ```
 
-
-
 **Combine declaration & assignment** into a single line:
 
 ```js
 let message = "Hello!";
 ```
-
-
 
 **Chaining Assignments**
 
@@ -103,13 +84,9 @@ c; // 4
 
 In above example, `2 +2` is evaluated first. It's assigned to `c`, then to `b`, then to `a`.
 
-
-
 **Declaring multiple variables**
 
  You can combine variable declarations into a single line, but it is not recommended because it makes readability difficult. You can also use multiline styles, shown below.
-
-
 
  All variants do the same thing:
 
@@ -133,8 +110,6 @@ let user = 'John'
   , message = 'Hello';
 ```
 
-
-
 **Change the value** of a variable:
 
 ``` js
@@ -143,8 +118,6 @@ message = 'Hello';
 message = 'World';  // Removes old data "Hello"
 alert (message); // "World"
 ```
-
-
 
 **Copy data** from one variable to another:
 
@@ -157,8 +130,6 @@ message = hello;
 alert(message); // "Hello world!"
 ```
 
-
-
 **Do NOT declare a variable twice**, as it will cause an error:
 ``` js
 let message = "This";
@@ -166,9 +137,7 @@ let message = "This";
 let message = "That"; // SyntaxError: 'message' has already been declared!
 ```
 
-
 ---
-
 
 ### Variable Naming
 
@@ -177,11 +146,7 @@ There are 2 limitations on variable names in JavaScript:
 1. Must contain *only* **letters**, **digits**, **$** or **_**
 2. First character can NOT be a digit
 
-
-
 [**camelCase**](https://en.wikipedia.org/wiki/CamelCase) is commonly used. Camel case uses multiple lowercase words strung together, with each new word (*after the first word*) receiving a capital letter:
-
-
 
 ``` js
 // camelCase
@@ -197,8 +162,6 @@ let 1a;      // can't start with a digit
 let my-name; // can't contain hyphen (-)
 ```
 
-
-
 **Case matters**: `apple` & `APPLE` are two different variables
 
 ```js
@@ -206,15 +169,12 @@ let apple = 'red';
 let APPLE = 'green';
 ```
 
-
-
 **Reserved Names** are words that **cannot be used** because they are used by the language itself.
 
 ``` js
 let let = 5;  // ERROR, reserved name: let
 let return = 5; // ERROR, reserved name: return
 ```
-
 
 **Use Strict**
 
@@ -234,9 +194,7 @@ num = 5;  // num is created, if it doesn't exist
 num =  5; // ERROR: num not defined
 ```
 
-
 ---
-
 
 ### Constants
 
@@ -249,8 +207,6 @@ const myBirthday = '09.09.1999';
 
 myBirthday = '08.08.1988'; // ERROR: can't reassign constant!
 ```
-
-
 
 #### Constants: Known Before Execution
 
@@ -273,8 +229,6 @@ Benefits:
 - Easier to mistype: `#FF7F00`
 - Reading code: `COLOR_ORANGE` is *more meaningful* than `#FF7F00`
 
-
-
 #### Constants: Calculated in Run-Time 
 
 If a constant is *calculated in run-time* and *unknown before execution*, it should be named normally, using camelCase.
@@ -285,9 +239,7 @@ const pageLoadTime = // time taken for a webpage to load
                      // - but doesn't change after it's set (constant)
 ```
 
-
 ---
-
 
 ### Naming Best Practices
 
@@ -315,8 +267,6 @@ Returning to code after doing something else for a while, it's much easier to fi
     - Good: `currentUser` `newUser` 
     - Bad: `currentVisitor` `newManInTown`
 
-
-
 #### Reusing Or Creating New Variables
 
 Extra variables are good, not evil.
@@ -330,7 +280,6 @@ Lazy programmers *reuse* existing variables.
 JavaScript Minifiers & browsers optimize code well enough, so performance issues aren't a concern. 
 
 Using different variable names for different values can *help the engine optimize your code.*
-
 
 # Data Types
 
@@ -351,9 +300,6 @@ In JavaScript, there are 8 basic data types.
 **Typeof operator**
 
 `typeof x` or `typeof(x)` is used to see which type is stored in a variable.
-
-
-
 
 ## Numbers
 
@@ -412,8 +358,6 @@ let x = a + b;
 let x = (100 + 50) * a;
 ```
 
-
-
 **Arithmetic operands** are the numbers in an arithmetic operation. 
 
 Operands are what **operators** are applied to.
@@ -435,7 +379,6 @@ let x = 1, y = 3;
 alert( y - x ) // 2, binary - operator subtracts values
 ```
 
-
 ```js
 let x = 5;
 let y = 3;
@@ -447,7 +390,6 @@ let z = x / y;  // Division, produces quotient & remainder
 let z = x % y;  // Modulus, produces remainder in division
 ```
 
-
 **Incrementing** & **Decrementing**
 
 Increment Operator `++` adds 1 to a value `+1`
@@ -457,7 +399,6 @@ Decrement operator `--` subtracts 1 from a value `-1`
 Operators `++` and `--` can go *before* or *after* a variable, which changes it's behavior:
 - Prefix form:  `++counter` returns the *new* value
 - Postfix form: `counter++` returns the *old* value
-
 
 ``` js
 let counter = 1;
@@ -478,7 +419,6 @@ let counter = 1;
 counter;               // 2
 ```
 
-
 **Exponentiation**
 
 Exponentiation operator `**` *raises the first operand to the power of the second operand.*
@@ -489,7 +429,6 @@ let z = x ** 2;         // 5^2 = 25
 // OR
 let z = Math.pow(x,2)   // 5^2 = 25
 ```
-
 
 **Operator Precedence** (Order of operations)
 
@@ -505,9 +444,6 @@ Operator precedence is the order in which operations are performed in arithmetic
 let x = 100 + 50 * 3;     // 50 * 3, then +100
 let y = (100 + 50) * 30;  // 100+50, then * 30
 ```
-
-
-
 
 **Assignment Operators**
 
@@ -536,7 +472,6 @@ n *= 3 + 5; // 3+5
             // 16 -- right part is evaluated first
 ```
 
-
 **JavaScript Numbers**
 
 JavaScript only has one type of number: with or without decimals
@@ -550,9 +485,6 @@ let x = 3.14; // w/ decimals
 let y = 3;    // w/o decimals
 ```
 
-
-
-
 Extra large or extra smalls can be written with *scientific (exponent) notation*.
 
 ``` js
@@ -560,17 +492,11 @@ let x = 123e5;  // 12,300,000
 let y = 123e-5; // 0.00123
 ```
 
-
-
-
 Integer precision, without a period or exponent notation, are accurate up to **15 digits**.
 ``` js
 let x = 999999999999999;   // x will be 999999999999999
 let y = 9999999999999999;  // y will be 10000000000000000
 ```
-
-
-
 
 Floating point arithmetic is **not always 100% accurate**.
 
@@ -579,9 +505,6 @@ let x = 0.2 + 0.1; // 0.30000000000000004
 // To solve this problem, it helps to multiply & divide:
 let x = (0.2 * 10 + 0.1 * 10) / 10; // 0.3
 ```
-
-
-
 
 **Adding Numbers and Strings** (binary +)
 
@@ -604,8 +527,6 @@ let y = 20;
 let z = x + y; // 1020
 ```
 
-
-
 JavaScript interpreter works *left to right*. Therefore:
 ``` js
 // Common mistake #1
@@ -622,8 +543,6 @@ let result = x + y + z; // 3030
 let result = x + y + Number(z) // 60
                         // Integer + Integer = 30, Integer + String = Concatenation 3030
 ```
-
-
 
 **Numeric Conversion** (unary +)
 
@@ -643,8 +562,6 @@ let x = "5"; // string
 +true;  // 1 
 +"";    // 0
 ```
-
-
 
 **Numeric Strings**
 
@@ -667,9 +584,6 @@ let x = "100";  // string
 let y = "10";   // string
 let z = x + y;  // 10020 -> concatenation, 2 strings, won't work
 ```
-
-
-
 
 **NaN** - Not a Number
 
@@ -704,9 +618,6 @@ let z = x + y;  // = NaN5
 ```js
 typeof NaN; // number
 ```
-
-
-
 
 **Infinity**
 
@@ -743,17 +654,12 @@ let y = -2 / 0; // -infinity
 typeof infinity; // number
 ```
 
-
-
 **Hexadecimal**
 
 JS interprets numeric constants as hexadecimals if they are preceded by `0x`
 ``` js
 let x = 0xFF; // 255
 ```
-
-
-
 
 **Number Methods**
 
@@ -767,8 +673,6 @@ twoDecimalPlaces; // 1.77
 
 ```
 
-
-
 **Converting to number data types**
 
 To convert a string to a number, use `Number()` constructor.
@@ -777,7 +681,6 @@ To convert a string to a number, use `Number()` constructor.
 let myNumber = '74';
 myNumber = Number(myNumber) + 3;
 ```
-
 
 **Comparison Operators**
 
@@ -803,7 +706,6 @@ let y = new Number(500);
 x == y;  // false: JS Objects cannot be compared
 x === y; // false
 ```
-
 
 **[Testing Knowledge](https://javascript.info/operators)**
 
@@ -831,7 +733,6 @@ let a = prompt("First number?", 1);   // +prompt()
 let b = prompt("Second number?", 2);  // +prompt()
 alert(a + b);                         // OR alert(+a + +b);
 ```
-
 
 ## Strings
 
@@ -1056,7 +957,6 @@ const myArray = text.split(",");
 // text[1] = c
 ```
 
-
 ### Comparison (Strings)
 
 To see whether a string is greater than another, JavaScript uses the so-called *dictionary* or *lexicographical* order.
@@ -1069,7 +969,6 @@ Strings are compared letter-by-better by their *unicode value* (case sensitive).
 4. Loop until end of string
 5. If both strings are the same length, then they're equal. 
 6. Else, the longer string wins.
-
 
 ``` js
 'Z' > 'A';      // true
@@ -1176,7 +1075,6 @@ How `switch()` works:
 2. Value of expression is then compared with values of *each case*
 3. If match, the associated block of code is executed.
 4. If no match, the `default` code block is executed.
-
 
 If multiple cases matches a case value, the *first case* is selected.
 
@@ -1295,8 +1193,6 @@ switch (month) {
 }
 ```
 
-
-
 ## Boolean (logical type) aka True/False
 
 Boolean type only has 2 values: `true` `false`.
@@ -1323,7 +1219,6 @@ if (cheese) { // true
 let uploadComplete = false;
 if (uploadComplete) { // don't need to specify `=== true` }
 ```
-
 
 ## Null Value
 
@@ -1575,7 +1470,6 @@ if (userName == "Admin") {
 }
 ```
 
-
 ### Ternary Operator
 
 The ternary *or conditional* operator is a bit of syntax that tests a condition and returns one value/expression if true & another if false. It takes up a lot less code than `if...else` block.
@@ -1584,8 +1478,6 @@ The ternary *or conditional* operator is a bit of syntax that tests a condition 
 ( condtion ) ? run this code : run this code instead;
 let greeting = ( isBirthday ) ? 'Happy bday!'' : 'Good day.';
 ```
-
-
 
 ## Chrome DevTools
 
@@ -1608,12 +1500,9 @@ Web developers log messages for 2 main reasons:
 
 ie: `debug(hideModal)`
 
-
-
 ## Functions
 
 Anytime you see `()`, a pair of parentheses, and you're not using a loop or if/else statement, you're making use of a function.
-
 
 Executing a function is also known as **invoking a function**.
 
@@ -1646,8 +1535,6 @@ function hello(name='Bryan') {
 hello('Dave');  // Hey Dave
 hello();        // Hey Bryan
 ```
-
-
 
 ### Anonymous Functions
 
@@ -1725,13 +1612,11 @@ const output = document.querySelector("#output");
 textBox.addEventListener('keydown', event => output.textContent = `You pressed "${event.key}".`);
 ```
 
-
 ### Built-in Browser Functions
 
 Array manipulation: `myArray.join(' ')`
 
 Generate random numbers: `Math.random()`
-
 
 ### Function Scope & Conflicts
 
@@ -1744,7 +1629,6 @@ Top level, outside of your functions, is called the **global scope**.
 JavaScript is setup like this for 2 main reasons:
 - Security
 - Organization
-
 
 ### Return Values
 
@@ -1876,7 +1760,6 @@ func();   // "Hi" alert
 sayHi();  // "Hi" alert
 ```
 
-
 ### Callback Functions
 
 `ask(question, yes, no)` has three parameters:
@@ -1945,8 +1828,6 @@ let sum = function(a,b) {
   return a + b;
 };
 ```
-
-
 
 ## Problem Solving
 
@@ -2024,8 +1905,6 @@ Three steps to try when you're stuck:
 **Don't look for a solution to the big problem.** Only look for solutions to sub-problems. 
 
 Unless you struggle, you won't learn anything.
-
-
 
 ### For Loop Example
 
@@ -2172,7 +2051,6 @@ Consider a basic password loop
 
 Use a compound condition
 - ( tries >=3 ) and guess !=correct
-
 
 ## Understanding Errors
 
@@ -2353,7 +2231,7 @@ let anotherReallyReallyLongLine = something + somethingElse + anotherThing +
     - Writing explanatory notes to self `/* Will finish this later… */`
     - Blaming stuff on other people `/* John coded this. Ask him. *`
     - Writing vague statements `/* This is another math function. */`
-    - **Erasing chunks of code**. Comment it out instead.
+    - **Erasing chunks of code**. Commenting it out instead is not absolutely evil.
   - Good Comments:
     - Authoring `/* Coded by Bryan Miller, July 24, 2022*/`
     - Details on functionality of method/procedure `/* This function validates the login form with the aid of the e-mail check function */`
@@ -2373,7 +2251,6 @@ let anotherReallyReallyLongLine = something + somethingElse + anotherThing +
   - If there are too many files, combine them into one or two
   - Saves space, makes it look cleaner, saves on loading time & efficiency
     - **Each imported file is an HTTP request** that affects performance
-
 
 ## [Code Tells You How, Comments Tell You Why](https://blog.codinghorror.com/code-tells-you-how-comments-tell-you-why/)
 
@@ -2401,3 +2278,430 @@ Something that is **common sense** to you may be confusing to another developer 
 $string = join('',reverse(split('',$string)));
 // How hard is it to add "# Reverse the string" into your code?
 ```
+
+# Node.JS
+
+Node.JS is a JavaScript runtime environment. It allows you to run JavaScript *outside of your web browser.*
+
+`nvm` Node Version Manager makes it easy to change Node versions and upgrade Node.
+
+`npm` Node Package Manager installs various libraries and tools used in JavaScript environments.
+
+## Using Node console
+
+To run Node console, run `node` in your terminal. To exit, type `.exit`.
+
+# Arrays
+
+Arrays are used to deal with large quantities of strings and numbers.
+
+An **Array** is an ordered collection of items: strings, numbers or other things.
+
+## Creating Arrays
+
+``` js
+// Syntax for arrays:
+const arrayName = [item1, item2, ...];      
+
+// Examples
+const cars = ["Saab", "Volvo", "BMW"];
+
+// Spaces & line breaks don't matter
+const cars = [
+  "Saab",
+  "Volvo",
+  "BMW"
+];
+
+// You can also create an array, and then provide the elements:
+const cars = [];
+cars[0]= "Saab";
+cars[1]= "Volvo";
+cars[2]= "BMW";
+
+// Create Array using Keyword new
+const cars = new Array("Saab", "Volvo", "BMW");
+```
+
+## Accessing Array Elements
+
+You access an array element by referring to the index number:
+
+```js
+const cars = ["Saab", "Volvo", "BMW"];
+let car = cars[0];
+```
+
+## Changing an Array Element
+
+``` js
+const cars = ["Saab", "Volvo", "BMW"];
+// Change index 0 to Opel
+cars[0] = "Opel";
+```
+
+## Accessing the Full Array
+
+The full array can be accessed by referring to the name of the array.
+
+``` js
+const cars = ["Saab", "Volvo", "BMW"];
+document.getElementById("demo").innerHTML = cars;
+```
+
+## Arrays are Objects
+
+`typeof myArray` returns "object".
+
+However, JavaScript arrays are best described as arrays.
+
+Arrays use numbers to access its "elements". ie: `person[0]`
+
+```js
+const person = ["John", "Doe", 46];
+person[0]; // "John"
+```
+
+**Objects** use **names** to access its "members". ie: `person.firstName`
+
+``` js
+const person = {firstName:"John", lastName:"Doe", age:46};
+person.firstName; // "John"
+```
+
+## Array Elements Can Be Objects
+
+Variables can be objects. Arrays are special kinds of objects.
+
+*In a **single array***, you can have variables of different types:
+
+- Objects
+- Functions
+- Arrays
+
+``` js
+myArray[0] = Date.now;
+myArray[1] = myFunction;
+myArray[2] = myCars;
+```
+
+## Array Properties & Methods
+
+Array's *real strength* is displayed when using their **built-in properties and methods**.
+
+``` js
+cars.length   // Returns the number of elements
+cars.sort()   // Sorts the array
+```
+
+### Length property
+
+`.length` Returns the number of elements in the array.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+let length = fruits.length; // 4
+```
+
+## Accessing 1st & Last Array Element
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+// First Element
+let fruit = fruits[0];  // Banana
+// Last Element
+let fruit = fruits[fruits.length - 1]; // Mango (-1 because element #1 = index 0)
+```
+
+## Looping Array Elements
+
+You can use `for` to loop through an array.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+let fruitLength = fruits.length;
+
+let text = "<ul>"; // begin text w/ unordered list tag
+
+for (let i = 0; i < fruitLength; i++) { 
+  text += "<li>" + fruits[i] + "</li>"; // add list item element to text var w/ array element
+}
+
+text += "</ul>"; // append closing tag
+```
+
+There is also the `Array.forEach()` function:
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+let text = "<ul>";
+fruits.forEach(myFunction);
+text += "</ul>";
+
+function myFunction(value) {
+  text += "<li>" + value + "</li>";
+}
+```
+
+## Adding Array Elements
+
+Easiest way to add an element to an array: `.push()` method.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple"];
+fruits.push("Lemon");  // Adds a new element (Lemon) to fruits
+```
+
+You can also use the `length` property:
+
+``` js
+const fruits = ["Banana", "Orange", "Apple"];
+fruits[fruits.length] = "Lemon";  // Adds "Lemon" to fruits
+// because .length is 1 greater than the last index
+```
+
+**WARNING**: You can create undefined holes in an array:
+
+``` js
+const fruits = ["Banana", "Orange", "Apple"];
+fruits[6] = "Lemon";  // Creates undefined "holes" in fruits
+// BAD
+```
+
+## Associative Arrays
+
+**JavaScript does NOT support associative arrays.**
+
+JavaScript **always** uses **numbered indexes** for **arrays**.
+
+``` js
+const person = [];
+person[0] = "John";
+person[1] = "Doe";
+person[2] = 46;
+person.length;    // Will return 3
+person[0];        // Will return "John"
+```
+
+It does NOT support arrays with named indexes.
+``` js
+const person = [];
+person["firstName"] = "John"; // BAD, unsupported
+person["lastName"] = "Doe";
+person["age"] = 46;
+person.length;     // Will return 0 (WRONG)
+person[0];         // Will return undefined (WRONG)
+```
+
+## Differences between Arrays & Objects
+
+Arrays use **numbered indexes.**
+- Use Arrays when you want element names to be **numbers**.
+
+Objects use **named indexes.**
+- Use Objects when you want element names to be **strings (text)**.
+
+> Arrays are *special kinds* of objects.
+
+## Recognizing Arrays
+
+`typeof myArray` returns `object`.
+
+To get around this, you can use `Array.isArray()` function or `instanceof` operator.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple"];
+
+Array.isArray(fruits);    // true
+fruits instanceof Array;  // true
+```
+
+## Array Methods (Indepth)
+
+### toString
+`toString()` method converts an *array* to a string of *comma separated* `,` array values.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+document.getElementById("demo").innerHTML = fruits.toString();
+
+// Banana,Orange,Apple,Mango
+```
+
+### Join 
+
+`join()` method joins all elements into a string like `toString`, but you can specify the *separator*:
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+document.getElementById("demo").innerHTML = fruits.join(" * ");
+// Banana * Orange * Apple * Mango
+```
+
+### Pop & Push
+
+Pop & push are used to add or remove new elements.
+
+- Popping items **out** of an array.
+- Pushing items **into** an array.
+
+#### Pop 
+
+`.pop()` method removes the ***last*** element from an array.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.pop();
+fruits; // ['Banana', 'Orange', 'Apple']
+```
+`.pop()` also returns the ***last*** value that was popped out.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+let poppedFruit = fruits.pop();
+poppedFruit;  // 'Mango'
+```
+
+#### Push
+
+`.push()` method adds a new element to the end of an array.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.push("Kiwi"); 
+fruits; // ['Banana', 'Orange', 'Apple', 'Mango', 'Kiwi']
+```
+
+`.push()` method also returns the new array **length**.
+
+```js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+let fruitsLength = fruits.push("Kiwi");
+fruitsLength; // 5
+```
+
+## Shift
+
+`.shift()` method removes the ***first*** array element, and shifts all other elements to a lower index.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.shift();
+fruits; // ['Orange', 'Apple', 'Mango']
+```
+`.shift()` method returns the value that was *"shifted out":*
+
+```js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+let fruit = fruits.shift(); 
+fruit; // Banana
+```
+
+## Unshift
+
+`.unshift()` method **adds** a new element to the **beginning** of an array and *unshifts* older elements.
+
+AND it returns the new array length.
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.unshift("Lemon"); // 5
+fruits; // ['Lemon', 'Banana', 'Orange', 'Apple', 'Mango']
+```
+
+## Merging Arrays (Concatenate)
+
+`.concat()` method creates a new array by merging (concatenating) existing arrays:
+
+``` js
+// Merging 2 arrays
+const myGirls = ["Cecilie", "Lone"];
+const myBoys = ["Emil", "Tobias", "Linus"];
+
+const myChildren = myGirls.concat(myBoys);  
+myChildren; // ['Cecilie', 'Lone', 'Emil', 'Tobias', 'Linus']
+
+// Merging 3 arrays
+const arr1 = ["Cecilie", "Lone"];
+const arr2 = ["Emil", "Tobias", "Linus"];
+const arr3 = ["Robin", "Morgan"];
+const myChildren = arr1.concat(arr2, arr3);
+myChildren; // ['Cecilie', 'Lone', 'Emil', 'Tobias', 'Linus', 'Robin', 'Morgan']
+
+// Concat accepts strings as well
+const arr1 = ["Emil", "Tobias", "Linus"];
+const myChildren = arr1.concat("Peter"); 
+myChildren; // ['Emil', 'Tobias', 'Linus', 'Peter']
+```
+
+## Splice
+
+`.splice(x, y, "Item",...,"Item")` method can add new items to an array.
+
+- 1st parameter `x`: **where** new elements should be **added**
+- 2nd parameter `y`: **how many** elements should be **removed**
+- Rest of parameters: **define** new elements **to be added.**
+
+`splice()` returns *an array with the deleted items.*
+
+**Adding elements to an array using `slice()`**
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango", "Grapes"];
+fruits.splice(2, 2, "Lemon", "Kiwi");   // ['Apple', 'Mango'] --- items removed
+           // 2: position -- fruit[2] (3rd item)
+           //    2: # of items to delete: fruit[2], fruit[3]
+           //       Add Lemon & Kiwi to array
+```
+
+**Deleting elements with `splice()`**
+
+``` js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+fruits.splice(0, 1);  // Banana
+fruits; // ['Orange', 'Apple', 'Mango']
+```
+
+## Slice
+
+`.slice()` method slices out a piece of an array **into a new array.**
+
+It does NOT REMOVE anything from the source array.
+
+``` js
+const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
+
+// Single argument: Everything from index X and on
+const citrus = fruits.slice(1); 
+                         // 1: starting position -- fruits[1]
+
+citrus;     // ['Orange', 'Lemon', 'Apple', 'Mango']
+fruits;     // ['Banana', 'Orange', 'Lemon', 'Apple', 'Mango']
+```
+If two arguments are passed to `slice(x, y)`:
+
+- `x` starting position   array[x]
+- `y` ending position     array[y]
+
+``` js
+const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
+const citrus = fruits.slice(1, 3);
+
+citrus; // ['Orange', 'Lemon']
+```
+
+## Automatic ToString
+
+JavaScript automatically converts arrays to comma separated strings.
+
+ALL objects in JS have a `toString()` method.
+
+```js
+const fruits = ["Banana", "Orange", "Apple", "Mango"];
+
+document.getElementById("demo").innerHTML = fruits.toString();  // Verbose method
+document.getElementById("demo").innerHTML = fruits; // AUTOMATIC version
+```
+
+
