@@ -6,11 +6,11 @@ The purpose of this repo is to document all progress made toward [_my primary go
 
 ## Project List
 
-| Project                    | URL                                                             | Source Code                                                  |
-| :------------------------- | :-------------------------------------------------------------- | :----------------------------------------------------------- |
-| **#3 Rock Paper Scissors** | [Live Demo](https://bmilcs.github.io/odin-rock-paper-scissors/) | [GitHub](https://github.com/bmilcs/odin-rock-paper-scissors) |
-| **#2 Landing Page**        | [Live Demo](https://bmilcs.github.io/odin-landing-page/)        | [GitHub](https://github.com/bmilcs/odin-landing-page)        |
-| **#1 Recipes**             | [Live Demo](https://bmilcs.github.io/odin-recipes/)             | [GitHub](https://github.com/bmilcs/odin-recipes)             |
+| Project                    | Topics Covered | URL                                                             | Source Code                                                  |
+| :------------------------- | :------------- | :-------------------------------------------------------------- | :----------------------------------------------------------- |
+| **#3 Rock Paper Scissors** | JavaScript     | [Live Demo](https://bmilcs.github.io/odin-rock-paper-scissors/) | [GitHub](https://github.com/bmilcs/odin-rock-paper-scissors) |
+| **#2 Landing Page**        | HTML & CSS     | [Live Demo](https://bmilcs.github.io/odin-landing-page/)        | [GitHub](https://github.com/bmilcs/odin-landing-page)        |
+| **#1 Recipes**             | HTML & CSS     | [Live Demo](https://bmilcs.github.io/odin-recipes/)             | [GitHub](https://github.com/bmilcs/odin-recipes)             |
 
 ## Notes
 
