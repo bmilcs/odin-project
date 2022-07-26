@@ -3063,3 +3063,162 @@ describe('reverseString', () => {
   })
 });
 ```
+
+# DOM Manipulation & Events
+
+What is the DOM?
+
+The Document Object Model is a 
+
+- tree-like representation of the contents of a web page.
+- a tree of "**nodes**" with different relationships, depending on how they're arranged in the HTML doc.
+- family tree:
+  - `parent` on it's own `branch`
+  - `child` on its own `branch`
+  - `sibling` share a `branch`
+
+## Targeting Nodes w/ Selectors
+
+Use CSS-style selectors & relationship properties to target nodes.
+
+To target `div class="display"` in the example below, you could use:
+
+- `div.display`
+- `.display`
+- `#container > .display`
+- `div#container > div.display`
+
+
+``` html
+ <div id="container">
+   <div class="display"></div>
+   <div class="controls"></div>
+</div>
+```
+
+You can also use **relational selectors** like `firstElementChild` or `lastElementChild` with special properties owned by the nodes.
+
+``` js
+const container = document.querySelector('#container');
+console.dir(container.firstElementChild);
+// selects 1st child of #container (ie: .display)
+
+const controls = document.querySelector('.controls');
+console.dir(controls.previousElementSibling);
+// select the sibling before controls => .display
+```
+
+## DOM Methods
+
+When HTML is parsed, it is converted to the DOM. The primary differences is:
+
+- nodes are *objects* 
+- with many properties & methods attached to them
+  
+These properties & methods are main tools used to manipulate web pages with JavaScript.
+
+## Query Selectors
+
+To target nodes, you use query selectors.
+
+`element.querySelector(selector)` returns a *reference* to the first matched selector
+
+`element.querySelectorAll(selector)` returns a *nodelist* containing references to ALL matches of the selectors (**NOT AN ARRAY.**)
+
+Nodelists look and somewhat act like arrays, but they're missing several array methods. To get around this, you can convert nodelists to arrays with `Array.from()` or the spread operator: `(...numbers)`.
+
+## Creating Elements
+
+`document.createElement(tagName, [options])` creates a new element of type tagName w/ optional parameters.
+
+This **does not** put elements into the DOM; it creates it in memory. That way, you can manipulate the element before placing it on the page w/ css styles.
+
+```js
+constant div = document.createElement('div');
+```
+
+## Append Elements
+
+`parentNode.appendChild(childNode)` appends *childNode* as the last child of *parentNode*.
+
+`parentNode.insertBefore(newNode, referenceNode)` inserts *newNode* INTO *parentNode* BEFORE *referenceNode*.
+
+## Remove Elements
+
+`parentNode.removeChild(child)` removes *child* from *parentNode* on the DOM & returns a reference to child.
+
+## Altering Elements
+
+After referencing an element, you can alter that element's properties. You can add/remove/alter attributes, change classes, add inline style info, etc.
+
+
+**Adding Inline Style**
+
+``` js
+const div = document.createElement('div');
+// creates div element, referenced by variable 'div'
+
+div.style.color = 'blue';
+div.style.cssText = 'color:blue; background: white;';
+div.setAttribute('style', 'color: blue; background: white;');
+```
+
+To access CSS rules from JS, you need to use *camelCase* or *bracket notation*:
+
+``` js
+div.style.backgroundColor      // works -> NOT .background-color
+div.style['background-color']; // works
+div.style.cssText = "background-color: white;"; // works, in string
+```
+
+**Attributes**
+
+```js
+const div = document.createElement('div');
+
+div.setAttribute('id', 'theDiv');
+// creates/updates id to theDiv
+div.getAttribute('id');
+// returns value: 'theDiv'
+div.removeAttribute('id');
+// removes id= attribute from node
+```
+
+**Classes**
+
+```js
+const div = document.createElement('div');
+
+div.classList.add('new');
+// add new class to div
+div.classList.remove('new');
+// remove new class from div
+div.classList.toggle('active');
+// adds or removes 'active' (toggle on off)
+```
+
+Toggling CSS styles is standard and cleaner than removing them.
+
+**Adding text**
+```js
+const div = document.createElement('div');
+div.textContent = 'Hello World!';
+```
+
+**Adding HTML**
+``` js
+div.innerHTML = '<span>Hello world!</span>';
+```
+
+`textContent` should be used over `innerHTML`, because `innerHTML` can cause security risks if misused.
+
+**JavaScript is run when the `script` tag is defined`. 
+- Causes DOM manipulation methods to *not work* if it runs *before* the nodes are created
+
+To fix this issue, add the `defer` keyword to your `<script>` in the `<header>` of your page, or move your `<script>` to the end of your `<body>`.
+
+```js
+<head>
+  <script src="./script.js" defer>
+</head>
+```
