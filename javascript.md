@@ -2684,7 +2684,7 @@ fruits; // ['Orange', 'Apple', 'Mango']
 
 `.slice()` method slices out a piece of an array **into a new array.**
 
-It does NOT REMOVE anything from the source array.
+It does **NOT REMOVE** anything from the source array.
 
 ``` js
 const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
@@ -2719,6 +2719,34 @@ const fruits = ["Banana", "Orange", "Apple", "Mango"];
 
 document.getElementById("demo").innerHTML = fruits.toString();  // Verbose method
 document.getElementById("demo").innerHTML = fruits; // AUTOMATIC version
+```
+
+## Optional Arguments
+
+`...argVariable` causes all remaining arguments to be placed inside an **FAKE array**.
+
+**IMPORTANT:** If you want to use array methods, convert `...extraArgs` to a **REAL ARRAY**:
+
+```js
+const removeFromArray = function (myArray, ...extraArgs) {
+  const args = Array.from(extraArgs);
+  // ...
+};
+```
+
+```js
+function myFun(a, b, ...manyMoreArgs) {
+  console.log("a", a);
+  console.log("b", b);
+  console.log("manyMoreArgs", manyMoreArgs);
+}
+
+myFun("one", "two", "three", "four", "five", "six");
+
+// Console Output:
+// a, one
+// b, two
+// manyMoreArgs, ["three", "four", "five", "six"]
 ```
 
 # Loops
@@ -3008,3 +3036,30 @@ Otherwise, `for`, `while` or `do...while` are largely interchangeable.
 
 `for` is recommended to begin with, because it's the easiest for remembering everything.
 
+# Test Driven Development
+
+TDD refers to the practice of writing automated tests that describe how your code should work before you actually write the code.
+
+Using `jest` to test javascript:
+
+``` js
+// reverseString.js
+const reverseString = function(string){
+  return string.split().reverse().join();
+}
+
+module.exports = reverseString;
+
+// reverseString.spec.js
+const reverseString = require('./reverseString')
+
+describe('reverseString', () => {
+  test('reverses single word', () => {
+    expect(reverseString('hello')).toEqual('olleh');
+  });
+
+  test.skip('reverses multiple words', () => {
+    expect(reverseString('hello there')).toEqual('ereht olleh')
+  })
+});
+```
