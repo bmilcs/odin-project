@@ -31,3 +31,28 @@ div.appendChild(para);
 
 // after creating the <div> with createElement, append the <h1> and <p> to it before adding it to the container.
 container.appendChild(div);
+
+const btn = document.querySelector("#btn");
+btn.style.border = "solid 5px blue";
+btn.style.fontSize = "x-large";
+btn.style.margin = "20px 0px";
+
+btn.addEventListener("click", (e) => {
+  alert(`Clicked! e: ${e}\ne.target: ${e.target}`);
+  e.target.style.background = "blue";
+});
+
+btn.addEventListener("mouseover", (e) => {
+  btn.style.backgroundColor = "yellow";
+});
+
+// buttons is a node list. It looks and acts much like an array.
+const buttons = document.querySelectorAll("button");
+
+// we use the .forEach method to iterate through each button
+buttons.forEach((button) => {
+  // and for each one we add a 'click' listener
+  button.addEventListener("click", () => {
+    alert(button.id);
+  });
+});

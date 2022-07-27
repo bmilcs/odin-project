@@ -3212,7 +3212,8 @@ div.innerHTML = '<span>Hello world!</span>';
 
 `textContent` should be used over `innerHTML`, because `innerHTML` can cause security risks if misused.
 
-**JavaScript is run when the `script` tag is defined`. 
+**JavaScript is run when the `script` tag is defined.**
+
 - Causes DOM manipulation methods to *not work* if it runs *before* the nodes are created
 
 To fix this issue, add the `defer` keyword to your `<script>` in the `<header>` of your page, or move your `<script>` to the end of your `<body>`.
@@ -3222,3 +3223,148 @@ To fix this issue, add the `defer` keyword to your `<script>` in the `<header>` 
   <script src="./script.js" defer>
 </head>
 ```
+
+## Events
+
+Events allow you to manipulate the DOM dynamically and on demand.
+
+Events are actions that occur such as:
+
+- Mouse clicks
+- Keypresses
+
+JavaScript can listen for these on webpages and react to these events.
+
+**Three Primary Ways to Handle Events**
+
+- Attach functions to HTML element attributes
+- Set the `on_event_` property on the DOM object in JS
+- Attach event listeners to nodes in JS
+
+Event listeners are the preferred method.
+
+**Method 1**
+
+Less than ideal solution: cluttering HTML w/ JavaScript:
+
+``` html
+<!-- functions' attributes (html elements) -->
+<button onclick="alert('hello world')">Click me</button>
+```
+
+**Method 2**
+
+Better solution: Moved JS to its own file. Buttons can only have a single `onclick` property.
+
+``` html
+<!-- html -->
+<button id="btn">Click Me!</button>
+```
+
+``` js
+// javascript
+const btn = document.querySelector('#btn');
+btn.onclick = () => alert('Hello World!');
+```
+
+**Method 3**
+
+Best method: Maintains separation and we also allow multiple event listeners if needed. 
+
+More flexible & powerful, but a bit more complex to setup.
+
+```html
+<!-- html -->
+<button id="btn">Click Me Too</button>
+```
+
+```js
+// javascript
+const btn = document.querySelector('#btn');
+btn.addEventListener('click', () => {
+  alert("Hello World!");
+});
+```
+
+**All three methods can be used with named functions.**
+
+```html
+<!-- html -->
+<!-- METHOD 1 -->
+<button onclick="alertFunction()">CLICK ME</button>
+```
+
+```js
+// javascript
+function alertFunction() {
+  alert("YOU CLICKED ME");
+}
+
+// METHOD 2
+btn.onclick = alertFunction;
+
+// METHOD 3
+btn.addEventListener('click', alertFunction);
+```
+
+**Named functions**
+- Clean up code considerably
+- Good idea if you want to reference a function in multiple places
+
+Retrieve event info by passing a parameter to the function - ie: `function (e)` is a callback from EventListener.
+
+```js
+btn.addEventListener('click', function (e) {
+  console.log(e); // [object: PointerEvent]
+  console.log(e.target); // [object: HTMLButtonElement]
+  e.target.style.background = 'blue';
+});
+```
+
+Callback Example:
+
+```js
+const notes = ['do', 're', 'me'];
+notes.forEach((noteInNotes) => console.log(noteInNotes));
+// or
+notes.forEach((noteInNotes) => {
+  console.log(noteInNotes);
+});
+// or
+notes.forEach(function(noteInNotes) {
+  console.log(noteInNotes);
+});
+// or
+notes.forEach(console.log);
+```
+
+**Attaching listeners to GROUPS of nodes**
+
+``` html
+<div id="container">
+    <button id="1">Click Me</button>
+    <button id="2">Click Me</button>
+    <button id="3">Click Me</button>
+</div>
+```
+
+``` js
+// buttons = node list, looks and acts much like an array.
+const buttons = document.querySelectorAll('button');
+
+// .forEach method to iterate through each button
+buttons.forEach((button) => {
+
+  // and for each one we add a 'click' listener
+  button.addEventListener('click', () => {
+    alert(button.id);
+  });
+});
+```
+
+**Other Useful Events**
+
+- `click`
+- `dblclick`
+- `keydown`
+- `keyup`
