@@ -3368,3 +3368,53 @@ buttons.forEach((button) => {
 - `dblclick`
 - `keydown`
 - `keyup`
+
+### Event Capture, Propagation, Bubbling
+
+```js
+// 3 nested div1 > div2 > div3
+const divs = document.querySelectorAll('div');
+
+divs.forEach(div => div.addEventListener('click', miscFunction)
+```
+
+**Default**
+
+Event capturing bubbles up by default, triggering the child first and then the parent nodes, as it travels upward in the dom.
+
+> div3, div2, div1 (parent)
+
+
+**Reverse**
+
+``` js
+divs.forEach(div => div.addEventListener('click'), miscFunction, {
+  capture: true
+})
+```
+
+Adding `capture: true` to an event listener will cause `miscFunction` to be run on the capture **down**, instead of the bubble **up**.
+
+> div1 > div2 > div3 (child)
+
+**Stopping Propagation**
+
+```js
+function miscFunction(e) {
+  e.stopPropagation(e); // stop bubbling (prevents parents from being triggered)
+}
+```
+
+If you add a paremeter with the `.stopPropagation()` function, it prevents events from bubbling up to the parent nodes. It will trigger once, and then stop.
+
+**Limit EventListener to 1 Event**
+
+```js
+button.addEventListener('click', () => {
+  console.log('Clicked!'); 
+  }, {
+  once: true  // limits the EventListener to 1 event
+              // = adding removeEventListener('click')
+  })
+```
+
