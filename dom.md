@@ -95,3 +95,122 @@ console.log(newDiv);
 ```
 
 ## Event Listeners
+
+```js
+let button = document
+  .getElementById("button")
+  .addEventListener("click", function () {
+    console.log("clicked");
+  });
+
+// Ideal way of doing it
+// Use a named function:
+
+let button = document
+  .getElementById("button")
+  .addEventListener("click", buttonClick);
+
+// event object: e
+function buttonClick(e) {
+  // console.log("Button clicked");
+  // document.getElementById("header-title").textContent = "Changed";
+  // document.querySelector("#main").style.backgroundCOlor = "#f4f4f4";
+
+  console.log(e); // returns a list of properties
+  // class name, id, mouse position, etc.
+
+  console.log(e.target); // returns what was clicked (html element)
+
+  console.log(e.target.id); // return id of what was clicked
+
+  console.log(e.target.className); // return class name of what was clicked
+
+  console.log(e.target.classList); // return dom token list/array of classes
+
+  let output = document.getElementById("output");
+  output.innerHTML = "<h3>" + e.target + "</h3";
+
+  console.log(e.type); // return event type: 'click'
+  console.log(e.clientX); // mouse position, x axis, browser window
+  console.log(e.offSetX); // mouse position, within element itself
+
+  console.log(e.altKey); // whether or not alt is held down during event
+  console.log(e.shiftKey); // whether or not modifier is held down
+  console.log(e.ctrlKey); // whether or not modifier is held down
+}
+```
+
+Mouse Events
+
+```js
+let button = document
+  .getElementById("button")
+  .addEventListener("click", runEvent);
+
+// EVENTS ---------
+
+// click
+// mousedown
+// mouseup
+
+// mouseenter  // triggers only on parent element
+// mouseleave
+
+// mouseover  // triggers on parent + inner elements
+// mouseout
+
+// mousemove  // when mouse position changes
+//            e.offsetX
+
+function runEvent(e) {
+  console.log("EVENT TYPE" + e.type); // type of event "click"
+}
+
+let box = document.getElementByID("box");
+
+box.addEventListener("mouseenter", runEvent);
+box.addEventListener("mouseleave", runEvent);
+```
+
+Keyboard Events
+
+```js
+let itemInput = document.querySelector('input[type="text"]');
+let form = document.querySelector("form");
+
+// EVENTS ---------
+// keydown  press key
+//    e.target.value = key pressed
+
+// keyup    release key
+
+// keypress
+
+// focus    click inside an input
+
+// blur     click outside of an input, when focus is lost
+
+// cut
+// paste
+
+// input    any change made to an input
+
+itemInput.addEventListener("keydown", runEvent);
+
+function runEvent(e) {
+  console.log("EVENT TYPE" + e.type); // type of event "keydown"
+  console.log("EVENT TYPE" + e.type.value); // key pressed
+}
+
+// select / dropdown box box
+let select.querySelector('select')
+select.addEventListener('change', runEvent)
+
+// Drop down box
+
+// change   when value selected changes
+// input    when value selected changes
+
+// Submit Event for Forms
+form.addEventListener('submit', runEvent);
+```
