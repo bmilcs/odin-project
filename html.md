@@ -311,13 +311,180 @@ DIV is one of the most basic HTML elements.
 <div class="alert-text pink-floyd">Welcome to the machine.</div>
 ```
 
-# Emmet (Visual Studio Code)
+# [Emmet (Visual Studio Code)](https://docs.emmet.io/abbreviations/syntax/)
 
-Creating elements with Emmet:
+Creating elements
 
 ```html
 <!-- create button with id "btnId" and classes "class1" "class2" -->
 button.class1.class2#btnID
 <!-- hit tab and it becomes: -->
 <button class="class1 class2" id="btnID"></button>
+```
+
+Children `>`
+
+```html
+div>ul>li
+<!-- tab -->
+<div>
+  <ul>
+    <li></li>
+  </ul>
+</div>
+```
+
+Sibling `+`
+
+```html
+div+p+bq
+<div></div>
+<p></p>
+<blockquote></blockquote>
+```
+
+Climb-up `^`
+
+```html
+div+div>p>spam+em
+<div></div>
+<div>
+  <p><span></span><em></em></p>
+</div>
+
+div+div>p>span+em^bq (blockquote rises above current sibling)
+<div></div>
+<div>
+  <p><span></span><em></em></p>
+  <blockquote></blockquote>
+</div>
+
+div+div>p>span+em^^^bq (bq rises above multiple parents)
+<div></div>
+<div>
+  <p><span></span><em></em></p>
+</div>
+<blockquote></blockquote>
+```
+
+Multiplication `*`
+
+```html
+ul>li*5
+<ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+</ul>
+```
+
+Grouping `()`
+
+```html
+div>(header>ul>li*2>a)+footer>p
+<div>
+  <header>
+    <ul>
+      <li><a href=""></a></li>
+      <li><a href=""></a></li>
+    </ul>
+  </header>
+  <footer>
+    <p></p>
+  </footer>
+</div>
+
+(div>dl>(dt+dd)*3)+footer>p
+<div>
+  <dl>
+    <dt></dt>
+    <dd></dd>
+    <dt></dt>
+    <dd></dd>
+    <dt></dt>
+    <dd></dd>
+  </dl>
+</div>
+<footer>
+  <p></p>
+</footer>
+```
+
+ID `#` & Class `.`
+
+```html
+div#header+div.page+div#footer.class1.class2.class3
+<div id="header"></div>
+<div class="page"></div>
+<div id="footer" class="class1 class2 class3"></div>
+```
+
+Custom Attributes
+
+```html
+td[title="Hello world!" colspan=3]
+<td title="Hello world!" colspan="3"></td>
+```
+
+Item Numbering `$`
+
+```html
+ul>li.item$*5
+<ul>
+  <li class="item1"></li>
+  <li class="item2"></li>
+  <li class="item3"></li>
+  <li class="item4"></li>
+  <li class="item5"></li>
+</ul>
+
+<!-- number padding -->
+ul>li.item$$$*5
+<ul>
+  <li class="item001"></li>
+  <li class="item002"></li>
+  <li class="item003"></li>
+  <li class="item004"></li>
+  <li class="item005"></li>
+</ul>
+```
+
+Changing Numbering Base & Direction
+
+```html
+<!-- Change direction 5-1 -->
+ul>li.item$@-*5
+<ul>
+  <li class="item5"></li>
+  <li class="item4"></li>
+  <li class="item3"></li>
+  <li class="item2"></li>
+  <li class="item1"></li>
+</ul>
+
+<!-- Change counter base value -->
+ul>li.item$@3*5
+<ul>
+  <li class="item3"></li>
+  <li class="item4"></li>
+  <li class="item5"></li>
+  <li class="item6"></li>
+  <li class="item7"></li>
+</ul>
+```
+
+Text `{}`
+
+```html
+a{click meeee}
+<a href="">click meeee</a>
+
+p>{Click }+a{here}+{ to continue}
+<p>Click <a href="">here</a> to continue</p>
+
+p{Click }+a{here}+{ to continue}
+<p>Click</p>
+<a href="">here</a> to continue
 ```
