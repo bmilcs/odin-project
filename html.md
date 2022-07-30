@@ -310,3 +310,14 @@ DIV is one of the most basic HTML elements.
 ```html
 <div class="alert-text pink-floyd">Welcome to the machine.</div>
 ```
+
+# Emmet (Visual Studio Code)
+
+Creating elements with Emmet:
+
+```html
+<!-- create button with id "btnId" and classes "class1" "class2" -->
+button.class1.class2#btnID
+<!-- hit tab and it becomes: -->
+<button class="class1 class2" id="btnID"></button>
+```
