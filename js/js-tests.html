@@ -1,102 +1,141 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Page Title</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Page Title</title>
-</head>
+  <body>
+    <script>
+      // Your JavaScript goes here!
+      // Tasks: https://javascript.info/object
+      let user = {};
+      user.name = "John";
+      user.surname = "Smith";
+      user.name = "Pete";
+      delete user.name;
 
-<body>
-  <script>
-    // Your JavaScript goes here!
+      // isEmpty: check if obj is empty
+      function isEmpty(args) {
+        // if a key exists, exit immediately
+        for (let key in obj) return false;
+        // nothing was triggered in the loop (empty obj)
+        return true;
+      }
 
-    // // print to dev console:
-    // console.log("Hello, World!")
+      // Sum all salaries
+      let salaries = {
+        John: 100,
+        Ann: 160,
+        Pete: 130,
+      };
 
-    // // declare & assign a variable:
-    // let message = 'Hello';
-    // // message box / popup alert
-    // alert(message);
+      let sum = 0;
+      for (let key in salaries) {
+        sum += salaries[key];
+      }
 
-    // // Assignment from
-    // // https://javascript.info/variables
+      // Multiply numeric property values
+      function multiplyNumeric(obj) {
+        for (let key in obj) {
+          if (typeof obj[key] == "number") menu[key] *= 2;
+        }
+      }
 
-    // // #1: Working with variables
-    // let admin,
-    //   name = "John";
+      // before the call
+      let menu = {
+        width: 200,
+        height: 300,
+        title: "My menu",
+      };
 
-    // admin = name;
-    // alert("Name: " + name + "\nAdmin: " + admin);
+      multiplyNumeric(menu);
+      console.table(menu);
 
-    // // #2. Right name
-    // let ourPlanetName = "Earth";
-    // let currentUserName = "John";
+      // // print to dev console:
+      // console.log("Hello, World!")
 
-    // // #3. Uppercase Const?
-    // const BIRTHDAY = '18.04.1982';
-    // const age = someCode(BIRTHDAY);
+      // // declare & assign a variable:
+      // let message = 'Hello';
+      // // message box / popup alert
+      // alert(message);
 
-    // // Assignment: https://www.theodinproject.com/lessons/foundations-fundamentals-part-1
-    // console.log("1. Add 23+97: " + (23 + 97));
-    // console.log("2. Add sequence of 6 #'s: " + (33 + 1 + 2 + 15 + 11 + 4));
-    // console.log("3. Print the solution of (4+6+9)/77 - should be 0.24675: " + ((4 + 6 + 9) / 77).toFixed(5))
-    // let a = 10;
-    // let b = 7 * a;
-    // console.log("4. Print var a (should be 10): " + a);
-    // console.log("4. 9 * a (should be 90): " + (9 * a));
-    // console.log("4. var b: " + b);
-    // const max = 57;
-    // let actual = max - 13;
-    // let percentage = actual / max;
-    // console.log("5. Should see 0.7719: " + percentage.toFixed(4));
+      // // Assignment from
+      // // https://javascript.info/variables
 
+      // // #1: Working with variables
+      // let admin,
+      //   name = "John";
 
-    // Assignment https://javascript.info/function-basics
-    // function min(a, b) {
-    //   return a < b ? a : b;
-    // }
+      // admin = name;
+      // alert("Name: " + name + "\nAdmin: " + admin);
 
-    // let num1 = prompt("Number 1");
-    // let num2 = prompt("Number 2");
+      // // #2. Right name
+      // let ourPlanetName = "Earth";
+      // let currentUserName = "John";
 
-    // // console.log(`Between ${num1} and ${num2}, the smallest # is ${min(num1, num2)}`);
+      // // #3. Uppercase Const?
+      // const BIRTHDAY = '18.04.1982';
+      // const age = someCode(BIRTHDAY);
 
-    // function pow(x, n) {
-    //   return Math.pow(x, n);
-    // }
+      // // Assignment: https://www.theodinproject.com/lessons/foundations-fundamentals-part-1
+      // console.log("1. Add 23+97: " + (23 + 97));
+      // console.log("2. Add sequence of 6 #'s: " + (33 + 1 + 2 + 15 + 11 + 4));
+      // console.log("3. Print the solution of (4+6+9)/77 - should be 0.24675: " + ((4 + 6 + 9) / 77).toFixed(5))
+      // let a = 10;
+      // let b = 7 * a;
+      // console.log("4. Print var a (should be 10): " + a);
+      // console.log("4. 9 * a (should be 90): " + (9 * a));
+      // console.log("4. var b: " + b);
+      // const max = 57;
+      // let actual = max - 13;
+      // let percentage = actual / max;
+      // console.log("5. Should see 0.7719: " + percentage.toFixed(4));
 
-    // console.log(`${num1} to the power of ${num2} is ${pow(num1, num2)}`);
+      // Assignment https://javascript.info/function-basics
+      // function min(a, b) {
+      //   return a < b ? a : b;
+      // }
 
-    // Assignment https://www.theodinproject.com/lessons/foundations-fundamentals-part-3
+      // let num1 = prompt("Number 1");
+      // let num2 = prompt("Number 2");
 
-    function add7(number) {
-      return number + 7;
-    }
+      // // console.log(`Between ${num1} and ${num2}, the smallest # is ${min(num1, num2)}`);
 
-    function multiply(number1, number2) {
-      return number1 * number2;
-    }
+      // function pow(x, n) {
+      //   return Math.pow(x, n);
+      // }
 
-    function capitalize(string) {
-      let titleCase = string.toLowerCase();
-      let firstLetter = titleCase.charAt();
-      // console.log(`titleCase: ${titleCase}, firstLetter: ${firstLetter}`)
-      return titleCase.replace(/^./, firstLetter.toUpperCase());
-    }
+      // console.log(`${num1} to the power of ${num2} is ${pow(num1, num2)}`);
 
-    let stringy = prompt("String?");
+      // Assignment https://www.theodinproject.com/lessons/foundations-fundamentals-part-3
 
-    console.log(`Title Case: ${capitalize(stringy)}`)
+      // function add7(number) {
+      //   return number + 7;
+      // }
 
-    // function lastLetter(string) {
-    //   return string.slice(-1);
-    // }
+      // function multiply(number1, number2) {
+      //   return number1 * number2;
+      // }
 
-    let lastLetter = (string) => string.slice(-1);
+      // function capitalize(string) {
+      //   let titleCase = string.toLowerCase();
+      //   let firstLetter = titleCase.charAt();
+      //   // console.log(`titleCase: ${titleCase}, firstLetter: ${firstLetter}`)
+      //   return titleCase.replace(/^./, firstLetter.toUpperCase());
+      // }
 
-    console.log(`Last letter: ${lastLetter(stringy)}`);
+      // let stringy = prompt("String?");
 
-  </script>
-</body>
+      // console.log(`Title Case: ${capitalize(stringy)}`)
 
+      // // function lastLetter(string) {
+      // //   return string.slice(-1);
+      // // }
+
+      // let lastLetter = (string) => string.slice(-1);
+
+      // console.log(`Last letter: ${lastLetter(stringy)}`);
+    </script>
+  </body>
 </html>

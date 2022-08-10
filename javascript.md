@@ -3418,3 +3418,185 @@ button.addEventListener('click', () => {
   })
 ```
 
+# Objects
+
+Objects are a very important part of JS and any real project will feature them.
+
+Creating an empty object:
+
+``` js
+let user = new Object(); // object constructor
+let user = {...};  // object literal
+```
+
+## Literals & Properties
+
+``` js
+let user = {    // object
+  name: "John", // key 
+  age: 30       // key
+// property key/name/identifier: value;
+}
+```
+
+**Getting property values**
+```js
+alert(user.name); // John
+alert(user.age);  // 30
+```
+
+**Adding values**
+```js
+user.isAdmin = true;
+```
+
+**Removing values**
+``` js
+delete user.age;
+```
+
+**Multi-word property names**
+``` js
+let user = {
+  name: "John",
+  age: "30",
+  "likes birds": true // multi-word
+}
+```
+ **Trailing Commas** make it easier to add/remove/move around properties.
+ ```js
+let user = {
+  ...
+  finalProperty: "value", // < last item contains a comma
+}
+ ```
+
+**Square brackets**
+``` js
+user.like birds = true; // ERROR - multi-word property w/ dot access
+
+let user = {};  // empty object
+user["likes birds"] = true; // set
+alert(user["likes birds"]); // get "true"
+delete user["likes birds"]; // delete
+```
+
+Square brackets allow you use expressions, as opposed to a literal string:
+``` js
+let key = "likes birds";
+user[key] = true; // == user["likes birds"] = true
+
+// key can be calculated at run-time or user input
+let key = prompt("What do you want to know about the user?", "name");
+user[key]; // "John" if name was passed
+user.key  // UNDEFINED *** dot notation cannot be used this way
+```
+
+**Computed Properties**
+
+We can use square brackets in object literal when creating an object.
+
+``` js
+let fruit = prompt("Fruit name?", "apple");
+let bag = {
+  [fruit]: 5, // property name = fruit variable value
+  [fruit + 'Computers']: 5; // bag.appleComputers = 5
+}
+bag.apple;  // 5 if fruit="apple"
+```
+
+**Property value shorthand**
+
+Using existing variables as values for property names:
+
+```js
+function makeUser(name, age) {
+  return {
+    name, // name: name,
+    age, //  age: age,
+
+  };
+}
+let user = makeUser("John", 30);
+user.name;  // John
+```
+
+Property names are converted to strings:
+
+```js
+let obj = {
+  0: "test" // "0": "test"
+}
+obj[0];   // test
+obj["0"]; //test
+```
+
+**Does a property exist?**
+```js
+if (user.noSuchProperty === undefined); // true - means "no such property"
+
+// special operator: in
+"key" in object;
+
+let user = { name: "John", age: 30, };
+"age" in user; // true
+"noSuchProperty" in user; // false, noSuchProperty doesn't exist within user object
+
+let key = "age";
+key in user; // true, "age" exists within user object
+```
+
+Use `in` instead of `=== undefined` because properties that do exist can contain the value "undefined".
+
+**Looping through an object**
+
+`for..in` is used to walk over all keys in an object.
+
+`for (let prop in obj)` is often used.
+
+``` js
+for (key in object) {
+  // code to execute
+}
+
+let user = { name: "John", age: 30, isAdmin: true };
+for (let key in user) {
+  key;        // name, age, isAdmin
+  user[key];  // John, 30, true
+}
+```
+
+**Order of properties**
+
+Object properties are ordered in a *special way*:
+
+- Integer properties are sorted
+- Others appear in creation order
+
+``` js
+let codes = {
+  "49": "Germany",
+  "41": "Switzerland",
+  "44": "Great Britain",
+  "1": "USA"
+};
+
+for (let code in codes) {
+  code; // 1, 41, 44, 49
+}
+```
+
+**Integer Properties** are properties that can be transformed to an integer and back without changing.
+
+`49` is an integer property.
+
+`+49` and `1.2` are not. 
+
+``` js
+// Number(...) explicitly converts to a number
+// Math.trunc is a built-in function that removes the decimal part
+alert( String(Math.trunc(Number("49"))) ); // "49", same, integer property
+alert( String(Math.trunc(Number("+49"))) ); // "49", not same "+49" ⇒ not integer property
+alert( String(Math.trunc(Number("1.2"))) ); // "1", not same "1.2" ⇒ not integer property
+```
+
