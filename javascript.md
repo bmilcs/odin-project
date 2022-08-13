@@ -3496,6 +3496,8 @@ user.key  // UNDEFINED *** dot notation cannot be used this way
 
 We can use square brackets in object literal when creating an object.
 
+An **object literal** is an object with properties literally written out when we create it.
+
 ``` js
 let fruit = prompt("Fruit name?", "apple");
 let bag = {
@@ -3599,4 +3601,108 @@ alert( String(Math.trunc(Number("49"))) ); // "49", same, integer property
 alert( String(Math.trunc(Number("+49"))) ); // "49", not same "+49" ⇒ not integer property
 alert( String(Math.trunc(Number("1.2"))) ); // "1", not same "1.2" ⇒ not integer property
 ```
+
+## Methods
+
+Methods are functions that exist within an object.
+
+```js
+const person = {
+  name: ['Bob', 'Smith'],
+  age: 32,
+  // bio: function () { // is equal to:
+  bio() {
+    console.log(`${this.name[0]} ${this.name[1]} is ${this.age} years old.`);
+  },
+  // introduceSelf: function () {
+  introduceSelf() {
+    console.log(`Hi! I'm ${this.name[0]}.`);
+  }
+};
+```
+
+## Objects as Object Properties
+
+An object property can itself be an object.
+
+``` js
+const person = {
+  name: {
+    first: 'Bob',
+    last: 'Smith',
+  },
+};
+
+person.name.first;  // Bob
+person['name']['first'];  // Bob
+person.name.last;   // Smith
+person['name']['last']; // Smith
+```
+
+## Adding methods to existing object
+
+``` js
+person.farewell = function() {
+  console.log("Later!");
+}
+```
+
+## `this`
+
+`this` is keyword refers to the current object the code is being written inside.
+
+## Defining the "shape" of an object
+
+Object literals are seriously inadequate when you need to create multiple objects. 
+
+Inferior way: Using a function
+
+``` js
+function createPerson(name) {
+  const obj = {};
+  obj.name = name;
+  obj.introduceSelf = function() {
+    console.log(`Hi! I'm ${this.name}.`);
+  }
+  return obj;
+}
+
+const frankie = createPerson('Frankie');
+frankie.name;
+frankie.introduceSelf();
+```
+
+> Using a function requires a lot of work: creating, initializing and returning an object.
+
+Best way: Use a **constructor**
+
+Constructors are functions that are called using the `new` keyword. When you call a constructor, it will:
+
+- Create a new object
+- Bind `this` to the object
+- Run the code in the constructor
+- Return the new object
+
+``` js
+function Person(name) {
+  this.name = name;
+  this.introduceSelf = function() {
+    console.log(`Hi. I'm ${this.name}.`);
+  }
+}
+
+const frankie = new Person('Frankie');
+frankie.name;
+frankie.introduceSelf();
+```
+
+## Built-in Objects
+
+`myString.split(",");` 
+
+`.split()` is a method available on a `String` object. When you create a string in your code, it is automatically created **as an instance of `String`**, which has several common methods and properties available on it.
+
+`const myDiv = document.createElement('div')`
+
+`createElement()` is a method available to the `Document` object. Every web page creates an instance of `Document` called `document`, containing the page structure, content and features such as its URL.
 

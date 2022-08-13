@@ -52,6 +52,24 @@
       multiplyNumeric(menu);
       console.table(menu);
 
+      // mdn
+
+      function newCat(name, breed, color) {
+      this.name = name;
+      this.breed = breed;
+      this.color = color;
+      this.greeting = function() {
+      console.log(`Hello, said ${ this.name } the ${ this.breed }.`);
+      }
+      }
+
+      const cat = new newCat('Bertie', 'Cymric', 'white');
+      const cat2 = new newCat(`Elfie',  'Aphrodite Giant', 'ginger');
+
+      cat.greeting();
+      cat2.greeting();
+
+
       // // print to dev console:
       // console.log("Hello, World!")
 
