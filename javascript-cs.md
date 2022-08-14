@@ -1,6 +1,12 @@
 # JavaScript Cheat Sheet
 
-## Arrays
+## Strings & Arrays
+
+string`.split("")` converts string > array
+
+array`.reverse()` reverses order of array
+
+array`.join("")` converts array to string
 
 ```js
 // Reversing Letters in a String: Convert to an array!
@@ -10,6 +16,16 @@ const reverseString = function (string) {
   // .reverse = reverses the order of the array
   // .join = converts array to string
 };
+```
+
+### `.map()`
+
+- takes an array and returns a new array of same length
+- always returns same # of items
+- factory machine: takes raw material, stamp it, kick out item on other end
+
+```js
+
 ```
 
 ## Functions: Optional Arguments
@@ -28,8 +44,8 @@ const removeFromArray = function (myArray, ...extraArgs) {
 ## Is variable a number?
 
 ```js
-if (typeof num1 !== "number");  // not a number
-if (!Number.isInteger(number);  // not an integer
+if (typeof num1 !== "number"); // not a number
+if (!Number.isInteger(number)); // not an integer
 ```
 
 ## Rounding w/o trailing `.0`
