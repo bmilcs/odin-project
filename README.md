@@ -6,11 +6,9 @@ The purpose of this repo is to track all progress made toward [_my primary goals
 
 ## Project List
 
-These assignments were tackled with a growth mindset and I did not reference the work of others while working through them.
+These assignments were tackled with a growth mindset and I did not reference the work of others while completing them. In other words, these are _learner's solutions_, written with the intent of practicing the fundamentals and developing problem solving skills.
 
-In other words, these are _learner's solutions_, written with the intention of practicing the fundamentals and developing problem solving skills.
-
-If you're looking for the best practices, look elsewhere!
+> If you're looking for the best practices, look elsewhere!
 
 ### Foundations
 
