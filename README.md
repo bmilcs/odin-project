@@ -29,6 +29,8 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 ## Progress
 
+**Start date**: June 30th, 2022
+
 - [ ] **Foundations**
 
   - [x] Introduction
