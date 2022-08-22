@@ -313,6 +313,8 @@ DIV is one of the most basic HTML elements.
 
 # [Emmet (Visual Studio Code)](https://docs.emmet.io/abbreviations/syntax/)
 
+- [Emmet Cheat Sheet](https://docs.emmet.io/cheat-sheet/)
+
 Creating elements
 
 ```html
