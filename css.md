@@ -1110,3 +1110,32 @@ flex-flow: flex-direction, flex-wrap;
 /* example */
 flex-flow: row wrap;
 ```
+
+## Emmet
+
+```css
+* {
+  /* bxz */
+  box-shadow: inset hoff voff blur #000;
+  /* ts */
+  text-shadow: hoff voff blur #000;
+  /* bd */
+  border: 1px solid #000;
+  /* c */
+  color: #000;
+  /* bgc */
+  background-color: #fff;
+  /* c */
+  color: #000;
+  /* df */
+  display: flex;
+  /* jc */
+  justify-content: start;
+  /* ai */
+  align-items: start;
+  /* ta */
+  text-align: left;
+  /* m:a */
+  margin: auto;
+}
+```
