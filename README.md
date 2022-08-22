@@ -2,13 +2,11 @@
 
 Welcome to my walk-through of [_The Odin Project_](https://www.theodinproject.com). T.O.P. is a free, open source curriculum that helps aspiring students become full stack web developers.
 
-The purpose of this repo is to track all progress made toward [_my primary goals_](#goals), to showcase my project work and to provide a central location for my web development notes.
+The purpose of this repo is to track progress, to showcase project work and to provide a central location for web development notes.
 
 ## Project List
 
 These assignments were tackled with a growth mindset and I did not reference the work of others while completing them. In other words, these are _learner's solutions_, written with the intent of practicing the fundamentals and developing problem solving skills.
-
-> If you're looking for the best practices, look elsewhere!
 
 ### Foundations
 
@@ -29,9 +27,9 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 ## Progress
 
-**Start date**: June 30th, 2022
+**Start date**: 6/30/2022
 
-- [ ] **Foundations**
+- [x] **Foundations** [Completed: 8/22/2022]
 
   - [x] Introduction
   - [x] Prerequisites
@@ -40,8 +38,8 @@ These assignments were tackled with a growth mindset and I did not reference the
   - [x] CSS Foundations
   - [x] Flexbox
   - [x] JavaScript Basics
-  - [ ] The Back End
-  - [ ] Conclusion
+  - [x] The Back End
+  - [x] Conclusion
 
 - [ ] **Intermediate HTML & CSS**
 
@@ -82,15 +80,6 @@ These assignments were tackled with a growth mindset and I did not reference the
 - [ ] **Getting Hired**
   - [ ] Preparing for Your Job Search
   - [ ] Applying to and Interviewing for Jobs
-
-## Goals
-
-By the end of the year 2022, my goals are to:
-
-- Improve my writing and communication skills.
-- Build a portfolio and personal homepage.
-- Complete The Odin Project curriculum.
-- Become a full stack web developer.
 
 ## Deployment
 
