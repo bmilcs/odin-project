@@ -491,6 +491,80 @@ p{Click }+a{here}+{ to continue}
 <a href="">here</a> to continue
 ```
 
+# SVGs
+
+`SVG` = Scalable Vector Graphic
+
+SVGs are a very common image format on the web. They're an incredibly powerful tool for creating **high-quality**, **dynamic** images.
+
+SVGs are a _scalable_ image format, which means they retain quality without increasing file size. They're very useful because you can **change their properties through CSS & JavaScript.**
+
+Common uses:
+
+- Icons
+- Graphs/Charts
+- Large, simple images
+- Patterned backgrounds
+- Applying effects to other elements (_via SVG filters_)
+
+Vector graphics are images defined _by math_. Conversely, raster graphics are defined by a _grid of pixels._ Raster graphics are limited to the size of the pixel grid and if you increase their size, you also increase the file size.
+
+SVGs are defined used `XML`. Extensible Markup Language is an HTML-like syntax used for APIs, RSS, spreadsheet & word editing software, etc.
+
+**Benefits of XML/SVG:**
+
+- Human readable
+- Designed to be interoperable with html
+  - It can be placed directly in an HTML file without any changes
+
+**Drawbacks**
+
+- Great for simple graphics, but they are extremely inefficient at storing complex images
+- Photo-realistic, fine details or texture are a poor choice for SVG
+
+## Anatomy of an SVG
+
+You will **not** want to create SVGs from scratch. Adobe Illustrator or Figma are popular choices for creating SVGs.
+
+It's common to download SVGs and tweak/adjust them.
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect x="0" y="0" width="100" height="100" fill="burlywood" />
+  <path
+    d="M 10 10 H 90 V 90 L 10 60"
+    fill="transparent"
+    stroke="black"
+    stroke-width="3"
+  />
+  <circle cx="50" cy="50" r="20" class="svg-circle" />
+  <g class="svg-text-group">
+    <text x="20" y="25" rotate="10" id="hello-text">Hello!</text>
+    <use href="#hello-text" x="-10" y="65" fill="white" />
+  </g>
+</svg>
+```
+
+- `xlmns` XML NameSpace: what dialect of XML you're using.
+- `viewbox`: Defines bounds of your SVG - positions of different points of the element in your SVG, aspect ratio and origin of the SVG
+- ` class``id `: Same as HTML, allowing you to target an element w/ JavaScript/CSS
+- `<circle>`, `<rect>`, `<path>`, `<text>` are the building blocks of SVGs.
+- `fill`, `stroke` are attributes that can be changed via CSS
+
+## Embedding SVGs
+
+Linking SVGs is similar to linking other images. _However_, the contents of the SVG will **not** be available from the webpage.
+
+Inline SVGs (pasting contents directly into your code) will render correctly and allow you to access SVG properties via JavaScript or CSS.
+
+Drawbacks of inline SVGs:
+
+- Makes your code harder to read
+- Makes your page less cacheable
+- Large SVGs can delay HTML loading times
+
+If don't need to weak the SVG code w/ JS/CSS, externally link SVGs because its cleaner and simpler.
+
 # Tables
 
 Tables are created with the `<table>` tag.
