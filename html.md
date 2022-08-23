@@ -490,3 +490,125 @@ p{Click }+a{here}+{ to continue}
 <p>Click</p>
 <a href="">here</a> to continue
 ```
+
+# Tables
+
+Tables are created with the `<table>` tag.
+
+Table cells are created with the `<td>` tag.
+
+Rows are created with `<tr>` tag.
+
+Headers are created with the `<th>` tag.
+
+**Allowing cells to span across multiple rows/columns**
+
+```html
+<table>
+  <tr>
+    <th colspan="2">Double Header</th>
+  </tr>
+  <tr>
+    <td rowspan="2">2 Row Cell</td>
+    <td>Regular Cell</td>
+  </tr>
+  <tr>
+    <td>Regular Cell</td>
+  </tr>
+</table>
+```
+
+![HTML Table](img/table-example.png)
+
+## **Advanced Table Features & Accessibility**
+
+### Captions
+
+**Captions** contain a description of the table contents. It is particularly useful for **blind people** by helping them decide if they want to hear all of the table data.
+
+Captions are added via the `<caption>` tag. It should be placed just below the opening `<table>` tag.
+
+### Table Structure: <thead>, <tfoot>, <tbody>
+
+`<thead>`, `<tfoot>` and `<tbody>` do **NOT** add accessibility OR visual enhancements on their own.
+
+They are useful for _styling and layout_.
+
+`<thead>` is the table header and should be placed at the top of your table, under any `<col>/<colgroup>` elements.
+
+`<tfoot>` is the table footer and it's useful for the summing of rows. It will automatically render at the bottom of the table, regardless of where it's placed.
+
+`<tbody>` is a wrapper for the other parts of a table.
+
+### Nesting Tables
+
+Tables can be nested within each other: a table within the cell of another table.
+
+### Tables for the Visually Impaired
+
+Screen readers identify **all headers** and use them to make programmatic associations between those headers and the cells they relate to.
+
+**The `scope` attribute**
+
+`scope` attribute can be added to `<th>` (table headers) to tell screen readers what the header is a header for. IE: Is it a header for a row or column?
+
+`scope` has two more values: `colgroup` and `rowgroup`. These sit over multiple columns or rows.
+
+```html
+<thead>
+  <tr>
+    <th scope="col">Purchase</th>
+    <th scope="col">Location</th>
+    <th scope="col">Date</th>
+    <th scope="col">Evaluation</th>
+    <th scope="col">Cost (€)</th>
+  </tr>
+</thead>
+
+<tr>
+  <th scope="row">Haircut</th>
+  <td>Hairdresser</td>
+  <td>12/09</td>
+  <td>Great idea</td>
+  <td>30</td>
+</tr>
+```
+
+**`id` & `headers` Attributes**
+
+`id` and `headers` are alternatives for `scope`. They create associations between headers and cells.
+
+1. Add unique `id` to each `<th>`
+2. Add `headers` to each `<td>`.
+   1. `headers` should contain a list of `id`'s of all `<th>` elements that act as a header for that cell, separated by spaces.
+
+## Best Practices
+
+[Excellent Resource](https://pencilandpaper.io/articles/ux-pattern-analysis-enterprise-data-tables/)
+
+### Text
+
+1. **Left-align columns** - We read left to right. Don't reinvent the wheel.
+2. **Match Heading Alignment to Column**
+3. **Never use center alignment**
+   1. _Right Alignment_ is key for enhancing readability, mental calculations & comparisons between rows.
+4. **Avoid Duplication**: Avoid repeating titles in every cell. Add common words to a header.
+
+### Numbers
+
+1. **Right Align Numeric Columns**
+2. **Use Monospace Fonts** (tabular typography)
+
+Exception: 1st column, date with numbers - use **left align**.
+
+**Quantitative Numbers** RIGHT ALIGN
+
+- Amounts, money, quantities
+- Measures
+- Percentages
+
+**Qualitative Numbers** LEFT ALIGN
+
+- Date
+- Zip, Postal Code
+- Phone Number
