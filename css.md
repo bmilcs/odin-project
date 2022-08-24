@@ -1139,3 +1139,143 @@ flex-flow: row wrap;
   margin: auto;
 }
 ```
+
+## CSS Resets / Reboots
+
+CSS Resets are used to deal with styling inconsistencies across browsers.
+
+Most popular reset is the [Meyer reset](https://meyerweb.com/eric/tools/css/reset/reset.css). It _removes_ default styling.
+
+[HTML5 Reset](https://html5doctor.com/html-5-reset-stylesheet/) is a more modern reset based on the Meyer reset.
+
+[Normalize.css](https://necolas.github.io/normalize.css/) doesn't remove default CSS styles, but replaces them with a standardized set of rules.
+
+**List of alternatives:**
+
+- [Vanilla CSS Un-Reset](http://cssreset.com/scripts/vanilla-css-un-reset/): Re-styles elements after you un-style them w/ a reset.
+- [MiniReset.css](https://github.com/jgthms/minireset.css): Wipes out styles, semantic markup has no affect, retains some defaults
+- [Sanitize.css](https://jonathantneal.github.io/sanitize.css/): Modern best practices, opinionated
+
+**Reboot**
+
+- [Reboot](https://github.com/twbs/bootstrap/blob/v4-dev/scss/_reboot.scss): SCSS, Part of bootstrap repo, builds upon Normalize. Opinionated, additional class-specific styles.
+
+**Browserlist**
+
+- [Browserlist](https://css-tricks.com/browserlist-good-idea/)
+
+## CSS Units
+
+**Absolute units** remain the same in any context. Pixels (`px`) is the only absolute measurement used in web design and they do not change relative to anything else on the page.
+
+**Relative units** change based on their context.
+
+### `em` and `rem`
+
+Both `em` and `rem` refer to _font size_ but are often used to define other sizes in CSS.
+
+Use `rem` as a rule of thumb.
+
+`1em` is the `font-size` of an element (or the _element's parent_ if you're setting `font-size`).
+
+If an element's `font-size: 16px`, setting `width: 4em` would make it's width `64px` because `(16px * 4)`.
+
+`1rem` is the `font-size` of the root element: `:root` or `html`. It works the same as `em` but without having to keep track of the parent's font size.
+
+### Viewport Units
+
+`vw` and `vh` relate to the size of the viewport.
+
+`1vh` = `1%` of viewport height.
+
+These are useful for full-height heroes, full-screen app-like interfaces.
+
+### Numbers, Lengths, Percentages
+
+`<integer>` is a whole number: `1024` `-55`
+
+`<number>` is a decimal number: `128` `123.11` `-0.55`
+
+`<dimension>` is a `<number>` with a unit attached to it: `45deg` `5s` `10px`. `<dimension>` is an umbrella category for:
+
+- `<length>`
+- `<angle>`
+- `<time>`
+- `<percentage>`
+
+### More Units
+
+- `ch` = width of the font's `0` character.
+- `lh` = line height of an element
+- `vmin` = % of viewport's width or height (_whichever is smaller_)
+- `vmax` = % of viewport's width or height (_whichever is larger_)
+
+### When to use `px`, `em`, `rem`
+
+[Source](https://codyloyd.com/2021/css-units/)
+
+Cody recommends using `rem` for fonts and `px` for everything else.
+
+It's a matter of design preference. When setting margins/paddings to `rem`, they will increase in size as the user zooms in.
+
+Setting margings/padding to `px` and fonts to `rem` will allow the text to grow, but everything else will remain static.
+
+### Using Viewports
+
+**Responsive Typography**
+
+Using viewport units for responsive typography is becoming popular, because it allows text to grow/shrink based on the size of the browser window.
+
+**Direct scaling** is too dramatic, so developers use `calc()` to control it. For example, `font-size: calc(16px + 0.5vw)`.
+
+Line height is another use case for viewport units.
+
+```css
+body {
+  /* font grows 1px for every 100px of viewport width */
+  font-size: calc(16px + 1vw);
+  /* leading grows along with font, */
+  /* with an additional 0.1em + 0.5px per 100px of the viewport */
+  line-height: calc(1.1em + 0.5vw);
+}
+```
+
+**Full-Height Layouts, Hero Images, Sticky Footers**
+
+Full Height:
+
+`height: 100vh` constrains your web app to the _height of your viewport_. Make sure to apply `overflow` values on internal elements to prevent content from being cut off.
+(`overflow-y: auto;`)
+
+Sticky Footers:
+
+`min-height: 100vh` will make your footer remain at the bottom of your page.
+
+Hero Images:
+
+Apply `height: 100vh` for full-screen sections and hero images.
+
+**Fluid Aspect Ratios**
+
+Constraining height-to-width ratios of an element can be useful (ie: embedded content).
+
+For full-screen videos:
+
+```css
+/* full-width * aspect-ratio */
+.full-width {
+  width: 100vw;
+  height: calc(100vw * (9 / 16));
+}
+```
+
+**Breaking the Container**
+
+To allow full width backgrounds to spill outside of a restricted container:
+
+```css
+.full-width {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+```
