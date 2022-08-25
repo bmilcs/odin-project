@@ -1279,3 +1279,273 @@ To allow full width backgrounds to spill outside of a restricted container:
   margin-right: calc(50% - 50vw);
 }
 ```
+
+## Fonts
+
+**System Font Stack**
+
+If a `font-family` that isn't installed on a user's computer, a fallback font is displayed. This is why a long list of fonts are often listed.
+
+A popular stack is the **system font** stack, which defaults to the operating system's UI font.
+
+> Useful when going for a "neutral" font-style
+
+```css
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+```
+
+**Online Font Libraries**
+
+Using fonts that are not stored on a user's computer is done through font libraries:
+
+- [Google Fonts](https://fonts.google.com/)
+- [Font Library](https://fontlibrary.org/)
+- [Adobe Fonts](https://fonts.adobe.com/)
+
+To add them to a site, use one of the following:
+
+> Always add a backup font
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+```
+
+```css
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+```
+
+**Downloaded Fonts**
+
+You can also import and define custom fonts using the `@font-face` rule. Note: Not all font file formats are supported by browsers.
+
+```css
+@font-face {
+  font-family: my-cool-font;
+  src: url(../fonts/the-font-file.woff);
+}
+```
+
+**Text Styles**
+
+**`font-style`**
+
+`<em>` allows you to italicize text in the middle of a sentence but it also adds emphasis to that text.
+
+If you just want text to be bold, italic, underlined or highlighted, **use a CSS property.**
+
+If you want to provide emphasis, use an html element.
+
+```css
+h1 {
+  font-style: italic;
+}
+```
+
+**`letter-spacing`**
+
+Some fonts have too little or too much spacing between letters. To change this, use:
+
+```css
+h1 {
+  letter-spacing: 0.5em;
+}
+```
+
+**`line-height`**
+
+Line height adjusts the space between lines of text and increasing it improves readability.
+
+```css
+p {
+  line-height: 1.5;
+}
+```
+
+**`text-transform`**
+
+Text transform allows you to change the letter case.
+
+```css
+p {
+  text-transform: uppercase;
+  text-transform: lowercase;
+  text-transform: capitalize;
+}
+```
+
+**`text-shadow`**
+
+Text shadow is good for headers, etc.
+
+```css
+h1 {
+  /* offset-x | offset-y | blur-radius | color */
+  text-shadow: 1px 1px 2px black;
+
+  /* color | offset-x | offset-y | blur-radius */
+  text-shadow: #fc0 1px 0 10px;
+
+  /* offset-x | offset-y | color */
+  text-shadow: 5px 5px #558abb;
+
+  /* color | offset-x | offset-y */
+  text-shadow: white 2px 5px;
+
+  /* offset-x | offset-y
+/* Use defaults for color and blur-radius */
+  text-shadow: 5px 10px;
+}
+```
+
+**`ellipsis`**
+
+`text-overflow: ellipsis` combined with a few other css rules can allow you to insert an ellipsis instead of overflowing out of an element:
+
+```css
+.overflowing {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+```
+
+## More CSS Properties
+
+### Background
+
+Background is a shorthand property for 8 different background related properties:
+
+- `background-attachment`
+- `background-clip`
+- `background-color`
+- `background-image`
+- `background-origin`
+- `background-position`
+- `background-repeat`
+- `background-size`
+
+Syntax:
+
+```css
+/* Using a <background-color> */
+background: green;
+
+/* Using a <bg-image> and <repeat-style> */
+background: url("test.jpg") repeat-y;
+
+/* Using a <box> and <background-color> */
+background: border-box red;
+
+/* A single image, centered and scaled */
+background: no-repeat center/80% url("../img/image.png");
+
+/* Global values */
+background: inherit;
+background: initial;
+background: revert;
+background: revert-layer;
+background: unset;
+```
+
+The background property is specified **as one or more background layers,** separated by commas.
+
+[Codepen of examples](https://codepen.io/webinspect/pen/emBzRd)
+
+### Border
+
+Border is a shorthand property for:
+
+- `border-color`
+- `border-style`
+- `border-width`
+
+Border Syntax:
+
+```css
+/* style */
+border: solid;
+
+/* width | style */
+border: 2px dotted;
+
+/* style | color */
+border: outset #f33;
+
+/* width | style | color */
+border: medium dashed green;
+```
+
+`border-radius` adds rounded corners.
+
+### Box-shadow
+
+`box-shadow` adds a shadow around an element's frame and it accepts multiple values:
+
+- inset
+- offset-x
+- offset-y
+- blur-radius
+- spread-radius
+- color
+
+```css
+/* Keyword values */
+box-shadow: none;
+
+/* offset-x | offset-y | color */
+box-shadow: 60px -16px teal;
+
+/* offset-x | offset-y | blur-radius | color */
+box-shadow: 10px 5px 5px black;
+
+/* offset-x | offset-y | blur-radius | spread-radius | color */
+box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+
+/* inset | offset-x | offset-y | color */
+box-shadow: inset 5em 1em gold;
+
+/* Any number of shadows, separated by commas */
+box-shadow: 3px 3px red, -1em 0 0.4em olive;
+```
+
+### Overflow
+
+Overflow is a shorthand property that sets the behavior when an element's content is too big to fit in its block formatting context.
+
+`visible` allows content to spill outside padding box.
+
+`hidden` hides or clips content that doesn't fit, and the content is scrollable.
+
+`clip` is similar to `hidden` but doesn't allow scrolling.
+
+`scroll` clips content to fit inside the padding box, and shows scrollbars.
+
+`auto` adds scrollbars on desktop. Looks the same as `visible` but still establishes a new block formatting context.
+
+`overlay` is the same as `auto` but with scrollbars drawn on top of content instead of taking up space.
+
+```css
+/* Keyword values */
+overflow: visible;
+overflow: hidden;
+overflow: clip;
+overflow: scroll;
+overflow: auto;
+overflow: hidden visible;
+```
+
+### Opacity
+
+Opacity sets opacity of an element, or the degree to which content behind an element is hidden.
+
+`opacity` is the opposite of transparency.
+
+```css
+/* opaque */
+opacity: 1;
+/* transparent */
+opacity: 0;
+```
