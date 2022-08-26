@@ -1549,3 +1549,36 @@ opacity: 1;
 /* transparent */
 opacity: 0;
 ```
+
+## Advanced Selectors
+
+Parent & Sibling Combinators
+
+- `>` Child combinator
+- `+` Adjacent Sibling combinator
+  - Only the 1st match
+- `~` General Sibling combinator
+  - All siblings
+
+```css
+/* all direct children div elements */
+main > div {
+}
+
+/* all direct grandchildren div elements */
+main > div > div {
+}
+
+/* only elements on same level of indentation (adjacent) */
+/* 1st div that directly follows .group1 */
+.group1 + div {
+}
+
+/* 2nd div that directly follows .group1 */
+.group1 + div + div {
+}
+
+/* all div siblings/adjacent to .group1 */
+.group1 ~ div {
+}
+```
