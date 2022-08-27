@@ -1582,3 +1582,166 @@ main > div > div {
 .group1 ~ div {
 }
 ```
+
+### Pseudo-classes
+
+Pseudo-classes give us different ways to _target elements_. Some are based on:
+
+- Their position or structure within HTML
+- State of an element
+- How user is currently interacting with it
+
+Pseudo-classes share the same specificity as regular classes: `0,0,1,0`.
+
+> Specificty notation: `inline, id, class, tag`, +1 per instance
+
+**Dynamic/User Action Pseudo-classes**
+
+`:focus` element is selected by user via cursor OR keyboard
+
+`:hover` anything under mouse pointer
+
+`:active` anything currently being clicked: great for giving user feedback that their action had an effect.
+
+Hyperlinks are blue and turn purple after clicking them:
+
+```css
+/* This rule will apply to all links */
+a {
+  text-decoration: underline;
+}
+
+/* This will apply to unvisited links */
+a:link {
+  color: blue;
+}
+
+/* And you guessed it, this applies to all links the user has clicked on */
+a:visited {
+  color: purple;
+}
+```
+
+**Structural Pseudo-classes**
+
+Structural pseudo-classes are a powerful way to select elements based on their _position within the DOM_.
+
+`:root` very top level of your document. equivalent to `html` (web), with higher specificity.
+
+- place global CSS rules in `:root` (anything you want available everywhere)
+  - css variables
+  - `box-sizing: border-box`
+
+`:first-child` `:last-child` match elements that are the first or last sibling.
+
+`:empty` matches elements that have no children at all.
+
+`:only-child` matches elements that don't have any siblings.
+
+`:nth-child` flexible with several uses:
+
+```css
+.myList:nth-child(5) {
+  /* Selects the 5th element with class myList */
+}
+
+.myList:nth-child(3n) {
+  /* Selects every 3rd element with class myList */
+}
+
+.myList:nth-child(3n + 3) {
+  /* Selects every 3rd element with class myList, beginning with the 3rd */
+}
+
+.myList:nth-child(even) {
+  /* Selects every even element with class myList */
+}
+```
+
+**Pseudo-elements**
+
+Pseudo-elements are more abstract than pseudo-classes. They allow us to affect parts of our HTML that **aren't elements at all.**
+
+Specificity of pseudo-elements: `0,0,0,1`
+
+`::marker` changes li's bullets/numbers style
+
+` ::first-letter``::first-line ` changes styling to first letter/line of text.
+
+`::selection` change highlighting when a user selects text on page
+
+` ::before``::after ` adds extra elements with CSS, without the need for HTML. These allow you decorate text in many ways:
+
+```html
+<style>
+  .emojify::before {
+    content: "😎 🥸 🤓";
+  }
+
+  .emojify::after {
+    content: "🤓 🥸 😎";
+  }
+</style>
+
+<body>
+  <div>Let's <span class="emojify">emojify</span>this span!</div>
+</body>
+```
+
+**Attribute Selectors**
+
+Attribute examples: ` src='picture.jpg'``href="bmilcs.com" `
+
+Attribute selector specificity: `0,0,1,0`
+
+Basic usage:
+
+- `[attribute]` targets anything where the attribute exists
+- `selector[attribute]` targets a selector with an attribute
+- `[attribute="value"]`
+
+Regex can be used with attribute selectors to select partial matches:
+
+- `[attribute^="value"]` matches values that begin with "value"
+- `[attribute$="value"]` matches strings that end with "value"
+- `[attribute*="value"]` matches strings that contain "value" anywhere
+
+Examples:
+
+```css
+a {
+  color: blue;
+}
+
+/* Internal links, beginning with "#" */
+a[href^="#"] {
+  background-color: gold;
+}
+
+/* Links with "example" anywhere in the URL */
+a[href*="example"] {
+  background-color: silver;
+}
+
+/* Links with "insensitive" anywhere in the URL,
+   regardless of capitalization */
+a[href*="insensitive" i] {
+  color: cyan;
+}
+
+/* Links with "cAsE" anywhere in the URL,
+with matching capitalization */
+a[href*="cAsE" s] {
+  color: pink;
+}
+
+/* Links that end in ".org" */
+a[href$=".org"] {
+  color: red;
+}
+
+/* Links that start with "https" and end in ".org" */
+a[href^="https"][href$=".org"] {
+  color: green;
+}
+```
