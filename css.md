@@ -1552,6 +1552,10 @@ opacity: 0;
 
 ## Advanced Selectors
 
+Exercise: [CSS Diner](https://flukeout.github.io/)
+
+Cheatsheet: [freeCodeCamp](https://www.freecodecamp.org/news/css-selectors-cheat-sheet/)
+
 Parent & Sibling Combinators
 
 - `>` Child combinator
@@ -1622,6 +1626,12 @@ a:visited {
 }
 ```
 
+**UI element states pseudo-classes**
+
+- `:enabled`
+- `:disabled`
+- `:checked`
+
 **Structural Pseudo-classes**
 
 Structural pseudo-classes are a powerful way to select elements based on their _position within the DOM_.
@@ -1658,6 +1668,33 @@ Structural pseudo-classes are a powerful way to select elements based on their _
 }
 ```
 
+`:nth-of-type(x)` matches the x instance of a selector.
+
+- `div:nth-of-type(2)` matches the 2nd div in the dom
+- `div:nth-of-type(2n)` matches every 2nd div: div DIV div DIV
+- `div:nth-of-type(2n+2)` matches every 2nd div, starting at the 2 position: div div div DIV div DIV
+
+`:nth-last-of-type(x)` does the same thing as `:nth-of-type`, starting at the end of the DOM, working upwards
+
+`:target` matches URI fragment identifiers:
+
+```css
+section:target {
+}
+```
+
+```html
+<a href="#cta">Call To Action</a>
+<!-- matches url.com/#cta-->
+<section id="cta"></section>
+```
+
+`:empty` matches elements that don't contain any children
+
+`:not(x)` matches elements that don't contain x
+
+- `div:not(.cta)` matches all divs that don't have a class of `cta`
+
 **Pseudo-elements**
 
 Pseudo-elements are more abstract than pseudo-classes. They allow us to affect parts of our HTML that **aren't elements at all.**
@@ -1666,7 +1703,7 @@ Specificity of pseudo-elements: `0,0,0,1`
 
 `::marker` changes li's bullets/numbers style
 
-` ::first-letter``::first-line ` changes styling to first letter/line of text.
+`::first-letter` `::first-line` changes styling to first letter/line of text.
 
 `::selection` change highlighting when a user selects text on page
 
@@ -1690,7 +1727,7 @@ Specificity of pseudo-elements: `0,0,0,1`
 
 **Attribute Selectors**
 
-Attribute examples: ` src='picture.jpg'``href="bmilcs.com" `
+Attribute examples: ` src='picture.jpg'` `href="bmilcs.com" `
 
 Attribute selector specificity: `0,0,1,0`
 
@@ -1698,13 +1735,15 @@ Basic usage:
 
 - `[attribute]` targets anything where the attribute exists
 - `selector[attribute]` targets a selector with an attribute
-- `[attribute="value"]`
+- `[attribute="value"]` targets an exact value
+- `[attribute~="value"]` targets a whitespace separated list of words, where one of the words is _exactly_ the specified value.
+- `[attribute|="value"]` targets exact match OR starts the specified value followed by - `attribute="value-one"` or `attribute="value"`
 
 Regex can be used with attribute selectors to select partial matches:
 
 - `[attribute^="value"]` matches values that begin with "value"
-- `[attribute$="value"]` matches strings that end with "value"
-- `[attribute*="value"]` matches strings that contain "value" anywhere
+- `[attribute$="value"]` matches values that end with "value"
+- `[attribute*="value"]` matches values that contain "value" anywhere
 
 Examples:
 
