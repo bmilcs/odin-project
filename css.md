@@ -2109,3 +2109,181 @@ May be used as values for the `<basic-shape>` data type, which is used by `clip-
 - `fit-content()`
 - `min-max()`
 - `repeat()`
+
+## Custom CSS Properties
+
+CSS Variables (aka Custom CSS Properties) are useful & powerful tools when writing our CSS files. They allow us to reference a value several times throughout a file and allow us to change all of those values in a single place.
+
+```css
+.error-modal {
+  --color-error-text: red;
+  --modal-border: 1px solid black;
+  --modal-font-size: calc(2rem + 5vw);
+
+  color: var(--color-error-text);
+  border: var(--modal-border);
+  font-size: var(--modal-font-size);
+}
+```
+
+### Fallback Values
+
+`var()` accepts two parameters: a CSS custom property and an optional fallback value. The fallback value is used if the custom property is invalid or hasn't been declared yet.
+
+```css
+.fallback {
+  --color-text: white;
+
+  background-color: var(--undeclared-property, black);
+  color: var(--undeclared-again, var(--color-text, yellow));
+}
+```
+
+### Scope
+
+The scope of custom properties is determined by the selector. This scope includes the selector the custom property lives in, as well as any descendant.
+
+### `:root` Selector
+
+Declaring custom properties in the `:root` selector is essentially the same as the `html` selector, but it has a higher specificity. It allows us to declare global variables that can be used throughout our projects.
+
+```css
+:root {
+  --color-black: #000;
+}
+
+.div-container {
+  background: var(--color-black);
+}
+```
+
+### Creating Themes with Custom Properties
+
+The `:root` selector allows us one way to add themes to our pages.
+
+1. Add `class` attribute on our `html` element (_javascript_)
+2. Add 2 scopes for the CSS custom properties, using the `.dark` and `.light` classes, which contain different values for the same custom CSS properties.
+
+```html
+<div class="container">
+  <p>
+    You're now viewing this example with the
+    <span class="theme-name">dark</span> theme!
+  </p>
+  <button class="theme-toggle">Toggle Theme</button>
+</div>
+```
+
+```css
+:root.dark {
+  --border-btn: 1px solid rgb(220, 220, 220);
+  --color-base-bg: rgb(18, 18, 18);
+  --color-base-text: rgb(240, 240, 240);
+  --color-btn-bg: rgb(36, 36, 36);
+}
+
+:root.light {
+  --border-btn: 1px solid rgb(36, 36, 36);
+  --color-base-bg: rgb(240, 240, 240);
+  --color-base-text: rgb(18, 18, 18);
+  --color-btn-bg: rgb(220, 220, 220);
+}
+
+body,
+.theme-toggle {
+  color: var(--color-base-text);
+}
+
+body {
+  background-color: var(--color-base-bg);
+  padding: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+p {
+  font-size: 1.5rem;
+}
+
+.theme-toggle {
+  background-color: var(--color-btn-bg);
+  border: var(--border-btn);
+  font-size: 1.125rem;
+  padding: 10px 20px;
+}
+
+.theme-toggle:hover {
+  cursor: pointer;
+}
+
+.theme-toggle:focus {
+  outline: var(--border-btn);
+}
+```
+
+```js
+function setTheme() {
+  const root = document.documentElement;
+  const newTheme = root.className === "dark" ? "light" : "dark";
+  root.className = newTheme;
+
+  document.querySelector(".theme-name").textContent = newTheme;
+}
+
+document.querySelector(".theme-toggle").addEventListener("click", setTheme);
+```
+
+## Media Queries
+
+Media Queries allow us to theme our applications based on the user's operating system or user agent (like a browser)'s preference. This is accomplished with the `prefers-color-scheme` media query, which checks if a user has selected a theme preference in their OS/user agent.
+
+- Possible values: `light` or `dark`
+
+```css
+:root {
+  --border-btn: 1px solid rgb(36, 36, 36);
+  --color-base-bg: rgb(240, 240, 240);
+  --color-base-text: rgb(18, 18, 18);
+  --color-btn-bg: rgb(220, 220, 220);
+  --theme-name: "light";
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --border-btn: 1px solid rgb(220, 220, 220);
+    --color-base-bg: rgb(18, 18, 18);
+    --color-base-text: rgb(240, 240, 240);
+    --color-btn-bg: rgb(36, 36, 36);
+    --theme-name: "dark";
+  }
+}
+
+body {
+  background-color: var(--color-base-bg);
+  color: var(--color-base-text);
+  padding: 10px;
+}
+```
+
+**Default**: Light (no preference or browser doesn't support the media query)
+
+If `dark` is the value of `prefers-color-scheme`, the media-query overwrites the default custom properties of `:root`.
+
+### Retrieving Custom CSS in JavaScript
+
+To use the values of custom properties in JavaScript:
+
+```js
+// get variable from inline style
+element.style.getPropertyValue("--my-var");
+
+// get variable from whever
+getComputedStyle(element).getPropertyValue("--my-var");
+
+// set variable on inline style
+element.style.setProperty("--my-var", jsVar + 4);
+```
