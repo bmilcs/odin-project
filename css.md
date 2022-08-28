@@ -2287,3 +2287,106 @@ getComputedStyle(element).getPropertyValue("--my-var");
 // set variable on inline style
 element.style.setProperty("--my-var", jsVar + 4);
 ```
+
+## Browser Compatibility
+
+Browser History:
+
+- 1995 Internet Explorer
+  - Netscape launched Mozilla > Firefox
+- 2003 Apple Safari
+- 2008 Google Chrome
+
+### Today
+
+Chrome & Chromium-based browsers are the dominant player.
+
+A shift has occurred, from standalone applications to HTML5 and Progressive Web Apps, that allow applications to fully function within a web browser.
+
+- Apps like Microsoft Word & Excel can now be utilized through any web browser, without the need of a standalone application.
+
+Different browsers use different **engines** to display info on a page:
+
+- Chrome/Chromium: **Blink**
+- Safari: **WebKit**
+
+Your applications may behave differently depending on what browser you're using.
+
+- Vast majority of apps are designed to work smoothly with **Chromium**, and providing as good performance in other browsers is secondary.
+
+For web development projects to have a broader reach, you must make sure you're testing your web apps **against the browsers which are most likely to be used**
+
+- Chrome
+- Safari
+- Firefox
+- Chromium: Edge, Brave, etc.
+
+You also may need to support less common ones: IE.
+
+### Browser Releases & New CSS Features
+
+**W3C** World Wide Web Consortium is the authority behind developing web standards
+
+- Maximize accessibility
+- Consistency of the web experience
+- Develop new CSS features
+
+### When Is It Safe To Use New Features
+
+Risk is involved when rushing to use new features.
+
+To help prevent compatibility issues, ["Can I Use"](https://caniuse.com/) is a great tool for the job.
+
+Implementing new features should wait until they are supposed by the most common browsers.
+
+### Mobile Browsers
+
+In some areas of the world, mobile users are a **vast majority**.
+
+- Tablets
+- Smartphones
+
+Most popular mobile operating systems:
+
+- Android
+- Apple iOS
+
+You must consider whether your application should be fully mobile compatible:
+
+**iOS & iPadOS**
+
+- Safari is technically the only supported browser.
+- On iOS, Chrome/Firefox are not full browsers.
+  - They use Safari rendering engine (WebKit).
+
+For your web app to work for Apple users, **you have to support WebKit & other technologies used in Safari.**
+
+Mobile browers != Desktop browsers. Adjustments may be needed to work properly on the mobile version of the same browser.
+
+**Different Screen Sizes**
+
+It's impossible to test every possible physical device. Browsers can emulate other devices, but _**only their screen sizes.**_
+
+### The browser's high level structure
+
+1. **UI** address bar, bookmark, back/forward
+2. **Browser Engine** marshals actions between UI/rendering engine.
+3. **Rendering Engine** displays request content. ie: html > parses html/css & displays it on screen
+   1. html, xml, images, others via plugins: pdf
+4. **Networking** calls, HTTP requests
+5. **UI Backend** drawing widgets, combo boxes, windows. Exposes a generic interface that is _not_ platform specific. Underneath it uses the operating system user interface methods.
+6. **JavaScript Interpreter** parse & execute JS code
+7. **Data Storage** persistence layer, saves data locally, cookies. ie: localStorage, IndexedDB, WebSQL, FileSystem
+
+> Chrome runs multiple instances of the rendering engine: 1 per tab.
+
+![Browser High Level Structure](img/browser-high-level.avif)
+
+**Rendering Engines**
+
+- Internet Explorer: Trident
+- Firefox: Gecko
+- Safari: WebKit
+- Chrome: Blink (fork of WebKit)
+
+> WebKit is an open source rendering engine. Began as an engine for Linux & was modified by Apple to support Mac/Windows.
