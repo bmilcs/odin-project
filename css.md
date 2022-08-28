@@ -2390,3 +2390,73 @@ It's impossible to test every possible physical device. Browsers can emulate oth
 - Chrome: Blink (fork of WebKit)
 
 > WebKit is an open source rendering engine. Began as an engine for Linux & was modified by Apple to support Mac/Windows.
+
+## Frameworks & Preprocessors
+
+CSS Frameworks & Preprocessors can make writing CSS more streamlined and less tedious.
+
+They are important because **they are commonly found in the workplace.** Many job requirements include _Bootstrap, SASS, and related technology._
+
+### Frameworks
+
+[Bootstrap](https://getbootstrap.com/), [Tailwind](https://tailwindcss.com/), [Bulma](https://bulma.io/) & [Foundation](https://get.foundation/)
+
+- Bundle CSS you can use/access via classes defined by the framework
+- Do a lot of the heavy lifting of packaging up commonly used CSS code
+  - Icons
+  - Interactions (dropdown menus)
+
+> Example: `.btn` adds all the needed styles to your buttons
+
+In order to use a framework, you need to understand:
+
+- how it expects you to lay out your site.
+- which classes it uses to designate its particular batch of styles
+
+**Advantages**
+
+- Gives teams ready made documentation
+- Online communities: Easy access to help
+- Grid system
+- Speed of project delivery
+- "I'm not a designer!"
+- Dealing with CSS bugs & Browser compatibility
+- Help with Responsive design
+
+**Disadvantages**:
+
+- All websites end up looking the same
+- New developers jump into learning frames too early in their education
+  - Never learn vanilla CSS
+  - Don't get enough practice to solidify the fundamentals
+- Overriding a framework's styling or debugging style issues is difficult if you haven't mastered CSS fundamentals
+  - Need to know what's happening under the hood
+
+### Preprocessors
+
+[SASS](https://sass-lang.com/), [LESS](https://lesscss.org/), [Stylus](https://stylus-lang.com/)
+
+Preprocessors (aka precompilers) are languages that help you write CSS more easily.
+
+- Reduce repetition
+- Provide time-saving & code-saving features
+  - Write Loops
+  - Join multiple stylesheets
+  - Nest classes
+
+Preprocessors are **extensions** to vanilla CSS that provide extra functionality:
+
+- Nesting
+- Mixins
+- Variables
+
+When you run the processor, it takes your code and turns it into vanilla CSS that you can import into your project.
+
+**Disadvantages**
+
+- Debugging is harder
+- Compilation slows down development
+- Can produce very large CSS files
+- Maintenance & Over-engineering
+- Tooling & Developer Convenience
+- Saving generated files
