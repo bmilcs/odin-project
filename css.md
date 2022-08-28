@@ -1834,3 +1834,278 @@ Sticky elements act like normal elements _until you scroll past them_, then they
 - Stay within its parent element. If you scroll beyond the parent, it disappears.
 - Common use cases:
   - Section headings
+
+## CSS Functions
+
+[Practical Uses of CSS Math Functions](https://web.dev/min-max-clamp/)
+
+CSS Properties that end with a pair of parenthesis and a value between them are called CSS Functions.
+
+Functions are reusable pieces of code which perform specific tasks. They are passed "arguments" between parenthesis, which are used by the function in a specific way.
+
+```css
+color: rgb(0, 42, 255);
+background: linear-gradient(90deg, blue, red);
+```
+
+The `color` property's value is the function `rgb()`, which accepts numbers for its arguments. It processes those numbers to calculate the correct color.
+
+The `background` property's value is the function `linear-gradient()`, which is a function that generates a gradient image based on the parameters it's given.
+
+> CSS does NOT allow us to create OUR OWN functions. CSS is bundled with premade functions to help solve the most common styling problems.`
+
+**CSS Functions for Responsive Design**
+
+There are several CSS functions that help with creating a responsive design.
+
+### `calc()`
+
+Most powerful use cases for calc are:
+
+- Mixing Units
+- Ability to nest `calc(calc() - calc())`
+
+> This example shows how `calc()` can affect layout, but it's not the best way to go about it.
+
+```css
+:root {
+  --header: 3rem;
+  --footer: 40px;
+  --main: calc(100vh - calc(var(--header) + var(--footer)));
+
+  /* pseudocode: */
+  main = 100% viewport height - (header's height + footer's height)
+}
+```
+
+### `min()` & `max()`
+
+Both `min` & `max` are great for creating responsive websites.
+
+`min` selects the smallest value in its list of parameters
+
+- behaves as a boundary for the `maximum` allowed value
+- useful for
+  - limiting size of container `min(400px, 50%)`
+  - 400px on large screens, 50% on small screens
+
+`max` selects the largest value in its list of parameters
+
+- behaves as a boundary for the `minimum` allowed value
+- most useful when the
+  - viewing window is exceptionally small
+  - the user increases the content size by using the browser's zoom feature
+  - when accesibility is important
+- Basic math can be done within within min/max's parameters
+
+```css
+width: min(150px, 100%);
+height: min(150px, 100%);
+
+- if 150px is smaller than 100% of the parent's width/height, 150px is used.
+- if 100% of the parent's width/height is smaller than 150px, 100% is used.
+
+width: max(100px, 4em, 50%);
+
+- largest value wins: 100px, 4em, 50%
+
+/* basic math example */
+min(80ch, 100vw - 2rem);
+- smallest value is selected: 80ch OR 100vw - 2rem
+```
+
+### `clamp()`
+
+`clamp` is another great way to make elements fluid & responsive. It accepts 3 values:
+
+```css
+h1 {
+  font-size: clamp(320px, 80vw, 60rem);
+}
+```
+
+1. Smallest acceptable value (320px)
+2. Ideal value (80vw)
+3. Largest value (60rem)
+
+### Text: Perfect Width
+
+Anything from 45 to 75 characters is widely regarded as a satisfactory length of line for text:
+
+```css
+p {
+  width: clamp(45ch, 50%, 75ch);
+}
+```
+
+Alternatively, if you want an element to be `50%` wide and not exceed `75ch`:
+
+```css
+p {
+  width: min(75ch, 50%);
+}
+```
+
+Or, if you want the element to be at least `45ch`:
+
+```css
+p {
+  width: max(45ch, 50%);
+}
+```
+
+### Padding Management
+
+Enable an element to have additional padding at larger screen sizes, while maintaining a minimum padding at smaller screen sizes.
+
+```css
+footer {
+  padding: var(--blockPadding) max(2rem, 50vw - var(--contentWidth) / 2);
+}
+
+.element {
+  padding: 1.5rem clamp(1rem, 5%, 3rem);
+}
+```
+
+### Fluid Typography
+
+`clamp()` is great for accomplishing fluid typography. You can set a minimum, ideal and maximum size that scales with the viewport width:
+
+```css
+p {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  - minimum: 1.5rem
+  - ideal:   5vw
+  - max:     3rem
+}
+```
+
+### Creating HSL Color Pallette w/ `calc()`
+
+```css
+.colors {
+  --base-hue: 140;
+  --saturation: 95%;
+  --lightness: 80%;
+  --rotation: 60;
+
+  color: #222;
+  text-align: center;
+}
+
+.color {
+  padding: 0.25rem;
+  background-color: hsl(var(--hue), var(--saturation), var(--lightness));
+}
+
+.color1 {
+  --hue: calc(var(--base-hue));
+}
+
+.color2 {
+  --hue: calc(var(--base-hue) + var(--rotation));
+}
+
+.color3 {
+  --hue: calc(var(--base-hue) + var(--rotation) * 2);
+}
+```
+
+### Contextual Margins w/ `max()`
+
+- Tall viewports (phones/tablets): `8vh` is used
+- Short viewports (monitors): `2rem` is used
+
+```css
+.element + .element {
+  margin-top: max(8vh, 2rem);
+}
+```
+
+### Other CSS Functions
+
+1. `url()` set background-image, list-style, cursor, border, etc.
+2. `var()` insert the value of a CSS variable.
+
+**Transform Functions**
+
+- `translate(x, y)` \*
+- `scale()` \*
+- `rotate()` \*
+- `perspective()`
+
+**Stepped Value Functions**
+
+- `round()` rounding
+- `mod()` modulus
+
+**Exponential Functions**
+
+- `pow(a,b)` a to the power of b
+- `sqrt(a)` square root of a
+
+**Sign-related Functions**
+
+- `abs()` absolute value
+- `sign()` returns -1 (negative #), 1 (positive #)
+
+**Filter Functions**
+
+Applies graphical effect on an**Counter Functions**
+
+- `drop-shadow()`
+- `grayscale()`
+- `hue-rotate()`
+- `invert()`
+- `opacity()`
+- `saturate()`
+- `sepia()`
+
+**Color Functions**
+
+- `rgb()` `rgba()`
+- `hsl()` `hsla()`
+
+**Image Functions**
+
+May be used wherever an `<image>` is valid as a value for a property:
+
+- `content` for pseudo-element
+- `background-image`
+- `list-style-image`
+- `border-image-source`
+- `cursor`
+
+Functions:
+
+- `conic-gradient()` \* circular gradient
+- `linear-gradient()` \* linear gradient
+- `cross-fade()`
+
+**Counter Functions**
+
+- `counter()`
+
+**Shape Functions**
+
+May be used as values for the `<basic-shape>` data type, which is used by `clip-path`, `offset-path` and `shape-outside` properties.
+
+- `circle()`
+- `ellipse()`
+- `inset()`
+- `polygon()`
+- `path()`
+
+**Reference Functions**
+
+- `attr()`
+- `env()`
+- `url()`
+- `var()`
+
+**CSS Grid Functions**
+
+- `fit-content()`
+- `min-max()`
+- `repeat()`
