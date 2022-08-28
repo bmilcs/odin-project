@@ -1784,3 +1784,53 @@ a[href^="https"][href$=".org"] {
   color: green;
 }
 ```
+
+## Positioning
+
+[Learn CSS Position in 9 Minutes](https://www.youtube.com/watch?v=jx5jmI0UlXU)
+
+### Static Positioning
+
+Static is the default positioning mode for all elements.
+
+`position: static`
+
+- `top` `right` `bottom` `left` `z-index` have **NO EFFECT** with static positioning.
+
+### Relative positioning
+
+Relative positioning gives `top` `right` (etc.) the ability to displace the element _relative_ to its normal position.
+
+`position: relative`
+
+- Meaning: "relative to itself"
+- Has no effect until `top` `left` `z-index` etc. are added
+- Makes a parent element the reference point for children with absolute positioning
+
+### Absolute Positioning
+
+Absolute positioning lets you position something at **an exact point** on the screen without disturbing elements around it.
+
+- Removes the element from the normal document flow while **_being positioned relative to an ancestor element_**.
+- Common use cases:
+  - Modals
+  - Image w/ caption on it
+  - Icons on top of other elements
+
+### Fixed Positioning
+
+Fixed elements are removed from the normal flow of the document and positioned relative to the `viewport`.
+
+- `top` `bottom` `left` `right` properties position it and it remains in position while the user scrolls.
+- Common use cases:
+  - Navigation bars
+  - Floating chat buttons
+
+### [Sticky Positioning](https://codepen.io/theanam/pen/MPLBYy)
+
+Sticky elements act like normal elements _until you scroll past them_, then they start to behave like fixed elements.
+
+- Are not taken out of the normal flow of the document.
+- Stay within its parent element. If you scroll beyond the parent, it disappears.
+- Common use cases:
+  - Section headings
