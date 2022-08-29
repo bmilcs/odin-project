@@ -1,4 +1,5 @@
 # JavaScript
+
 **JAVASCRIPT** is a scripting language that allows you change CSS & HTML elements after site is loaded. It makes web pages interactive and engaging for users.
 
 ## Running JavaScript Code
@@ -35,9 +36,10 @@ To view the Console, hit `F12` while on a page and click on the Console tab.
 Variables are "storage containers" for data in your code
 
 There are 3 ways to create a variable:
-  - `let` = modern, preferred method
-  - `var` = old method, similar to `let`, but it has differences
-  - `constant`
+
+- `let` = modern, preferred method
+- `var` = old method, similar to `let`, but it has differences
+- `constant`
 
 **Declare a variable** with the name "message":
 
@@ -71,10 +73,10 @@ let message = "Hello!";
 
 **Chaining Assignments**
 
-Chained assignments evaluate from *right* to *left.*
+Chained assignments evaluate from _right_ to _left._
 
-``` js
-let a,b,c;
+```js
+let a, b, c;
 a = b = c = 2 + 2;
 
 a; // 4
@@ -86,13 +88,15 @@ In above example, `2 +2` is evaluated first. It's assigned to `c`, then to `b`, 
 
 **Declaring multiple variables**
 
- You can combine variable declarations into a single line, but it is not recommended because it makes readability difficult. You can also use multiline styles, shown below.
+You can combine variable declarations into a single line, but it is not recommended because it makes readability difficult. You can also use multiline styles, shown below.
 
- All variants do the same thing:
+All variants do the same thing:
 
 ```js
 // One-liner, not recommended (poor readability)
-let user = "John", age = 25, message = "Hello";
+let user = "John",
+  age = 25,
+  message = "Hello";
 
 // Separate lines (better readability)
 let user = "John";
@@ -100,29 +104,29 @@ let age = 25;
 let message = "Hello";
 
 // Combined multi-line options:
-let user = 'John',
+let user = "John",
   age = 25,
-  message = 'Hello';
+  message = "Hello";
 
 // Or
-let user = 'John'
-  , age = 25
-  , message = 'Hello';
+let user = "John",
+  age = 25,
+  message = "Hello";
 ```
 
 **Change the value** of a variable:
 
-``` js
+```js
 let message;
-message = 'Hello';
-message = 'World';  // Removes old data "Hello"
-alert (message); // "World"
+message = "Hello";
+message = "World"; // Removes old data "Hello"
+alert(message); // "World"
 ```
 
 **Copy data** from one variable to another:
 
-``` js
-let hello = 'Hello World!';
+```js
+let hello = "Hello World!";
 let message;
 
 // Copy contents of hello to message variable
@@ -131,7 +135,8 @@ alert(message); // "Hello world!"
 ```
 
 **Do NOT declare a variable twice**, as it will cause an error:
-``` js
+
+```js
 let message = "This";
 // repeated 'let' = ERROR
 let message = "That"; // SyntaxError: 'message' has already been declared!
@@ -143,12 +148,12 @@ let message = "That"; // SyntaxError: 'message' has already been declared!
 
 There are 2 limitations on variable names in JavaScript:
 
-1. Must contain *only* **letters**, **digits**, **$** or **_**
+1. Must contain _only_ **letters**, **digits**, **$** or **\_**
 2. First character can NOT be a digit
 
-[**camelCase**](https://en.wikipedia.org/wiki/CamelCase) is commonly used. Camel case uses multiple lowercase words strung together, with each new word (*after the first word*) receiving a capital letter:
+[**camelCase**](https://en.wikipedia.org/wiki/CamelCase) is commonly used. Camel case uses multiple lowercase words strung together, with each new word (_after the first word_) receiving a capital letter:
 
-``` js
+```js
 // camelCase
 let myName;
 let myFirstLastName;
@@ -165,33 +170,33 @@ let my-name; // can't contain hyphen (-)
 **Case matters**: `apple` & `APPLE` are two different variables
 
 ```js
-let apple = 'red';
-let APPLE = 'green';
+let apple = "red";
+let APPLE = "green";
 ```
 
 **Reserved Names** are words that **cannot be used** because they are used by the language itself.
 
-``` js
+```js
 let let = 5;  // ERROR, reserved name: let
 let return = 5; // ERROR, reserved name: return
 ```
 
 **Use Strict**
 
-Normally, you need to *define a variable* before using it.
+Normally, you need to _define a variable_ before using it.
 
-In the *old times*, it wasn't possible to create a variable by a mere assignment of the value without using `let`.
+In the _old times_, it wasn't possible to create a variable by a mere assignment of the value without using `let`.
 
 To maintain compatibility with older scripts, **DON'T** insert "use strict".
 
-``` js
+```js
 // MISSING 'use strict'
-num = 5;  // num is created, if it doesn't exist
+num = 5; // num is created, if it doesn't exist
 ```
 
-``` js
+```js
 "use strict";
-num =  5; // ERROR: num not defined
+num = 5; // ERROR: num not defined
 ```
 
 ---
@@ -202,17 +207,17 @@ Constants are variables that cannot be reassigned or changed. Attempting to do s
 
 To create a constant, you substitute `let` with `const`:
 
-``` js
-const myBirthday = '09.09.1999';
+```js
+const myBirthday = "09.09.1999";
 
-myBirthday = '08.08.1988'; // ERROR: can't reassign constant!
+myBirthday = "08.08.1988"; // ERROR: can't reassign constant!
 ```
 
 #### Constants: Known Before Execution
 
-Use CAPITAL LETTERS & underscores for constants that contain *difficult-to-remember* values that are known *before execution*. 
+Use CAPITAL LETTERS & underscores for constants that contain _difficult-to-remember_ values that are known _before execution_.
 
-``` js
+```js
 // Web Color Codes in Hexadecimal Format
 const COLOR_RED = "#F00";
 const COLOR_GREEN = "#0F0";
@@ -225,15 +230,16 @@ alert(currentColor); // #FF7F00
 ```
 
 Benefits:
+
 - Much easier to remember: `COLOR_ORANGE`
 - Easier to mistype: `#FF7F00`
-- Reading code: `COLOR_ORANGE` is *more meaningful* than `#FF7F00`
+- Reading code: `COLOR_ORANGE` is _more meaningful_ than `#FF7F00`
 
-#### Constants: Calculated in Run-Time 
+#### Constants: Calculated in Run-Time
 
-If a constant is *calculated in run-time* and *unknown before execution*, it should be named normally, using camelCase.
+If a constant is _calculated in run-time_ and _unknown before execution_, it should be named normally, using camelCase.
 
-``` js
+```js
 const pageLoadTime = // time taken for a webpage to load
                      // - unknown before execution (calculated in run-time)
                      // - but doesn't change after it's set (constant)
@@ -249,43 +255,47 @@ It is one of the most important & complex skills in programming. Variable names 
 
 In a real project, most of the time is spent **modifying & extending** an existing code base -- not writing something new from scratch.
 
-Returning to code after doing something else for a while, it's much easier to find info that's well-labeled, or when variables have *good names.*
+Returning to code after doing something else for a while, it's much easier to find info that's well-labeled, or when variables have _good names._
 
-*Good-to-follow Rules:*
+_Good-to-follow Rules:_
 
 - Human-readable Names
+
   - `userName` `shoppingCart`
 
-- Avoid abbreviations or short names --- *unless you know what you're doing*
-  - `a` `b` `c` 
+- Avoid abbreviations or short names --- _unless you know what you're doing_
 
-- Make names *maximally* descriptive & concise
-  - `data` `value` are bad --- unless the context of the code makes it *exceptionally obvious* what they are referencing
+  - `a` `b` `c`
 
-- Agree on terms within your *team OR in your own mind*
+- Make names _maximally_ descriptive & concise
+
+  - `data` `value` are bad --- unless the context of the code makes it _exceptionally obvious_ what they are referencing
+
+- Agree on terms within your _team OR in your own mind_
   - If a site visitor is called a `user`, related variable naming options:
-    - Good: `currentUser` `newUser` 
+    - Good: `currentUser` `newUser`
     - Bad: `currentVisitor` `newManInTown`
 
 #### Reusing Or Creating New Variables
 
 Extra variables are good, not evil.
 
-Lazy programmers *reuse* existing variables.
+Lazy programmers _reuse_ existing variables.
 
 - Causes confusion as to what's inside the variable at any given point.
-- Save a little bit of time on *variable declaration*
+- Save a little bit of time on _variable declaration_
 - BUT lose 10x more on debugging
 
-JavaScript Minifiers & browsers optimize code well enough, so performance issues aren't a concern. 
+JavaScript Minifiers & browsers optimize code well enough, so performance issues aren't a concern.
 
-Using different variable names for different values can *help the engine optimize your code.*
+Using different variable names for different values can _help the engine optimize your code._
 
 # Data Types
 
 In JavaScript, there are 8 basic data types.
 
 7 Primitive Types:
+
 - `number` number or floating point
 - `bigint` integer number of arbitrary length
 - `string` zero or more characters
@@ -295,6 +305,7 @@ In JavaScript, there are 8 basic data types.
 - `symbol` unique idenitifers
 
 1 Non-primitive data type:
+
 - `object` complex data structures
 
 **Typeof operator**
@@ -303,16 +314,16 @@ In JavaScript, there are 8 basic data types.
 
 ## Numbers
 
-Numbers are the building blocks of programming logic.  The *number type* represents both *integer* and *floating point* numbers.
+Numbers are the building blocks of programming logic. The _number type_ represents both _integer_ and _floating point_ numbers.
 
-``` js
+```js
 let n = 123;
 n = 1.23;
 ```
 
-**Special numeric values** 
+**Special numeric values**
 
-- `infinity`  Greater than any number
+- `infinity` Greater than any number
 - `-infinity` Less than any number
 - `NaN` Not a Number
 
@@ -336,18 +347,18 @@ const bigInt = 1234567890123456789012345678901234567890n;
 
 **Arithmetic operators** perform arithmetic on numbers --- literal or variables.
 
-| Operator | Description |
-| ---: | :-- |
-| + | Addition |
-| - | Subtraction |
-| * | Multiplication |
-| ** | Exponentiation |
-| / | Division |
-| %| Modulus |
+| Operator | Description    |
+| -------: | :------------- |
+|        + | Addition       |
+|        - | Subtraction    |
+|       \* | Multiplication |
+|     \*\* | Exponentiation |
+|        / | Division       |
+|        % | Modulus        |
 
 Examples
 
-``` js
+```js
 // literals
 let x = 100 + 50;
 
@@ -358,36 +369,39 @@ let x = a + b;
 let x = (100 + 50) * a;
 ```
 
-**Arithmetic operands** are the numbers in an arithmetic operation. 
+**Arithmetic operands** are the numbers in an arithmetic operation.
 
 Operands are what **operators** are applied to.
 
 | Operand | Operator | Operand |
-|---|---|---|
-|100|+|50|
+| ------- | -------- | ------- |
+| 100     | +        | 50      |
 
-A operator is *unary* if it has a single operand.
+A operator is _unary_ if it has a single operand.
+
 ```js
 let x = 1;
 x = -x; // unary operand -
-alert( x ); // -1
+alert(x); // -1
 ```
 
-An operator is *binary* if it has 2 operands.
+An operator is _binary_ if it has 2 operands.
+
 ```js
-let x = 1, y = 3;
-alert( y - x ) // 2, binary - operator subtracts values
+let x = 1,
+  y = 3;
+alert(y - x); // 2, binary - operator subtracts values
 ```
 
 ```js
 let x = 5;
 let y = 3;
 
-let z = x + y;  // Addition
-let z = x - y;  // Subtraction
-let z = x * y;  // Multiplication
-let z = x / y;  // Division, produces quotient & remainder
-let z = x % y;  // Modulus, produces remainder in division
+let z = x + y; // Addition
+let z = x - y; // Subtraction
+let z = x * y; // Multiplication
+let z = x / y; // Division, produces quotient & remainder
+let z = x % y; // Modulus, produces remainder in division
 ```
 
 **Incrementing** & **Decrementing**
@@ -396,38 +410,39 @@ Increment Operator `++` adds 1 to a value `+1`
 
 Decrement operator `--` subtracts 1 from a value `-1`
 
-Operators `++` and `--` can go *before* or *after* a variable, which changes it's behavior:
-- Prefix form:  `++counter` returns the *new* value
-- Postfix form: `counter++` returns the *old* value
+Operators `++` and `--` can go _before_ or _after_ a variable, which changes it's behavior:
 
-``` js
+- Prefix form: `++counter` returns the _new_ value
+- Postfix form: `counter++` returns the _old_ value
+
+```js
 let counter = 1;
 let a = ++counter; // ++BEFORE: changes the counter AND THEN assigns the variable a its value
-a;                 // 2
+a; // 2
 
 let counter = 1;
 let a = counter++; // AFTER++: assigns "a" with old counter value
-                   // THEN increments "counter" variable +1
-a;                 // 1
-counter;           // 2
+// THEN increments "counter" variable +1
+a; // 1
+counter; // 2
 
 let counter = 1;
-alert( 2 * ++counter ); // 4 (++counter first then 2*counter)
+alert(2 * ++counter); // 4 (++counter first then 2*counter)
 
 let counter = 1;
-2 * counter++;         // 2 (2 * counter[1] then counter++)
-counter;               // 2
+2 * counter++; // 2 (2 * counter[1] then counter++)
+counter; // 2
 ```
 
 **Exponentiation**
 
-Exponentiation operator `**` *raises the first operand to the power of the second operand.*
+Exponentiation operator `**` _raises the first operand to the power of the second operand._
 
-``` js
+```js
 let x = 5;
-let z = x ** 2;         // 5^2 = 25
+let z = x ** 2; // 5^2 = 25
 // OR
-let z = Math.pow(x,2)   // 5^2 = 25
+let z = Math.pow(x, 2); // 5^2 = 25
 ```
 
 **Operator Precedence** (Order of operations)
@@ -440,67 +455,68 @@ Operator precedence is the order in which operations are performed in arithmetic
 4. Addition `+` & Subtraction `-`
 5. Left -> Right
 
-``` js
-let x = 100 + 50 * 3;     // 50 * 3, then +100
-let y = (100 + 50) * 30;  // 100+50, then * 30
+```js
+let x = 100 + 50 * 3; // 50 * 3, then +100
+let y = (100 + 50) * 30; // 100+50, then * 30
 ```
 
 **Assignment Operators**
 
-The most basic assignment operator is `=`. It assigns the variable on the *left* with the value stated on the right.
+The most basic assignment operator is `=`. It assigns the variable on the _left_ with the value stated on the right.
 
-There are more complex types, which provide *useful shortcuts* to keep your code *neater & more efficient.* 
+There are more complex types, which provide _useful shortcuts_ to keep your code _neater & more efficient._
 
-> Modify-in-place or "*modify-and-assign*"
+> Modify-in-place or "_modify-and-assign_"
 
 ```js
-let x = 10
-let y = 5
+let x = 10;
+let y = 5;
 
-x += y  // Addition Assignment:       x = x + y
-x -= y  // Subtraction Assignment:    x = x - y
-x *= y  // Multiplication Assignment: x = x * y
-x *= y  // Division Assignment:       x = x / y
+x += y; // Addition Assignment:       x = x + y
+x -= y; // Subtraction Assignment:    x = x - y
+x *= y; // Multiplication Assignment: x = x * y
+x *= y; // Division Assignment:       x = x / y
 ```
 
-Because *modify-and-assign* operators are *operators*, they run *after* most other calculations.
+Because _modify-and-assign_ operators are _operators_, they run _after_ most other calculations.
 
-``` js
+```js
 let n = 2;
 n *= 3 + 5; // 3+5
-            // n *= 8 ... n = n * 8
-            // 16 -- right part is evaluated first
+// n *= 8 ... n = n * 8
+// 16 -- right part is evaluated first
 ```
 
 **JavaScript Numbers**
 
 JavaScript only has one type of number: with or without decimals
 
-* Always 64-bit floating point
-* Double precision floating point numbers
-* Does not define integers, short, long, floating point, etc.
+- Always 64-bit floating point
+- Double precision floating point numbers
+- Does not define integers, short, long, floating point, etc.
 
-``` js
+```js
 let x = 3.14; // w/ decimals
-let y = 3;    // w/o decimals
+let y = 3; // w/o decimals
 ```
 
-Extra large or extra smalls can be written with *scientific (exponent) notation*.
+Extra large or extra smalls can be written with _scientific (exponent) notation_.
 
-``` js
-let x = 123e5;  // 12,300,000
+```js
+let x = 123e5; // 12,300,000
 let y = 123e-5; // 0.00123
 ```
 
 Integer precision, without a period or exponent notation, are accurate up to **15 digits**.
-``` js
-let x = 999999999999999;   // x will be 999999999999999
-let y = 9999999999999999;  // y will be 10000000000000000
+
+```js
+let x = 999999999999999; // x will be 999999999999999
+let y = 9999999999999999; // y will be 10000000000000000
 ```
 
 Floating point arithmetic is **not always 100% accurate**.
 
-``` js
+```js
 let x = 0.2 + 0.1; // 0.30000000000000004
 // To solve this problem, it helps to multiply & divide:
 let x = (0.2 * 10 + 0.1 * 10) / 10; // 0.3
@@ -510,11 +526,11 @@ let x = (0.2 * 10 + 0.1 * 10) / 10; // 0.3
 
 > Concatenation & Addition share `+` operator, which causes weird behavior:
 
-``` js
+```js
 // Add two numbers, result will be a number
 let x = 10;
 let y = 20;
-let z = x + y;  // 30
+let z = x + y; // 30
 
 // If you add two strings, the result will be a string concatenation:
 let x = "10";
@@ -527,62 +543,63 @@ let y = 20;
 let z = x + y; // 1020
 ```
 
-JavaScript interpreter works *left to right*. Therefore:
-``` js
+JavaScript interpreter works _left to right_. Therefore:
+
+```js
 // Common mistake #1
 let x = 10;
 let y = 20;
-let z = "The result is: " + x + y;  // The result is: 1020
-                                    // String + Integer = Concatenation
+let z = "The result is: " + x + y; // The result is: 1020
+// String + Integer = Concatenation
 
 // Common mistake #2
 let x = 10;
 let y = 20;
 let z = "30";
 let result = x + y + z; // 3030
-let result = x + y + Number(z) // 60
-                        // Integer + Integer = 30, Integer + String = Concatenation 3030
+let result = x + y + Number(z); // 60
+// Integer + Integer = 30, Integer + String = Concatenation 3030
 ```
 
 **Numeric Conversion** (unary +)
 
-The unary `+` applied to *numbers* doesn't do anything. However, `+` applied to a *string* converts it to a *number*.
+The unary `+` applied to _numbers_ doesn't do anything. However, `+` applied to a _string_ converts it to a _number_.
 
-``` js
+```js
 let x = 1;
-alert( +x ); // 1
+alert(+x); // 1
 
 let y = -2;
-alert( -x ); // -2
+alert(-x); // -2
 
 // conversion of non-numbers
 let x = "5"; // string
-+x + 5;      // 10
++x + 5; // 10
 
-+true;  // 1 
-+"";    // 0
++true; // 1
++""; // 0
 ```
 
 **Numeric Strings**
 
 JavaScript strings can have numeric content, and JS will attempt to convert strings to numbers in all numeric operations.
 
-``` js
-let x = "100";  // string
-let y = "10";   // string
-let z = x / y;  // 10
+```js
+let x = "100"; // string
+let y = "10"; // string
+let z = x / y; // 10
 
-let x = "100";  // string
-let y = "10";   // string
-let z = x * y;  // 1,000
+let x = "100"; // string
+let y = "10"; // string
+let z = x * y; // 1,000
 
-let x = "100";  // string
-let y = "10";   // string
-let z = x - y;  // 90
+let x = "100"; // string
+let y = "10"; // string
+let z = x - y; // 90
 
-let x = "100";  // string
-let y = "10";   // string
-let z = x + y;  // 10020 -> concatenation, 2 strings, won't work
+let x = "100"; // string
+let y = "10"; // string
+let z = x + y; // 10020 -> concatenation, 2 strings, won't work
 ```
 
 **NaN** - Not a Number
@@ -591,39 +608,41 @@ let z = x + y;  // 10020 -> concatenation, 2 strings, won't work
 
 Trying to do arithmetic w/ a non-numeric string will result in `NaN`.
 
-``` js
-let x = 100 / Apple;  // NaN
-let x = 100 / "10";   // 10
+```js
+let x = 100 / Apple; // NaN
+let x = 100 / "10"; // 10
 ```
 
 `isNaN(x)` is a **global function** to find out if a value is not a number.
 
 ```js
 let x = 100 / "Apple";
-isNaN(x);   // true
+isNaN(x); // true
 ```
 
 If `NaN` is used in a mathematical operation, the result will be `NaN`
-``` js
-let x = NaN;    // NaN
-let y = 5;      // Number
-let z = x + y;  // = NaN
 
-let x = NaN;    // NaN
-let y = "5";    // string
-let z = x + y;  // = NaN5
+```js
+let x = NaN; // NaN
+let y = 5; // Number
+let z = x + y; // = NaN
+
+let x = NaN; // NaN
+let y = "5"; // string
+let z = x + y; // = NaN5
 ```
 
 `typeof NaN` returns `number`
+
 ```js
 typeof NaN; // number
 ```
 
 **Infinity**
 
-`Infinity` or `-Infinity` is the value JS will return *if you calculate a number outside of the largest possible number*
+`Infinity` or `-Infinity` is the value JS will return _if you calculate a number outside of the largest possible number_
 
-``` js
+```js
 let myNumber = 2;
 // Execute until Infinity
 while (myNumber != Infinity) {
@@ -644,41 +663,42 @@ while (myNumber != Infinity) {
 
 Division by 0 (zero) = Infinity
 
-``` js
-let x = 2 / 0;  // infinity
+```js
+let x = 2 / 0; // infinity
 let y = -2 / 0; // -infinity
 ```
 
 `typeof infinity` returns `number`
-``` js
+
+```js
 typeof infinity; // number
 ```
 
 **Hexadecimal**
 
 JS interprets numeric constants as hexadecimals if they are preceded by `0x`
-``` js
-let x = 0xFF; // 255
+
+```js
+let x = 0xff; // 255
 ```
 
 **Number Methods**
 
 Restricting decimal places (rounding) w/ `.toFixed()`
 
-``` js
+```js
 const lotsOfDecimal = 1.766584958675746364;
-lotsOfDecimal;  // 1.766584958675746364;
+lotsOfDecimal; // 1.766584958675746364;
 const twoDecimalPlaces = lotsOfDecimal.toFixed(2);
 twoDecimalPlaces; // 1.77
-
 ```
 
 **Converting to number data types**
 
 To convert a string to a number, use `Number()` constructor.
 
-``` js
-let myNumber = '74';
+```js
+let myNumber = "74";
 myNumber = Number(myNumber) + 3;
 ```
 
@@ -686,136 +706,146 @@ myNumber = Number(myNumber) + 3;
 
 When you want to run true/false tests, and act conditionally based on the results, you use **comparison operators**.
 
-- `==` Loose equality: Converts value to a common type & then checks equality (*Are two values **equal to** one another?*)
-- `!=` Loose inequality: Converts value to a common type & then checks inequality (*Are two values **not equal** to one another?*)
-- `===` Strict equality: *Are two values AND their types **identical** to one another?*
-- `!==` Strict non-equality: *Are two values AND their types **NOT identical** to one another?*
-- ` < ` Less than: *Is the left value **less than** the right value?*
-- `>`   Greater than: *Is the left value **greater than** the right value?*
-- `<=`  Less than: *Is the left value **less than OR equal to** the right value?*
-- `>=`  Less than: *Is the left value **greater than or equal to** the right value?*
+- `==` Loose equality: Converts value to a common type & then checks equality (_Are two values **equal to** one another?_)
+- `!=` Loose inequality: Converts value to a common type & then checks inequality (_Are two values **not equal** to one another?_)
+- `===` Strict equality: _Are two values AND their types **identical** to one another?_
+- `!==` Strict non-equality: _Are two values AND their types **NOT identical** to one another?_
+- `<` Less than: _Is the left value **less than** the right value?_
+- `>` Greater than: _Is the left value **greater than** the right value?_
+- `<=` Less than: _Is the left value **less than OR equal to** the right value?_
+- `>=` Less than: _Is the left value **greater than or equal to** the right value?_
 
-``` js
+```js
 let x = "5";
 let y = 5;
-x == y;  // true
+x == y; // true
 x === y; // false
 
 let x = new Number(500);
 let y = new Number(500);
-x == y;  // false: JS Objects cannot be compared
+x == y; // false: JS Objects cannot be compared
 x === y; // false
 ```
 
 **[Testing Knowledge](https://javascript.info/operators)**
 
-``` js
-"" + 1 + 0    // 10
-"" - 1 + 0    // -1
-true + false  // 1
-6 / "3"       // 2
-"2" * "3"     // 6
-4 + 5 + "px"  // "9px"
-"$" + 4 + 5   // "$45"
-"4" - 2       // 2
-"4px" - 2     // NaN
-"  -9  " + 5  // "  -9  5"
-"  -9  " - 5  // -14
-              // whitespace is ignored
-null + 1      // 1
-undefined + 1 // NaN
-              // undefined = NaN when converted to a number
-" \t \n" - 2  //-2
-              // space characters are trimmed off start/end when converted to a #
+```js
+"" + 1 + 0; // 10
+"" - 1 + 0; // -1
+true + false; // 1
+6 / "3"; // 2
+"2" * "3"; // 6
+4 + 5 + "px"; // "9px"
+"$" + 4 + 5; // "$45"
+"4" - 2; // 2
+"4px" - 2; // NaN
+"  -9  " + 5; // "  -9  5"
+"  -9  " - 5; // -14
+// whitespace is ignored
+null + 1; // 1
+undefined + 1; // NaN
+// undefined = NaN when converted to a number
+" \t \n" - 2; //-2
+// space characters are trimmed off start/end when converted to a #
 
 // fix the addition
-let a = prompt("First number?", 1);   // +prompt()
-let b = prompt("Second number?", 2);  // +prompt()
-alert(a + b);                         // OR alert(+a + +b);
+let a = prompt("First number?", 1); // +prompt()
+let b = prompt("Second number?", 2); // +prompt()
+alert(a + b); // OR alert(+a + +b);
 ```
 
 ## Strings
 
-* Is a simple piece of text and a fundamental building block of any language.
-* Strings must be wrapped in quotes 
-  * Without quotes, it is assumed to be a *variable* name, *property* name, *reversed* word, or similar.
+- Is a simple piece of text and a fundamental building block of any language.
+- Strings must be wrapped in quotes
+  - Without quotes, it is assumed to be a _variable_ name, _property_ name, _reversed_ word, or similar.
 
 Creating strings:
 
-``` js
+```js
 const string = "My name is Jack";
 const copyString = string;
-console.log(string)
+console.log(string);
 ```
 
 Single quotes and Double quotes have very little differences and their use is personal preference.
-``` js
+
+```js
 let doubleString = "Double quoted";
-let singleString = 'Single quoted';
+let singleString = "Single quoted";
 let nestedQuotes = 'This "works", too';
 ```
 
 Escaping characters in a string: `\`
-``` js
-let escapedExample = 'I\'m a tired';
+
+```js
+let escapedExample = "I'm a tired";
 ```
 
 Escape Sequences
 
-* `\0`  nulll character
-* `\\`  backslash
-* `\n`  newline
-* `\r`  carriage return
-* `\v`  vertical tab
-* `\t`  tab
-* `\b`  backspace
-* `\f`  form feed
+- `\0` nulll character
+- `\\` backslash
+- `\n` newline
+- `\r` carriage return
+- `\v` vertical tab
+- `\t` tab
+- `\b` backspace
+- `\f` form feed
 
-Concatenating Strings using a ***Template Literal***, which works like a normal string, except you can include variables in it.
+Concatenating Strings using a **_Template Literal_**, which works like a normal string, except you can include variables in it.
+
 > Use ` instead of " or '
+
 ```js
-const firstName = 'Bryan';
-const lastName = 'Miller';
+const firstName = "Bryan";
+const lastName = "Miller";
 const joinedName = `${firstName} ${lastName}`;
 const greeting = `Hello, ${firstName} ${lastName}`; // Hello, Bryan Miller
 const greeting = `Hello, ${joinedName}`; // Hello, Bryan Miller
 ```
 
 Including expressions in strings
-``` js
-const song = 'Fight the Youth';
+
+```js
+const song = "Fight the Youth";
 const score = 9;
 const highestScore = 10;
-const output = `I like the song ${song}. I gave it a score of ${score/highestScore * 100}%.`;
+const output = `I like the song ${song}. I gave it a score of ${
+  (score / highestScore) * 100
+}%.`;
 // "I like the song Fight the Youth. I gave it a score of 90%."
 ```
 
 Multi-line strings
-``` js
+
+```js
 const output = `I like the song.
 I gave it a score of 90%.`;
-const output = 'I like the song.\nI gave it a score of 90%.';
+const output = "I like the song.\nI gave it a score of 90%.";
 // I like the song.
 // I gave it a score of 90%.
 ```
 
 ### String Methods & Properties
 
-* A **method** is a bit of functionality that is built into the language or into specific data types.
-* [List](https://www.w3schools.com/jsref/jsref_obj_string.asp)
-* [Exhaustive List](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+- A **method** is a bit of functionality that is built into the language or into specific data types.
+- [List](https://www.w3schools.com/jsref/jsref_obj_string.asp)
+- [Exhaustive List](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
 
 **String Length**
 
 `length` property returns the length of a string:
-``` js
+
+```js
 let txt = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-let length = txt.length;  // 26
+let length = txt.length; // 26
 ```
 
 #### Extracting Parts of a String
 
 Three methods exist for extracting part of a string:
+
 1. `slice(start, end)`
 2. `substring(start, end)`
 3. `substr(start, end)`
@@ -823,31 +853,31 @@ Three methods exist for extracting part of a string:
 **Slice**
 
 `slice()` extracts part of a string & returns the extracted part in a new string.
- This method accepts 2 parameters: start position, end position
+This method accepts 2 parameters: start position, end position
 
 > Starting position is 0
 
- ``` js
- // positive values go left > right
+```js
+// positive values go left > right
 let str = "Apple, Banana, Kiwi";
-let part = str.slice(7, 13);  // Banana 
+let part = str.slice(7, 13); // Banana
 
 // negative values go right > left
 let part = str.slice(-12, -6); //  Banana: left 12x from end, left 6x from end
 
-// single value  returns everything from the given starting point 
-let part = str.slice(7);  // Banana, Kiwi
-let part = str.slice(-12);  // Banana, Kiwi
- ```
+// single value  returns everything from the given starting point
+let part = str.slice(7); // Banana, Kiwi
+let part = str.slice(-12); // Banana, Kiwi
+```
 
- **SubString**
+**SubString**
 
- `substring()` is similar to `slice()`, but negative values (anything under 0) are treated as 0.
+`substring()` is similar to `slice()`, but negative values (anything under 0) are treated as 0.
 
-``` js
+```js
 let str = "Apple, Banana, Kiwi";
-let part = str.substring(7, 13);  // Banana
-let part = str.substring(-12, -6);  // ''
+let part = str.substring(7, 13); // Banana
+let part = str.substring(-12, -6); // ''
 ```
 
 **SubStr**
@@ -856,34 +886,36 @@ let part = str.substring(-12, -6);  // ''
 
 ```js
 let str = "Apple, Banana, Kiwi";
-let part = str.substr(7, 6);  // Banana
+let part = str.substr(7, 6); // Banana
 
 // single values return everything from the given starting point
-let part = str.substr(7);  // Banana, Kiwi
+let part = str.substr(7); // Banana, Kiwi
 
 // negative numbers start from the right
-let part = str.substr(-4);  // Kiwi
+let part = str.substr(-4); // Kiwi
 ```
 
 #### Replacing String Content
 
 `replace()` method replaces a value with another value in a string.
 
-It only replaces the **FIRST** match and it's case sensitive. 
+It only replaces the **FIRST** match and it's case sensitive.
 
-``` js
+```js
 let text = "Replace me! No me!";
-let newText = text.replace("me!", "you!");  // Replace you! No me!
+let newText = text.replace("me!", "you!"); // Replace you! No me!
 ```
 
 To ignore case, use regular expression with an `/i` (insensitive) flag.
-``` js
+
+```js
 let text = "Please visit Microsoft!";
 let newText = text.replace(/MICROSOFT/i, "bmilcs.com"); // Please visit bmilcs!
 ```
 
 To replace ALL matches, use regular expression `/g` (global) flag
-``` js
+
+```js
 let text = "Hi Hi Hi";
 let newText = text.replace(/Hi/g, "Hey"); // Hey Hey Hey
 ```
@@ -892,7 +924,7 @@ let newText = text.replace(/Hi/g, "Hey"); // Hey Hey Hey
 
 To change the case of a string, use `.toUpperCase()` and `.toLowerCase()` methods.
 
-``` js
+```js
 let text = "Hello World";
 let text2 = text.toUpperCase(); // HELLO WORLD
 let text3 = text.toLowerCase(); // hello world
@@ -902,28 +934,28 @@ let text3 = text.toLowerCase(); // hello world
 
 Concatenation of strings can be performed with the `concat()` method.
 
-``` js
+```js
 let text1 = "Hello";
 let text2 = "World";
 let text3 = text1.concat(" ", text2); // Hello World
 // This can also be done with the plus operator
-let text3 = text1 + " " + text2;  // Hello World
+let text3 = text1 + " " + text2; // Hello World
 ```
 
 #### Trim Whitespace
 
 Use `.trim()` to remove whitespace from both sides of a string.
 
-``` js
+```js
 let text = "       Hi   ";
 let text2 = text1.trim(); // "Hi"
 ```
 
 ### Add Padding to Strings
 
-`padStart()` and `padEnd()` pads a string with another string. The number parameter represents the **max length** of the string: 
+`padStart()` and `padEnd()` pads a string with another string. The number parameter represents the **max length** of the string:
 
-``` js
+```js
 let text = "Hello";
 let padded = text.padStart(7, "x"); // xxHello
 let padded = text.padEnd(7, "x"); // Helloxx
@@ -941,15 +973,15 @@ let padded = string.padStart(4, "0"); // 400
 
 ```js
 let text = "HELLO WORLD";
-let char = text.charAt(0);  // H
-let char = text.charCodeAt(0);  // 72
+let char = text.charAt(0); // H
+let char = text.charCodeAt(0); // 72
 ```
 
 #### Converting Strings to Arrays
 
-`split()` method converts strings to arrays. 
+`split()` method converts strings to arrays.
 
-``` js
+```js
 let text = "a,b,c,d,e,f";
 const myArray = text.split(",");
 // text[0] = a
@@ -959,31 +991,31 @@ const myArray = text.split(",");
 
 ### Comparison (Strings)
 
-To see whether a string is greater than another, JavaScript uses the so-called *dictionary* or *lexicographical* order.
+To see whether a string is greater than another, JavaScript uses the so-called _dictionary_ or _lexicographical_ order.
 
-Strings are compared letter-by-better by their *unicode value* (case sensitive). The algorithm is simple:
+Strings are compared letter-by-better by their _unicode value_ (case sensitive). The algorithm is simple:
 
 1. Compare 1st character
 2. If the 1st character is greater/less than, done.
 3. If both characters are same, compare the next character in the string.
 4. Loop until end of string
-5. If both strings are the same length, then they're equal. 
+5. If both strings are the same length, then they're equal.
 6. Else, the longer string wins.
 
-``` js
-'Z' > 'A';      // true
-'Glow' > 'Glee' // true
-'Bee' > 'Be'    // true
-'Hi' > 'Z'      // false
+```js
+"Z" > "A"; // true
+"Glow" > "Glee"; // true
+"Bee" > "Be"; // true
+"Hi" > "Z"; // false
 ```
 
 **Comparison of different types**
 
 When comparing 2 different data types, JS converts values to numbers.
 
-``` js
-'2' > 1; // true, string 2 becomes 2
-'01' == 1; // true, string 01 becomes 1
+```js
+"2" > 1; // true, string 2 becomes 2
+"01" == 1; // true, string 01 becomes 1
 true == 1; // true
 false == 0; // true
 
@@ -997,23 +1029,25 @@ Boolean(b); // true
 a == b; // true!
 
 // null & undefined
-Number(null);       // 0
-Number(undefined);  // NaN
-null == undefined;  // true -- "sweet couple", equal to each other 
-                    // but not any other value
+Number(null); // 0
+Number(undefined); // NaN
+null == undefined; // true -- "sweet couple", equal to each other
+// but not any other value
 null === undefined; // false - different TYPES (strict equality)
 ```
 
 Comparison `>` `>=`, etc. is different than equality check `==`.
-``` js
+
+```js
 // strange result: null vs 0
-null > 0;     // false  (>)
-null == 0;    // false  (== equality)  
-alert( null >= 0 ); // true (>= comparison)
+null > 0; // false  (>)
+null == 0; // false  (== equality)
+alert(null >= 0); // true (>= comparison)
 ```
 
 Undefined should NOT be compared to other values:
-``` js
+
+```js
 undefined > 0; // false (becomes NaN, which returns false to ALL comparisons)
 undefined < 0; // false (becomes NaN, which returns false to ALL comparisons)
 undefined == 0; // false (ONLY equals null & undefined)
@@ -1021,45 +1055,49 @@ undefined == 0; // false (ONLY equals null & undefined)
 
 ## Conditionals
 
-* `if`   condition is true, execute a block of code
-* `else if` tests a new condition, when 1st `if` condition is false
-* `else` executives when `if` / `else if` is false
-* `switch` specify many alternative blocks of code to be executed
+- `if` condition is true, execute a block of code
+- `else if` tests a new condition, when 1st `if` condition is false
+- `else` executives when `if` / `else if` is false
+- `switch` specify many alternative blocks of code to be executed
 
 ### If
-``` js
+
+```js
 if (condition) {
   //  block of code to be executed if the condition is true
 }
 
-if (hour < 18) {  // If hour is less than 18:00 then
+if (hour < 18) {
+  // If hour is less than 18:00 then
   greeting = "Good day";
 }
 ```
 
 ### Else
 
-``` js
+```js
 if (condition) {
-// ^ true
+  // ^ true
 } else {
-// if = false
+  // if = false
 }
 
-if (hour < 18) {  // If hour is less than 18:00 then
+if (hour < 18) {
+  // If hour is less than 18:00 then
   greeting = "Good day";
-} else { // Hour is not less than 18:00
+} else {
+  // Hour is not less than 18:00
   greeting = "Good evening";
 }
 ```
 
 ### Else If
 
-``` js
+```js
 if (condition1) {
   // ^ true
 } else if (condition2) {
-  //  ^ condition2 = true && condition1 = false, 
+  //  ^ condition2 = true && condition1 = false,
 } else {
   //  condition1 & condition = false
 }
@@ -1072,18 +1110,18 @@ Switch is an alternative to `if`, `else if`, `else`.
 How `switch()` works:
 
 1. Switch expression is evaluated once.
-2. Value of expression is then compared with values of *each case*
+2. Value of expression is then compared with values of _each case_
 3. If match, the associated block of code is executed.
 4. If no match, the `default` code block is executed.
 
-If multiple cases matches a case value, the *first case* is selected.
+If multiple cases matches a case value, the _first case_ is selected.
 
 If no matching cases are found, the program continues to the `default` label.
 
-If no default label is found, the program *continues to the statement(s) after the switch*.
+If no default label is found, the program _continues to the statement(s) after the switch_.
 
 ```js
-switch(expression) {
+switch (expression) {
   case x:
     // expression returns x > execute me.
     break;
@@ -1091,7 +1129,7 @@ switch(expression) {
     // expression returns y > execute me.
     break;
   default:
-    // expression returned something other than x or y
+  // expression returned something other than x or y
 }
 
 // getDay() returns weekday as a number [0-6]
@@ -1103,7 +1141,7 @@ switch (new Date().getDay()) {
     day = "Monday";
     break;
   case 2:
-     day = "Tuesday";
+    day = "Tuesday";
     break;
   case 3:
     day = "Wednesday";
@@ -1131,65 +1169,69 @@ switch (new Date().getDay()) {
 ```
 
 Switch statement for checking ranges
-``` js
+
+```js
 // Set the student's grade
 const grade = 87;
 
-switch (true) {   // checks all conditions, until true
-	// If score is 90 or greater
-	case grade >= 90:
-		console.log("A");
-		break;
-	// If score is 80 or greater
-	case grade >= 80:
-		console.log("B");
-		break;
-	// If score is 70 or greater
-	case grade >= 70:
-		console.log("C");
-		break;
-	// If score is 60 or greater
-	case grade >= 60:
-		console.log("D");
-		break;
-	// Anything 59 or below is failing
-	default:
-		console.log("F");
+switch (
+  true // checks all conditions, until true
+) {
+  // If score is 90 or greater
+  case grade >= 90:
+    console.log("A");
+    break;
+  // If score is 80 or greater
+  case grade >= 80:
+    console.log("B");
+    break;
+  // If score is 70 or greater
+  case grade >= 70:
+    console.log("C");
+    break;
+  // If score is 60 or greater
+  case grade >= 60:
+    console.log("D");
+    break;
+  // Anything 59 or below is failing
+  default:
+    console.log("F");
 }
 ```
 
 Switch statement with multiple Cases (OR logical operator)
-``` js
+
+```js
 // Get number corresponding to the current month, with 0 being January and 11 being December
 const month = new Date().getMonth();
 
 switch (month) {
-	// January, February, March
-	case 0:
-	case 1:
-	case 2:
-		console.log("Winter");
-		break;
-	// April, May, June
-	case 3:
-	case 4:
-	case 5:
-		console.log("Spring");
-		break;
-	// July, August, September
-	case 6:
-	case 7:
-	case 8:
-		console.log("Summer");
-		break;
-	// October, November, December
-	case 9:
-	case 10:
-	case 11:
-		console.log("Autumn");
-		break;
-	default:
-		console.log("Something went wrong.");
+  // January, February, March
+  case 0:
+  case 1:
+  case 2:
+    console.log("Winter");
+    break;
+  // April, May, June
+  case 3:
+  case 4:
+  case 5:
+    console.log("Spring");
+    break;
+  // July, August, September
+  case 6:
+  case 7:
+  case 8:
+    console.log("Summer");
+    break;
+  // October, November, December
+  case 9:
+  case 10:
+  case 11:
+    console.log("Autumn");
+    break;
+  default:
+    console.log("Something went wrong.");
 }
 ```
 
@@ -1200,17 +1242,19 @@ Boolean type only has 2 values: `true` `false`.
 When testing boolean values, ie `true` or `false`, all values return true EXCEPT for the following:
 
 **Falsy Values**
-* `false`
-* `undefined`
-* `null`
-* `0`
-* `NaN`
-* `''` empty string 2 
+
+- `false`
+- `undefined`
+- `null`
+- `0`
+- `NaN`
+- `''` empty string 2
 
 **Truthy Values**
-* *Everything* else
-  
-``` js
+
+- _Everything_ else
+
+```js
 let cheese = 'Cheddar';
 if (cheese) { // true
   "Time to eat!"
@@ -1222,7 +1266,7 @@ if (uploadComplete) { // don't need to specify `=== true` }
 
 ## Null Value
 
-The special `null` value is a type of it's own which *only* contains the `null` value.
+The special `null` value is a type of it's own which _only_ contains the `null` value.
 
 It simply represents **nothing**, **empty**, or **value unknown**.
 
@@ -1234,31 +1278,31 @@ It means **value is not assigned.** When a variable is declared without a value,
 
 In other words, it is the **default value for unassigned things.**
 
-``` js
+```js
 let age;
 alert(age); // shows "undefined"
 ```
 
 ## Object Type
 
-`object` type is special. It is the only non-primitive data type because they are used to *store collections of data & more complex entities.*
+`object` type is special. It is the only non-primitive data type because they are used to _store collections of data & more complex entities._
 
 ## Symbol Type
 
-`symbol` type is used to *create unique identifiers* for `object`.
+`symbol` type is used to _create unique identifiers_ for `object`.
 
 ## Logical Operators
 
 There are four logical operators in JavaScript:
 
-* `||` OR
-* `&&` AND
-* `!` NOT
-* `??` Nullish Colaescing
+- `||` OR
+- `&&` AND
+- `!` NOT
+- `??` Nullish Colaescing
 
 ### `||` (OR)
 
-``` js
+```js
 result = a || b;
 ```
 
@@ -1266,28 +1310,29 @@ result = a || b;
 
 In JavaScript, `||` is **trickier & more powerful.**
 
-``` js
+```js
 // booleans:
 // all result in true, except for when both operands are false
-true || true;   // true
-false || true;  // true
-true || false;  // true
+true || true; // true
+false || true; // true
+true || false; // true
 false || false; // false
 
-if (1 || 0) { // works just like if( true || false )
- 'truthy!';   // 'truthy!'
+if (1 || 0) {
+  // works just like if( true || false )
+  ("truthy!"); // 'truthy!'
 }
 ```
 
 Most of the time, OR `||` is used in an `if` statement to test if any of the given conditions are true:
 
-``` js
+```js
 let hour = 9;
 let isWeekend = true;
 
 // if hour less than 10 or greater than 18 or is weekend
-if (hour < 10 || hour > 18 || isWeekend) {  
-  "office is closed"; // 'office is closed'
+if (hour < 10 || hour > 18 || isWeekend) {
+  ("office is closed"); // 'office is closed'
 }
 ```
 
@@ -1295,7 +1340,7 @@ if (hour < 10 || hour > 18 || isWeekend) {
 
 The "extra" features of JavaScript provides the extended algorithm as follows:
 
-``` js
+```js
 result = value1 || value2 || value3;
 ```
 
@@ -1304,15 +1349,17 @@ result = value1 || value2 || value3;
 1. Evaluates operands from left to right
 2. Each operand is converted to a boolean.
    1. If `true`, stops & returns **original value** of the operand.
-3. If all operands have been evaluated and `false`, the *last* operand is returned
+3. If all operands have been evaluated and `false`, the _last_ operand is returned
 
-``` js
+```js
 1 || 0; // 1 (1 is truthy)
 null || 0 || 1; // 1 (1 is first truthy value)
 undefined || null || 0; // 0 (all falsy, last operand is returned)
 ```
+
 **1. Getting first truthy value from list of variables / expressions:**
-``` js
+
+```js
 let firstName = "";
 let lastName = "";
 let nickName = "SuperCoder";
@@ -1330,72 +1377,74 @@ firstName || lastName || nickName || "Anonymous"); // Anonymous
 
 The importance of this is obvious when an operand isn't just a value: an expression with a side effect, such as a **variable assignment** or **function call.**
 
-``` js
+```js
 true || alert("not printed"); // nothing: true's seen & evaluation stops
-false || alert("printed");  // "printed"
+false || alert("printed"); // "printed"
 ```
 
 Sometimes used to execute commands only if the condition on the left is `false`.
 
 ### AND `&&`
 
-In *classical programming*, AND returns `true` if *both operands* are truthy and `false` otherwise:
+In _classical programming_, AND returns `true` if _both operands_ are truthy and `false` otherwise:
 
-``` js
-true && true;   // true
-false && true;  // false
-true && false;  // false
+```js
+true && true; // true
+false && true; // false
+true && false; // false
 false && false; // false
 ```
 
-Example with `if` `&&` 
-``` js
+Example with `if` `&&`
+
+```js
 let hour = 12;
 let minute = 30;
 if (hour == 12 && minute == 30) {
-  "the time is 12:30"; 
+  ("the time is 12:30");
 }
-if (1 && 0) { // evaluated as true && false ** NOT POSSIBLE
-  "i'll never be executed! :("; 
+if (1 && 0) {
+  // evaluated as true && false ** NOT POSSIBLE
+  ("i'll never be executed! :(");
 }
 ```
 
-**AND `&&` finds the *first falsy***
+**AND `&&` finds the _first falsy_**
 
 AND returns the **first falsy** or the last value if none were found:
 
 1. Evaluates operands left to right
 2. Each operand is converted to boolean.
    1. If result is `false`, stops & returns original value of that operand
-3. If all operands have been evaluated (all were *truthy*), returns the last operand.
+3. If all operands have been evaluated (all were _truthy_), returns the last operand.
 
 > OR returns the **first truthy** or the last value if none were found.
 
-``` js
+```js
 1 && 0; // 0
 1 && 5; // 5
-null && 5;  // null
+null && 5; // null
 0 && "no matter what"; // 0
 ```
 
 Precedence: AND `&&` is HIGHER than OR `||`
 
-``` js
-aa & bb || c && d;     // is read as:
-(a && b) || (c && d);  //
+```js
+aa & bb || (c && d); // is read as:
+(a && b) || (c && d); //
 ```
+
 **Don't** replace `if` with `||` or `&&`.
 
 If statements are more obvious and more readable, so it is recommended to use every construct for its purpose:
 
-* `if` if we want `if`
-* `&&` if we want `AND`
+- `if` if we want `if`
+- `&&` if we want `AND`
 
-``` js
+```js
 let x = 1;
-(x > 0) && alert( 'Greater than zero!' ); // NOT RECOMMENDED
-if (x > 0) alert( 'Greater than zero!' ); // BETTER! RECOMMENDED.
-
+x > 0 && alert("Greater than zero!"); // NOT RECOMMENDED
+if (x > 0) alert("Greater than zero!"); // BETTER! RECOMMENDED.
 ```
 
 ### NOT `!`
@@ -1403,67 +1452,64 @@ if (x > 0) alert( 'Greater than zero!' ); // BETTER! RECOMMENDED.
 The boolean NOT operator `!` accepts a single argument & does the following:
 
 1. Converts the operand to a boolean: `true` / `false`
-2. Returns the *inverse* value
+2. Returns the _inverse_ value
 
-``` js
+```js
 // syntax
 result = !value;
 
 // examples
 !true; // false
-!0;    // true
+!0; // true
 ```
 
 **Double NOT** `!!` is sometimes used for converting a value to a boolean type.
 
-``` js
+```js
 !!"non-empty string"; // true
 !!null; // false
 ```
 
 ### AND, OR, NOT Tasks
 
-``` js
-null || 2 || undefined;  // 2 (first truthy value)
-alert(1) || 2 || alert(3);  // alert pops up, doesn't return a value (undefined)
-                            // 2 is then returned (first truthy)
-null || 2 && 3 || 4;  // 2 && 3: returns 3 (all truthy, returns last truthy)
-                      // null || 3 || 4: returns 3 (first truthy)
-                      // && statements take precedence
+```js
+null || 2 || undefined; // 2 (first truthy value)
+alert(1) || 2 || alert(3); // alert pops up, doesn't return a value (undefined)
+// 2 is then returned (first truthy)
+null || (2 && 3) || 4; // 2 && 3: returns 3 (all truthy, returns last truthy)
+// null || 3 || 4: returns 3 (first truthy)
+// && statements take precedence
 // if condition, age between 14-90, inclusively (can reach the edges of 14-90)
-if (age >= 14 && age <= 90) 
-// if condition, age NOT between 14-90, inclusively
-if (!(age >= 14 && age <= 90))
-if (age < 14 || age > 90)
-
-if (-1 || 0) alert( 'first' );
+if (age >= 14 && age <= 90)
+  if (!(age >= 14 && age <= 90))
+    // if condition, age NOT between 14-90, inclusively
+    if (age < 14 || age > 90) if (-1 || 0) alert("first");
 // Runs: -1 || 0 = -1, truthy
 
-if (-1 && 0) alert( 'second' );
+if (-1 && 0) alert("second");
 // Doesn't run: -1 && 0 = 0, falsy
 
-if (null || -1 && 1) alert( 'third' );
+if (null || (-1 && 1)) alert("third");
 // Runs: && higher precedence, -1 && 1 executes first:
 // null || -1 && 1 ---> null || 1 ---> 1
 ```
 
 [Check the login:](https://javascript.info/logical-operators)
-``` js
+
+```js
 let userName = prompt("Who's there?", "");
 
 if (userName == "Admin") {
-
   let userPassword = prompt("Password?", "");
-  
+
   if (userPassword == "TheMaster") {
     alert("Welcome!");
   } else if (userPassword == "" || userPassword == null) {
     alert("Cancelled");
   } else {
-    alert("Wrong password!"); 
-  } 
-
-} else if (userName == '' || userName == null ) {
+    alert("Wrong password!");
+  }
+} else if (userName == "" || userName == null) {
   alert("Cancelled");
 } else {
   alert("I don't know you");
@@ -1472,7 +1518,7 @@ if (userName == "Admin") {
 
 ### Ternary Operator
 
-The ternary *or conditional* operator is a bit of syntax that tests a condition and returns one value/expression if true & another if false. It takes up a lot less code than `if...else` block.
+The ternary _or conditional_ operator is a bit of syntax that tests a condition and returns one value/expression if true & another if false. It takes up a lot less code than `if...else` block.
 
 ```js
 ( condtion ) ? run this code : run this code instead;
@@ -1491,8 +1537,8 @@ To view the currently selected HTML element on the **Console** tab, hit `esc` an
 
 Web developers log messages for 2 main reasons:
 
-- Making sure code is executing in the *right order*
-- Inspecting *values of variables* at a certain moment in time
+- Making sure code is executing in the _right order_
+- Inspecting _values of variables_ at a certain moment in time
 
 **Debugging**
 
@@ -1506,9 +1552,9 @@ Anytime you see `()`, a pair of parentheses, and you're not using a loop or if/e
 
 Executing a function is also known as **invoking a function**.
 
-``` js
+```js
 function myFunction() {
-  alert('hello');
+  alert("hello");
 }
 
 myFunction(); // INVOKE or call function once
@@ -1516,52 +1562,51 @@ myFunction(); // INVOKE or call function once
 
 ### Function Parameters
 
-Some functions require *perameters* or values that need to be included inside the `()` parentheses, in order to do it's job properly.
+Some functions require _perameters_ or values that need to be included inside the `()` parentheses, in order to do it's job properly.
 
-``` js
+```js
 // replace function parameters: string, string
-string.replace("hi", "hello")
+string.replace("hi", "hello");
 ```
 
 Not all parameters are required. Some are optional.
 
 Default parameters can be specified by using `=`.
 
-``` js
-function hello(name='Bryan') {
+```js
+function hello(name = "Bryan") {
   console.log(`Hey ${name}`);
 }
 
-hello('Dave');  // Hey Dave
-hello();        // Hey Bryan
+hello("Dave"); // Hey Dave
+hello(); // Hey Bryan
 ```
 
 ### Anonymous Functions
 
-``` js
+```js
 function() {
   alert('hello');
 }
 ```
 
-You can create functions *without a name*. Anonymous functions are used when another function expects a function as a parameter, in order to reduce the number of lines of code.
+You can create functions _without a name_. Anonymous functions are used when another function expects a function as a parameter, in order to reduce the number of lines of code.
 
-``` js
+```js
 function logKey(event) {
   console.log(`You pressed "${event.key}".`);
 }
-textBox.addEventListener('keydown', logKey);
+textBox.addEventListener("keydown", logKey);
 
 // Instead of defining logKey(), you can use an anonymous function:
-textBox.addEventListener('keydown', function(event)
-{
+textBox.addEventListener("keydown", function (event) {
   console.log(`You pressed "${event.key}"`);
 });
 ```
 
 ### Arrow Functions
 
-Another form of an anonymous function is called the *arrow function*.
+Another form of an anonymous function is called the _arrow function_.
 
 Instead of typing `function(event)`, you use `(event) =>`.
 
@@ -1571,26 +1616,31 @@ Arrow functions are recommended because they make your code:
 - shorter
 
 ```js
-textBox.addEventListener('keydown', (event) => {
+textBox.addEventListener("keydown", (event) => {
   console.log(`You pressed "${event.key}".`);
 });
 ```
 
 If the function contains a single line, you can skip the `{}`
+
 ```js
-textBox.addEventListener('keydown', (event) => 
-console.log(`You pressed "${event.key}".`));
+textBox.addEventListener("keydown", (event) =>
+  console.log(`You pressed "${event.key}".`)
+);
 ```
 
 If the function only takes one parameter, you can skip the `()` around it
+
 ```js
-textBox.addEventListener('keydown', event => 
-console.log(`You pressed "${event.key}".`));
+textBox.addEventListener("keydown", (event) =>
+  console.log(`You pressed "${event.key}".`)
+);
 ```
 
 If function needs to return a value, and only contains one line, you can omit the `return` statement.
+
 ```js
-const doubled = originals.map(item => item *2);
+const doubled = originals.map((item) => item * 2);
 
 // item => item * 2 is equivalent to:
 function doubleItem(item) {
@@ -1599,17 +1649,21 @@ function doubleItem(item) {
 ```
 
 Arrow function live example
-``` html
+
+```html
 <!-- html -->
 <input id="textBox" type="text"></input>
 <div id="output"></div>
 ```
 
-``` js
+```js
 const textBox = document.querySelector("#textBox");
 const output = document.querySelector("#output");
 
-textBox.addEventListener('keydown', event => output.textContent = `You pressed "${event.key}".`);
+textBox.addEventListener(
+  "keydown",
+  (event) => (output.textContent = `You pressed "${event.key}".`)
+);
 ```
 
 ### Built-in Browser Functions
@@ -1627,6 +1681,7 @@ They are locked away in their own compartments and unreachable from code outside
 Top level, outside of your functions, is called the **global scope**.
 
 JavaScript is setup like this for 2 main reasons:
+
 - Security
 - Organization
 
@@ -1634,13 +1689,13 @@ JavaScript is setup like this for 2 main reasons:
 
 A function can return a value back into the calling code using `return`.
 
-``` js
+```js
 function sum(a, b) {
   return a + b;
 }
 
 let result = sum(1, 2);
-alert( result ); // 3
+alert(result); // 3
 ```
 
 You can `return` without a value, which causes the function to exit immediately.
@@ -1649,18 +1704,18 @@ You can `return` without a value, which causes the function to exit immediately.
 
 ```js
 function showMovie(age) {
-  if ( !checkAge(age) ) {
+  if (!checkAge(age)) {
     return;
   }
 
-  alert( "Showing you the movie" ); // (*)
+  alert("Showing you the movie"); // (*)
   // ...
 }
 ```
 
 ### Function Naming
 
-Functions are *actions* and their name is usually a *verb*. Naming should be
+Functions are _actions_ and their name is usually a _verb_. Naming should be
 
 - Brief
 - Accurate as possible
@@ -1675,7 +1730,7 @@ Common verbs used:
 
 One function, one action. It should do exactly what's suggested by it's name, **no more**.
 
-Two independent actions deserve two functions. Examples of what *not to do*:
+Two independent actions deserve two functions. Examples of what _not to do_:
 
 - `getAge` shouldn't `alert` the result. It should only get.
 - `createForm` shouldn't modify the document. It should only create & return.
@@ -1689,28 +1744,26 @@ Separate functions are easier to test & debug, and their existence is a great co
 // BAD
 function showPrimes(n) {
   nextPrime: for (let i = 2; i < n; i++) {
-
     for (let j = 2; j < i; j++) {
       if (i % j == 0) continue nextPrime;
     }
 
-    alert( i ); // a prime
+    alert(i); // a prime
   }
 }
 
-// GOOD 
+// GOOD
 function showPrimes(n) {
-
   for (let i = 2; i < n; i++) {
     if (!isPrime(i)) continue;
 
-    alert(i);  // a prime
+    alert(i); // a prime
   }
 }
 
 function isPrime(n) {
   for (let i = 2; i < n; i++) {
-    if ( n % i == 0) return false;
+    if (n % i == 0) return false;
   }
   return true;
 }
@@ -1719,45 +1772,47 @@ function isPrime(n) {
 ### Function Expressions
 
 Function declaration is one way of creating a function:
+
 ```js
 function sayHi() {
   alert("Hello");
 }
 ```
 
-A second syntax for creating a function is called a *Function Expression*. It allows you to create a new function in the *middle of any expression*.
+A second syntax for creating a function is called a _Function Expression_. It allows you to create a new function in the _middle of any expression_.
 
-``` js
-let sayHi = function() {
+```js
+let sayHi = function () {
   alert("Hello");
 };
 ```
 
 ### Function is a value
 
-No matter how a functions created, it is a *value*.
+No matter how a functions created, it is a _value_.
 
 ```js
 function sayHi() {
-  alert( "Hello" );
+  alert("Hello");
 }
 
-alert( sayHi ); // shows the function code
+alert(sayHi); // shows the function code
 ```
 
-Mentioning a function without parentheses does *not* cause it to execute.
+Mentioning a function without parentheses does _not_ cause it to execute.
 
-Because it's a *value*, we can work with it like other values. We can copy a function to another variable:
+Because it's a _value_, we can work with it like other values. We can copy a function to another variable:
 
 ```js
-function sayHi() {    // creates a function, storing it in the variable sayHi
+function sayHi() {
+  // creates a function, storing it in the variable sayHi
   alert("Hi");
 }
 
 let func = sayHi; // without (), it copies the function itself to func and doesn't invoke it.
 
-func();   // "Hi" alert
-sayHi();  // "Hi" alert
+func(); // "Hi" alert
+sayHi(); // "Hi" alert
 ```
 
 ### Callback Functions
@@ -1770,18 +1825,18 @@ sayHi();  // "Hi" alert
 
 In the example below, `showOk` and `showCancel` are called **callbacks** OR **callback functions**.
 
-``` js
+```js
 function ask(question, yes, no) {
-  if (confirm(question)) yes()
+  if (confirm(question)) yes();
   else no();
 }
 
 function showOkay() {
-  alert('agreed');
+  alert("agreed");
 }
 
 function showCancel() {
-  alert('cancelled');
+  alert("cancelled");
 }
 
 // Functions showOk and showCancel are passed as parameters
@@ -1790,16 +1845,20 @@ ask("Do you agree?", showOk, showCancel);
 
 Using Function Expressions, the above code can be condensed to:
 
-``` js
+```js
 function ask(question, yes, no) {
-  if (confirm(question)) yes()
+  if (confirm(question)) yes();
   else no();
 }
 
 ask(
   "Do you agree?",
-  function() { alert('agreed'); },    // anonymous function
-  function() { alert('cancelled'); }  // anonymous function
+  function () {
+    alert("agreed");
+  }, // anonymous function
+  function () {
+    alert("cancelled");
+  } // anonymous function
 );
 ```
 
@@ -1809,11 +1868,11 @@ Function Declarations: a function, declared as a separate statement, in the main
 
 Function Declarations can be called **earlier than it is defined**.
 
-Why? JS looks for *global functions* before running the script and creates them, during the *initialization phase*.
+Why? JS looks for _global functions_ before running the script and creates them, during the _initialization phase_.
 
 ```js
 // Function Declaration
-function sum(a,b) {
+function sum(a, b) {
   return a + b;
 }
 ```
@@ -1822,9 +1881,9 @@ Function Expression: a function, created inside an expression or inside another 
 
 Function Expressions are created when the **execution reaches it and is usable only from that moment**.
 
-``` js
+```js
 // Function expression
-let sum = function(a,b) {
+let sum = function (a, b) {
   return a + b;
 };
 ```
@@ -1848,7 +1907,7 @@ When you can explain the problem in plain english, you understand it.
 Before jumping into coding a solution to your problem, you need to create a plan to solve it. Some questions that you need to answer at this stage are:
 
 - Does your program have an interface?
-- What does it look like? 
+- What does it look like?
 - What functionality will the interface have?
 - Sketch it out on paper
 - What inputs will your program have?
@@ -1861,6 +1920,7 @@ Before jumping into coding a solution to your problem, you need to create a plan
 Pseudocode is writing out the logic for your program in natural language instead of code. It helps you slow down & think through the steps to take to solve the problem.
 
 Example of pseudocode
+
 ```
 When the user inputs a number
 Initialize a counter variable & set it to 0
@@ -1876,51 +1936,53 @@ From your planning you should have identified some **sub-problems** of the big p
 
 Beginners often start on the **big problem.** **DO NOT DO THIS.** If the problem is complex, you'll get tied in knots and make life harder on yourself.
 
-Instead, decompose the problem into smaller and easier to solve sub-problems. **Decomposition** is the main way to deal with complexity, making problems *easier* and *more approachable* to solve and understand.
+Instead, decompose the problem into smaller and easier to solve sub-problems. **Decomposition** is the main way to deal with complexity, making problems _easier_ and _more approachable_ to solve and understand.
 
-Then, solve each sub-problem one by one. 
+Then, solve each sub-problem one by one.
 
 - Begin with the simplest sub-problem: means you know the answer, or are closer to that answer.
-- After that, simplest means *this sub-problem doesn't depend on others being solved.*
+- After that, simplest means _this sub-problem doesn't depend on others being solved._
 - Once all sub-problems are solved, connect the dots.
-- Connecting all *sub-solutions* will give you the solution to the main problem.
+- Connecting all _sub-solutions_ will give you the solution to the main problem.
 
 ### Getting suck
 
-What if  I can't solve a sub-problem?
+What if I can't solve a sub-problem?
 
-- Take a deep breath. 
+- Take a deep breath.
 - It happens to everyone.
 
 The best programmers & problem-solvers are more curious about bugs and errors than irritated.
 
 Three steps to try when you're stuck:
 
-1. Debug: Go step by step through your solution, trying to find where you went wrong. 
-2. Reassess: Take a step back. Look at the problem from another perspective. 
+1. Debug: Go step by step through your solution, trying to find where you went wrong.
+2. Reassess: Take a step back. Look at the problem from another perspective.
    1. Another way is starting anew. Delete everything & begin with fresh eyes.
-3. Research: Google. No matter what problem you have, someone has probably solved it. 
+3. Research: Google. No matter what problem you have, someone has probably solved it.
    1. After solving a problem, do this anyway. You can learn a lot from other people's solutions.
 
-**Don't look for a solution to the big problem.** Only look for solutions to sub-problems. 
+**Don't look for a solution to the big problem.** Only look for solutions to sub-problems.
 
 Unless you struggle, you won't learn anything.
 
 ### For Loop Example
 
-``` js
-let answer = parseInt(prompt("Please enter the number you would like to FizzBuzz up to: "));
+```js
+let answer = parseInt(
+  prompt("Please enter the number you would like to FizzBuzz up to: ")
+);
 
 for (let i = 1; i <= answer; i++) {
   console.log(i);
 }
 ```
 
-- Declare var  `i` and assign initial value to `1`
+- Declare var `i` and assign initial value to `1`
 - `i <= answer` is our condition.
-  - Loop until i is *greater than* answer
+  - Loop until i is _greater than_ answer
 - `i++` means increment `i` +1 every iteration
-  
+
 ### How to begin thinking like a programmer
 
 ### **Comments are code**
@@ -1953,7 +2015,7 @@ Output the text **message**.
 **Variable:** where answer from user will be stored
 **Message:** question being asked of the user
 
-It shouldn't be the first line of your algorithm. 
+It shouldn't be the first line of your algorithm.
 
 **Input Algorithm**
 
@@ -1964,6 +2026,7 @@ Ask the user **message** and store the answer in **variable**.
 Ask the user for two numbers & add them. (Algorithm only)
 
 First Try:
+
 ```
 Create an integer variable for x
 Create an integer variable for y
@@ -1975,7 +2038,8 @@ tell user "answer is " sum
 ```
 
 Convert to comments:
-``` js
+
+```js
 // Create an integer variable for x
 // Create an integer variable for y
 // create an integer variable for sum
@@ -1986,7 +2050,8 @@ Convert to comments:
 ```
 
 Flesh out the comments:
-``` js
+
+```js
 // Create an integer variable for x
 let x;
 // Create an integer variable for y
@@ -2002,6 +2067,7 @@ sum = x + y;
 // tell user "answer is " sum
 console.log(`sum: ${um}`);
 ```
+
 **Failure is wonderful!**
 
 - It's a normal part of programming
@@ -2013,7 +2079,8 @@ console.log(`sum: ${um}`);
 - Usually it's really an algorithm problem
 
 **How to Debug**
-- The best way to debug is to *not have bugs*
+
+- The best way to debug is to _not have bugs_
 - Bad implementation can be googled
 - Bad algorithms usually cannot
 - What are you not understanding?
@@ -2021,7 +2088,7 @@ console.log(`sum: ${um}`);
 - DON'T start with a solution
 - You're most likely assuming something that isn't true
 
-``` js
+```js
 // Convert to integer code
 sum = +x + +y;
 ```
@@ -2050,6 +2117,7 @@ Consider a basic password loop
 - It exits with a negative result if the user is wrong three times.
 
 Use a compound condition
+
 - ( tries >=3 ) and guess !=correct
 
 ## Understanding Errors
@@ -2069,10 +2137,10 @@ An error is a type of object built into JS and consists of a **name/type** and *
 Example:
 
 ```js
-const a = "Hello"
-const b = "World"
+const a = "Hello";
+const b = "World";
 
-console.log(c)
+console.log(c);
 ```
 
 This code will run but it will generate an error.
@@ -2081,7 +2149,7 @@ This is called **throwing** an error.
 
 `Uncaught ReferenceError: c is not defined at script.js:4`
 
-A `ReferenceError` is thrown when one refers to a variable that is **not declared and/or initialized**. 
+A `ReferenceError` is thrown when one refers to a variable that is **not declared and/or initialized**.
 
 `ReferenceError` can be caused by many things. ie: `ReferenceError: can't access lexical declaration 'X' before initialization`
 
@@ -2089,7 +2157,7 @@ The next part of the error tells you where to find the error: `script.js` file a
 
 **Stack trace** is another important part of an error. It helps you understand **when an error was thrown** and **what functions were called** that led up to that error.
 
-``` js
+```js
 const a = 5;
 const b = 10;
 
@@ -2135,7 +2203,7 @@ Error: `Uncaught SyntaxError: Invalid or unexpected token`
 
 Pro tip: **TypeError** = Check your data type!
 
-``` js
+```js
 const str1 = "Hello";
 const str2 = "World!";
 const message = str1.push(str2);
@@ -2143,29 +2211,29 @@ const message = str1.push(str2);
 
 Error: `Uncaught TypeError: str1.push is not a function`
 
-`.push()` is a function for arrays, but *not for strings*. 
+`.push()` is a function for arrays, but _not for strings_.
 
 ### Console Methods
 
 Console has other useful methods - not just `console.log()`.
 
-`console.table()` can display the data in a table format. 
+`console.table()` can display the data in a table format.
 
 ```js
 // console.table syntax
-console.table(tabledata, tablecolumns)
+console.table(tabledata, tablecolumns);
 // tabledata: The data to fill the table with.
 // tablecolumns: OPTIONAL: An array with the names of the table columns.
 
 console.table(["Audi", "Volvo", "Ford"]);
-console.table({firstname:"John", lastname:"Doe"});
+console.table({ firstname: "John", lastname: "Doe" });
 
 // Example
-const car1 = {name:"Audi", model:"A4"}
-const car2 = {name:"Volvo", model:"XC90"}
-const car3 = {name:"Ford", model:"Fusion"}
+const car1 = { name: "Audi", model: "A4" };
+const car2 = { name: "Volvo", model: "XC90" };
+const car3 = { name: "Ford", model: "Fusion" };
 
-console.table([car1, car2, car3]);  // print every value in table
+console.table([car1, car2, car3]); // print every value in table
 console.table([car1, car2, car3], ["model"]); // only print the model column in table
 ```
 
@@ -2173,25 +2241,25 @@ console.table([car1, car2, car3], ["model"]); // only print the model column in 
 
 ### Errors vs Warnings
 
-Errors *stop* execution of your program and prevent further action.
+Errors _stop_ execution of your program and prevent further action.
 
-Warnings provide you insight on *potential problems* that *may not crash* your program at runtime or at all.
+Warnings provide you insight on _potential problems_ that _may not crash_ your program at runtime or at all.
 
 [MDN's JavaScript Error Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors)
 
 # Clean Code
 
-## [Rules of thumb for writing *clean code*:](https://onextrapixel.com/10-principles-for-keeping-your-programming-code-clean/)
+## [Rules of thumb for writing _clean code_:](https://onextrapixel.com/10-principles-for-keeping-your-programming-code-clean/)
 
 - Indentation: Consistency is what matters.
 - Semi-colons: Just use them.
 - Naming Things: Be descriptive.
-  - Single characters are *okay* to use in the context of a **loop** or **callback function**. Otherwise:
+  - Single characters are _okay_ to use in the context of a **loop** or **callback function**. Otherwise:
   - Variables: Begin with `noun` or `adjective`
   - Functions: Begin with `verb`
 - Line length: 80 Characters. Be consistent.
 
-```js 
+```js
 // One possible format
 let reallyReallyLongLine =
   something +
@@ -2201,30 +2269,34 @@ let reallyReallyLongLine =
   oneMoreReallyLongThing;
 
 // Another possible format
-let anotherReallyReallyLongLine = something + somethingElse + anotherThing +
-                                  howManyTacos + oneMoreReallyLongThing;
+let anotherReallyReallyLongLine =
+  something +
+  somethingElse +
+  anotherThing +
+  howManyTacos +
+  oneMoreReallyLongThing;
 ```
 
 **Tips:**
 
-- Revise Your Logic Before Coding:   **flow diagrams** or **written pseudo-code**.
-- Clearly Expose the Structure of the Page: 
-    ```js <div id="main-container">
-        <div id="header">
-            <div id="logo">...</div>
-            <div id="main-menu">...</div>
-        </div>
-        <div id="content">
-            <div id="left-column">...</div>
-            <div id="center-column">...</div>
-            <div id="right-column">...</div>
-        </div>
-        <div id="footer">
-            <div id="footer-menu">...</div>
-            <div id="disclaimer">...</div>
-        </div>
-    </dv> 
-    ```
+- Revise Your Logic Before Coding: **flow diagrams** or **written pseudo-code**.
+- Clearly Expose the Structure of the Page:
+  ```js <div id="main-container">
+      <div id="header">
+          <div id="logo">...</div>
+          <div id="main-menu">...</div>
+      </div>
+      <div id="content">
+          <div id="left-column">...</div>
+          <div id="center-column">...</div>
+          <div id="right-column">...</div>
+      </div>
+      <div id="footer">
+          <div id="footer-menu">...</div>
+          <div id="disclaimer">...</div>
+      </div>
+  </dv>
+  ```
 - Use the correct **indentation**
 - Write explanatory comments
   - Avoid **abusing comments**:
@@ -2256,9 +2328,9 @@ let anotherReallyReallyLongLine = something + somethingElse + anotherThing +
 
 "Programs **must be written for people to read**, and only **incidentally** for **machines to execute**."
 
-Concentrate on explaining to human beings what we want a computer to do --- *not instructing a computer what to do*.
+Concentrate on explaining to human beings what we want a computer to do --- _not instructing a computer what to do_.
 
-If you write your code *to be consumed by other programmers first*, and by the compiler second, you may find the need for additional **comments** to be **greatly reduced**.
+If you write your code _to be consumed by other programmers first_, and by the compiler second, you may find the need for additional **comments** to be **greatly reduced**.
 
 Sometimes **fewer** comments makes code **more readable**.
 
@@ -2267,13 +2339,14 @@ However, no matter how simple, concise and clear your code may end up being, it'
 **Comments can never be replaced by code alone:**
 
 **Code can't explain**:
--  WHY the program is being written
--  REASON for choosing this or that method
--  REASON why alternative approaches were taken.
+
+- WHY the program is being written
+- REASON for choosing this or that method
+- REASON why alternative approaches were taken.
 
 Something that is **common sense** to you may be confusing to another developer without any context.
 
-``` perl
+```perl
 // You may very well know that
 $string = join('',reverse(split('',$string)));
 // How hard is it to add "# Reverse the string" into your code?
@@ -2281,7 +2354,7 @@ $string = join('',reverse(split('',$string)));
 
 # Node.JS
 
-Node.JS is a JavaScript runtime environment. It allows you to run JavaScript *outside of your web browser.*
+Node.JS is a JavaScript runtime environment. It allows you to run JavaScript _outside of your web browser._
 
 `nvm` Node Version Manager makes it easy to change Node versions and upgrade Node.
 
@@ -2289,7 +2362,7 @@ Node.JS is a JavaScript runtime environment. It allows you to run JavaScript *ou
 
 Installation:
 
-``` sh
+```sh
 # install nvm
 sudo apt install curl
 sudo apt update && sudo apt upgrade
@@ -2316,9 +2389,9 @@ An **Array** is an ordered collection of items: strings, numbers or other things
 
 ## Creating Arrays
 
-``` js
+```js
 // Syntax for arrays:
-const arrayName = [item1, item2, ...];      
+const arrayName = [item1, item2, ...];
 
 // Examples
 const cars = ["Saab", "Volvo", "BMW"];
@@ -2351,7 +2424,7 @@ let car = cars[0];
 
 ## Changing an Array Element
 
-``` js
+```js
 const cars = ["Saab", "Volvo", "BMW"];
 // Change index 0 to Opel
 cars[0] = "Opel";
@@ -2361,7 +2434,7 @@ cars[0] = "Opel";
 
 The full array can be accessed by referring to the name of the array.
 
-``` js
+```js
 const cars = ["Saab", "Volvo", "BMW"];
 document.getElementById("demo").innerHTML = cars;
 ```
@@ -2381,8 +2454,8 @@ person[0]; // "John"
 
 **Objects** use **names** to access its "members". ie: `person.firstName`
 
-``` js
-const person = {firstName:"John", lastName:"Doe", age:46};
+```js
+const person = { firstName: "John", lastName: "Doe", age: 46 };
 person.firstName; // "John"
 ```
 
@@ -2390,13 +2463,13 @@ person.firstName; // "John"
 
 Variables can be objects. Arrays are special kinds of objects.
 
-*In a **single array***, you can have variables of different types:
+\*In a **single array\***, you can have variables of different types:
 
 - Objects
 - Functions
 - Arrays
 
-``` js
+```js
 myArray[0] = Date.now;
 myArray[1] = myFunction;
 myArray[2] = myCars;
@@ -2404,28 +2477,28 @@ myArray[2] = myCars;
 
 ## Array Properties & Methods
 
-Array's *real strength* is displayed when using their **built-in properties and methods**.
+Array's _real strength_ is displayed when using their **built-in properties and methods**.
 
-``` js
-cars.length   // Returns the number of elements
-cars.sort()   // Sorts the array
+```js
+cars.length; // Returns the number of elements
+cars.sort(); // Sorts the array
 ```
 
 ### Length property
 
 `.length` Returns the number of elements in the array.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 let length = fruits.length; // 4
 ```
 
 ## Accessing 1st & Last Array Element
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 // First Element
-let fruit = fruits[0];  // Banana
+let fruit = fruits[0]; // Banana
 // Last Element
 let fruit = fruits[fruits.length - 1]; // Mango (-1 because element #1 = index 0)
 ```
@@ -2434,13 +2507,13 @@ let fruit = fruits[fruits.length - 1]; // Mango (-1 because element #1 = index 0
 
 You can use `for` to loop through an array.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 let fruitLength = fruits.length;
 
 let text = "<ul>"; // begin text w/ unordered list tag
 
-for (let i = 0; i < fruitLength; i++) { 
+for (let i = 0; i < fruitLength; i++) {
   text += "<li>" + fruits[i] + "</li>"; // add list item element to text var w/ array element
 }
 
@@ -2449,7 +2522,7 @@ text += "</ul>"; // append closing tag
 
 There is also the `Array.forEach()` function:
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 
 let text = "<ul>";
@@ -2465,24 +2538,24 @@ function myFunction(value) {
 
 Easiest way to add an element to an array: `.push()` method.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple"];
-fruits.push("Lemon");  // Adds a new element (Lemon) to fruits
+fruits.push("Lemon"); // Adds a new element (Lemon) to fruits
 ```
 
 You can also use the `length` property:
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple"];
-fruits[fruits.length] = "Lemon";  // Adds "Lemon" to fruits
+fruits[fruits.length] = "Lemon"; // Adds "Lemon" to fruits
 // because .length is 1 greater than the last index
 ```
 
 **WARNING**: You can create undefined holes in an array:
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple"];
-fruits[6] = "Lemon";  // Creates undefined "holes" in fruits
+fruits[6] = "Lemon"; // Creates undefined "holes" in fruits
 // BAD
 ```
 
@@ -2492,34 +2565,37 @@ fruits[6] = "Lemon";  // Creates undefined "holes" in fruits
 
 JavaScript **always** uses **numbered indexes** for **arrays**.
 
-``` js
+```js
 const person = [];
 person[0] = "John";
 person[1] = "Doe";
 person[2] = 46;
-person.length;    // Will return 3
-person[0];        // Will return "John"
+person.length; // Will return 3
+person[0]; // Will return "John"
 ```
 
 It does NOT support arrays with named indexes.
-``` js
+
+```js
 const person = [];
 person["firstName"] = "John"; // BAD, unsupported
 person["lastName"] = "Doe";
 person["age"] = 46;
-person.length;     // Will return 0 (WRONG)
-person[0];         // Will return undefined (WRONG)
+person.length; // Will return 0 (WRONG)
+person[0]; // Will return undefined (WRONG)
 ```
 
 ## Differences between Arrays & Objects
 
 Arrays use **numbered indexes.**
+
 - Use Arrays when you want element names to be **numbers**.
 
 Objects use **named indexes.**
+
 - Use Objects when you want element names to be **strings (text)**.
 
-> Arrays are *special kinds* of objects.
+> Arrays are _special kinds_ of objects.
 
 ## Recognizing Arrays
 
@@ -2527,30 +2603,31 @@ Objects use **named indexes.**
 
 To get around this, you can use `Array.isArray()` function or `instanceof` operator.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple"];
 
-Array.isArray(fruits);    // true
-fruits instanceof Array;  // true
+Array.isArray(fruits); // true
+fruits instanceof Array; // true
 ```
 
 ## Array Methods (Indepth)
 
 ### toString
-`toString()` method converts an *array* to a string of *comma separated* `,` array values.
 
-``` js
+`toString()` method converts an _array_ to a string of _comma separated_ `,` array values.
+
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 document.getElementById("demo").innerHTML = fruits.toString();
 
 // Banana,Orange,Apple,Mango
 ```
 
-### Join 
+### Join
 
-`join()` method joins all elements into a string like `toString`, but you can specify the *separator*:
+`join()` method joins all elements into a string like `toString`, but you can specify the _separator_:
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 document.getElementById("demo").innerHTML = fruits.join(" * ");
 // Banana * Orange * Apple * Mango
@@ -2563,30 +2640,31 @@ Pop & push are used to add or remove new elements.
 - Popping items **out** of an array.
 - Pushing items **into** an array.
 
-#### Pop 
+#### Pop
 
-`.pop()` method removes the ***last*** element from an array.
+`.pop()` method removes the **_last_** element from an array.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 fruits.pop();
 fruits; // ['Banana', 'Orange', 'Apple']
 ```
-`.pop()` also returns the ***last*** value that was popped out.
 
-``` js
+`.pop()` also returns the **_last_** value that was popped out.
+
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 let poppedFruit = fruits.pop();
-poppedFruit;  // 'Mango'
+poppedFruit; // 'Mango'
 ```
 
 #### Push
 
 `.push()` method adds a new element to the end of an array.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
-fruits.push("Kiwi"); 
+fruits.push("Kiwi");
 fruits; // ['Banana', 'Orange', 'Apple', 'Mango', 'Kiwi']
 ```
 
@@ -2600,28 +2678,29 @@ fruitsLength; // 5
 
 ## Shift
 
-`.shift()` method removes the ***first*** array element, and shifts all other elements to a lower index.
+`.shift()` method removes the **_first_** array element, and shifts all other elements to a lower index.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 fruits.shift();
 fruits; // ['Orange', 'Apple', 'Mango']
 ```
-`.shift()` method returns the value that was *"shifted out":*
+
+`.shift()` method returns the value that was _"shifted out":_
 
 ```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
-let fruit = fruits.shift(); 
+let fruit = fruits.shift();
 fruit; // Banana
 ```
 
 ## Unshift
 
-`.unshift()` method **adds** a new element to the **beginning** of an array and *unshifts* older elements.
+`.unshift()` method **adds** a new element to the **beginning** of an array and _unshifts_ older elements.
 
 AND it returns the new array length.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 fruits.unshift("Lemon"); // 5
 fruits; // ['Lemon', 'Banana', 'Orange', 'Apple', 'Mango']
@@ -2631,12 +2710,12 @@ fruits; // ['Lemon', 'Banana', 'Orange', 'Apple', 'Mango']
 
 `.concat()` method creates a new array by merging (concatenating) existing arrays:
 
-``` js
+```js
 // Merging 2 arrays
 const myGirls = ["Cecilie", "Lone"];
 const myBoys = ["Emil", "Tobias", "Linus"];
 
-const myChildren = myGirls.concat(myBoys);  
+const myChildren = myGirls.concat(myBoys);
 myChildren; // ['Cecilie', 'Lone', 'Emil', 'Tobias', 'Linus']
 
 // Merging 3 arrays
@@ -2648,7 +2727,7 @@ myChildren; // ['Cecilie', 'Lone', 'Emil', 'Tobias', 'Linus', 'Robin', 'Morgan']
 
 // Concat accepts strings as well
 const arr1 = ["Emil", "Tobias", "Linus"];
-const myChildren = arr1.concat("Peter"); 
+const myChildren = arr1.concat("Peter");
 myChildren; // ['Emil', 'Tobias', 'Linus', 'Peter']
 ```
 
@@ -2660,23 +2739,23 @@ myChildren; // ['Emil', 'Tobias', 'Linus', 'Peter']
 - 2nd parameter `y`: **how many** elements should be **removed**
 - Rest of parameters: **define** new elements **to be added.**
 
-`splice()` returns *an array with the deleted items.*
+`splice()` returns _an array with the deleted items._
 
 **Adding elements to an array using `slice()`**
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango", "Grapes"];
-fruits.splice(2, 2, "Lemon", "Kiwi");   // ['Apple', 'Mango'] --- items removed
-           // 2: position -- fruit[2] (3rd item)
-           //    2: # of items to delete: fruit[2], fruit[3]
-           //       Add Lemon & Kiwi to array
+fruits.splice(2, 2, "Lemon", "Kiwi"); // ['Apple', 'Mango'] --- items removed
+// 2: position -- fruit[2] (3rd item)
+//    2: # of items to delete: fruit[2], fruit[3]
+//       Add Lemon & Kiwi to array
 ```
 
 **Deleting elements with `splice()`**
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
-fruits.splice(0, 1);  // Banana
+fruits.splice(0, 1); // Banana
 fruits; // ['Orange', 'Apple', 'Mango']
 ```
 
@@ -2686,22 +2765,23 @@ fruits; // ['Orange', 'Apple', 'Mango']
 
 It does **NOT REMOVE** anything from the source array.
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
 
 // Single argument: Everything from index X and on
-const citrus = fruits.slice(1); 
-                         // 1: starting position -- fruits[1]
+const citrus = fruits.slice(1);
+// 1: starting position -- fruits[1]
 
-citrus;     // ['Orange', 'Lemon', 'Apple', 'Mango']
-fruits;     // ['Banana', 'Orange', 'Lemon', 'Apple', 'Mango']
+citrus; // ['Orange', 'Lemon', 'Apple', 'Mango']
+fruits; // ['Banana', 'Orange', 'Lemon', 'Apple', 'Mango']
 ```
+
 If two arguments are passed to `slice(x, y)`:
 
-- `x` starting position   array[x]
-- `y` ending position     array[y]
+- `x` starting position array[x]
+- `y` ending position array[y]
 
-``` js
+```js
 const fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
 const citrus = fruits.slice(1, 3);
 
@@ -2717,7 +2797,7 @@ ALL objects in JS have a `toString()` method.
 ```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
 
-document.getElementById("demo").innerHTML = fruits.toString();  // Verbose method
+document.getElementById("demo").innerHTML = fruits.toString(); // Verbose method
 document.getElementById("demo").innerHTML = fruits; // AUTOMATIC version
 ```
 
@@ -2757,12 +2837,12 @@ Loops are used to make a computer do a repetitive task.
 
 The basic tool for looping through a collection is the `for ... of` loop.
 
-``` js
-const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+```js
+const cats = ["Leopard", "Serval", "Jaguar", "Tiger", "Caracal", "Lion"];
 
-
-for (const cat of cats) { // get 1st item in `cats`, assign it to `cat`
-  console.log(cat);       // run the code { } & repeat until end of collection
+for (const cat of cats) {
+  // get 1st item in `cats`, assign it to `cat`
+  console.log(cat); // run the code { } & repeat until end of collection
 }
 ```
 
@@ -2772,11 +2852,11 @@ These are specialized loops.
 
 `map()` is used to **do something** to every item in a collection and then **create a new collection** with the changed items.
 
-``` js
-const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+```js
+const cats = ["Leopard", "Serval", "Jaguar", "Tiger", "Caracal", "Lion"];
 
-const upperCats = cats.map(toUpper);  // perform function to every item in cats
-                                      // create new array in upperCats
+const upperCats = cats.map(toUpper); // perform function to every item in cats
+// create new array in upperCats
 
 upperCats; // [ "LEOPARD", "SERVAL", "JAGUAR", "TIGER", "CARACAL", "LION" ]
 
@@ -2787,13 +2867,13 @@ function toUpper(string) {
 
 `filter()` is used to **test each item** in a collection and **create a new collection** containing ONLY matching items.
 
-``` js
-const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+```js
+const cats = ["Leopard", "Serval", "Jaguar", "Tiger", "Caracal", "Lion"];
 
 const filtered = cats.filter(lCat); // test each item with lCat function
-                                    // store matches in filtered
+// store matches in filtered
 function lCat(cat) {
-  return cat.startsWith('L'); // boolean: if true, return item
+  return cat.startsWith("L"); // boolean: if true, return item
 }
 
 filtered; // [ "Leopard", "Lion" ]
@@ -2801,11 +2881,11 @@ filtered; // [ "Leopard", "Lion" ]
 
 `filter()` and `map()` are often used with **function expressions**:
 
-``` js
-const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+```js
+const cats = ["Leopard", "Serval", "Jaguar", "Tiger", "Caracal", "Lion"];
 
 //                            parameter of function
-const filtered = cats.filter((cat) => cat.startsWith('L'));
+const filtered = cats.filter((cat) => cat.startsWith("L"));
 //                                    code within function
 
 filtered; // [ "Leopard", "Lion" ]
@@ -2813,29 +2893,30 @@ filtered; // [ "Leopard", "Lion" ]
 
 ## Standard For Loop
 
-``` js
-for (initializer; condition; final-expression) {
+```js
+for (initializer; condition; final - expression) {
   // code to run
 }
 ```
+
 - **Initializer** variable to set a number, to be incremented (counter)
 - **Condition** when loop should **stop**. (comparison operator)
 - **Final Expression** evaluated during each run. (increment the variable)
 
-``` js
-for (let i = 1; i < 10; i++)
-{
-  i;  // current value of counter
+```js
+for (let i = 1; i < 10; i++) {
+  i; // current value of counter
 }
 ```
+
 - `let i = 1` is the counter variable, starting at 1.
 - `i < 10` keep looping as long as i is less than 10
 - `i++` add 1 to loop each time round the loop
 
 **Looping Through Collections**
 
-``` js
-const cats = ['Leopard', 'Serval', 'Jaguar', 'Tiger', 'Caracal', 'Lion'];
+```js
+const cats = ["Leopard", "Serval", "Jaguar", "Tiger", "Caracal", "Lion"];
 
 // For...Of loop example
 for (const cat of cats) {
@@ -2849,108 +2930,119 @@ for (let i = 0; i < cats.length; i++) {
 } // End of 1st Loop, execute this ^
 ```
 
-`for...of` didn't exist in the early versions of JavaScript, so the For Loop was the standard way to iterate through an array. 
+`for...of` didn't exist in the early versions of JavaScript, so the For Loop was the standard way to iterate through an array.
 
-However, it *increases the chances of bugs* into your code./
+However, it _increases the chances of bugs_ into your code./
 
 **It's BEST to use `for...of` when you can!**
 
 Sometimes, you still need a `for` loop. For example:
 
-``` js
-const cats = ['Pete', 'Biggles', 'Jasmine'];
-let myFavoriteCats = 'My cats are called ';
+```js
+const cats = ["Pete", "Biggles", "Jasmine"];
+let myFavoriteCats = "My cats are called ";
 ```
 
 `for...of` **doesn't work** because there's no way to know when you're on the final loop iteration.
 
-``` js
+```js
 for (const cat of cats) {
-  myFavoriteCats += `${cat}, `
+  myFavoriteCats += `${cat}, `;
 }
 
 myFavoriteCats; // "My cats are called Pete, Biggles, Jasmine, "
-                // Missing ", and" -- not well formed
+// Missing ", and" -- not well formed
 ```
+
 `for` loop allows you to know when you're on the last loop iteration:
 
-``` js
+```js
 for (let i = 0; i < cats.length; i++) {
-  if (i === cats.length - 1) {   // We are at the end of the array (last item)
-    myFavoriteCats += `and ${cats[i]}.` // add "and "
+  if (i === cats.length - 1) {
+    // We are at the end of the array (last item)
+    myFavoriteCats += `and ${cats[i]}.`; // add "and "
   } else {
-    myFavoriteCats += `${cats[i]}, `
+    myFavoriteCats += `${cats[i]}, `;
   }
 }
 ```
 
 ## Exiting Loops `break`
 
-To stop a loop mid-execution, you can use a `break` statement. A `break` statement will *immediately exit the loop* and make the browser move onto any code that follows it.
+To stop a loop mid-execution, you can use a `break` statement. A `break` statement will _immediately exit the loop_ and make the browser move onto any code that follows it.
 
 Example: Search through contacts/phone numbers and return just the first number you want to find.
 
-``` html
+```html
 <label for="search">Search by contact name: </label>
-<input id="search" type="text">
+<input id="search" type="text" />
 <button>Search</button>
 
 <p></p>
 ```
 
-``` js
-const contacts = ['Chris:2232322', 'Sarah:3453456', 'Bill:7654322', 'Mary:9998769', 'Dianne:9384975'];
-const para = document.querySelector('p');
-const input = document.querySelector('input');
-const btn = document.querySelector('button');
+```js
+const contacts = [
+  "Chris:2232322",
+  "Sarah:3453456",
+  "Bill:7654322",
+  "Mary:9998769",
+  "Dianne:9384975",
+];
+const para = document.querySelector("p");
+const input = document.querySelector("input");
+const btn = document.querySelector("button");
 
-btn.addEventListener('click', () => {               // When button is clicked
-  const searchName = input.value.toLowerCase();     // Convert search term to lowercase
-  input.value = '';
+btn.addEventListener("click", () => {
+  // When button is clicked
+  const searchName = input.value.toLowerCase(); // Convert search term to lowercase
+  input.value = "";
   input.focus();
-  para.textContent = '';
-  for (const contact of contacts) {                 // Loop thru contact list
-    const splitContact = contact.split(':');        // Split current contact into array 
-    if (splitContact[0].toLowerCase() === searchName) {   // If splitContact name is match
-      para.textContent = splitContact[0] + '\'s number is ' + splitContact[1] + '.';  // Update <p> with the above string
-      break;  // Stop loop & move on
+  para.textContent = "";
+  for (const contact of contacts) {
+    // Loop thru contact list
+    const splitContact = contact.split(":"); // Split current contact into array
+    if (splitContact[0].toLowerCase() === searchName) {
+      // If splitContact name is match
+      para.textContent =
+        splitContact[0] + "'s number is " + splitContact[1] + "."; // Update <p> with the above string
+      break; // Stop loop & move on
     }
   }
-  if (para.textContent === '') {
-   para.textContent = 'Contact not found.';
- }
+  if (para.textContent === "") {
+    para.textContent = "Contact not found.";
+  }
 });
 ```
 
 ## Skipping Iterations `continue`
 
-`continue` is similar to `break`, but it skips to the *next iteration* instead of exiting the loop.
+`continue` is similar to `break`, but it skips to the _next iteration_ instead of exiting the loop.
 
 Example: Takes a number as input & returns only numbers that are **squares** of integers (whole numbers).
 
-``` html
+```html
 <label for="number">Enter number: </label>
-<input id="number" type="text">
+<input id="number" type="text" />
 <button>Generate integer squares</button>
 
-<p>Output: </p>
+<p>Output:</p>
 ```
 
+```js
+const para = document.querySelector("p");
+const input = document.querySelector("input");
+const btn = document.querySelector("button");
 
-``` js
-const para = document.querySelector('p');
-const input = document.querySelector('input');
-const btn = document.querySelector('button');
-
-btn.addEventListener('click', () => {
-  para.textContent = 'Output: ';
+btn.addEventListener("click", () => {
+  para.textContent = "Output: ";
   const num = input.value;
-  input.value = '';
+  input.value = "";
   input.focus();
   for (let i = 1; i <= num; i++) {
-    let sqRoot = Math.sqrt(i);            // sqRoot of i, ie:  4
+    let sqRoot = Math.sqrt(i); // sqRoot of i, ie:  4
     // if you round down sqRoot and it's NOT the same as the initial value (integer), ignore number
-    if (Math.floor(sqRoot) !== sqRoot) {  
+    if (Math.floor(sqRoot) !== sqRoot) {
       continue; // Skip to next loop iteration
     }
     para.textContent += `${i} `;
@@ -2961,29 +3053,31 @@ btn.addEventListener('click', () => {
 ## While & Do...While
 
 `while` loops are very similar to `for` loops, except for:
-- the initializer is set *before the loop*
-- the final-expression is included *inside the loop*
 
-Both loops contain the same 3 items and they're defined in the same order. 
+- the initializer is set _before the loop_
+- the final-expression is included _inside the loop_
 
-``` js 
-initializer
+Both loops contain the same 3 items and they're defined in the same order.
+
+```js
+initializer;
 while (condition) {
   // code to run
 
-  final-expression
+  final - expression;
 }
 ```
 
 Example:
 
-``` js
-const cats = ['Pete', 'Biggles', 'Jasmine'];
-let myFavoriteCats = 'My cats are called ';
+```js
+const cats = ["Pete", "Biggles", "Jasmine"];
+let myFavoriteCats = "My cats are called ";
 
-let i = 0;  // initializer
+let i = 0; // initializer
 
-while (i < cats.length) { // condition
+while (i < cats.length) {
+  // condition
   if (i === cats.length - 1) {
     myFavoriteCats += `and ${cats[i]}.`;
   } else {
@@ -2992,31 +3086,31 @@ while (i < cats.length) { // condition
   i++; // final-expression
 }
 
-myFavoriteCats;     // "My cats are called Pete, Biggles, and Jasmine."
+myFavoriteCats; // "My cats are called Pete, Biggles, and Jasmine."
 ```
 
 `do...while` is very similar, but structured slightly different.
 
-**Do...While ALWAYS excutes at LEAST one time** because the condition comes *after* the code.
+**Do...While ALWAYS excutes at LEAST one time** because the condition comes _after_ the code.
 
 ```js
-initializer
+initializer;
 do {
   // code to run
 
-  final-expression
-} while (condition)
+  final - expression;
+} while (condition);
 ```
 
 `do...while` example:
 
-``` js
-const cats = ['Pete', 'Biggles', 'Jasmine'];
-let myFavoriteCats = 'My cats are called ';
+```js
+const cats = ["Pete", "Biggles", "Jasmine"];
+let myFavoriteCats = "My cats are called ";
 
-let i = 0;  // initializer 
+let i = 0; // initializer
 do {
-  if (i === cats.length - 1) { 
+  if (i === cats.length - 1) {
     myFavoriteCats += `and ${cats[i]}.`;
   } else {
     myFavoriteCats += `${cats[i]}, `;
@@ -3025,14 +3119,14 @@ do {
   i++; // final-expression
 } while (i < cats.length); // condition
 
-myFavoriteCats;     // "My cats are called Pete, Biggles, and Jasmine."
+myFavoriteCats; // "My cats are called Pete, Biggles, and Jasmine."
 ```
 
 ## Choosing the Right Loop
 
 If you're iterating through an **array** or **object** that supports it and you **don't need access to the index position**, use `for...of`. **It's the best choice.**
 
-Otherwise, `for`, `while` or `do...while` are largely interchangeable. 
+Otherwise, `for`, `while` or `do...while` are largely interchangeable.
 
 `for` is recommended to begin with, because it's the easiest for remembering everything.
 
@@ -3042,25 +3136,25 @@ TDD refers to the practice of writing automated tests that describe how your cod
 
 Using `jest` to test javascript:
 
-``` js
+```js
 // reverseString.js
-const reverseString = function(string){
+const reverseString = function (string) {
   return string.split().reverse().join();
-}
+};
 
 module.exports = reverseString;
 
 // reverseString.spec.js
-const reverseString = require('./reverseString')
+const reverseString = require("./reverseString");
 
-describe('reverseString', () => {
-  test('reverses single word', () => {
-    expect(reverseString('hello')).toEqual('olleh');
+describe("reverseString", () => {
+  test("reverses single word", () => {
+    expect(reverseString("hello")).toEqual("olleh");
   });
 
-  test.skip('reverses multiple words', () => {
-    expect(reverseString('hello there')).toEqual('ereht olleh')
-  })
+  test.skip("reverses multiple words", () => {
+    expect(reverseString("hello there")).toEqual("ereht olleh");
+  });
 });
 ```
 
@@ -3068,7 +3162,7 @@ describe('reverseString', () => {
 
 What is the DOM?
 
-The Document Object Model is a 
+The Document Object Model is a
 
 - tree-like representation of the contents of a web page.
 - a tree of "**nodes**" with different relationships, depending on how they're arranged in the HTML doc.
@@ -3088,22 +3182,21 @@ To target `div class="display"` in the example below, you could use:
 - `#container > .display`
 - `div#container > div.display`
 
-
-``` html
- <div id="container">
-   <div class="display"></div>
-   <div class="controls"></div>
+```html
+<div id="container">
+  <div class="display"></div>
+  <div class="controls"></div>
 </div>
 ```
 
 You can also use **relational selectors** like `firstElementChild` or `lastElementChild` with special properties owned by the nodes.
 
-``` js
-const container = document.querySelector('#container');
+```js
+const container = document.querySelector("#container");
 console.dir(container.firstElementChild);
 // selects 1st child of #container (ie: .display)
 
-const controls = document.querySelector('.controls');
+const controls = document.querySelector(".controls");
 console.dir(controls.previousElementSibling);
 // select the sibling before controls => .display
 ```
@@ -3112,18 +3205,18 @@ console.dir(controls.previousElementSibling);
 
 When HTML is parsed, it is converted to the DOM. The primary differences is:
 
-- nodes are *objects* 
+- nodes are _objects_
 - with many properties & methods attached to them
-  
+
 These properties & methods are main tools used to manipulate web pages with JavaScript.
 
 ## Query Selectors
 
 To target nodes, you use query selectors.
 
-`element.querySelector(selector)` returns a *reference* to the first matched selector
+`element.querySelector(selector)` returns a _reference_ to the first matched selector
 
-`element.querySelectorAll(selector)` returns a *nodelist* containing references to ALL matches of the selectors (**NOT AN ARRAY.**)
+`element.querySelectorAll(selector)` returns a _nodelist_ containing references to ALL matches of the selectors (**NOT AN ARRAY.**)
 
 Nodelists look and somewhat act like arrays, but they're missing several array methods. To get around this, you can convert nodelists to arrays with `Array.from()` or the spread operator: `(...numbers)`.
 
@@ -3139,82 +3232,83 @@ constant div = document.createElement('div');
 
 ## Append Elements
 
-`parentNode.appendChild(childNode)` appends *childNode* as the last child of *parentNode*.
+`parentNode.appendChild(childNode)` appends _childNode_ as the last child of _parentNode_.
 
-`parentNode.insertBefore(newNode, referenceNode)` inserts *newNode* INTO *parentNode* BEFORE *referenceNode*.
+`parentNode.insertBefore(newNode, referenceNode)` inserts _newNode_ INTO _parentNode_ BEFORE _referenceNode_.
 
 ## Remove Elements
 
-`parentNode.removeChild(child)` removes *child* from *parentNode* on the DOM & returns a reference to child.
+`parentNode.removeChild(child)` removes _child_ from _parentNode_ on the DOM & returns a reference to child.
 
 ## Altering Elements
 
 After referencing an element, you can alter that element's properties. You can add/remove/alter attributes, change classes, add inline style info, etc.
 
-
 **Adding Inline Style**
 
-``` js
-const div = document.createElement('div');
+```js
+const div = document.createElement("div");
 // creates div element, referenced by variable 'div'
 
-div.style.color = 'blue';
-div.style.cssText = 'color:blue; background: white;';
-div.setAttribute('style', 'color: blue; background: white;');
+div.style.color = "blue";
+div.style.cssText = "color:blue; background: white;";
+div.setAttribute("style", "color: blue; background: white;");
 ```
 
-To access CSS rules from JS, you need to use *camelCase* or *bracket notation*:
+To access CSS rules from JS, you need to use _camelCase_ or _bracket notation_:
 
-``` js
-div.style.backgroundColor      // works -> NOT .background-color
-div.style['background-color']; // works
+```js
+div.style.backgroundColor; // works -> NOT .background-color
+div.style["background-color"]; // works
 div.style.cssText = "background-color: white;"; // works, in string
 ```
 
 **Attributes**
 
 ```js
-const div = document.createElement('div');
+const div = document.createElement("div");
 
-div.setAttribute('id', 'theDiv');
+div.setAttribute("id", "theDiv");
 // creates/updates id to theDiv
-div.getAttribute('id');
+div.getAttribute("id");
 // returns value: 'theDiv'
-div.removeAttribute('id');
+div.removeAttribute("id");
 // removes id= attribute from node
 ```
 
 **Classes**
 
 ```js
-const div = document.createElement('div');
+const div = document.createElement("div");
 
-div.classList.add('new');
+div.classList.add("new");
 // add new class to div
-div.classList.remove('new');
+div.classList.remove("new");
 // remove new class from div
-div.classList.toggle('active');
+div.classList.toggle("active");
 // adds or removes 'active' (toggle on off)
 ```
 
 Toggling CSS styles is standard and cleaner than removing them.
 
 **Adding text**
+
 ```js
-const div = document.createElement('div');
-div.textContent = 'Hello World!';
+const div = document.createElement("div");
+div.textContent = "Hello World!";
 ```
 
 **Adding HTML**
-``` js
-div.innerHTML = '<span>Hello world!</span>';
+
+```js
+div.innerHTML = "<span>Hello world!</span>";
 ```
 
 `textContent` should be used over `innerHTML`, because `innerHTML` can cause security risks if misused.
 
 **JavaScript is run when the `script` tag is defined.**
 
-- Causes DOM manipulation methods to *not work* if it runs *before* the nodes are created
+- Causes DOM manipulation methods to _not work_ if it runs _before_ the nodes are created
 
 To fix this issue, add the `defer` keyword to your `<script>` in the `<header>` of your page, or move your `<script>` to the end of your `<body>`.
 
@@ -3247,7 +3341,7 @@ Event listeners are the preferred method.
 
 Less than ideal solution: cluttering HTML w/ JavaScript:
 
-``` html
+```html
 <!-- functions' attributes (html elements) -->
 <button onclick="alert('hello world')">Click me</button>
 ```
@@ -3256,20 +3350,20 @@ Less than ideal solution: cluttering HTML w/ JavaScript:
 
 Better solution: Moved JS to its own file. Buttons can only have a single `onclick` property.
 
-``` html
+```html
 <!-- html -->
 <button id="btn">Click Me!</button>
 ```
 
-``` js
+```js
 // javascript
-const btn = document.querySelector('#btn');
-btn.onclick = () => alert('Hello World!');
+const btn = document.querySelector("#btn");
+btn.onclick = () => alert("Hello World!");
 ```
 
 **Method 3**
 
-Best method: Maintains separation and we also allow multiple event listeners if needed. 
+Best method: Maintains separation and we also allow multiple event listeners if needed.
 
 More flexible & powerful, but a bit more complex to setup.
 
@@ -3280,8 +3374,8 @@ More flexible & powerful, but a bit more complex to setup.
 
 ```js
 // javascript
-const btn = document.querySelector('#btn');
-btn.addEventListener('click', () => {
+const btn = document.querySelector("#btn");
+btn.addEventListener("click", () => {
   alert("Hello World!");
 });
 ```
@@ -3304,34 +3398,35 @@ function alertFunction() {
 btn.onclick = alertFunction;
 
 // METHOD 3
-btn.addEventListener('click', alertFunction);
+btn.addEventListener("click", alertFunction);
 ```
 
 **Named functions**
+
 - Clean up code considerably
 - Good idea if you want to reference a function in multiple places
 
 Retrieve event info by passing a parameter to the function - ie: `function (e)` is a callback from EventListener.
 
 ```js
-btn.addEventListener('click', function (e) {
+btn.addEventListener("click", function (e) {
   console.log(e); // [object: PointerEvent]
   console.log(e.target); // [object: HTMLButtonElement]
-  e.target.style.background = 'blue';
+  e.target.style.background = "blue";
 });
 ```
 
 Callback Example:
 
 ```js
-const notes = ['do', 're', 'me'];
+const notes = ["do", "re", "me"];
 notes.forEach((noteInNotes) => console.log(noteInNotes));
 // or
 notes.forEach((noteInNotes) => {
   console.log(noteInNotes);
 });
 // or
-notes.forEach(function(noteInNotes) {
+notes.forEach(function (noteInNotes) {
   console.log(noteInNotes);
 });
 // or
@@ -3340,23 +3435,22 @@ notes.forEach(console.log);
 
 **Attaching listeners to GROUPS of nodes**
 
-``` html
+```html
 <div id="container">
-    <button id="1">Click Me</button>
-    <button id="2">Click Me</button>
-    <button id="3">Click Me</button>
+  <button id="1">Click Me</button>
+  <button id="2">Click Me</button>
+  <button id="3">Click Me</button>
 </div>
 ```
 
-``` js
+```js
 // buttons = node list, looks and acts much like an array.
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll("button");
 
 // .forEach method to iterate through each button
 buttons.forEach((button) => {
-
   // and for each one we add a 'click' listener
-  button.addEventListener('click', () => {
+  button.addEventListener("click", () => {
     alert(button.id);
   });
 });
@@ -3384,13 +3478,12 @@ Event capturing bubbles up by default, triggering the child first and then the p
 
 > div3, div2, div1 (parent)
 
-
 **Reverse**
 
-``` js
-divs.forEach(div => div.addEventListener('click'), miscFunction, {
-  capture: true
-})
+```js
+divs.forEach((div) => div.addEventListener("click"), miscFunction, {
+  capture: true,
+});
 ```
 
 Adding `capture: true` to an event listener will cause `miscFunction` to be run on the capture **down**, instead of the bubble **up**.
@@ -3410,12 +3503,16 @@ If you add a paremeter with the `.stopPropagation()` function, it prevents event
 **Limit EventListener to 1 Event**
 
 ```js
-button.addEventListener('click', () => {
-  console.log('Clicked!'); 
-  }, {
-  once: true  // limits the EventListener to 1 event
-              // = adding removeEventListener('click')
-  })
+button.addEventListener(
+  "click",
+  () => {
+    console.log("Clicked!");
+  },
+  {
+    once: true, // limits the EventListener to 1 event
+    // = adding removeEventListener('click')
+  }
+);
 ```
 
 # Objects
@@ -3424,55 +3521,63 @@ Objects are a very important part of JS and any real project will feature them.
 
 Creating an empty object:
 
-``` js
+```js
 let user = new Object(); // object constructor
 let user = {...};  // object literal
 ```
 
 ## Literals & Properties
 
-``` js
-let user = {    // object
-  name: "John", // key 
-  age: 30       // key
-// property key/name/identifier: value;
-}
+```js
+let user = {
+  // object
+  name: "John", // key
+  age: 30, // key
+  // property key/name/identifier: value;
+};
 ```
 
 **Getting property values**
+
 ```js
 alert(user.name); // John
-alert(user.age);  // 30
+alert(user.age); // 30
 ```
 
 **Adding values**
+
 ```js
 user.isAdmin = true;
 ```
 
 **Removing values**
-``` js
+
+```js
 delete user.age;
 ```
 
 **Multi-word property names**
-``` js
+
+```js
 let user = {
   name: "John",
   age: "30",
-  "likes birds": true // multi-word
+  "likes birds": true, // multi-word
+};
+```
+
+**Trailing Commas** make it easier to add/remove/move around properties.
+
+```js
+let user = {
+ ...
+ finalProperty: "value", // < last item contains a comma
 }
 ```
- **Trailing Commas** make it easier to add/remove/move around properties.
- ```js
-let user = {
-  ...
-  finalProperty: "value", // < last item contains a comma
-}
- ```
 
 **Square brackets**
-``` js
+
+```js
 user.like birds = true; // ERROR - multi-word property w/ dot access
 
 let user = {};  // empty object
@@ -3482,14 +3587,15 @@ delete user["likes birds"]; // delete
 ```
 
 Square brackets allow you use expressions, as opposed to a literal string:
-``` js
+
+```js
 let key = "likes birds";
 user[key] = true; // == user["likes birds"] = true
 
 // key can be calculated at run-time or user input
 let key = prompt("What do you want to know about the user?", "name");
 user[key]; // "John" if name was passed
-user.key  // UNDEFINED *** dot notation cannot be used this way
+user.key; // UNDEFINED *** dot notation cannot be used this way
 ```
 
 **Computed Properties**
@@ -3498,7 +3604,7 @@ We can use square brackets in object literal when creating an object.
 
 An **object literal** is an object with properties literally written out when we create it.
 
-``` js
+```js
 let fruit = prompt("Fruit name?", "apple");
 let bag = {
   [fruit]: 5, // property name = fruit variable value
@@ -3516,31 +3622,31 @@ function makeUser(name, age) {
   return {
     name, // name: name,
     age, //  age: age,
-
   };
 }
 let user = makeUser("John", 30);
-user.name;  // John
+user.name; // John
 ```
 
 Property names are converted to strings:
 
 ```js
 let obj = {
-  0: "test" // "0": "test"
-}
-obj[0];   // test
+  0: "test", // "0": "test"
+};
+obj[0]; // test
 obj["0"]; //test
 ```
 
 **Does a property exist?**
+
 ```js
 if (user.noSuchProperty === undefined); // true - means "no such property"
 
 // special operator: in
 "key" in object;
 
-let user = { name: "John", age: 30, };
+let user = { name: "John", age: 30 };
 "age" in user; // true
 "noSuchProperty" in user; // false, noSuchProperty doesn't exist within user object
 
@@ -3556,31 +3662,31 @@ Use `in` instead of `=== undefined` because properties that do exist can contain
 
 `for (let prop in obj)` is often used.
 
-``` js
+```js
 for (key in object) {
   // code to execute
 }
 
 let user = { name: "John", age: 30, isAdmin: true };
 for (let key in user) {
-  key;        // name, age, isAdmin
-  user[key];  // John, 30, true
+  key; // name, age, isAdmin
+  user[key]; // John, 30, true
 }
 ```
 
 **Order of properties**
 
-Object properties are ordered in a *special way*:
+Object properties are ordered in a _special way_:
 
 - Integer properties are sorted
 - Others appear in creation order
 
-``` js
+```js
 let codes = {
-  "49": "Germany",
-  "41": "Switzerland",
-  "44": "Great Britain",
-  "1": "USA"
+  49: "Germany",
+  41: "Switzerland",
+  44: "Great Britain",
+  1: "USA",
 };
 
 for (let code in codes) {
@@ -3592,14 +3698,14 @@ for (let code in codes) {
 
 `49` is an integer property.
 
-`+49` and `1.2` are not. 
+`+49` and `1.2` are not.
 
-``` js
+```js
 // Number(...) explicitly converts to a number
 // Math.trunc is a built-in function that removes the decimal part
-alert( String(Math.trunc(Number("49"))) ); // "49", same, integer property
-alert( String(Math.trunc(Number("+49"))) ); // "49", not same "+49" ⇒ not integer property
-alert( String(Math.trunc(Number("1.2"))) ); // "1", not same "1.2" ⇒ not integer property
+alert(String(Math.trunc(Number("49")))); // "49", same, integer property
+alert(String(Math.trunc(Number("+49")))); // "49", not same "+49" ⇒ not integer property
+alert(String(Math.trunc(Number("1.2")))); // "1", not same "1.2" ⇒ not integer property
 ```
 
 ## Methods
@@ -3608,7 +3714,7 @@ Methods are functions that exist within an object.
 
 ```js
 const person = {
-  name: ['Bob', 'Smith'],
+  name: ["Bob", "Smith"],
   age: 32,
   // bio: function () { // is equal to:
   bio() {
@@ -3617,7 +3723,7 @@ const person = {
   // introduceSelf: function () {
   introduceSelf() {
     console.log(`Hi! I'm ${this.name[0]}.`);
-  }
+  },
 };
 ```
 
@@ -3625,26 +3731,26 @@ const person = {
 
 An object property can itself be an object.
 
-``` js
+```js
 const person = {
   name: {
-    first: 'Bob',
-    last: 'Smith',
+    first: "Bob",
+    last: "Smith",
   },
 };
 
-person.name.first;  // Bob
-person['name']['first'];  // Bob
-person.name.last;   // Smith
-person['name']['last']; // Smith
+person.name.first; // Bob
+person["name"]["first"]; // Bob
+person.name.last; // Smith
+person["name"]["last"]; // Smith
 ```
 
 ## Adding methods to existing object
 
-``` js
-person.farewell = function() {
+```js
+person.farewell = function () {
   console.log("Later!");
-}
+};
 ```
 
 ## `this`
@@ -3653,21 +3759,21 @@ person.farewell = function() {
 
 ## Defining the "shape" of an object
 
-Object literals are seriously inadequate when you need to create multiple objects. 
+Object literals are seriously inadequate when you need to create multiple objects.
 
 Inferior way: Using a function
 
-``` js
+```js
 function createPerson(name) {
   const obj = {};
   obj.name = name;
-  obj.introduceSelf = function() {
+  obj.introduceSelf = function () {
     console.log(`Hi! I'm ${this.name}.`);
-  }
+  };
   return obj;
 }
 
-const frankie = createPerson('Frankie');
+const frankie = createPerson("Frankie");
 frankie.name;
 frankie.introduceSelf();
 ```
@@ -3683,26 +3789,25 @@ Constructors are functions that are called using the `new` keyword. When you cal
 - Run the code in the constructor
 - Return the new object
 
-``` js
+```js
 function Person(name) {
   this.name = name;
-  this.introduceSelf = function() {
+  this.introduceSelf = function () {
     console.log(`Hi. I'm ${this.name}.`);
-  }
+  };
 }
 
-const frankie = new Person('Frankie');
+const frankie = new Person("Frankie");
 frankie.name;
 frankie.introduceSelf();
 ```
 
 ## Built-in Objects
 
-`myString.split(",");` 
+`myString.split(",");`
 
 `.split()` is a method available on a `String` object. When you create a string in your code, it is automatically created **as an instance of `String`**, which has several common methods and properties available on it.
 
 `const myDiv = document.createElement('div')`
 
 `createElement()` is a method available to the `Document` object. Every web page creates an instance of `Document` called `document`, containing the page structure, content and features such as its URL.
-
