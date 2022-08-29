@@ -44,7 +44,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 - [ ] **Intermediate HTML & CSS**
 
   - [x] Intermediate HTML Concepts
-  - [ ] Intermediate CSS Concepts
+  - [x] Intermediate CSS Concepts
   - [ ] Forms
   - [ ] Grid
 
