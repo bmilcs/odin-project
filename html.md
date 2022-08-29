@@ -686,3 +686,149 @@ Exception: 1st column, date with numbers - use **left align**.
 - Date
 - Zip, Postal Code
 - Phone Number
+
+## The Form Element
+
+Forms are one of the most crucial parts of your site. They are your user's gateway into your backend: the user provides data and you do stuff with it. There are many ways to collect a piece of a data, so you need to _specify the proper types of inputs_.
+
+The form element is a **container element**, like div. The form element wraps all the inputs a user will interact with on a form.
+
+The form element accepts two essential attributes:
+
+1. `action` attribute accepts a URL value that tells the form where to send its data to be processed. (ie: hooking into backend systems)
+2. `method` attribute tells the browser **which HTTP request method** it should use to submit the form.
+   1. `GET`: Retrieve something from a server (ie: Google search)
+   2. `POST`: Change something on a server (ie: user creates an account)
+
+```html
+<form action="example.com/path" method="post"></form>
+```
+
+### Form Controls
+
+#### Input Element
+
+The `input` element is the most versatile of all form control elements. It accepts a `type` attribute, which tells the browser what type of data it should expect and how it should render the input element.
+
+A `text` input accepts any text input (ie: user's first and last names).
+
+```html
+<form action="example.com/path" method="post">
+  <input type="text" />
+</form>
+```
+
+#### Labels
+
+Labels are used to inform the user what type of data they are expected to enter in an input element.
+
+`<label>` accepts a `for=ID` attribute, which associates it with a particular `<input>` through it's `id` attribute.
+
+When an associated label is clicked, it will focus on the corresponding input so the user can input some data. This makes forms more accessible to users.
+
+```html
+<form action="example.com/path" method="post">
+  <label for="first_name">First Name:</label>
+  <input type="text" id="first_name" />
+</form>
+```
+
+#### Placeholder Attribute
+
+To guide users on what to enter in form elements, we include `placeholder` text in input fields.
+
+Placeholder text should demonstrate _how text should be entered and formatted._
+
+```html
+<label for="first_name">First Name:</label>
+<input type="text" id="first_name" placeholder="Bob..." />
+```
+
+#### Name Attribute
+
+Labels tell the user what they should enter into an input field.
+
+```html
+<label for="first_name">First Name:</label>
+<input type="text" id="first_name" name="first_name" />
+```
+
+The `name` attribute lets the backend know what each piece of data represents.
+
+The `name` attribute is a variable name for the supplied input after it is submitted.
+
+Form input should **always** have a `name` attribute, **or it will be ignored when the form is submitted**.
+
+Using [httpbin](https://httpbin.org/), you can see the output when submitting a form.
+
+```html
+<form action="http://httpbin.org/post" method="post"></form>
+```
+
+#### Using Form Controls OUTSIDE of Forms
+
+You can use any form control **outside** of the `<form>` element, even when you don't have a backend server to send the data.
+
+ie: Using JavaScript to take input data and display it somewhere on the page.
+
+#### Type Attribute
+
+`Email inputs` are specialized text inputs just for email addresses.
+
+- On mobile devices, they display a different keyboard showing the `@` symbol to make it easier to type.
+- Validate that the user has entered a correctly formatted email address
+
+To create an email input, we add a `type="email"` to our input element:
+
+```html
+<label for="user_email">Email Address:</label>
+<input
+  type="email"
+  id="user_email"
+  name="email"
+  placeholder="you@example.com"
+/>
+```
+
+`Password inputs` are another specialized text input. They mask the inputted data with asterisks `*`.
+
+To create password inputs, we add a `type="password"` to our input element:
+
+```html
+<label for="user_password">Password:</label>
+<input type="password" id="user_password" name="password" />
+```
+
+`Number inputs` only accept numbers and ignore any other characters.
+
+To create number inputs, we add a `type="number"` to our input element:
+
+```html
+<label for="amount">Amount:</label>
+<input type="number" id="amount" name="amount" />
+```
+
+`Date inputs` allow us to collect dates from a user, by rendering a simple date picker calendar.
+
+To create date inputs, we add a `type="date"` to our input element:
+
+```html
+<label for="dob">Date of Birth:</label>
+<input type="date" id="dob" name="dob" />
+```
+
+#### Text Area
+
+`<textarea>` is technically not an input element, but it allows the user to enter **multi-line** text, such as comments and reviews.
+
+- Can be resized by clicking & dragging the bottom right corner
+- Have a closing tag, allowing you to wrap initial content in it
+- Accept `rows` and `cols` attributes to control the height/width
+
+To create a text area, we use the `<textarea>` element:
+
+```html
+<textarea></textarea>
+<textarea>Some initial content</textarea>
+<textarea rows="20" cols="60"></textarea>
+```
