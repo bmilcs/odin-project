@@ -1044,3 +1044,34 @@ accent-color: rebeccapurple;
 ```
 
 Calendar or date pickers are downright impossible to style, requiring us to build JavaScript custom controls or one of the many JavaScript libraries that provide ready made solutions.
+
+#### Easy To Style
+
+- `<form>`
+- `<fieldset>` `<legend>`
+- single line `<input>`'s, _except for search_
+- `<textarea>`
+- `<button>` & `<input type="button">`
+- `<label>`
+- `<output>`
+
+#### Challenging To Style
+
+- `<input type="checkbox">`
+- `<input type="radio">`
+- `<input type="search">`
+
+#### Very Difficult To Style
+
+- `<input type="color">`
+- `<input type="datetime-local">`
+- `<input type="range">`
+- dropdown related elements:
+  - `<select>`
+  - `<option>`
+  - `<optgroup>`
+  - `<datalist>`
+- `<progress>`
+- `<meter>`
+
+###
