@@ -817,6 +817,57 @@ To create date inputs, we add a `type="date"` to our input element:
 <input type="date" id="dob" name="dob" />
 ```
 
+`Hidden inputs` are hidden from the user, but allow you to send extra data to the backend, such as a timestamp. ie: `type="hidden"`
+
+`Search inputs` are text fields with an "X" icon in them, allowing the user to clear its contents. ie: `type="search"`
+
+- Search values can be automatically saved & reused for autocompletion purposes, across multiple pages on the same site.
+
+`Phone inputs` are text fields that present a special keyboard on mobile for entering phone numbers. No data validation is provided by default. ie: `type="tel"`.
+
+### Global Input Attributes
+
+- `autofocus` boolean: what input is automatically focused when the page loads
+- `disabled` boolean: user cannot interact w/ an input element
+- `form` attribute: must match the `id` of a `<form>` on the page. This allows you attach input elements that aren't nested in a `<form>` element.
+- `name`\*\*\* value sent to the backend, required
+- `value` element's initial value
+
+### Other Text Attributes
+
+- `<readonly>` blocks user input, but its value is sent to backend
+- `<disabled>` blocks user input, and is NOT sent to backend
+- `<size>` sets the width of input
+- `<maxlength>` limits # of characters
+- `<spellcheck>` if browser supports it
+
+### Built-in Form Validation
+
+- `required` prevents form submission until the field is completed
+- `minlength` `maxlength` restrict character counts
+- `min` `max` restrict number values
+- `type` restricts data to value type: email, number, etc.
+- `pattern` regular expression pattern that the data needs to follow
+
+When an element is **valid**:
+
+- Element matches `:valid` CSS pseudo-class
+- User will be able to submit the data
+
+When an element is **invalid**:
+
+- Element matches `:invalid` CSS pseudo-class
+  - Or `:out-of-range` if applicable
+- User will be blocked if they submit the data
+
+```html
+<form>
+  <label for="choose">Would you prefer a banana or a cherry?</label>
+  <input id="choose" name="i-like" required pattern="[Bb]anana|[Cc]herry" />
+  <button>Submit</button>
+</form>
+```
+
 ### Text Area
 
 `<textarea>` is technically not an input element, but it allows the user to enter **multi-line** text, such as comments and reviews.
@@ -928,6 +979,8 @@ Single checkboxes are useful if you want a user to toggle something as true or f
 </div>
 ```
 
+**Note:** Only `checked` elements are sent when submitting a form. Unchecked elemnts do not.
+
 ### Buttons
 
 Buttons are used to submit forms and trigger actions.
@@ -965,6 +1018,92 @@ To create a generic button, add `type="button"` to a `<button>` element.
 ```
 
 **IMPORTANT**: Buttons within a form with `type="submit"` (default value) will _always try to make a new request and submit data to the server._ Therefore, buttons in a form that are used for other purposes should **always** have a specified `type` attribute value to avoid unwanted effects of submitting a form.
+
+#### Image Button
+
+Image buttons are rendered like `<img>` elements, but when clicked, the x & y coordinates are submitted instead of its value.
+
+`<input type="image">` contain all `<img>` and `<button>` attributes.
+
+Image buttons are useful for **heatmaps**.
+
+### File Picker
+
+`<input type="file">` allows the user to attach one or more files to a form.
+
+Restricting filetypes is done using the `accept` attribute.
+
+To allow multiple files to be chosen, add the `multiple` attribute.
+
+Examples:
+
+```html
+<!-- image files -->
+<input type="file" name="file" id="file" accept="image/*" multiple />
+
+<!-- mobile device, direct camera / microphone capture -->
+<input type="file" accept="image/*;capture=camera" />
+<input type="file" accept="video/*;capture=camcorder" />
+<input type="file" accept="audio/*;capture=microphone" />
+```
+
+### Slider Controls
+
+Number picking can be done with a slider. Sliders are created with an input element and a `type="range"`. Sliders should contain:
+
+- `min` attribute
+- `max` attribute
+- `step` attribute: increment value
+
+To display the value of a slider, we use the `<output>` element. Similar to `<label>`, we add the `for` attribute to associate the `<output>` field a the slider.
+
+To actually get it working, we need to use JavaScript:
+
+```js
+const price = document.querySelector("#price");
+const output = document.querySelector(".price-output");
+
+output.textContent = price.value;
+
+price.addEventListener("input", () => {
+  output.textContent = price.value;
+});
+```
+
+### Autocomplete box
+
+We can provide suggestions or automatically completed values for form widgets using `<datalist>` container with nested `<option>` elements.
+
+To associate the datalist with an input, we add the `list` attribute to the input element and specify the `id` of the datalist.
+
+For color pickers, we can specify a pallette of specific colors in addition to the default color picker.
+
+```html
+<label for="myFruit">What's your favorite fruit?</label>
+<input type="text" name="myFruit" id="myFruit" list="mySuggestion" />
+<datalist id="mySuggestion">
+  <option>Apple</option>
+  <option>Banana</option>
+  <option>Blackberry</option>
+  <option>Blueberry</option>
+  <option>Lemon</option>
+  <option>Lychee</option>
+  <option>Peach</option>
+  <option>Pear</option>
+</datalist>
+```
+
+### Progress & Meter bars
+
+Progress bars are created like so:
+
+```html
+<progress max="100" value="75">75/100</progress>
+```
+
+Meter bars represent a fixed value in a range delimited by `min` and `max` values.
+
+They are colored according to the `optimum` value: green, yellow or red.
 
 ### Organizing Form Elements
 
