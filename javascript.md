@@ -3922,3 +3922,36 @@ The script above applies `invalid` class to the `<div>` when email is not specif
   <p class="help">Please enter a valid email address</p>
 </div>
 ```
+
+CSS can then show or hide the validation message when the form's submitted.
+
+```css
+.help {
+  display: none;
+}
+.invalid .help {
+  display: block;
+}
+.invalid label,
+.invalid input,
+.invalid .help {
+  color: red;
+  border-color: red;
+}
+```
+
+#### [Custom Form Validation Example](js/form-validation-class-example.md)
+
+### Recommendations
+
+- Use standard HTML input types where possible:
+  - `min` `max`
+  - `step`
+  - `minlength` `maxlength`
+  - `pattern`
+  - `required`
+  - `inputmode`
+  - `autocomplete`
+- If necessary, use a little JavaScript to enable custom validations & messages
+- For complex fields, progressively enhance the standard inputs
+- Forget Internet Explorer
