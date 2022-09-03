@@ -12,6 +12,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 | Project                    | URL                                                             | Source Code                                                  |
 | :------------------------- | :-------------------------------------------------------------- | :----------------------------------------------------------- |
+| **#6 Sign-up Form**        | [Live Demo](https://bmilcs.github.io/odin-signup-form/)         | [GitHub](https://github.com/bmilcs/odin-signup-form)         |
 | **#5 Calculator**          | [Live Demo](https://bmilcs.github.io/odin-calculator/)          | [GitHub](https://github.com/bmilcs/odin-calculator)          |
 | **#4 Etch-A-Sketch**       | [Live Demo](https://bmilcs.github.io/odin-etch-a-sketch/)       | [GitHub](https://github.com/bmilcs/odin-etch-a-sketch)       |
 | **#3 Rock Paper Scissors** | [Live Demo](https://bmilcs.github.io/odin-rock-paper-scissors/) | [GitHub](https://github.com/bmilcs/odin-rock-paper-scissors) |
