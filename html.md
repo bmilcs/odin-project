@@ -1244,6 +1244,16 @@ The `title` attribute allows us to enter a descriptive validation message to the
 </form>
 ```
 
+### Regex Examples
+
+[HTML Common Regex Patterns](https://www.html5pattern.com/)
+
+[MDN Regex Cheatsheet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Cheatsheet)
+
+### JavaScript & Constraint Validation API
+
+[View in Javascript Notes Here!](javascript.md#Form-Constraint-Validation)
+
 ### Input Behavior Exceptions
 
 Credit card fields with an input type of number present the increment/decrement icons which make it easy to enter the wrong information.
@@ -1253,6 +1263,53 @@ Instead, credit cards should be a `type="text"`.
 - `inputmode="numeric"` shows the number keyboard
 - `autocomplete="cc-number"` presents previously entered/configured credit card numbers.
 
-### JavaScript & Constraint Validation API
+### CSS Tricks Example
 
-[View in Javascript Notes Here!](javascript.md#Form-Constraint-Validation)
+[Form Validation UX in HTML & CSS Guide](https://css-tricks.com/form-validation-ux-html-css/)
+
+- Uses labels that appear like placeholders
+- Doesn't work for me on Chrome (2022)
+  - Icons don't appear & background color doesn't change
+
+### Do's & Don't's of Form Validation UX
+
+[Twitter Source](https://twitter.com/vponamariov/status/1400388896136040454)
+
+1. The best place to show validation errors - near inputs. Don't gather all of them in one place.
+1. Don't disable the submit button. Allow users to click on it and see the validation errors.
+
+   Users might scroll past some of the inputs without filling them.
+
+   If the submit button is blocked, then they won't know what to do next.
+
+1. Consider providing positive feedback as well as negative.
+
+1. Use human language in error messages, not a technical one.
+
+1. Put an _exclamation icon_ next to inputs it might help colorblind people to notice the error.
+
+1. Don't hide error messages under icons.
+
+1. Password validation the right way:
+
+   ![Password Validation](img/forms/password-validation.jpeg)
+
+1. Guide users to prevent mistakes:
+
+   ![Guide Users](./img/forms/help-users-avoid-mistakes.jpeg)
+
+1. Avoid aggressive error messages: showing error messages while a user is still typing
+
+   1. Lazy: When user leaves input
+   2. Poor UX: When the form is submitted
+   3. Best: 1st validate when user leaves input, then aggressively display error message until a valid entry is provided.
+
+   [Best Validation Method](https://twitter.com/i/status/1380182270808633345)
+
+### How to Report Errors
+
+[Source](https://www.nngroup.com/articles/errors-forms-design-guidelines/)
+
+- Don't use validation summaries as the only indication of an error
+- Don't use tooltips to report errors
+- Provide extra help for repeated errors
