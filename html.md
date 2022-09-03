@@ -739,6 +739,8 @@ To guide users on what to enter in form elements, we include `placeholder` text 
 
 Placeholder text should demonstrate _how text should be entered and formatted._
 
+- matches `:placeholder` pseudo-element
+
 ```html
 <label for="first_name">First Name:</label>
 <input type="text" id="first_name" placeholder="Bob..." />
@@ -840,33 +842,6 @@ To create date inputs, we add a `type="date"` to our input element:
 - `<size>` sets the width of input
 - `<maxlength>` limits # of characters
 - `<spellcheck>` if browser supports it
-
-### Built-in Form Validation
-
-- `required` prevents form submission until the field is completed
-- `minlength` `maxlength` restrict character counts
-- `min` `max` restrict number values
-- `type` restricts data to value type: email, number, etc.
-- `pattern` regular expression pattern that the data needs to follow
-
-When an element is **valid**:
-
-- Element matches `:valid` CSS pseudo-class
-- User will be able to submit the data
-
-When an element is **invalid**:
-
-- Element matches `:invalid` CSS pseudo-class
-  - Or `:out-of-range` if applicable
-- User will be blocked if they submit the data
-
-```html
-<form>
-  <label for="choose">Would you prefer a banana or a cherry?</label>
-  <input id="choose" name="i-like" required pattern="[Bb]anana|[Cc]herry" />
-  <button>Submit</button>
-</form>
-```
 
 ### Text Area
 
@@ -1213,4 +1188,71 @@ Calendar or date pickers are downright impossible to style, requiring us to buil
 - `<progress>`
 - `<meter>`
 
-###
+### Built-in Form Validation
+
+A **constraint** is a rule that governs what should or should not be into a form field.
+
+Client-side validation is **NOT a substitute for server-side validation.** Anyone who knows how to use developer tools can bypass your JavaScript & HTML.
+
+- `required` prevents form submission until the field is completed
+  - matches `:required` css pseudo-class
+- `minlength` `maxlength` restrict character counts
+- `min` `max` restrict number values
+- `type` restricts data to value type: email, number, etc.
+- `pattern` regular expression pattern that the data needs to follow
+
+When an element is **valid**:
+
+- Element matches `:valid` CSS pseudo-class
+- User will be able to submit the data
+
+When an element is **invalid**:
+
+- Element matches `:invalid` CSS pseudo-class
+  - Or `:out-of-range` if applicable
+- User will be blocked if they submit the data
+
+```html
+<form>
+  <label for="choose">Would you prefer a banana or a cherry?</label>
+  <input id="choose" name="i-like" required pattern="[Bb]anana|[Cc]herry" />
+  <button>Submit</button>
+</form>
+```
+
+The `title` attribute allows us to enter a descriptive validation message to the user when the incorrect input is provided.
+
+```html
+<form action="#" method="get">
+  <div>
+    <label for="zip_code">Postal / Zip Code:</label>
+  </div>
+
+  <input
+    type="text"
+    id="zip_code"
+    name="zip_code"
+    pattern="(\d{5}([\-]\d{4})?)"
+    title="Please enter a valid zip code, example: 65251"
+    placeholder="65251"
+    required
+  />
+
+  <div>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+```
+
+### Input Behavior Exceptions
+
+Credit card fields with an input type of number present the increment/decrement icons which make it easy to enter the wrong information.
+
+Instead, credit cards should be a `type="text"`.
+
+- `inputmode="numeric"` shows the number keyboard
+- `autocomplete="cc-number"` presents previously entered/configured credit card numbers.
+
+### JavaScript & Constraint Validation API
+
+[View in Javascript Notes Here!](javascript.md#Form-Constraint-Validation)

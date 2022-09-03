@@ -1482,8 +1482,10 @@ null || (2 && 3) || 4; // 2 && 3: returns 3 (all truthy, returns last truthy)
 // if condition, age between 14-90, inclusively (can reach the edges of 14-90)
 if (age >= 14 && age <= 90)
   if (!(age >= 14 && age <= 90))
-    // if condition, age NOT between 14-90, inclusively
-    if (age < 14 || age > 90) if (-1 || 0) alert("first");
+    if (age < 14 || age > 90)
+      if (-1 || 0)
+        // if condition, age NOT between 14-90, inclusively
+        alert("first");
 // Runs: -1 || 0 = -1, truthy
 
 if (-1 && 0) alert("second");
@@ -3811,3 +3813,112 @@ frankie.introduceSelf();
 `const myDiv = document.createElement('div')`
 
 `createElement()` is a method available to the `Document` object. Every web page creates an instance of `Document` called `document`, containing the page structure, content and features such as its URL.
+
+## Form Constraint Validation
+
+Constraint Validation API provides form customization options which can enhance the standard HTML field checking.
+
+- Stop validation until first interaction with a field or submits the form
+- Show custom styled error messages
+- Custom validation that's impossible w/ HTML alone
+  - ie: Comparing 2 inputs: New & Confirm password fields
+  - ie: Date comes after another date
+
+### Form Validation
+
+Before using the API, disable the default validation & error messages by setting `noValidate` property set to `true`.
+
+> This is equivalent to the `novalidate` html attribute
+
+```js
+const myform = document.getElementById("myform");
+myform.noValidate = true;
+```
+
+Event handlers can then be added:
+
+```js
+myform.addEventListener("submit", validateForm);
+```
+
+The submit handler can check if **the whole form is valid** with `checkValidity()` or `reportValidity` methods. These return `true` when all inputs are valid.
+
+An `invalid` event is also triggered on every invalid field. This does **NOT** bubble --- handlers must be added to every control that uses it.
+
+```js
+// validate form on submission
+function validateForm(e) {
+  const form = e.target;
+
+  if (form.checkValidity()) {
+    // form is valid - make further checks
+  } else {
+    // form is invalid - cancel submit
+    e.preventDefault();
+  }
+}
+```
+
+### Individual Field Validation
+
+Each field will have their own **constraint validation properties**:
+
+- `willValidate` returns `true`if element is a candidate for constraint validation
+- `validationMessage` validation message, which is an **empty string** if the field is valid
+- `valitity` _ValidityObject_ object
+  - has a `valid` property
+    - `true` field is valid
+    - `false` field is invalid
+
+| ValidityState      | description                              |
+| :----------------- | :--------------------------------------- |
+| `.badInput`        | browser can't understand the input       |
+| `.customError`     | custom validity message has been sent    |
+| `.patternMismatch` | value doesn't match `pattern` attribute  |
+| `.rangeOverflow`   | value > `max` attribute                  |
+| `.rangeUnderflow`  | value < `min` attribute                  |
+| `.stepMismatch`    | value doesn't fit `step` attribute rules |
+| `.tooLong`         | string length > `maxlength`              |
+| `.tooShort`        | string length < `minlength`              |
+| `.typeMismatch`    | value is not a valid email/url           |
+| `.valueMissing`    | `required` value is empty                |
+
+Individual fields have the following **constraint validation methods**:
+
+- `setCustomValidity(message)` sets an error message for an invalid field. An empty string must be passed when field is valid or field will remain invalid forever.
+- `validity.valid` returns `true` when input is valid
+- `checkValidity()` property does the same thing and it also triggers an `invalid` event on the field, which can be useful.
+
+`validateForm()` handler function can loop through every field and apply an `invalid` class to its parent element where necessary:
+
+```js
+function validateForm(e) {
+  const form = e.target;
+  if (form.checkValidity()) {
+    // form is valid - make further checks
+  } else {
+    // form is invalid - cancel submit
+    e.preventDefault();
+    // apply invalid class
+    Array.from(form.elements).forEach((i) => {
+      if (i.checkValidity()) {
+        // field is valid - remove class
+        i.parentElement.classList.remove("invalid");
+      } else {
+        // field is invalid - add class
+        i.parentElement.classList.add("invalid");
+      }
+    });
+  }
+}
+```
+
+The script above applies `invalid` class to the `<div>` when email is not specified or invalid.
+
+```html
+<div>
+  <label for="email">email</label>
+  <input type="email" id="email" name="email" required />
+  <p class="help">Please enter a valid email address</p>
+</div>
+```
