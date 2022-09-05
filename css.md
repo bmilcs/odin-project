@@ -2590,12 +2590,6 @@ To test grid alignment properties:
 
 ![Grid Properties Testing](img/devtools-grid-properties.png)
 
-### `fr` unit
-
-`fr` is a grid specific unit of measurement.
-
-`fr` represents a **fraction of the available space** in a container.
-
 ### Grid Positioning: Columns/Rows
 
 The following properties allow us to position grid items based on column grid and column row **lines**. This allows them to span across multiple lines.
@@ -2692,3 +2686,102 @@ Horizontally justifying items on the **inline axis**: `justify-self` `justify-it
 `margin-left/right: auto`
 
 ### [Grid Properties List](https://css-tricks.com/snippets/css/complete-guide-grid/#aa-grid-properties)
+
+### Grid: Repeat Function
+
+`repeat()` is a css function that allows us to define multiple values without repeating it over and over.
+
+```css
+.grid-container {
+  grid-template-rows: repeat(2, 150px);
+  grid-template-columns: repeat(5, 150px);
+}
+```
+
+### Grid: Fractional Units & Min-Content
+
+`fr` is a grid specific unit of measurement that allows us to start making them _dynamic or flexible._
+
+`fr` represents a **fraction of _the available space_** in a container.
+
+- `2fr` would be twice as large as `1fr`
+
+`min-content` is the smallest size an element can be without overflowing.
+
+- in a `<p>`, `min-content` would be the size of the largest word within it.
+
+### Grid: `Min()` & `Max()` Track Sizes
+
+Using CSS functions `min()` and `max()` are useful in declaring track sizes in responsive designs:
+
+```css
+.grid-container {
+  grid-template-rows: repeat(2, min(200px, 50%));
+  grid-template-columns: repeat(5, max(120px, 15%));
+}
+```
+
+### Grid: `minmax()` Dynamic Minimum & Maximum Sizes
+
+`minmax()` is a grid-only CSS function. It can be used with:
+
+- `grid-template-columns`
+- `grid-template-rows`
+- `grid-auto-columns`
+- `grid-auto-rows`
+
+`minmax()` accepts two values: minimum track size & maximum track size.
+
+**Unlike `min()/max()`**, it _can_ make sense to use _2 static values_ for both arguments.
+
+```css
+.grid-container {
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(5, minmax(150px, 200px));
+}
+```
+
+Dynamic sizing occurs when grid container changes size.
+
+### Grid: `clamp()`
+
+`clamp(minimum-size, ideal-size, maximum-size)`
+
+Since clamp's purpose is to create _flexibly-size track with constraints_, we want to use:
+
+- **Ideal value**: _Dyanmic_ measurement
+- **Min/Max**: _Static_ measurement
+
+```css
+.simple-example {
+  width: clamp(500px, 80%, 1000px);
+}
+```
+
+### Grid: Auto-Fit & Auto-Fill
+
+`auto-fill` & `auto-fit` functions return **“the largest possible positive integer”** without the grid items overflowing their container
+
+The real magic of `auto-fill` and `auto-fit` is when we use `minmax()` as well.
+
+With `minmax()`, we tell grid that we want _as many columns as possible_, while limiting each column's size without overflowing our grid.
+
+```css
+.grid-container {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+```
+
+In the above example:
+
+- `autofit()` returns **highest possible integer** without overflowing
+- It needs grid width. default: window width, minus margins. (ie: `500px`)
+- Browser determines how many grid column tracks could fit in that width.
+- Using `minmax()`, it takes the minimum value `150px` to find out.
+  - Grid will render 3x `150px` columns in the grid (3x `150px` = `450px`)
+- Browser then resizes those 3x columns to fit the _maximum_ allowed value of `minmax()` -- `1fr`
+
+**`auto-fill`** works the exact same way as `auto-fit`, except when there are not enough items to fill up an entire grid row _once_.
+
+- `auto-fit` keeps grid items at their `MAX` size.
+- `auto-fill` keeps grid items at their `MIN` size.
