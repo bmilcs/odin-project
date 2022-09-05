@@ -2502,7 +2502,10 @@ Quotes:
 **Grid Containers** will contain the whole grid. This is accomplished with:
 
 ```css
+/* block level */
 display: grid;
+/* inline level */
+display: inline-grid;
 ```
 
 - Grid containers only affect their _direct children_.
@@ -2567,9 +2570,13 @@ There are `column-gap` and `row-gap` properties to control which axis receives a
 
 ### Grid Terminology
 
+- **Grid track**: entire row or column of a the grid.
+  - Defined exlicitly
 - **Grid line**: dividing line that makes up the grid structure.
+  - Created implicitly - after our tracks are defined.
 - **Grid cell**: space between row/column grid lines.
-- **Grid track**: entire row/column of a the grid.
+  - Smallest unit of measurement in grid.
+  - Default size of each child element
 - **Grid area**: any space surrounded by 4 grid lines
   - ie: 2x1 group of cells, 2x6 group of cells
 
@@ -2583,8 +2590,68 @@ To test grid alignment properties:
 
 ![Grid Properties Testing](img/devtools-grid-properties.png)
 
-### `fr` unit && repeat()
+### `fr` unit
 
 `fr` is a grid specific unit of measurement.
 
 `fr` represents a **fraction of the available space** in a container.
+
+### Grid Positioning: Columns/Rows
+
+The following properties allow us to position grid items based on column grid and column row **lines**. This allows them to span across multiple lines.
+
+```css
+/* Grid ITEM Level */
+
+grid-column: 1 / 6; /* grid-column: start / end */
+grid-column-start: 1;
+grid-column-end: 6;
+
+grid-row: 1 / 3; /* grid-row: start / end; */
+grid-row-start: 1;
+grid-row-end: 3;
+```
+
+#### Grid Positioning: Area (Shorthand)
+
+Grid Area is another shorthand available, which includes all 4 positioning properties:
+
+`grid-area: `
+
+- `grid-row-start /`
+- `grid-column-start /`
+- `grid-row-end /`
+- `grid-column-end;`
+
+```css
+#living-room {
+  grid-area: 1 / 1 / 3 / 6;
+}
+```
+
+However, this can get confusing. Instead of using **grid lines**, we can create a visual layout of the grid _in words_. To do this, we give each item on the grid a name using `grid-area`:
+
+```css
+#living-room {
+  grid-area: living-room;
+}
+```
+
+This is possible for _all grid items_. We can then map out the whole structure with the **grid container**, using `grid-template-areas`.
+
+```css
+.container {
+  display: inline-grid;
+  grid-template: 40px 40px 40px 40px 40px / 40px 40px 40px 40px 40px;
+  background-color: lightblue;
+
+  grid-template-areas:
+    "living-room living-room living-room living-room living-room"
+    "living-room living-room living-room living-room living-room"
+    "bedroom bedroom bathroom kitchen kitchen"
+    "bedroom bedroom bathroom kitchen kitchen"
+    "closet closet bathroom kitchen kitchen";
+}
+```
+
+`.` can be used to indicate an **empty cell**.

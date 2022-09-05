@@ -7,26 +7,58 @@
     <title>Document</title>
     <style>
       .container {
-        display: grid;
-        grid-template-columns: 10rem 10rem;
-        grid-template-rows: 10rem 10rem;
-        grid-auto-rows: 10rem;
-        column-gap: 10px;
-        row-gap: 100px;
+        display: inline-grid;
+        grid-template: 40px 40px 40px 40px 40px / 40px 40px 40px 40px 40px;
+        background-color: lightblue;
       }
 
-      .container > div {
-        border: 2px solid black;
+      .room {
+        border: 1px solid;
+        font-size: 50%;
+        text-align: center;
+      }
+
+      #living-room {
+        grid-column-start: 1;
+        grid-column-end: 6;
+        grid-row-start: 1;
+        grid-row-end: 3;
+      }
+
+      #kitchen {
+        grid-column: 2 / 4;
+        grid-row: 3 / 6;
+      }
+
+      #bedroom {
+        grid-column-start: 4;
+        grid-column-end: 6;
+        grid-row-start: 3;
+        grid-row-end: 5;
+      }
+
+      #bathroom {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 3;
+        grid-row-end: 6;
+      }
+
+      #closet {
+        grid-column-start: 4;
+        grid-column-end: 6;
+        grid-row-start: 5;
+        grid-row-end: 6;
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div>Item 1</div>
-      <div>Item 2</div>
-      <div>Item 3</div>
-      <div>Item 4</div>
-      <div>Item 5</div>
+      <div class="room" id="living-room">Living Room</div>
+      <div class="room" id="kitchen">Kitchen</div>
+      <div class="room" id="bedroom">Bedroom</div>
+      <div class="room" id="bathroom">Bathroom</div>
+      <div class="room" id="closet">Closet</div>
     </div>
   </body>
 </html>
