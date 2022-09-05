@@ -2673,4 +2673,22 @@ Instead of specifying a grid start/end lines by number, you can specify a start 
 }
 ```
 
-## [Grid Properties List](https://css-tricks.com/snippets/css/complete-guide-grid/#aa-grid-properties)
+### Grid Alignment
+
+Verically aligning items on the **block axis**: `align-self`, `align-items`.
+
+Horizontally justifying items on the **inline axis**: `justify-self` `justify-items`
+
+- auto
+- normal
+- start
+- end
+- center
+- stretch
+- baseline
+- first baseline
+- last baseline
+
+`margin-left/right: auto`
+
+### [Grid Properties List](https://css-tricks.com/snippets/css/complete-guide-grid/#aa-grid-properties)
