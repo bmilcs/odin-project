@@ -2460,3 +2460,131 @@ When you run the processor, it takes your code and turns it into vanilla CSS tha
 - Maintenance & Over-engineering
 - Tooling & Developer Convenience
 - Saving generated files
+
+## Grid
+
+Grid was inspired by other forms of media: **newspapers and magazines**.
+
+Flexbox allows us to position and align items on **one** of two axis: main & cross. It also allows us to grow, shrink and change the size of flex items. `flex-wrap` allows us to take flex items and move them to the next line. However, this isn't always easy and it's not the best tool for the job.
+
+In other words, Flexbox is best used on a **single dimension**: up/down.
+
+**Grid** makes creating **two-dimensional** layout much easier. Grid can also create one-dimensional layouts, giving developers the option of adding a second row later on.
+
+Grid shares many similarities with Flexbox:
+
+- Parent containers
+- Child items
+- Similar property names (alignment/positioning)
+
+While Flexbox can struggle to make all child items match evenly in size, Grid makes this much easier.
+
+- Flexbox Layout: mostly defined in child items
+- **Grid Layout**: mostly defined in parent element
+
+Grid is better at overlapping
+
+- Place items on overlapping grid lines, or within the same exact grid cells.
+
+Grid is sturdier
+
+- Grid has space-occupying features: fractional units, content can break grids
+- Flexbox sizing is complicated: `width` `min-width` `flex-basis` `flex-grow` `flex-shrink`
+
+Quotes:
+
+- "Flexbox is for alignment. Grid is for layout."
+- "If you start giving flex items _a width_, grid will be easier to use."
+- "Grid is best suited for 2D & overlapping elements, while flexbox shines in simpler/common layout requirements."
+
+## Setting Up a Grid
+
+**Grid Containers** will contain the whole grid. This is accomplished with:
+
+```css
+display: grid;
+```
+
+- Grid containers only affect their _direct children_.
+- Grid items can also be grid containers.
+
+### Columns & Rows
+
+Specifying grid _columns_ and _rows_ defines the **grid track** or the space between lines on a grid. This is done with the `grid-template-columns` and `grid-template-rows` properties.
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: 50px 50px;
+  grid-template-rows: 50px 50px;
+}
+```
+
+`grid-template` is a shorthand property for both `grid-template-columns` and `grid-template-rows`.
+
+```css
+.container {
+  display: grid;
+  grid-template: 50px 50px / 50px 50px;
+  /* equivalent to:
+  grid-template-columns: 50px 50px;
+  grid-template-rows: 50px 50px; */
+}
+```
+
+### Implicit vs Explicit Grid
+
+Adding a **5th div** to a **2x2 grid** will land in a third row that isn't **explicitly** defined.
+
+The **_implicit_** grid concept is how CSS automatically places grid items, even when we haven't _explicitly_ defined a layout for them.
+
+- Size values established by our `grid-template-columns` `grid-template-rows` are **NOT carried over** into these **implicit** grid tracks.
+
+Implicit guide track sizes are created using the `grid-auto-rows` and `grid-auto-columns` properties.
+
+> If we want any new rows to stay the same value as our explicit row track sizes:
+
+```css
+.container {
+  display: grid;
+  /* explicit guide tracks */
+  grid-template-columns: 50px 50px;
+  grid-template-rows: 50px 50px;
+  /* implicit guide tracks */
+  grid-auto-rows: 50px;
+}
+```
+
+_Much less common option_: Add extra content **horizontally** (row) w/ `grid-auto-flow: column` property. Implicit track sizes are set w/ the `grid-auto-columns` property.
+
+### Gap
+
+Gaps between rows/columns are known as gutters / alleys.
+
+There are `column-gap` and `row-gap` properties to control which axis receives a gap.
+
+`gap` is shorthand for `column-gap` and `row-gap`.
+
+### Grid Terminology
+
+- **Grid line**: dividing line that makes up the grid structure.
+- **Grid cell**: space between row/column grid lines.
+- **Grid track**: entire row/column of a the grid.
+- **Grid area**: any space surrounded by 4 grid lines
+  - ie: 2x1 group of cells, 2x6 group of cells
+
+### Grid DevTools
+
+To get grid badges in devtools, click on `(grid)` in the DOM tree. The `layout` tab also have useful settings for grid.
+
+![Grid Badges](./img/devtools-grid-badges.png)
+
+To test grid alignment properties:
+
+![Grid Properties Testing](img/devtools-grid-properties.png)
+
+### `fr` unit && repeat()
+
+`fr` is a grid specific unit of measurement.
+
+`fr` represents a **fraction of the available space** in a container.
