@@ -1,0 +1,80 @@
+/* The gap is 15px
+The grid has two columns
+The grid has four rows
+The second column is three times larger than the first
+The third row is five times larger than the others
+The header and footer elements span across both columns
+The sidebar element only spans across the first column
+The nav and article elements span across the second column */
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 300px 900px;
+  grid-template-rows: repeat(2, 100px) 500px 100px;
+  /* grid-template-areas:
+    "header header"
+    "sidebar nav"
+    "sidebar article"
+    "footer footer"; */
+  gap: 15px;
+}
+
+.container div {
+  padding: 15px;
+  font-size: 32px;
+  font-family: Helvetica;
+  font-weight: bold;
+  color: white;
+  border-radius: 15px;
+}
+
+.header {
+  background-color: #ffde22;
+  /* grid-area: header; */
+  grid-column: 1 / 3;
+}
+
+.sidebar {
+  background-color: #ff7755;
+  /* grid-area: sidebar; */
+  grid-column: 1 / 2;
+  grid-row: 2 / 4;
+}
+
+.nav {
+  background-color: #00ddff;
+  /* grid-area: nav; */
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+.article {
+  background-color: #bccbde;
+  /* grid-area: article; */
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
+}
+
+.article p {
+  font-size: 18px;
+  font-family: sans-serif;
+  color: white;
+  text-align: left;
+}
+
+.footer {
+  background-color: #393f4d;
+  /* grid-area: footer; */
+  grid-column: 1 / 3;
+  grid-row: 4 / 5;
+}
