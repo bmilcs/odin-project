@@ -2612,6 +2612,8 @@ grid-row-start: 1;
 grid-row-end: 3;
 ```
 
+**Defaults**: If an item spans _one track_ (column/row), you can omit `grid-column-end`/`grid-column-row`.
+
 #### Grid Positioning: Area (Shorthand)
 
 Grid Area is another shorthand available, which includes all 4 positioning properties:
@@ -2655,3 +2657,20 @@ This is possible for _all grid items_. We can then map out the whole structure w
 ```
 
 `.` can be used to indicate an **empty cell**.
+
+### Negative Grid Lines
+
+Negative grid lines can be used to go from right to left.
+
+### Span Keyword
+
+Instead of specifying a grid start/end lines by number, you can specify a start line and then _the number of tracks you'd like the area to span._
+
+```css
+.box2 {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+```
+
+## [Grid Properties List](https://css-tricks.com/snippets/css/complete-guide-grid/#aa-grid-properties)
