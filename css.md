@@ -2785,3 +2785,13 @@ In the above example:
 
 - `auto-fit` keeps grid items at their `MAX` size.
 - `auto-fill` keeps grid items at their `MIN` size.
+
+## Grid vs Flexbox
+
+### Content First vs. Layout First Design
+
+If your design originates with the content first, Flexbox is a good choice when starting with the smallest parts outwards.
+
+If given a specific overall layout to adhere to (explicit placement of elements in **two dimensions**).
+
+Ultimately, it's PERSONAL PREFERENCE.
