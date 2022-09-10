@@ -43,12 +43,12 @@ These assignments were tackled with a growth mindset and I did not reference the
   - [x] The Back End
   - [x] Conclusion
 
-- [ ] **Intermediate HTML & CSS**
+- [x] **Intermediate HTML & CSS**
 
   - [x] Intermediate HTML Concepts
   - [x] Intermediate CSS Concepts
   - [x] Forms
-  - [ ] Grid
+  - [x] Grid
 
 - [ ] **JavaScript**
 
