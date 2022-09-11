@@ -18,7 +18,7 @@ To run JS locally, via the browser, you have 2 options.
 </body>
 ```
 
-2. External Script:
+1. External Script:
 
 ```html
 <!-- JavaScript files have the .js extension: -->
@@ -4043,3 +4043,190 @@ player.sayName();
 ```
 
 ### [Exercise: Book Object](js/exer/../exercises/book.js)
+
+### The Prototype
+
+All JavaScript **objects** have a `prototype`.
+
+- Prototype is another object that the original object inherits from.
+- The original object has access to all of its prototype's methods & properties.
+
+When using constructors to create objects, it is **best** to define functions on the `prototype` of that object.
+
+- A _single instance_ of that function will be **shared between all of the Student objects**.
+- If the function's declared inside the constructor, the function will be **duplicated every time a new Student object is created**.
+
+```js
+function Student(name, grade) {
+  this.name = name;
+  this.grade = grade;
+}
+
+Student.prototype.sayName = function () {
+  console.log(this.name);
+};
+Student.prototype.goToProm = function () {
+  console.log("Eh.. go to prom?");
+};
+```
+
+#### Prototypal Inheritance: Recommended Method
+
+The current best way of setting the prototype of an object is with `Object.create`.
+
+- `Object.create` returns a new object with the specified prototype & any additional properties you add
+
+```js
+function Student() {}
+
+Student.prototype.sayName = function () {
+  console.log(this.name);
+};
+
+function EighthGrader(name) {
+  this.name = name;
+  this.grade = 8;
+}
+
+EighthGrader.prototype = Object.create(Student.prototype);
+
+const carl = new EighthGrader("carl");
+carl.sayName(); // console.logs "carl"
+carl.grade; // 8
+```
+
+**WARNING**: Do NOT set one prototype equal to another, because it can cause issues in the future. In other words:
+
+```js
+// BAD - DON'T DO THIS:
+EighthGrader.prototype = Student.prototype;
+```
+
+#### More on Prototypes
+
+1. Every JavaScript function has a **prototype property** (empty by default)
+
+   We attach properties & methods **on this prototype property** when you want to implement _inheritance_
+
+2. The **prototype attribute** (aka prototype object) is a characteristic of an object
+
+   It points to **the object's parent** or the object it inerhited its properties from.
+
+   > `Object.prototype` or _prototype object_
+
+The `__proto__` _pseudo_-property contains an object's prototype object.
+
+```js
+function People() {
+  this.superstar = "Michael Jackson";
+}
+// Define "athlete" property on the People prototype so that "athlete" is accessible by all objects that use the People () constructor.
+People.prototype.athlete = "Tiger Woods";
+
+var famousPerson = new People();
+famousPerson.superstar = "Steve Jobs";
+
+// The search for superstar will first look for the superstar property on the famousPerson object, and since we defined it there, that is the property that will be used. Because we have overwritten the famousPerson’s superstar property with one directly on the famousPerson object, the search will NOT proceed up the prototype chain.
+console.log(famousPerson.superstar); // Steve Jobs
+
+// Note that in ECMAScript 5 you can set a property to read only, and in that case you cannot overwrite it as we just did.
+
+// This will show the property from the famousPerson prototype (People.prototype), since the athlete property was not defined on the famousPerson object itself.
+console.log(famousPerson.athlete); // Tiger Woods
+
+// In this example, the search proceeds up the prototype chain and find the toString method on Object.prototype, from which the Fruit object inherited—all objects ultimately inherits from Object.prototype as we have noted before.
+console.log(famousPerson.toString()); // [object Object]
+```
+
+All built-in constructors:
+
+- `Array()`
+- `Number()`
+- `String()`
+
+... were created from the `Object constructor`, and their prototype is `Object.prototype`.
+
+#### Looping through Objects
+
+The `for...in` loop iterates over inherited properties.
+
+To check if an object has its own (not inherited) property, use `obj.hasOwnProperty(key)`. `hasOwnProperty()` is inherited from `Object.prototype.hasOwnProperty`.
+
+```js
+let animal = {
+  eats: true,
+};
+
+let rabbit = {
+  jumps: true,
+  __proto__: animal,
+};
+
+// Object.keys only returns own keys
+alert(Object.keys(rabbit)); // jumps
+
+// for..in loops over both own and inherited keys
+for (let prop in rabbit) alert(prop); // jumps, then eats
+
+// To sort properties by inherited or own:
+for (let prop in rabbit) {
+  let isOwn = rabbit.hasOwnProperty(prop);
+
+  if (isOwn) {
+    alert(`Our: ${prop}`); // Our: jumps
+  } else {
+    alert(`Inherited: ${prop}`); // Inherited: eats
+  }
+}
+```
+
+#### [JavaScript Visualized: Prototypal Inheritance](https://dev.to/lydiahallie/javascript-visualized-prototypal-inheritance-47co)
+
+#### Objects & Chaining
+
+To chain multiple calls together in an object, `return this` within the method declaration:
+
+```js
+const cat = {
+  init: function (sound) {
+    this.sound = sound;
+    // RETURN this = allows for chaining:
+    return this;
+  },
+  // ...
+};
+
+const kitty = Object.create(cat).init("meow");
+```
+
+#### [Methods: Constructor vs Prototype](https://stackoverflow.com/questions/9772307/declaring-javascript-object-method-in-constructor-function-vs-in-prototype/9772864#9772864)
+
+```js
+var Dog = function (name) {
+  this.name = name;
+
+  // PRIVATE variable (not accessible via dog.barkCount)
+  var barkCount = 0;
+
+  this.bark = function () {
+    barkCount++;
+    alert(this.name + " bark");
+  };
+
+  // PRIVATE variable `barkCount` requires the method be in the constructor
+  this.getBarkCount = function () {
+    alert(this.name + " has barked " + barkCount + " times");
+  };
+};
+
+// PUBLIC variable name, should be defined on the prototype.
+Dog.prototype.wagTail = function () {
+  alert(this.name + " wagging tail");
+};
+
+var dog = new Dog("Dave");
+dog.bark();
+dog.bark();
+dog.getBarkCount();
+dog.wagTail();
+```
