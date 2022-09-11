@@ -290,7 +290,7 @@ JavaScript Minifiers & browsers optimize code well enough, so performance issues
 
 Using different variable names for different values can _help the engine optimize your code._
 
-# Data Types
+## Data Types
 
 In JavaScript, there are 8 basic data types.
 
@@ -2249,9 +2249,9 @@ Warnings provide you insight on _potential problems_ that _may not crash_ your p
 
 [MDN's JavaScript Error Reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors)
 
-# Clean Code
+## Clean Code
 
-## [Rules of thumb for writing _clean code_:](https://onextrapixel.com/10-principles-for-keeping-your-programming-code-clean/)
+### [Rules of thumb for writing _clean code_:](https://onextrapixel.com/10-principles-for-keeping-your-programming-code-clean/)
 
 - Indentation: Consistency is what matters.
 - Semi-colons: Just use them.
@@ -2326,7 +2326,7 @@ let anotherReallyReallyLongLine =
   - Saves space, makes it look cleaner, saves on loading time & efficiency
     - **Each imported file is an HTTP request** that affects performance
 
-## [Code Tells You How, Comments Tell You Why](https://blog.codinghorror.com/code-tells-you-how-comments-tell-you-why/)
+### [Code Tells You How, Comments Tell You Why](https://blog.codinghorror.com/code-tells-you-how-comments-tell-you-why/)
 
 "Programs **must be written for people to read**, and only **incidentally** for **machines to execute**."
 
@@ -2354,7 +2354,7 @@ $string = join('',reverse(split('',$string)));
 // How hard is it to add "# Reverse the string" into your code?
 ```
 
-# Node.JS
+## Node.JS
 
 Node.JS is a JavaScript runtime environment. It allows you to run JavaScript _outside of your web browser._
 
@@ -2379,17 +2379,17 @@ nvm install --lts # install long term support
 nvm use --lts
 ```
 
-## Using Node console
+### Using Node console
 
 To run Node console, run `node` in your terminal. To exit, type `.exit`.
 
-# Arrays
+## Arrays
 
 Arrays are used to deal with large quantities of strings and numbers.
 
 An **Array** is an ordered collection of items: strings, numbers or other things.
 
-## Creating Arrays
+### Creating Arrays
 
 ```js
 // Syntax for arrays:
@@ -2415,7 +2415,7 @@ cars[2]= "BMW";
 const cars = new Array("Saab", "Volvo", "BMW");
 ```
 
-## Accessing Array Elements
+### Accessing Array Elements
 
 You access an array element by referring to the index number:
 
@@ -2424,7 +2424,7 @@ const cars = ["Saab", "Volvo", "BMW"];
 let car = cars[0];
 ```
 
-## Changing an Array Element
+### Changing an Array Element
 
 ```js
 const cars = ["Saab", "Volvo", "BMW"];
@@ -2432,7 +2432,7 @@ const cars = ["Saab", "Volvo", "BMW"];
 cars[0] = "Opel";
 ```
 
-## Accessing the Full Array
+### Accessing the Full Array
 
 The full array can be accessed by referring to the name of the array.
 
@@ -2441,7 +2441,7 @@ const cars = ["Saab", "Volvo", "BMW"];
 document.getElementById("demo").innerHTML = cars;
 ```
 
-## Arrays are Objects
+### Arrays are Objects
 
 `typeof myArray` returns "object".
 
@@ -2461,7 +2461,7 @@ const person = { firstName: "John", lastName: "Doe", age: 46 };
 person.firstName; // "John"
 ```
 
-## Array Elements Can Be Objects
+### Array Elements Can Be Objects
 
 Variables can be objects. Arrays are special kinds of objects.
 
@@ -2477,7 +2477,7 @@ myArray[1] = myFunction;
 myArray[2] = myCars;
 ```
 
-## Array Properties & Methods
+### Array Properties & Methods
 
 Array's _real strength_ is displayed when using their **built-in properties and methods**.
 
@@ -2495,7 +2495,7 @@ const fruits = ["Banana", "Orange", "Apple", "Mango"];
 let length = fruits.length; // 4
 ```
 
-## Accessing 1st & Last Array Element
+### Accessing 1st & Last Array Element
 
 ```js
 const fruits = ["Banana", "Orange", "Apple", "Mango"];
@@ -2505,7 +2505,7 @@ let fruit = fruits[0]; // Banana
 let fruit = fruits[fruits.length - 1]; // Mango (-1 because element #1 = index 0)
 ```
 
-## Looping Array Elements
+### Looping Array Elements
 
 You can use `for` to loop through an array.
 
@@ -2536,7 +2536,7 @@ function myFunction(value) {
 }
 ```
 
-## Adding Array Elements
+### Adding Array Elements
 
 Easiest way to add an element to an array: `.push()` method.
 
@@ -2561,7 +2561,7 @@ fruits[6] = "Lemon"; // Creates undefined "holes" in fruits
 // BAD
 ```
 
-## Associative Arrays
+### Associative Arrays
 
 **JavaScript does NOT support associative arrays.**
 
@@ -2587,7 +2587,7 @@ person.length; // Will return 0 (WRONG)
 person[0]; // Will return undefined (WRONG)
 ```
 
-## Differences between Arrays & Objects
+### Differences between Arrays & Objects
 
 Arrays use **numbered indexes.**
 
@@ -2599,7 +2599,7 @@ Objects use **named indexes.**
 
 > Arrays are _special kinds_ of objects.
 
-## Recognizing Arrays
+### Recognizing Arrays
 
 `typeof myArray` returns `object`.
 
@@ -2612,9 +2612,9 @@ Array.isArray(fruits); // true
 fruits instanceof Array; // true
 ```
 
-## Array Methods (Indepth)
+### Array Methods (Indepth)
 
-### toString
+#### toString
 
 `toString()` method converts an _array_ to a string of _comma separated_ `,` array values.
 
@@ -2625,7 +2625,7 @@ document.getElementById("demo").innerHTML = fruits.toString();
 // Banana,Orange,Apple,Mango
 ```
 
-### Join
+#### Join
 
 `join()` method joins all elements into a string like `toString`, but you can specify the _separator_:
 
@@ -2635,14 +2635,14 @@ document.getElementById("demo").innerHTML = fruits.join(" * ");
 // Banana * Orange * Apple * Mango
 ```
 
-### Pop & Push
+#### Pop & Push
 
 Pop & push are used to add or remove new elements.
 
 - Popping items **out** of an array.
 - Pushing items **into** an array.
 
-#### Pop
+##### Pop
 
 `.pop()` method removes the **_last_** element from an array.
 
@@ -2660,7 +2660,7 @@ let poppedFruit = fruits.pop();
 poppedFruit; // 'Mango'
 ```
 
-#### Push
+##### Push
 
 `.push()` method adds a new element to the end of an array.
 
@@ -2678,7 +2678,7 @@ let fruitsLength = fruits.push("Kiwi");
 fruitsLength; // 5
 ```
 
-## Shift
+### Shift
 
 `.shift()` method removes the **_first_** array element, and shifts all other elements to a lower index.
 
@@ -2696,7 +2696,7 @@ let fruit = fruits.shift();
 fruit; // Banana
 ```
 
-## Unshift
+### Unshift
 
 `.unshift()` method **adds** a new element to the **beginning** of an array and _unshifts_ older elements.
 
@@ -2708,7 +2708,7 @@ fruits.unshift("Lemon"); // 5
 fruits; // ['Lemon', 'Banana', 'Orange', 'Apple', 'Mango']
 ```
 
-## Merging Arrays (Concatenate)
+### Merging Arrays (Concatenate)
 
 `.concat()` method creates a new array by merging (concatenating) existing arrays:
 
@@ -2733,7 +2733,7 @@ const myChildren = arr1.concat("Peter");
 myChildren; // ['Emil', 'Tobias', 'Linus', 'Peter']
 ```
 
-## Splice
+### Splice
 
 `.splice(x, y, "Item",...,"Item")` method can add new items to an array.
 
@@ -2761,7 +2761,7 @@ fruits.splice(0, 1); // Banana
 fruits; // ['Orange', 'Apple', 'Mango']
 ```
 
-## Slice
+### Slice
 
 `.slice()` method slices out a piece of an array **into a new array.**
 
@@ -2790,7 +2790,7 @@ const citrus = fruits.slice(1, 3);
 citrus; // ['Orange', 'Lemon']
 ```
 
-## Automatic ToString
+### Automatic ToString
 
 JavaScript automatically converts arrays to comma separated strings.
 
@@ -2803,7 +2803,7 @@ document.getElementById("demo").innerHTML = fruits.toString(); // Verbose method
 document.getElementById("demo").innerHTML = fruits; // AUTOMATIC version
 ```
 
-## Optional Arguments
+### Optional Arguments
 
 `...argVariable` causes all remaining arguments to be placed inside an **FAKE array**.
 
@@ -2831,11 +2831,11 @@ myFun("one", "two", "three", "four", "five", "six");
 // manyMoreArgs, ["three", "four", "five", "six"]
 ```
 
-# Loops
+## Loops
 
 Loops are used to make a computer do a repetitive task.
 
-## For ... Of Loop
+### For ... Of Loop
 
 The basic tool for looping through a collection is the `for ... of` loop.
 
@@ -2848,7 +2848,7 @@ for (const cat of cats) {
 }
 ```
 
-## Map() & Filter()
+### Map() & Filter()
 
 These are specialized loops.
 
@@ -2893,7 +2893,7 @@ const filtered = cats.filter((cat) => cat.startsWith("L"));
 filtered; // [ "Leopard", "Lion" ]
 ```
 
-## Standard For Loop
+### Standard For Loop
 
 ```js
 for (initializer; condition; final - expression) {
@@ -2969,7 +2969,7 @@ for (let i = 0; i < cats.length; i++) {
 }
 ```
 
-## Exiting Loops `break`
+### Exiting Loops `break`
 
 To stop a loop mid-execution, you can use a `break` statement. A `break` statement will _immediately exit the loop_ and make the browser move onto any code that follows it.
 
@@ -3017,7 +3017,7 @@ btn.addEventListener("click", () => {
 });
 ```
 
-## Skipping Iterations `continue`
+### Skipping Iterations `continue`
 
 `continue` is similar to `break`, but it skips to the _next iteration_ instead of exiting the loop.
 
@@ -3052,7 +3052,7 @@ btn.addEventListener("click", () => {
 });
 ```
 
-## While & Do...While
+### While & Do...While
 
 `while` loops are very similar to `for` loops, except for:
 
@@ -3124,7 +3124,7 @@ do {
 myFavoriteCats; // "My cats are called Pete, Biggles, and Jasmine."
 ```
 
-## Choosing the Right Loop
+### Choosing the Right Loop
 
 If you're iterating through an **array** or **object** that supports it and you **don't need access to the index position**, use `for...of`. **It's the best choice.**
 
@@ -3132,7 +3132,7 @@ Otherwise, `for`, `while` or `do...while` are largely interchangeable.
 
 `for` is recommended to begin with, because it's the easiest for remembering everything.
 
-# Test Driven Development
+## Test Driven Development
 
 TDD refers to the practice of writing automated tests that describe how your code should work before you actually write the code.
 
@@ -3160,7 +3160,7 @@ describe("reverseString", () => {
 });
 ```
 
-# DOM Manipulation & Events
+## DOM Manipulation & Events
 
 What is the DOM?
 
@@ -3173,7 +3173,7 @@ The Document Object Model is a
   - `child` on its own `branch`
   - `sibling` share a `branch`
 
-## Targeting Nodes w/ Selectors
+### Targeting Nodes w/ Selectors
 
 Use CSS-style selectors & relationship properties to target nodes.
 
@@ -3203,7 +3203,7 @@ console.dir(controls.previousElementSibling);
 // select the sibling before controls => .display
 ```
 
-## DOM Methods
+### DOM Methods
 
 When HTML is parsed, it is converted to the DOM. The primary differences is:
 
@@ -3212,7 +3212,7 @@ When HTML is parsed, it is converted to the DOM. The primary differences is:
 
 These properties & methods are main tools used to manipulate web pages with JavaScript.
 
-## Query Selectors
+### Query Selectors
 
 To target nodes, you use query selectors.
 
@@ -3222,7 +3222,7 @@ To target nodes, you use query selectors.
 
 Nodelists look and somewhat act like arrays, but they're missing several array methods. To get around this, you can convert nodelists to arrays with `Array.from()` or the spread operator: `(...numbers)`.
 
-## Creating Elements
+### Creating Elements
 
 `document.createElement(tagName, [options])` creates a new element of type tagName w/ optional parameters.
 
@@ -3232,17 +3232,17 @@ This **does not** put elements into the DOM; it creates it in memory. That way, 
 constant div = document.createElement('div');
 ```
 
-## Append Elements
+### Append Elements
 
 `parentNode.appendChild(childNode)` appends _childNode_ as the last child of _parentNode_.
 
 `parentNode.insertBefore(newNode, referenceNode)` inserts _newNode_ INTO _parentNode_ BEFORE _referenceNode_.
 
-## Remove Elements
+### Remove Elements
 
 `parentNode.removeChild(child)` removes _child_ from _parentNode_ on the DOM & returns a reference to child.
 
-## Altering Elements
+### Altering Elements
 
 After referencing an element, you can alter that element's properties. You can add/remove/alter attributes, change classes, add inline style info, etc.
 
@@ -3320,7 +3320,7 @@ To fix this issue, add the `defer` keyword to your `<script>` in the `<header>` 
 </head>
 ```
 
-## Events
+### Events
 
 Events allow you to manipulate the DOM dynamically and on demand.
 
@@ -3465,7 +3465,7 @@ buttons.forEach((button) => {
 - `keydown`
 - `keyup`
 
-### Event Capture, Propagation, Bubbling
+#### Event Capture, Propagation, Bubbling
 
 ```js
 // 3 nested div1 > div2 > div3
@@ -3517,7 +3517,7 @@ button.addEventListener(
 );
 ```
 
-# Objects
+## Objects
 
 Objects are a very important part of JS and any real project will feature them.
 
@@ -3528,7 +3528,7 @@ let user = new Object(); // object constructor
 let user = {...};  // object literal
 ```
 
-## Literals & Properties
+### Literals & Properties
 
 ```js
 let user = {
@@ -3710,7 +3710,7 @@ alert(String(Math.trunc(Number("+49")))); // "49", not same "+49" ⇒ not intege
 alert(String(Math.trunc(Number("1.2")))); // "1", not same "1.2" ⇒ not integer property
 ```
 
-## Methods
+### Methods
 
 Methods are functions that exist within an object.
 
@@ -3729,7 +3729,7 @@ const person = {
 };
 ```
 
-## Objects as Object Properties
+### Objects as Object Properties
 
 An object property can itself be an object.
 
@@ -3747,7 +3747,7 @@ person.name.last; // Smith
 person["name"]["last"]; // Smith
 ```
 
-## Adding methods to existing object
+### Adding methods to existing object
 
 ```js
 person.farewell = function () {
@@ -3755,11 +3755,11 @@ person.farewell = function () {
 };
 ```
 
-## `this`
+### `this`
 
 `this` is keyword refers to the current object the code is being written inside.
 
-## Defining the "shape" of an object
+### Defining the "shape" of an object
 
 Object literals are seriously inadequate when you need to create multiple objects.
 
@@ -3804,7 +3804,7 @@ frankie.name;
 frankie.introduceSelf();
 ```
 
-## Built-in Objects
+### Built-in Objects
 
 `myString.split(",");`
 
