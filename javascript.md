@@ -3955,3 +3955,91 @@ CSS can then show or hide the validation message when the form's submitted.
 - If necessary, use a little JavaScript to enable custom validations & messages
 - For complex fields, progressively enhance the standard inputs
 - Forget Internet Explorer
+
+## Organizing JavaScript Code
+
+JavaScript is a very _forgiving_ & _flexible_ language, allowing us to structure it in many ways. As projects increase in size, maintenance becomes difficult unless code is structured well. Organization of code is known as `design patterns`.
+
+### Objects And Object Constructors
+
+Review:
+
+```js
+// Object LITERAL
+const myObject = {
+  property: "Value!",
+  otherProperty: 77,
+  "obnoxious property": function () {
+    // do stuff!
+  },
+};
+
+// Get Info out of an Object
+// 1. dot notation * PREFERRED: cleaner, but limited functionality
+myObject.property; // 'Value!'
+
+// 2. bracket notation * UGLIER, but MORE ROBUST
+myObject["obnoxious property"]; // [Function]
+
+// this is NOT possible w/ dot notation:
+let varObjKey = "obnoxious property";
+myObject[varObjKey];
+```
+
+### Objects as a Design Pattern
+
+Tic Tac Toe example:
+
+```js
+// example one
+const playerOneName = "tim";
+const playerTwoName = "jenn";
+const playerOneMarker = "X";
+const playerTwoMarker = "O";
+
+// example two
+const playerOne = {
+  name: "tim",
+  marker: "X",
+};
+
+const playerTwo = {
+  name: "jenn",
+  marker: "O",
+};
+```
+
+Benefit of using objects:
+
+> As an app grows in complexity, objects allow us to organize data in a superior way:
+
+```js
+// OKAY:
+console.log(playerOneName);
+console.log(playerTwoName);
+
+// BETTER: Don't have to remember the specific person's name
+function printName(player) {
+  console.log(player.name);
+}
+```
+
+### Object Constructors
+
+When we have a specific type of object that we need to duplicate, like an inventory of items, a bettery way to create them is using an **object constructor**:
+
+```js
+function Player(name, marker) {
+  this.name = name;
+  this.marker = marker;
+  this.sayName = function () {
+    console.log(name);
+  };
+}
+
+// To call an object constructor, you use the keyword new
+const player = new Player("steve", "X");
+player.sayName();
+```
+
+### [Exercise: Book Object](js/exer/../exercises/book.js)
