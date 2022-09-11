@@ -52,7 +52,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 - [ ] **JavaScript**
 
-  - [ ] Introduction
+  - [x] Introduction
   - [ ] Organizing your JavaScript Code
   - [ ] JavaScript in the Real World
   - [ ] Asynchronous JavaScript and APIs
