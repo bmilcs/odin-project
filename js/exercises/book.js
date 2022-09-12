@@ -3,11 +3,12 @@ function Book(title, author, pages, readStatus) {
   this.author = author;
   this.pages = pages;
   this.readStatus = readStatus;
-  this.info = function () {
-    return `${this.title} by ${this.author}, ${this.pages} pages, ${this.readStatus}`;
-  };
 }
+
+Book.prototype.info = function () {
+  return `${this.title} by ${this.author}, ${this.pages} pages, ${this.readStatus}`;
+};
 
 theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", "295", "not read yet");
 
-theHobbit.info();
+console.log(theHobbit.info());
