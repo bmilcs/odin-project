@@ -4230,3 +4230,197 @@ dog.bark();
 dog.getBarkCount();
 dog.wagTail();
 ```
+
+#### `this`
+
+Function invocation: `hello('World')`
+
+- `hello` expression evaluates to a function object
+- pair of parenthesis with `World` argument
+
+**IIFE**: Immediately-invoked Function Expression
+
+```js
+// IIFE
+const message = (function (name) {
+  // function object
+  return "Hello " + name + "!";
+})("World"); // passes World as a parameter
+// Hello World!
+```
+
+**"`this` is the **global object** in a function invocation"**
+
+- _global object_: determined by execution environment (browsers: `window` object)
+- function invocation, execution context is the _global object_
+
+```js
+function sum(a, b) {
+  console.log(this === window); // => true
+  this.myNumber = 20; // add 'myNumber' property to global object
+  return a + b;
+}
+// sum() is invoked as a function
+// this in sum() is a global object (window)
+sum(15, 16); // => 31
+window.myNumber; // => 20
+```
+
+In a function call, `this` is automatically set to `window` in a browser.
+
+In the global execution context (outside of any function scope), `this` also equals the global object `window`.
+
+```js
+console.log(this === window); // => true
+this.myString = "Hello World!";
+console.log(window.myString); // => 'Hello World!'
+```
+
+```html
+<!-- In an html file -->
+<script type="text/javascript">
+  console.log(this === window); // => true
+</script>
+```
+
+**`this` is _undefined_ in a function invocation in strict mode**
+
+```js
+function fun() {
+  "use strict"; // enable the strict mode
+  console.log(this === undefined); // => true
+}
+
+function fun() {
+  // NON-strict mode
+  console.log(this === window); // => true
+}
+```
+
+**Pitfall:** `this` in an inner function:
+
+```js
+const numbers = {
+  numberA: 5,
+  numberB: 10,
+  sum: function () {
+    // method, not function
+    console.log(this === numbers); // => true (obj name)
+    function calculate() {
+      // function
+      // this = window OR undefined/strict mode
+      console.log(this === numbers); // => false
+      // therefore this.numberA/B don't exist
+      return this.numberA + this.numberB;
+    }
+    return calculate();
+  },
+};
+numbers.sum(); // => NaN or throws TypeError in strict mode
+```
+
+To solve the issue above:
+
+1. Manually change the _context of calculate()_:
+
+   Use `return calculate.call(this)` -- not `return calculate()`
+
+   `function.call(this)` = indirect invocation of a function
+
+   - it modifies the _context_ to a value specified as the 1st parameter.
+
+2. Use an arrow function:
+
+   ```js
+   const calculate = () => {
+     console.log(this === numbers); // => true
+     return this.numberA + this.numberB;
+   };
+   ```
+
+**Method invocation**
+
+`this` is the _object that owns the method_ in a method invocation.
+
+**Pitfall**: Separating method from its object:
+
+```js
+function Pet(name) {
+  this.name = name;
+  this.logInfo = function () {
+    console.log(`${this.name} is my name`);
+  };
+}
+
+const myCat = new Pet("Joe");
+setTimeout(myCat.logInfo, 1000);
+// " is my name"
+
+const extractedLogInfo = myCat.logInfo;
+extractedLogInfo();
+// " is my name"
+
+const boundLogInfo = myCat.logInfo.bind(myCat);
+boundLogInfo();
+// YAY! "Joe is my name"
+```
+
+When passed as a parameter, the method is separated from its object. To fix this:
+
+1. use the `.bind(myCat)` method.
+2. change method to arrow function
+
+**Construction Invocation**
+
+Constructor invocation is perform when the `new` keyword is followed by an expression that evaluates to a function object.
+
+Always use `new` when creating instances from a constructor function.
+
+- If `new` is omitted, a new object **is NOT** created. Instead, the `window` object will inherit the constructor's properties.
+
+**Indirect Invocation**
+
+Indirect invocation is performed when a **function is called using**:
+
+- `myFunction.call()`
+- `myFunction.apply()`
+
+`myFunction.call(thisArg, arg1, arg2)` accepts the 1st argument `thisArg`, which sets the context of the invocation and a **list of arguments.**
+
+`myFunction.apply(thisArg, [arg1, arg2])` accepts the 1st argument `thisArg`, which sets the context of the invocation and an **array of arguments.**
+
+Example:
+
+```js
+// obj
+const name = { name: "White Rabbit" };
+
+// function
+function concatName(string) {
+  console.log(this === rabit); // true
+  return string + this.name;
+}
+
+// indirect invocations
+concatName.call(rabbit, "Hello"); // Hello White Rabbit
+concatName.apply(rabbit, ["Bye"]); // Bye White Rabbit
+```
+
+**Bound Functions**
+
+Bound functions are functions whos context and/or arguments are bound to specific values.
+
+`myFunction.bind(thisArg, arg1, arg2)` accepts 1st argument `thisArg` as context an optional list of arguments `arg1` `arg2` to bound to. `.bind()` returns a new function that's bound to `thisArg`'s context and `arg1` `arg2` arguments.
+
+```js
+function multiply(number) {
+  "use strict";
+  return this * number;
+}
+
+// binds double to multiply with value of 2
+const double = multiply.bind(2);
+
+double(3); // 6
+double(10); // 20
+```
