@@ -8,12 +8,17 @@ The purpose of this repo is to track progress, to showcase project work and to p
 
 These assignments were tackled with a growth mindset and I did not reference the work of others while completing them. In other words, these are _learner's solutions_, written with the intent of practicing the fundamentals and developing problem solving skills.
 
+### Intermediate HTML and CSS
+
+| Project                | URL                                                         | Source Code                                              |
+| :--------------------- | :---------------------------------------------------------- | :------------------------------------------------------- |
+| **#7 Admin Dashboard** | [Live Demo](https://bmilcs.github.io/odin-admin-dashboard/) | [GitHub](https://github.com/bmilcs/odin-admin-dashboard) |
+| **#6 Sign-up Form**    | [Live Demo](https://bmilcs.github.io/odin-signup-form/)     | [GitHub](https://github.com/bmilcs/odin-signup-form)     |
+
 ### Foundations
 
 | Project                    | URL                                                             | Source Code                                                  |
 | :------------------------- | :-------------------------------------------------------------- | :----------------------------------------------------------- |
-| **#7 Admin Dashboard**     | [Live Demo](https://bmilcs.github.io/odin-admin-dashboard/)     | [GitHub](https://github.com/bmilcs/odin-admin-dashboard)     |
-| **#6 Sign-up Form**        | [Live Demo](https://bmilcs.github.io/odin-signup-form/)         | [GitHub](https://github.com/bmilcs/odin-signup-form)         |
 | **#5 Calculator**          | [Live Demo](https://bmilcs.github.io/odin-calculator/)          | [GitHub](https://github.com/bmilcs/odin-calculator)          |
 | **#4 Etch-A-Sketch**       | [Live Demo](https://bmilcs.github.io/odin-etch-a-sketch/)       | [GitHub](https://github.com/bmilcs/odin-etch-a-sketch)       |
 | **#3 Rock Paper Scissors** | [Live Demo](https://bmilcs.github.io/odin-rock-paper-scissors/) | [GitHub](https://github.com/bmilcs/odin-rock-paper-scissors) |
