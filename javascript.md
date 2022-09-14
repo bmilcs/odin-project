@@ -4431,6 +4431,8 @@ A prototype is a **property** that all functions have and it points to an object
 
 Prototypes are important because they allow you to share methods across all instances of an object.
 
+`Object.create` creates a new object and it sets its prototype EQUAL to another pre-existing object.
+
 #### new Keyword / Prototypal Inheritance
 
 When creating a new instance of an object, the `new` keyword:
