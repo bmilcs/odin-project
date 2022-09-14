@@ -4110,7 +4110,7 @@ EighthGrader.prototype = Student.prototype;
 
 2. The **prototype attribute** (aka prototype object) is a characteristic of an object
 
-   It points to **the object's parent** or the object it inerhited its properties from.
+   It points to **the object's parent** or the object it inherited its properties from.
 
    > `Object.prototype` or _prototype object_
 
@@ -4423,4 +4423,102 @@ const double = multiply.bind(2);
 
 double(3); // 6
 double(10); // 20
+```
+
+#### TLDR / Job Interview Answer
+
+A prototype is a **property** that all functions have and it points to an object.
+
+Prototypes are important because they allow you to share methods across all instances of an object.
+
+#### new Keyword / Prototypal Inheritance
+
+When creating a new instance of an object, the `new` keyword:
+
+- Creates `this` object
+- Implicitly returns `this` object for you
+- Failed lookups go to the `.prototype` object
+
+```js
+function Animal(name, energy) {
+  // 'new' => creates this object & automatically:
+  // let animal = Object.create(Animal.prototype)
+  // let this = Object.create(Animal.prototype);
+  this.name = name; // animal.name
+  this.energy = energy; // animal.energy
+  // return this * automatic // return animal
+}
+
+Animal.prototype.eat = function (amount) {
+  console.log("nom!", amount, "times");
+};
+
+const cow = new Animal("Maynard", 50);
+```
+
+To create another object that inherits the Animal object:
+
+```js
+function Dog(name, energy, breed) {
+  // * remember, by calling 'new Dog', this is automatic:
+  //   let this = Object.create(Dog.prototype);
+  // 1) call the Animal constructor function
+  //    passing context (this obj) and the arguments
+  Animal.call(this, name, energy);
+  this.breed = breed;
+}
+
+// then, inherit the Animal.prototype:
+Dog.prototype = Object.create(Animal.prototype);
+// ^ overrides the Dog constructor. to reset this to Dog:
+Dog.prototype.constructor = Dog;
+
+// add a method to dog
+Dog.prototype.bark = function () {
+  console.log("woof");
+};
+
+const molly = new Dog("Molly", 100, "black lab");
+```
+
+#### Classes
+
+```js
+class Animal {
+  constructor(name, energy) {
+    this.name = name;
+    this.energy = energy;
+  },
+  eat(amount) {
+    console.log(`${this.name} is eating`);
+    this.energy += amount;
+  }
+}
+
+const snoop = new Animal('Snoop', 10);
+```
+
+To create a dog class that inherits Animal class:
+
+```js
+// dog inherits animal class
+class Dog extends Animal {
+  constructor(name, energy, breed) {
+    super(name, energy);
+    this.breed = breed;
+  }
+  bark() {
+    console.log("woof woof");
+  }
+}
+```
+
+#### Built-in Objects
+
+```js
+// Arrays
+let array = []; // is syntactic sugar for:
+let array = new Array();
+// the Array() object has built-in methods
+// .pop, .push, etc.
 ```
