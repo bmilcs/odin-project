@@ -32,6 +32,13 @@ myPC.boot(); // Desktop Method
 console.log(myPC instanceof Desktop);
 console.log(myPC instanceof Computer);
 
+// doesn't work w/ methods; only properties
+console.log(myPC.hasOwnProperty("boot"));
+
+// print all keys in an object:
+for (let key in myPC) {
+  console.log(`${key}: ${myPC[key]}`);
+}
 // Class syntactical sugar version:
 
 // class Computer {
