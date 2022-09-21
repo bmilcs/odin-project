@@ -4524,3 +4524,71 @@ let array = new Array();
 // the Array() object has built-in methods
 // .pop, .push, etc.
 ```
+
+### Factory Functions
+
+The factory function pattern is similar to constructors. Instead of using `new` to create an object, factory functions setup & return the new object when you call the function:
+
+```js
+// FACTORY FUNCTION VERSION
+
+const personFactory = (name, age) => {
+  const sayHello = () = console.log('hello!');
+  return { name, age, sayHello };
+};
+
+const jeff = personFactory('jeff', 27);
+jeff.name; // jeff
+jeff.sayHello();  // hello!
+
+// VS CONSTRUCTOR PATTERN:
+
+const Person = function(name, age) {
+  this.sayHello = () => console.log('hello!');
+  this.name = name;
+  this.age = age;
+};
+
+const jeff = new Person('jeff', 27);
+```
+
+#### Object Shorthand
+
+If creating an object where the variables have the _exact same name_ as the object property you're defining, it can be condensed to:
+
+```js
+// 2015 Shorthand:
+return { name, age, sayHello };
+
+// Originally would have looked like:
+return { name: name, age: age, sayHello: sayHello };
+```
+
+`console.log` hack:
+
+```js
+const name = "Maynard";
+const color = "red";
+const number = 34;
+
+// HACK: display var name + value
+console.log({ name, color, number }); // { name: 'Maynard', color: 'red', number: 34 }
+
+console.log(name, color, number); // Maynard red 34
+```
+
+#### Scope & Closure
+
+**Scope**: _where_ things like variables & functions can be used in your code.
+
+```js
+let a = 17; // global scope
+
+const func = (x) => {
+  let a = x; // function scope
+};
+
+func(99);
+
+console.log(a); // 17
+```
