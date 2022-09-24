@@ -5148,3 +5148,4 @@ var foo = "foo";
 - Efficient DOM caching: **limit DOM calls**, 1 per module
 - No memory leaks
   - _Unbind_ unused EventsListeners!
+  - Bind EventListeners functions to `this`
