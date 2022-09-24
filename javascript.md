@@ -4577,7 +4577,7 @@ console.log({ name, color, number }); // { name: 'Maynard', color: 'red', number
 console.log(name, color, number); // Maynard red 34
 ```
 
-### Scope & Closure
+#### Scope & Closure
 
 **Scope**: _where_ things like variables & functions are available to us (where they can be used in our code).
 
@@ -4627,7 +4627,7 @@ foo();
 a; // 2
 ```
 
-### Function Scope
+#### Function Scope
 
 All scopes in JS are created with `Function Scope` **only**.
 
@@ -4658,7 +4658,7 @@ letYears; // error
 
 > New Functions = New Scope
 
-### Lexical Scope
+#### Lexical Scope
 
 Lexical Scope or **Closure**: Nested functions, or functions within another function. The inner function has access to the scope of the outer function.
 
@@ -4666,7 +4666,7 @@ Lexical Scope or **Closure**: Nested functions, or functions within another func
 - **Scope Chain**: Establish scope for a given function
   - When resolving a variable, work at _innermost_ scope and search outwards.
 
-### Closures
+#### Closures
 
 Closures are similar to Lexical Scope.
 
@@ -4698,7 +4698,7 @@ You can call it directly but to call your closure, you have to add `()` to the e
 sayHello("Bob")(); // extra ()
 ```
 
-### Scope && `this`
+#### Scope && `this`
 
 Each scope binds a different value of `this`.
 
@@ -4738,7 +4738,7 @@ var toggleNav = function () {
 nav.addEventListener("click", toggleNav, false);
 ```
 
-### Changing `this`
+#### Changing `this`
 
 > Repeat notes, look above for more info.
 
@@ -4903,4 +4903,172 @@ var Module = (function () {
     publicMethod: publicMethod,
   };
 })();
+```
+
+#### Private Variables & Functions \*\*\*
+
+Scope prevents outside access to functions within `FactoryFunction`. The only way to use those functions is to `return` them.
+
+- Big Deal: We can't access `capitalizeString()`, BUT `printString()` can. THAT is **closure.**
+
+```js
+const FactoryFunction = (string) => {
+  const capitalizeString = () => string.toUpperCase();
+  const printString = () => console.log(`----${capitalizeString()}----`);
+  return { printString };
+};
+
+const taco = FactoryFunction("taco");
+
+printString(); // ERROR!!
+capitalizeString(); // ERROR!!
+taco.capitalizeString(); // ERROR!!
+taco.printString(); // this prints "----TACO----"
+```
+
+Another example:
+
+```js
+const counterCreator = () => {
+  let count = 0;
+  return () => {
+    console.log(count);
+    count++;
+  };
+};
+
+const counter = counterCreator();
+
+counter(); // 0
+counter(); // 1
+counter(); // 2
+counter(); // 3
+```
+
+- `counter()` is calling the **return value** of `counterCreator()`.
+- the `counter()` function is a **closure.**
+  - has access to `count`
+  - can print & increment it
+  - **no other way for our program to access that variable**
+
+#### Factory Functions & Closure \*\*\*
+
+Closures allow us to create **private** variables & functions.
+
+Private functions are used in the _workings_ of our object that are **not intended to be used elsewhere in our program**.
+
+- Even though an object might only do 1-2 things, we are free to split our functions up as much as we want
+  - Allows for cleaner, easier to read code
+  - Only export the functions that the rest of the program are going to use
+
+> ## Private functions are **very useful** and should be used as often as possible!
+
+#### Back to Factory Functions
+
+Factories are JavaScript functions that return an object.
+
+Game example: Objects describe our players & all the things the player can do.
+
+```js
+const Player = (name, level) => {
+  let health = level * 2;
+  const getLevel = () => level;
+  const getName = () => name;
+  const die = () => {
+    // uh oh
+  };
+  const damage = (x) => {
+    health -= x;
+    if (health <= 0) {
+      die();
+    }
+  };
+  const attack = (enemy) => {
+    if (level < enemy.getLevel()) {
+      damage(1);
+      console.log(`${enemy.getName()} has damaged ${name}`);
+    }
+    if (level >= enemy.getLevel()) {
+      enemy.damage(1);
+      console.log(`${name} has damaged ${enemy.getName()}`);
+    }
+  };
+  return { attack, damage, getLevel, getName };
+};
+
+const jimmie = Player("jim", 10);
+const badGuy = Player("jeff", 5);
+jimmie.attack(badGuy);
+
+jimmie.die(); // ERROR, not publicly accessible
+jimmie.health -= 1000; // ERROR, not publicly accessible
+```
+
+##### Inheritance With Factories
+
+Using factories, there are many ways to accomplish prototypes & inheritance.
+
+- Giving our objects access to methods/properties of another object
+
+```js
+const Person = (name) => {
+  const sayName = () => console.log(`my name is ${name}`);
+  return { sayName };
+};
+
+const Nerd = (name) => {
+  // simply create a person and pull out the sayName function with destructuring assignment syntax!
+  const { sayName } = Person(name);
+  const doSomethingNerdy = () => console.log("nerd stuff");
+  return { sayName, doSomethingNerdy };
+};
+
+const jeff = Nerd("jeff");
+
+jeff.sayName(); //my name is jeff
+jeff.doSomethingNerdy(); // nerd stuff
+```
+
+Destructuring assignment: `const { sayName } = Person(name);`
+
+- Allows us to cherry pick the `sayName()` function only.
+
+To include an **entire object** and all of its properties & methods, you use `Object.assign`:
+
+```js
+const Nerd = (name) => {
+  const prototype = Person(name);
+  const doSomethingNerdy = () => console.log("nerd stuff");
+  return Object.assign({}, prototype, { doSomethingNerdy });
+};
+```
+
+`Object.assign`
+
+- allows you to copy one or more source objects into a new object:
+
+**`Object.assign(target, ...sources)`**
+
+- **target**: object you're creating, with receives all of the sources properties.
+- **sources**: source objects, containing properties/methods you want to apply.
+
+Prototypal inheritance can be achieved by passing `Object.create(proto)` as the target object:
+
+```js
+const proto = {
+  hello() {
+    return `Hello, my name is ${this.name}`;
+  },
+};
+
+const greeter = (name) =>
+  Object.assign(Object.create(proto), {
+    name,
+  });
+
+const george = greeter("george");
+
+const msg = george.hello();
+
+console.log(msg);
 ```
