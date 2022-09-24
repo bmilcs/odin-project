@@ -5072,3 +5072,67 @@ const msg = george.hello();
 
 console.log(msg);
 ```
+
+#### Module Pattern
+
+> ES6 introduced 'modules' to JS. Modules are a syntax for **importing** and **exporting** code between different JS files.
+
+> **Note:** Modules are not the same as Module Pattern.
+
+Modules & factory functions are very similar, but they differ in how they're created:
+
+```js
+const calculator = (() => {
+  const add = (a, b) => a + b;
+  const sub = (a, b) => a - b;
+  const mul = (a, b) => a * b;
+  const div = (a, b) => a / b;
+  return {
+    add,
+    sub,
+    mul,
+    div,
+  };
+})();
+
+calculator.add(3, 5); // 8
+calculator.sub(6, 2); // 4
+calculator.mul(14, 5534); // 77476
+```
+
+Instead of creating a factory to be used over and over again to create multiple objects, _the module pattern_ wraps the factory in an `IIFE` (immediately invoked function expression).
+
+```js
+// IIFE
+(function () {
+  var foo = "bar"; // private
+  console.log(foo);
+})();
+
+// Same thing as:
+function immediateFunction() {
+  var foo = "bar"; // private
+  console.log(foo);
+}
+immediateFunction();
+```
+
+**IIFE**: Obtains Data **Privacy**
+
+- Any variable declared within the IIFE can't be accessed outside of its scope.
+
+Explicitly defining & calling a function (second example above):
+
+- Unnecessary clutter in global namespace
+- Increases possible name collisions
+- Intentions of code isn't as self-explanatory as an IIFE
+- It might accidentally be called more than once.
+
+To pass an argument to an IIFE:
+
+```js
+var foo = "foo";
+(function (innerFoo) {
+  console.log(innerFoo); // foo
+})(foo); // pass argument to IIFE
+```
