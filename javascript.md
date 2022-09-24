@@ -5136,3 +5136,15 @@ var foo = "foo";
   console.log(innerFoo); // foo
 })(foo); // pass argument to IIFE
 ```
+
+#### Modular Pattern Ground Rules
+
+- Self-contained module
+  - Everything to do w/ module is in my module
+  - No global variables
+  - If a module manages more than one thing, it should be split up
+- Separation of concerns
+- DRY Code: Don't Repeat Yourself
+- Efficient DOM caching: **limit DOM calls**, 1 per module
+- No memory leaks
+  - _Unbind_ unused EventsListeners!
