@@ -4577,18 +4577,330 @@ console.log({ name, color, number }); // { name: 'Maynard', color: 'red', number
 console.log(name, color, number); // Maynard red 34
 ```
 
-#### Scope & Closure
+### Scope & Closure
 
-**Scope**: _where_ things like variables & functions can be used in your code.
+**Scope**: _where_ things like variables & functions are available to us (where they can be used in our code).
+
+**Namespace**: sometimes means _scope_. It usually refers to **the highest level/global scope**.
+
+- **Global Scope**: 1 and only: don't clutter it. Limit use to things that need to be shared/accessible across scopes.
+- **Local Scope**: any scope defined _past the global scope._ Each function has its **own `(nested)` local scope.**
+  - Any function defined _within another function_ has a local scope, which is _linked to the outer function_.
 
 ```js
-let a = 17; // global scope
+let a = 17; // global / root / parent scope
+window.a; // 17
 
 const func = (x) => {
   let a = x; // function scope
+  a; // 99
+  window.a; // 17
 };
 
 func(99);
 
 console.log(a); // 17
+```
+
+- Children have access to all of parent's _cookies_.
+- Parents _don't_ have access to children's cookies ()
+
+```js
+// scope = variable access
+// context = this
+
+let a = 1;
+
+function foo() {
+  a = 2;
+  // looks for 'a' defined in the local scope (function)
+  // if it doesn't exist, it looks in parent for 'a'
+  a; // 2
+}
+
+function bar() {
+  let a = 3; // defined in function scope
+  a; // 3
+}
+
+foo();
+a; // 2
+```
+
+### Function Scope
+
+All scopes in JS are created with `Function Scope` **only**.
+
+Function scopes are **NOT** created by:
+
+- `for` / `while` loops (_block scope_)
+- `if` / `switch` expression statements (_block scope_)
+
+Exception\*
+
+- `var` = function scoped
+- `let/const` = block scoped
+
+Function Scope: Falls back to the nearest function
+
+Block Scope: `{ }` Anything within curly brackets
+
+```js
+// FUNCTION (var) vs BLOCK (let/const)
+var age = 100;
+if (age > 12) {
+  var varYears = age * 7; // var, nearest function: window
+  let dogYears = age * 7; // let, block scoped: stuck inside { }
+}
+varYears; // 700;
+letYears; // error
+```
+
+> New Functions = New Scope
+
+### Lexical Scope
+
+Lexical Scope or **Closure**: Nested functions, or functions within another function. The inner function has access to the scope of the outer function.
+
+- Any variables/objects/functions defined in its parent scope, are available in the scope chain.
+- **Scope Chain**: Establish scope for a given function
+  - When resolving a variable, work at _innermost_ scope and search outwards.
+
+### Closures
+
+Closures are similar to Lexical Scope.
+
+Closure makes our scope inside `SayHello` inaccessible to the public scope:
+
+```js
+var sayHello = function (name) {
+  var text = "Hello, " + name;
+  return function () {
+    console.log(text);
+  };
+};
+
+sayHello("Todd"); // returns NOTHING, no error, silence
+```
+
+`sayHello()` returns a function, which means it isn't executed -- it simply exists.
+
+- It needs _assignment_ & _then_ calling:
+
+```js
+var helloTodd = sayHello("Todd");
+helloTod(); // call the closure & logs 'Hello, Todd'
+```
+
+You can call it directly but to call your closure, you have to add `()` to the end:
+
+```js
+sayHello("Bob")(); // extra ()
+```
+
+### Scope && `this`
+
+Each scope binds a different value of `this`.
+
+```js
+var fun = function () {
+  console.log(this); // this = global, [object Window] *DEFAULT*
+};
+
+var obj = {};
+obj.method = function () {
+  console.log(this); // this = Object { obj }
+};
+
+// <nav class="nav">
+var nav = document.querySelector(".nav");
+
+var toggleNav = function () {
+  console.log(this); // this = <nav> element, due to how its called:
+};
+nav.addEventListener("click", toggleNav, false);
+```
+
+Within the same parent function, the value of `this` can change:
+
+```js
+var nav = document.querySelector(".nav"); // <nav class="nav">
+
+var toggleNav = function () {
+  console.log(this); // <nav> element
+
+  // new scope, NOT called by nav
+  setTimeout(function () {
+    console.log(this); // [object Window]
+  }, 1000);
+};
+
+nav.addEventListener("click", toggleNav, false);
+```
+
+### Changing `this`
+
+> Repeat notes, look above for more info.
+
+`.call()` and `.apply()` methods
+
+- allow you to pass in a **scope** to a function when **calling/invoking** it
+- specifies the value of `this`.
+
+```js
+var links = document.querySelectorAll("nav li");
+
+for (var i = 0; i < links.length; i++) {
+  (function () {
+    console.log(this); // this = set w/ call()
+  }.call(links[i])); // this = links[i] aka nav li
+}
+```
+
+- `.call(scope, arg1, arg2)` // individual args, comma separated
+- `.apply(scope, [arg1, arg2])` // array of values
+
+```js
+myFunction();
+myFunction().call(scope, arg1, arg2);
+myFunction().apply(scope, [arg1, arg2]);
+```
+
+`.bind()` method
+
+- Doesn't call/invoke the function
+- Binds value of this _BEFORE_ it's called.
+
+```js
+// We CAN'T pass parameters into function references:
+nav.addEventListener("click", toggleNav(arg1, arg2), false); // BAD: invokes function immediately
+
+// GOOD:
+nav.addEventListener("click", toggleNav.bind(scope, arg1, arg2), false);
+```
+
+### Private & Public Scope
+
+Closures allow us to _emulate_ public/private scope.
+
+The `Module` design pattern allows us to do this by _wrapping our functions inside a function:_
+
+```js
+(function () {
+  // private scope
+})();
+
+(function () {
+  // add functions within private scope
+  var myFunction = function () {
+    // function within private function
+  };
+});
+
+myFunction(); // Uncaught ReferenceError: not defined
+```
+
+**Modules** allow us to scope functions correctly: private/public scope & an object.
+
+```js
+// global namespace / window obj
+var Module = (function () {
+  return {
+    myMethod: function () {
+      console.log("myMethod called!");
+    },
+  };
+})();
+
+// call module & methods
+Module.myMethod();
+```
+
+`return` returns our `public` methods:
+
+- accessible in global scope
+- but are _`namespaced`_.
+
+> Lots of developers go wrong and pollute the global namespace by dumping functions in global scope.
+
+To create _private scope_, DON'T return functions:
+
+```js
+var Module = (function () {
+  var privateMethod = function () {
+    // private method, not returned
+    // can't be called globally
+  };
+
+  return {
+    publicMethod: function () {
+      // public methods, inside return
+      // can be called globally
+    },
+  };
+})();
+
+Module.privateMethod(); // error
+Module.publicMethod(); // success
+Module.publicMethod;
+```
+
+**ANYTHING** in the _same scope_ has access to anything in the same scope, **even after the function is returned.**
+
+- `public` methods have _access_ to our `private` methods
+- BUT they're unaccessible to global scope
+
+```js
+var Module = (function () {
+  var privateMethod = function () {
+    // privacy
+  };
+
+  return {
+    publicMethod: function () {
+      // publicMethod HAS ACCESS TO prviateMethod! ^ above
+      privateMethod();
+    },
+  };
+})();
+```
+
+- Above ^: powerful level of interactivity
+- Security: why we can't put all of our functions in the global scope, making our code vulnerable to attack
+
+Example of returning an object w/ private/public methods:
+
+```js
+var Module = (function () {
+  var privateMethod = function () {
+    // privacy
+  };
+
+  var myModule = {}; // create obj
+  myModule.publicMethod = function () {
+    // public method in myModule obj
+  };
+
+  // return object w/ public methods
+  return myModule;
+})();
+
+Module.publicMethod();
+```
+
+Naming private & public methods:
+
+- `_privateMethod()`: prefix private methods with `_`
+- `publicMethod()`
+
+This visually helps you differentiate the two:
+
+```js
+var Module = (function () {
+  var _privateMethod = function () {};
+  var publicMethod = function () {};
+  return {
+    publicMethod: publicMethod,
+  };
+})();
 ```
