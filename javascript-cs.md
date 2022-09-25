@@ -91,3 +91,114 @@ x.closureVar; // ERROR: undefined * due to closure!
 
 a; // 3 -- due to scope chain
 ```
+
+## Factory Functions
+
+Factories:
+
+- Used over and over
+- Create multiple objects
+
+```js
+// factory function: constructor without "new" keyword
+// sets up & returns object.
+const Person = (name) => {
+  const sayName = () => console.log(`my name is ${name}`);
+  return { sayName };
+};
+
+const joe = Person("Joe");
+joe.sayName(); // my name is Joe
+
+// factory function object inheritance
+
+const Nerd = (name) => {
+  // inheritance - destructuring assignment syntax!
+  const { sayName } = Person(name);
+
+  const doSomethingNerdy = () => console.log("nerd stuff");
+
+  return { sayName, doSomethingNerdy };
+};
+
+const jeff = Nerd("jeff");
+
+jeff.sayName(); // my name is jeff
+jeff.doSomethingNerdy(); // nerd stuff
+```
+
+## Module Pattern
+
+Modules are like Factory Functions, but wrapped in an `IIFE`.
+
+- **NOT** used over & over to create multiple objects
+- **Immediately invoked** / Doesn't require assignment to a variable
+- `IIFE` = **Privacy**
+
+```js
+var myModule = (function () {
+  "use strict";
+
+  var _privateProperty = "Hello World";
+
+  function _privateMethod() {
+    console.log(_privateProperty);
+  }
+
+  return {
+    publicMethod: function () {
+      _privateMethod();
+    },
+  };
+})();
+
+console.log(myModule._privateProperty); // undefined: protected by module closure
+myModule._privateMethod(); // TypeError: protected by module closure
+myModule.publicMethod(); // 'Hello World'
+```
+
+### Revealing Module Pattern:
+
+- Return statement: object literal that _reveals_ publicly available methods/properties
+
+```js
+var myModule = (function () {
+  "use strict";
+
+  var _privateProperty = "Hello World";
+  var publicProperty = "I am a public property";
+
+  function _privateMethod() {
+    console.log(_privateProperty);
+  }
+
+  function publicMethod() {
+    _privateMethod();
+  }
+
+  return {
+    publicMethod: publicMethod,
+    publicProperty: publicProperty,
+  };
+})();
+
+myModule.publicMethod(); // outputs 'Hello World'
+console.log(myModule.publicProperty); // outputs 'I am a public property'
+console.log(myModule._privateProperty); // is undefined protected by the module closure
+myModule._privateMethod(); // is TypeError protected by the module closure
+```
+
+Example with HTML elements:
+
+```js
+const Formatter = (function () {
+  const writeToDOM = (selector, message) => {
+    document.querySelector(selector).innerHTML = message;
+  };
+  return {
+    writeToDOM,
+  };
+})();
+
+Formatter.writeToDOM("#target", "Hi there");
+```
