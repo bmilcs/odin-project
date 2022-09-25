@@ -5149,3 +5149,18 @@ var foo = "foo";
 - No memory leaks
   - _Unbind_ unused EventsListeners!
   - Bind EventListeners functions to `this`
+
+#### Namespacing
+
+Encapsulating inner workings of our programs into objects produces _namespacing_.
+
+Namespacing is a technique that is used to:
+
+- avoid naming collisions in our programs
+
+Example:
+
+- Repeat use of `add()` function/method:
+  - `calculator.add()`
+  - `displayController.add()`
+  - `operatorStack.add()`
