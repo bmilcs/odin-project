@@ -1,4 +1,6 @@
+//
 // Factory method that returns an object
+//
 
 const ballFactory = (type, color) => {
   const ballType = type;
