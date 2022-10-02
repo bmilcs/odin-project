@@ -4961,7 +4961,7 @@ Private functions are used in the _workings_ of our object that are **not intend
   - Allows for cleaner, easier to read code
   - Only export the functions that the rest of the program are going to use
 
-> ## Private functions are **very useful** and should be used as often as possible!
+> Private functions are **very useful** and should be used as often as possible!
 
 #### Back to Factory Functions
 
@@ -5164,3 +5164,443 @@ Example:
   - `calculator.add()`
   - `displayController.add()`
   - `operatorStack.add()`
+
+### Classes
+
+Classes are syntactic sugar in JS. They perform the exact same thing as object constructors and prototypes.
+
+Some believe they are dangerous and/or misleading, obscuring what is really going on with these objects.
+
+However, they are gaining popularity and exist in frameworks like React.
+
+#### Getters & Setters
+
+There are 2 types of **object properties**.
+
+- Data Properties (everything up until now)
+- Accessor Properties (**execute on getting/setting a value**)
+
+Accessor properties are denoted by `get` and `set`:
+
+- `get` executes when a property is _read_
+- `set` executes when it is _assigned_
+
+```js
+let obj = {
+  get propName() {
+    // getter, code executed on getting obj.propName
+  },
+  set propName(value) {
+    // setter, code executed on setting obj.propName = value
+  },
+};
+
+// Example:
+let user = {
+  name: "John",
+  surname: "Smith",
+
+  get fullName() {
+    return `${this.name} ${this.surname}`;
+  },
+};
+
+alert(user.fullName); // John Smith
+```
+
+From the outside, an accessor looks like a regular one.
+
+- We don't _call_ `user.fullName` as a function
+- We _read_ it normally & the **getter runs behind the scenes**
+
+`fullName` is only a getter, so we can't assign it a value:
+
+```js
+let user = {
+  get fullName() {
+    return `...`;
+  },
+};
+
+user.fullName = "Test"; // Error (property has only a getter)
+```
+
+By adding a `setter`, we can fix that:
+
+```js
+let user = {
+  name: "John",
+  surname: "Smith",
+
+  get fullName() {
+    return `${this.name} ${this.surname}`;
+  },
+
+  set fullName(value) {
+    [this.name, this.surname] = value.split(" ");
+  },
+};
+
+// set fullName is executed with the given value.
+user.fullName = "Alice Cooper";
+
+alert(user.name); // Alice
+alert(user.surname); // Cooper
+```
+
+#### Accessor Descriptors
+
+Access properties DON'T have `value` or `writable`. They have:
+
+- `get` a function w/o arguments, when property is read
+- `set` a function w/ 1 argument, when property is set
+- `enumerable` same as data properties
+- `configurable` same as data properties
+
+To create an _accessor `fullName` with `defineProperty`_, we can pass a descriptor with `get` and `set`:
+
+```js
+let user = {
+  name: "John",
+  surname: "Smith",
+};
+
+Object.defineProperty(user, "fullName", {
+  get() {
+    return `${this.name} ${this.surname}`;
+  },
+
+  set(value) {
+    [this.name, this.surname] = value.split(" ");
+  },
+});
+
+for (let key in user) alert(key); // name, surname
+```
+
+> A property can be **either** an **accessor** (has get/set methods) **or a data property** (has a value), **not both.**
+
+```js
+// Error: Invalid property descriptor.
+Object.defineProperty({}, "prop", {
+  get() {
+    return 1;
+  },
+
+  value: 2, // ERROR: Invalid property descriptor
+});
+```
+
+#### Smarter Getters/Setters
+
+```js
+let user = {
+  get name() {
+    return this._name;
+  },
+
+  set name(value) {
+    if (value.length < 4) {
+      alert("Name is too short, need at least 4 characters");
+      return;
+    }
+    this._name = value;
+  },
+};
+
+user.name = "Pete";
+alert(user.name); // Pete
+
+user.name = ""; // Name is too short...
+```
+
+```js
+function User(name, birthday) {
+  this.name = name;
+  this.birthday = birthday;
+}
+
+let john = new User("John", new Date(1992, 6, 1));
+
+//
+// Define age intelligently, by calculating age based on birthdate
+//
+
+function User(name, birthday) {
+  this.name = name;
+  this.birthday = birthday;
+
+  // age is calculated from the current date and birthday
+  Object.defineProperty(this, "age", {
+    get() {
+      let todayYear = new Date().getFullYear();
+      return todayYear - this.birthday.getFullYear();
+    },
+  });
+}
+
+let john = new User("John", new Date(1992, 6, 1));
+
+alert(john.birthday); // birthday is available
+alert(john.age); // ...as well as the age
+```
+
+#### What is a class?
+
+```js
+// Class Syntax:
+class MyClass {
+  // methods
+  constructor() {
+    // ..
+  }
+  // NOTE: NO COMMAS BETWEEN METHODS !
+  method1() {}
+  method2() {}
+  method3() {}
+}
+
+// Example
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  sayHi() {
+    alert(`${this.name} says hi!`);
+  }
+}
+
+let user = new User("John");
+user.sayHi(); // 'John says hi!'
+```
+
+`new User("John")`:
+
+- Creates a new object
+- Constructor runs with the given argument and assigns it to `this.name`.
+
+A class is a **kind of function**.
+
+`class User {}`:
+
+- Creates function named `User`
+- Function code is taken from the `constructor` method
+- Stores _class methods_ (`sayHi()`) in User.prototype
+
+```js
+class User {
+  constructor(name) {
+    this.name = name;
+  }
+  sayHi() {
+    alert(this.name);
+  }
+}
+
+// class is a function
+alert(typeof User); // function
+
+// ...or, more precisely, the constructor method
+alert(User === User.prototype.constructor); // true
+
+// The methods are in User.prototype, e.g:
+alert(User.prototype.sayHi); // the code of the sayHi method
+
+// there are exactly two methods in the prototype
+alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
+```
+
+#### Not Just Syntactic Sugar
+
+A constructor function and prototype are _almost the same_ as classes.
+
+```js
+// rewriting class User in pure functions
+// 1. Create constructor function
+function User(name) {
+  this.name = name;
+}
+// a function prototype has "constructor" property by default,
+// so we don't need to create it
+
+// 2. Add the method to prototype
+User.prototype.sayHi = function () {
+  alert(this.name);
+};
+
+// Usage:
+let user = new User("John");
+user.sayHi();
+```
+
+However...
+
+- Functions created by `class` are labeled by internal property: `[[IsClassConstructor]]`
+- Classes **must be called with `new`**
+- Classes are _non-enumerable_
+  - All methods in the prototype have `numerable` set to `false`
+  - Good thing: if we `for...in` over an object, we don't want its class methods
+- Classes always `use strict`
+
+```js
+class User {
+  constructor() {}
+}
+
+alert(typeof User); // function
+User(); // Error: Class constructor User cannot be invoked without 'new'
+alert(User); // class User { ... }
+```
+
+#### Class Expression
+
+Classes can be defined inside another expression, passed around, returned & assigned -- just like functions.
+
+```js
+let User = class {
+  sayHi() {
+    alert("hi");
+  }
+};
+```
+
+Class expressions may have a name. It is only visible within the class itself:
+
+```js
+// "Named Class Expression"
+let User = class MyClass {
+  sayHi() {
+    alert(MyClass); // MyClass name is visible only inside the class
+  }
+};
+
+new User().sayHi(); // works, shows MyClass definition
+alert(MyClass); // error, MyClass name isn't visible outside of the class
+```
+
+Creating classes dynamically "on-demand":
+
+```js
+function makeClass(phrase) {
+  // declare a class and return it
+  return class {
+    sayHi() {
+      alert(phrase);
+    }
+  };
+}
+
+// Create a new class
+let User = makeClass("Hello");
+
+new User().sayHi(); // Hello
+```
+
+#### Class Getters/Setters
+
+Classes can include getters/setters, computed properties, etc... just like literal objects.
+
+```js
+class User {
+  constructor(name) {
+    // invoked the setter below
+    this.name = name;
+  }
+
+  get name() {
+    return this._name
+  }
+
+  set name(value) {
+    if (value.length < 4 >) {
+      alert('Get a longer name, man.');
+      return;
+    }
+    this._name = value;
+  }
+}
+
+let user = new User("John");
+alert(user.name); // John
+user = new User(""); // 'Get a longer name, man.'
+```
+
+#### Class Computed Names
+
+Using brackets `[...]`, we can set computed method names:
+
+```js
+class User {
+  ["say" + "Hi"]() {
+    alert("Hey");
+  }
+}
+
+new User().sayHi(); // Hey
+```
+
+#### Class fields
+
+Class fields that allow us to add _any properties_.
+
+- NOT stored on the `User.prototype`
+- Stored on all object instances
+
+All you write is `property = value`:
+
+```js
+class User {
+  // class field -- all obj get this property
+  name = "John";
+
+  // can also using more complex expressions and function calls:
+  name = prompt("Name please?", "John");
+}
+
+let user = new User();
+alert(user.name); // John
+alert(User.prototype.name); // !!! undefined
+```
+
+#### Bound Methods w/ Class fields
+
+Functions have a dynamic `this`, dependent on the function call.
+
+- If object is _passed around_, `this` won't reference its object anymore:
+
+```js
+class Button {
+  constructor(value) {
+    this.value = value;
+  }
+
+  click() {
+    alert(this.value);
+  }
+}
+
+let button = new Button("hello");
+setTimeout(button.click, 1000); // undefined
+```
+
+To fix this, you can:
+
+- Use a wrapper function: `setTimeOut(() => button.click(), 1000)`
+- Bind the method to object in the _constructor_
+
+```js
+class Button {
+  constructor(value) {
+    // binds `this` to object
+    this.value = value;
+  }
+  // becomes `class field` -- not method click()
+  // NOT defined on prototype; copied on each object instance
+  click = () => {
+    alert(this.value);
+  };
+}
+
+let button = new Button("Hello");
+setTimeOut(button.click, 1000); // hello due to this.value = value in constructor
+```
