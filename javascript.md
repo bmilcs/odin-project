@@ -5550,11 +5550,18 @@ All you write is `property = value`:
 
 ```js
 class User {
-  // class field -- all obj get this property
+  // class fields -- all obj get this property
+  // public class fields
   name = "John";
-
-  // can also using more complex expressions and function calls:
   name = prompt("Name please?", "John");
+
+  // private class fields: only accessible within class
+  #height = 0;
+  width;
+
+  constructor(job) {
+    this.job = job;
+  }
 }
 
 let user = new User();
@@ -5603,4 +5610,131 @@ class Button {
 
 let button = new Button("Hello");
 setTimeOut(button.click, 1000); // hello due to this.value = value in constructor
+```
+
+#### Sub classing with `extends`
+
+`extends` keyword: creates a child of another class.
+
+```js
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    console.log(`${this.name} makes a noise.`);
+  }
+}
+
+// Sub class / inheritance
+class Dog extends Animal {
+  constructor(name) {
+    // super class constructor, passing name parameter
+    super(name);
+  }
+  speak() {
+    console.log(`${this.name} barks.`);
+  }
+}
+
+const doggy = new Dog("Sparky");
+doggy.speak(); // 'Sparky barks.'
+```
+
+You can also extend traditional function-based "classes":
+
+```js
+function Animal(name) {
+  this.name = name;
+}
+
+Animal.prototype.speak = function () {
+  console.log(`${this.name} makes a noise.`);
+};
+
+class Dog extends Animal {
+  speak() {
+    console.log(`${this.name} barks.`);
+  }
+}
+
+const doggy = new Dog("Buddy");
+doggy.speak(); // 'Buddy barks.'
+```
+
+Classes **cannot** extend regular objects -- objects without a constructor. If you want to inherit a regular object, use `Object.setPrototypeOf()`.
+
+```js
+const Animal = {
+  speak() {
+    console.log(`${this.name} makes a noise.`);
+  },
+};
+
+class Dog {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+// inherit from a regular object, without extends:
+Object.setPrototypeOf(Dog.prototype, Animal);
+
+const doggy = new Dog("Baxter");
+doggy.speak(); // Baxter makes a noise.
+```
+
+The `super` keyword can reference the methods of the super / parent class, which is an advantage over prototype-based inheritance.
+
+```js
+class Cat {
+  constructor(name) {
+    this.name = name;
+  }
+  speak() {
+    console.log(`${this.name} makes a noise.`);
+  }
+}
+
+class Lion extends Cat {
+  speak() {
+    // parent's speak method call, even though this is
+    // "overwriting it"
+    super.speak();
+    console.log(`${this.name} ROARS.`);
+  }
+}
+
+const leo = new Lion("Leo");
+leo.speak();
+// Leo makes a noise.
+// Leo ROARS.
+```
+
+#### Mix-ins
+
+Mix-ins or _abstract subclasses_ are **templates for classes.**
+
+Classes can only have 1 superclass, so multiple inheritance from tooling classes is _not possible._
+
+A function with:
+
+- superclass as input
+- subclass extending that superclass as output
+
+can be used to implement **mix-ins**
+
+```js
+const calculatorMixin = (Base) =>
+  class extends Base {
+    calc() {}
+  };
+const randomizerMixin = (Base) =>
+  class extends Base {
+    randomize() {}
+  };
+
+// Mix-ins can be used by a class like this:
+class Foo {}
+class Bar extends calculatorMixin(randomizerMixin(Foo)) {}
 ```
