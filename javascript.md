@@ -5838,3 +5838,29 @@ const murderRobotDog = (name) => {
 murderRobot("sniffles").bark();
 // Woof, I am sniffles
 ```
+
+### History / Why: Package Managers/Module Bundlers
+
+JavaScript Pacakage Managers emered to help _automate the process of downloading & upgrading libraries from a central repository._
+
+`npm` was originally a package manager made specifically for `node.js`, a JS runtime designed to run on the server --- not the frontend. It is automatically included with `node.js`.
+
+Linking modules to a webpage with `npm` alone requires going through the `node_modules/` directory and manually linking them in the `<head>` of a web page.
+
+JavaScript wasn't designed to import code from one file to another. It was only meant to run in the browser.
+
+In 2009, CommonJS was created with the goal of creating an ecosystem for JavaScript, and modules were a big part of it. This would allow you to import/export code across files, like most programming languages, without resorting to global variables. The most well known implementation of CommonJS is `node.js`.
+
+Instead of loading a module like `moment.min.js` in an HTML script tag, `node.js` allows you to load it directly in the JavaScript file: `var moment = require('moment');`. This works great with server side node.js because it has access to the file system. However, this doesn't work in the browser. Loading files in the browser has to be done dynamically - synchronously, slowing down execution, or ascnhronously, which has timing issues.
+
+Module bundlers is a tool that gets around this problem with a build step, which has access to the file system, to create a final output that is browser compatible.
+
+- Converts `require` statements (invalid in JavaScript)
+- to actual contents of each file (JavaScript friendly)
+
+Modern JS Summary:
+
+- **Package Manager**: Automatically download 3rd party packages
+- **Module Bundler**: Create a single js script file
+- **Transpiler**: Use future JS features
+- **Task Runner**: Automate different parts of the build process
