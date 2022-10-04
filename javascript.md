@@ -5711,6 +5711,42 @@ leo.speak();
 // Leo ROARS.
 ```
 
+#### Static Class Methods
+
+Static class methods are methods that
+
+- Belong to the class itself
+- Are private and not accessible outside of the class
+- Object instances cannot access public class methods
+
+```js
+class Person {
+  // Doesn't belong to instances!!
+  static species() {
+    return "Homo sapiens";
+  }
+
+  static speciesSentence() {
+    // static method this => points to Person class (not instance)
+    return `Humans are classified as ${this.species()}`;
+  }
+
+  constructor(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.hasJob = false;
+  }
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  }
+}
+
+const joe = new Person("Joe", "Schmoe");
+joe.species(); // error
+Person.species(); // Homo sapiens
+Person.speciesSentence(); // Humans are classified as Homo sapiens
+```
+
 #### Mix-ins
 
 Mix-ins or _abstract subclasses_ are **templates for classes.**
@@ -5737,4 +5773,68 @@ const randomizerMixin = (Base) =>
 // Mix-ins can be used by a class like this:
 class Foo {}
 class Bar extends calculatorMixin(randomizerMixin(Foo)) {}
+```
+
+#### Composition vs Inheritance
+
+- Inheritance: Design types by **what they are**
+- Composition: Design types by **what they do**
+
+```
+//
+// Inheritance: what they ARE
+//
+
+Robot
+  .drive()
+
+    CleaningRobot
+    .clean()
+
+    MurderRobot
+    .kill()
+
+Animal
+  .poop()
+
+    Dog
+      .bark()
+
+    Cat
+      .meow()
+
+//
+// Composition: what they DO
+//
+
+dog             = pooper + barker
+cat             = pooper + meower
+cleaningRobot   = driver + cleaner
+murderRobot     = driver + killer
+murderRobotDog  = driver + killer + barker
+```
+
+```js
+const barker = (state) => ({
+  bark: () => console.log(`Woof. I'm a ${state.name}`),
+});
+
+const driver = (state) => ({
+  drive: () => (state.position = state.position + state.speed),
+});
+
+barker({ name: "karo" }).barker();
+// Woof, I am karo
+
+const murderRobotDog = (name) => {
+  let state = {
+    name,
+    speed: 100,
+    position: 0,
+  };
+  return Object.assign({}, barker(state), driver(state), killer(state));
+};
+
+murderRobot("sniffles").bark();
+// Woof, I am sniffles
 ```
