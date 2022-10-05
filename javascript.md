@@ -6094,6 +6094,90 @@ module.exports = {
 
 - `mode`: development, production, or none
 
+### Webpack Lesson
+
+Aside from bundling modules, webpack can:
+
+- Process & manipulate code during compilation step
+- Writing SASS for CSS
+- Manage images, compress & optimize them for web use
+- Minify & Uglify your code
+  - Minify: Remove whitespace, comments, semi-colons, can be reversed back when needed
+  - Uglifying: Code becomes unreadable, reducing naming to single letters, no way to reverse
+  - CSS: Remove whitespace
+  - JS: Remove whitespace, truncate variables to single letters, etc. Makes it less readable.
+
+```sh
+npm install --save-dev style-loader css-loader
+```
+
+Allows us to import CSS from within a JavaScript module. The file is then automatically added to the `<style>` tag in with final html file.
+
+```js
+//webpack.config.js
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "dist"),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
+};
+```
+
+```js
+// js file
+import "./style.css";
+element.classList.add("hello");
+```
+
+Module loaders can be **chained**. Chains are executed in reverse order. The first loader passes its result (ie: resource with applied transformations) to the next one, and so forth. \* JavaScript is expected to be the last loader in the chain.
+
+**Loading Images** into webpack can be done with the built-in Asset Modules:
+
+```js
+   module: {
+     rules: [
+       {
+         test: /\.css$/i,
+         use: ['style-loader', 'css-loader'],
+       },
+      { // Loading Images:
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
+     ],
+   },
+ };
+```
+
+- Javascript Loader: `import myImage from './my-image.png'`
+- CSS Loader: `url(./my-image.png)`
+- HTML Loader: `<img src=".my-image.png" />
+
+Each of those references automatically triggers optimization, a new URL/path to the optimized version will be substituted in its place & the new file will be added to your `output` directory.
+
+**Loading Fonts** into webpack will automatically output them in your build directory:
+
+```js
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
+      },
+     ],
+   },
+ };
+```
+
 ### ES6 Modules
 
 Module syntax in ES6 contains 2 components:
