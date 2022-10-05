@@ -6093,3 +6093,58 @@ module.exports = {
 `html-webpack-plugin` generates an HTML file for your app & automatically generates bundles into this file.
 
 - `mode`: development, production, or none
+
+### ES6 Modules
+
+Module syntax in ES6 contains 2 components:
+
+- `import`
+- `export`
+
+```js
+// file: myModule.js
+const functionOne = () => console.log("function one, yo.");
+const functionTwo = () => console.log("function two, yo.");
+export { functionOne, functionTwo };
+export default expression;
+export default function functionName();
+export default class ClassName;
+export default function* generatorFunctionName();
+
+// another file: otherJS.js
+import { functionOne, functionTwo } from "./myModule.js";
+functionOne();
+
+// rename / alias
+import { functionOne as f1, functionTwo as f2 } from "./myModule.js";
+
+// default import:
+import myDefault, * as myModule from "/modules/my-module.js";
+// myModule.default and myDefault point to the same binding
+
+// namespace import:
+import * as myModule from "./myModule.js";
+myModule.doCoolStuff();
+// myModule has a null prototype
+
+// import module for its side effects (ie global scope content)
+import "./myModule.js";
+```
+
+In order to load modules into your html file:
+
+```js
+<script type="module" src="index.js"></script>
+```
+
+Benefits of writing code in **modules**:
+
+- **Code reuse**: If you have written functions that manipulate the DOM in a specific way, putting all of those functions into their own file as a `module` means you can copy that file and reuse it **very easily**.
+
+With the introduction of ES6 Modules, the modular pattern (IIFEs) is **not needed anymore.**
+
+You can _definitely_ export:
+
+- constructors
+- classes
+- factory functions
