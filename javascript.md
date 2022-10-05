@@ -5985,3 +5985,72 @@ module.exports = {
   <script src="dist/bundle.js"></script>
 </body>
 ```
+
+#### Creating a bundle
+
+- mkdir `src/` `dist/`
+- index.html > `dist/`
+
+To bundle a package as a dependency:
+
+```sh
+# production dependency
+npm install --save package_name
+
+# development dependency
+npm install --save-dev package_name
+```
+
+Remove any `<source>` tags for dependencies from your html file. This is done automatically via `import` lines. Rename our javascript file to:
+
+```html
+<script src="main.js"></script>
+```
+
+```js
+import _ from "lodash";
+```
+
+- `import` doesn't pollute global scope
+
+By stating what dependencies a module needs, webpack:
+
+- builds a **dependency graph.**
+- uses graph to **generate an optimized bundle**
+  - where scripts are executed in the correct order
+
+`npx webpack` takes our script `src/index.js` as our entry point & generates `dist/main.js` as the output.
+
+Behind the scenes, webpack **transpiles** the code so that older browsers can also run it.
+
+- Webpack only alters code that contains `import` and `exxport`
+
+#### Using a Configuration
+
+`./webpack.config.js` is run by default, but you can specify another file as your config using the `--config` arg.
+
+```js
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
+  },
+};
+```
+
+#### NPM Scripts
+
+Running a local copy of webpack from CLI is painful, so we can automate the process with a shortcut:
+
+```json
+// package.json
+   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+   },
+```
+
+With `build` setup, we can now run `npm run build`.
