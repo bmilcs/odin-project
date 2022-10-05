@@ -6054,3 +6054,42 @@ Running a local copy of webpack from CLI is painful, so we can automate the proc
 ```
 
 With `build` setup, we can now run `npm run build`.
+
+#### Webpack Concepts
+
+- `entry`: which module webpack should use to begin building its dependency graph
+  - `./src/index.js` by default
+- `ouput`: where webpack should emit bundles it creates & how to name them
+  - `./dist/main.js` by default
+- `loaders` by default, webpack only understands JS & JSON files.
+  - loaders allow webpack to process other types of files & convert them into valid modules
+  - loaders have 2 properties in your config:
+    - `test` file/files should be transformed
+    - `use` what loader should be used to do the transforming
+
+```js
+// loader example
+  module: {
+    rules: [{ test: /\.txt$/, use: 'raw-loader' }],
+  },
+```
+
+- `plugins` perform wider range of tasks, like bundle optimization, asset management, injection of `env` variables
+  - to use a plugin, you need to `require()` it & add it to the `plugins` array
+  -
+
+```js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack"); //to access built-in plugins
+
+module.exports = {
+  module: {
+    rules: [{ test: /\.txt$/, use: "raw-loader" }],
+  },
+  plugins: [new HtmlWebpackPlugin({ template: "./src/index.html" })],
+};
+```
+
+`html-webpack-plugin` generates an HTML file for your app & automatically generates bundles into this file.
+
+- `mode`: development, production, or none
