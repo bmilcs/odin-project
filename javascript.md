@@ -5839,7 +5839,9 @@ murderRobot("sniffles").bark();
 // Woof, I am sniffles
 ```
 
-### History / Why: Package Managers/Module Bundlers
+## Package Managers / Module Bundlers
+
+_History & Why_
 
 JavaScript Pacakage Managers emered to help _automate the process of downloading & upgrading libraries from a central repository._
 
@@ -5864,3 +5866,122 @@ Modern JS Summary:
 - **Module Bundler**: Create a single js script file
 - **Transpiler**: Use future JS features
 - **Task Runner**: Automate different parts of the build process
+
+### `npm`
+
+Installing packages:
+
+```sh
+# unscoped packages
+npm install package-name
+
+# scoped public packages
+npm install @scope/package-name
+
+# private packages
+npm install @scope/private-package-name
+
+# package with dist-tags
+npm install example-package@beta
+```
+
+#### package.json File
+
+`package.json`
+
+- lists package dependencies
+- specifies versions of packages that can be used
+- makes build reproducible, easier to share
+
+**Required**: `name` & `version` fields
+
+- `"name"` contains package names, all lowercase, one word, \_/-
+- `"version"` form: `x.x.x.x`
+
+**Author field**
+
+- `Your name <email@example.com> (http://www.example.com)
+
+```json
+{
+  "name": "my-awesome-package",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>"
+}
+```
+
+**To create a new package.json:**
+
+```sh
+npm init
+
+# default values
+npm init --yes
+```
+
+**To customize the npm questionaire:**
+
+```sh
+vi ~/.npm-init.js
+
+module.exports = prompt("what's your favorite flavor of ice cream, buddy?", "I LIKE THEM ALL");
+```
+
+**To set config options for the init command:**
+
+```sh
+npm set init-author-email "example@email.com"
+npm set init-author-name "example name"
+npm set init-license "MIT"
+```
+
+#### Dependencies & devDependencies
+
+`devDependencies` and `dependencies` are 2 properties that are added to `package.json`.
+
+When an app is fed _into a module bundler_ (Webpack/Rollup), all required dependencies are **pulled together** and **bundled**.
+
+- These packages should be present in `dependencies`
+
+`devDependencies` are only required during the development phase and not necessary for the production build. Examples are `babel` plugins, `test runners` and `linter packages`.
+
+For packages required in both production and development, add them to the `dependencies` section.
+
+#### [Official npm documentation](https://docs.npmjs.com/)
+
+#### `yarn`
+
+Yarn is a replacement for the default `npm`. It's the same for the most part, but it does have a few more features.
+
+### Webpack
+
+Webpack is a tool for bundling modules.
+
+```js
+// src/index.js
+import bar from "./bar.js";
+bar();
+
+// src/bar.js
+export default function bar() {
+  //
+}
+
+// webpack.config.js
+const path = require("path");
+
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
+  },
+};
+```
+
+```html
+<body>
+  ...
+  <script src="dist/bundle.js"></script>
+</body>
+```
