@@ -6076,7 +6076,6 @@ With `build` setup, we can now run `npm run build`.
 
 - `plugins` perform wider range of tasks, like bundle optimization, asset management, injection of `env` variables
   - to use a plugin, you need to `require()` it & add it to the `plugins` array
-  -
 
 ```js
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -6177,6 +6176,29 @@ Each of those references automatically triggers optimization, a new URL/path to 
    },
  };
 ```
+
+In addition, webpack can also:
+
+- Load fonts
+- Load data: `xml`, `csv`, `json`
+- Parse `json` files
+
+Output Management:
+
+- `npm install --save-dev html-webpack-plugin`
+- `clean: true` under `output` to remove unused files from `dist/`
+
+Development:
+
+- source maps: `devtool: 'inline-source-map'`
+- webpack's `watch mode`
+  - `scripts` > `"watch": "webpack --watch",`
+
+Other useful features:
+
+- **Code splitting**: Allows you to split your code into bundles, which can then be loaded **on demand** or **in parallel**. It can have a major impact on load times.
+- **Lazy loading**: **On-demand loading**, which speeds up initial load of the app.
+- **Tree shaking**: Dead code elimination.
 
 ### ES6 Modules
 
