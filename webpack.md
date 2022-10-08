@@ -4,7 +4,11 @@ Installation
 
 ```sh
 # install webpack
-npm install webpack webpack-cli --save-dev
+npm install --save-dev webpack webpack-cli
+
+# webpack-dev-server
+
+npm install --save-dev webpack-dev-server
 
 # html
 npm install --save-dev html-webpack-plugin
@@ -13,7 +17,11 @@ npm install --save-dev html-webpack-plugin
 npm install --save-dev style-loader css-loader
 
 # sass
-npm install sass-loader sass webpack --save-dev
+npm install --save-dev sass-loader sass
+
+# install all of the above
+
+npm install --save-dev webpack webpack-cli webpack-dev-server html-webpack-plugin style-loader css-loader sass-loader sass
 ```
 
 ```js
