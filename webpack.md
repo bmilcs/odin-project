@@ -41,7 +41,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: "Restaurant Page: Odin Project #10",
-      template: "./src/index.html",
+      template: "./src/template.html",
+      filename: "index.html",
     }),
   ],
   module: {
@@ -97,6 +98,13 @@ package.json
   },
 ```
 
+template.html
+
+```html
+<!-- page title -->
+<title><%= htmlWebpackPlugin.options.title %></title>
+```
+
 ## CSS
 
 ```sh
@@ -146,6 +154,12 @@ npm install --save-dev style-loader css-loader
 npm install --save-dev html-webpack-plugin
 ```
 
+`./src/template.html`
+
+```html
+<title><%= htmlWebpackPlugin.options.title %></title>
+```
+
 ```js
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
@@ -153,7 +167,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Output Management',
+      title: "Restaurant Page: Odin Project #10",
+      template: "./src/index.html",
+      filename: "index.html",
+
     }),
   ],
 ```
