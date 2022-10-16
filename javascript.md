@@ -148,10 +148,10 @@ let message = "That"; // SyntaxError: 'message' has already been declared!
 
 There are 2 limitations on variable names in JavaScript:
 
-1. Must contain _only_ **letters**, **digits**, **$** or **\_**
+1. Must contain _only_ **letters**, **digits**, **$** or \_
 2. First character can NOT be a digit
 
-[**camelCase**](https://en.wikipedia.org/wiki/CamelCase) is commonly used. Camel case uses multiple lowercase words strung together, with each new word (_after the first word_) receiving a capital letter:
+[**camelCase**](https://en.wikipedia.org/wiki/CamelCase) is commonly used. Camel case uses multiple lowercase words strung together, with each new word (after the first word) receiving a capital letter:
 
 ```js
 // camelCase
@@ -795,7 +795,7 @@ Escape Sequences
 
 Concatenating Strings using a **_Template Literal_**, which works like a normal string, except you can include variables in it.
 
-> Use ` instead of " or '
+> Use \`
 
 ```js
 const firstName = "Bryan";
@@ -1349,7 +1349,6 @@ result = value1 || value2 || value3;
 1. Evaluates operands from left to right
 2. Each operand is converted to a boolean.
    1. If `true`, stops & returns **original value** of the operand.
-3. If all operands have been evaluated and `false`, the _last_ operand is returned
 
 ```js
 1 || 0; // 1 (1 is truthy)
@@ -2465,7 +2464,7 @@ person.firstName; // "John"
 
 Variables can be objects. Arrays are special kinds of objects.
 
-\*In a **single array\***, you can have variables of different types:
+\*In a **single array**, you can have variables of different types:
 
 - Objects
 - Functions
@@ -5900,7 +5899,7 @@ npm install example-package@beta
 
 **Author field**
 
-- `Your name <email@example.com> (http://www.example.com)
+- `Your name <email@example.com> (http://www.example.com)`
 
 ```json
 {
@@ -6161,7 +6160,7 @@ Module loaders can be **chained**. Chains are executed in reverse order. The fir
 
 - Javascript Loader: `import myImage from './my-image.png'`
 - CSS Loader: `url(./my-image.png)`
-- HTML Loader: `<img src=".my-image.png" />
+- HTML Loader: `<img src=".my-image.png" />`
 
 Each of those references automatically triggers optimization, a new URL/path to the optimized version will be substituted in its place & the new file will be added to your `output` directory.
 
@@ -6191,8 +6190,8 @@ Output Management:
 Development:
 
 - source maps: `devtool: 'inline-source-map'`
-- webpack's `watch mode`
-  - `scripts` > `"watch": "webpack --watch",`
+- webpacks `watch mode`
+  - scripts > `"watch": "webpack --watch"`
 
 Other useful features:
 
@@ -6254,3 +6253,340 @@ You can _definitely_ export:
 - constructors
 - classes
 - factory functions
+
+## OOP Principles
+
+### Single Responsibility
+
+_Single Responsility_ states that a class, object, module, etc. should only have **one responsibility**.
+
+- Does NOT mean an object can do only one thing
+- Should be a part of one responsibility
+
+Most of our code has functions to update & write things to the DOM in addition to our application logic.
+
+It is a _really_ good idea to separate **DOM stuff** from **application logic**.
+
+Example:
+
+```js
+function isGameOver() {
+  // game over logic goes here!
+
+  if (gameOver) {
+    const gameOverDiv = document.createElement("div");
+    gameOverDiv.classList.add("game-over");
+    gameOverDiv.textContent = `${this.winner} won the game!`;
+    document.body.appendChild(gameOverDiv);
+  }
+}
+
+// Separate DOM stuff into its own module:
+
+function isGameOver() {
+  // game over logic goes here!
+
+  if (gameOver) {
+    DOMStuff.gameOver(this.winner);
+  }
+}
+```
+
+The function `isGameOver` shouldn't call the DOM function at all. That should go elsewhere, directly in the game-loop.
+
+Another way to think about the Single Responsibility Principle:
+
+- A method/class/component should have **a single reason** to change
+- Otherwise, if an object is trying to have multiple responsibilities, _changing one aspect might affect another_
+
+Single Responsibility is the first of a commonly found set of 5 design principles called: The **SOLID** Principles.
+
+### Loosely Coupled Objects
+
+Obviously, all of our objects are inteded to work together to form our final application. However, _you should make sure that individual objects can stand alone as much as possible._
+
+**Tightly coupled objects** are objects that rely so heavily on each other than removing/changing one will require that you completely change another. _A real bummer._
+
+For example, writing a game: if we wanted to completely change how the interface worked, we should be able to do that without reworking the game logic.
+
+- We should be able to start off writing our game primarily using `console.log` and then add in a bunch of `DOM` functions later.
+
+#### Object Role Stereotypes
+
+Object Role Stereotypes are a set of general, pre-established roles that commonly occur across object-oriented stereotypes.
+
+They are templates which can help decompose behavior into cohesive components.
+
+- **Information Holder** object that knows information & provide info to other objects
+- **Structurer** object that maintains relationships between objects & info about those relationships
+- **Service Provider** object that performs specific work & offers service to others on demand
+- **Controller** object that makes decisions & control a complex task
+- **Coordinator** object delegates work to other objects, doesn't make any decisions
+- **Interfacer** object that transforms info or requests between parts of a system
+
+### S.O.L.I.D.
+
+- `S` Single Responsibility
+- `O` Open/Closed Principle
+- `L` Liskov Substituion Principle
+- `I` Interface Segregation Principle
+- `D` Dependency Inversion Principle
+
+### S. Single Responsibility
+
+The Single Responsibility Principle states that a class or module should have:
+
+- A single purpose
+- Only one reason to change
+
+An object's definition should only have to be modified due to changes to it's single responsibility within the system.
+
+### O. Open-Closed
+
+Open-Closed Principle states that code should be:
+
+- Open for extension
+- Closed for modification
+
+We should be able to add additional functionality **by extending the original
+functionality**, without the need to modify it.
+
+Violation of Open-Closed Principle:
+
+```js
+// Hybrid Vehicle has an electric range in addition to fuel-based range
+class Vehicle {
+  constructor(fuelCapacity, fuelEfficiency) {
+    this.fuelCapacity = fuelCapacity;
+    this.fuelEfficiency = fuelEfficiency;
+  }
+
+  getRange() {
+    let range = this.fuelCapacity * this.fuelEfficiency;
+
+    // VIOLATION: Should NOT extend existing class!
+    if (this instanceof HybridVehicle) {
+      range += this.electricRange;
+    }
+    return range;
+  }
+}
+
+class HybridVehicle extends Vehicle {
+  constructor(fuelCapacity, fuelEfficiency, electricRange) {
+    super(fuelCapacity, fuelEfficiency);
+    this.electricRange = electricRange;
+  }
+}
+
+const standardVehicle = new Vehicle(10, 15);
+const hybridVehicle = new HybridVehicle(10, 15, 50);
+
+console.log(standardVehicle.getRange()); // Outputs '150'
+console.log(hybridVehicle.getRange()); // Outputs '200'
+```
+
+Instead of adding to the existing `getRange()` method, we should override the
+`getRange()` method within the `HybridVehicle` class, without modifying the
+original code:
+
+```js
+class Vehicle {
+    constructor(fuelCapacity, fuelEfficiency) {
+        this.fuelCapacity = fuelCapacity;
+        this.fuelEfficiency = fuelEfficiency;
+    }
+
+    // GOOD: Original code is untouched
+    getRange() {
+        return this.fuelCapacity * this.fuelEfficiency;
+    }
+}
+
+class HybridVehicle extends Vehicle {
+    constructor(fuelCapacity, fuelEfficiency, electricRange) {
+        super(fuelCapacity, fuelEfficiency);
+        this.electricRange = electricRange;
+    }
+
+    // Leaves the base class Vehicle untouched by overriding getRange() method
+    within another class
+    getRange() {
+        return (this.fuelCapacity * this.fuelEfficiency) + this.electricRange;
+    }
+}
+
+const standardVehicle = new Vehicle(10, 15);
+const hybridVehicle = new HybridVehicle(10, 15, 50);
+
+console.log(standardVehicle.getRange()); // Outputs '150'
+console.log(hybridVehicle.getRange()); // Outputs '200'
+```
+
+### L. Liskov Substitution
+
+The Liskov Substitution Principle states that:
+
+- Any class should be substitutable for its parent class without unexpected
+  consequences.
+
+If `Cat` and `Dog` extend the class `Animal`, we should expect:
+
+- All of functionality in the `Animal` class to behave normally for a `Cat` and
+  `Dog` object.
+
+A classic violation of the Liskov Principle is the "square and rectangle"
+problem. It is posed that a `Square` class can inherit from a `Rectangle`
+class. Both shapes have 2 sides & both calculate area by multiplying their
+sides by each other.
+
+Problems arise when we try to use `Rectangle` functionality on a `Square`
+object:
+
+```js
+class Rectangle {
+  constructor(height, width) {
+    this.height = height;
+    this.width = width;
+  }
+
+  setHeight(newHeight) {
+    this.height = newHeight;
+  }
+}
+
+class Square extends Rectangle {}
+
+const rectangle = new Rectangle(4, 5);
+const square = new Square(4, 4);
+
+console.log(`Height: ${rectangle.height}, Width: ${rectangle.width}`); // 'Height: 4, Width: 5' (correct)
+console.log(`Height: ${square.height}, Width: ${square.width}`); // 'Height: 4, Width: 4' (correct)
+
+square.setHeight(5);
+console.log(`Height: ${square.height}, Width: ${square.width}`); // Outputs 'Height: 5, Width: 4' (wrong)
+```
+
+`.setHeight()` on the `Square` object makes the square have a different height
+than length, which makes for an invalid square.
+
+This can be solve with **polymorphism**: an if statement in the Rectangle
+class, or a variety of other methods.
+
+The real issue is that `Square` is not a good child class of `Rectangle`, and
+both shapes should be inherited from a `Shape` class instead.
+
+### I. Interface Segregation
+
+Interface Segregation principle states that an entity should:
+
+- Never be forced to implement an interface that contains elements **which it
+  will never use**.
+
+For example: A `Penguin` should never be forced to implement a `Bird` interface
+IF that `Bird` interface includes flying functionality. Penguins can't fly.
+
+In JavaScript, a good way to implement Interface Segregation is through
+**composition**:
+
+```js
+class Penguin {}
+class Bird {}
+
+const flyer = {
+  fly() {
+    console.log(`Flap flap, I'm flying!`);
+  },
+};
+
+Object.assign(Bird.prototype, flyer);
+
+const bird = new Bird();
+bird.fly(); // 'Flap flap, I'm flying!'
+
+const penguin = new Penguin();
+penguin.fly(); // 'Error: penguin.fly is not a function'
+```
+
+Using `Object.assign`, we're able to selectively assign functionality to the
+classes that require it. This way, we can avoid giving flight to penguins.
+
+### D. Dependency Inversion
+
+Dependency Inversion Principle states that:
+
+- High level code should never depend on low level interfaces
+- Abstractions should be used instead
+- It's all about `decoupling` code
+
+Example:
+
+Software that runs an online store, and within it is a class `PurchaseHandler`
+that handles the final purchase. This class is capable of charging the user's
+credit card via a Paypal API:
+
+```js
+// BAD: Our code breaks IF we need to swap to Square API or something else in
+the future!
+class PurchaseHandler {
+    processPayment(paymentDetails, amount) {
+        // Complicated, PayPal specific logic goes here
+        const paymentSuccess = PayPal.requestPayment(paymentDetails, amount);
+
+        if (paymentSuccess) {
+            // Do something
+            return true;
+        }
+
+        // Do something
+        return false;
+    }
+}
+```
+
+The issue is that if we need to change from Paypal to another API for handling
+purchases, our code breaks. We need to go back and swap out Paypal API calls
+for Square API calls. If Square accepts different types of data or wants us to
+stage a payment first, and then process it once staging has completed, it
+creates a headache.
+
+Instead, we need to abstract the functionality out.
+
+- Create another class called `PaymentHandler`
+- It will remain the same no matter what the underlying payment system we use
+- `PaymentHandler` will require changes in the future
+- BUT our higher level interface remains the same: `PurchaseHandler`
+
+```js
+// Remains consistent, regardless of payment system: Paypal, Square, etc.
+class PurchaseHandler {
+  processPayment(paymentDetails, amount) {
+    const paymentSuccess = PaymentHandler.requestPayment(
+      paymentDetails,
+      amount
+    );
+
+    if (paymentSuccess) {
+      // Do something
+      return true;
+    }
+
+    // Do something
+    return false;
+  }
+}
+
+// Abstracted away, allowing us to keep a consistent PurchaseHandler above ^
+class PaymentHandler {
+  requestPayment(paymentDetails, amount) {
+    // Complicated, PayPal specific logic goes here
+    return PayPal.requestPayment(paymentDetails, amount);
+  }
+}
+```
+
+Like many of the SOLID principles, the objective is:
+
+- less about writing less code OR writing it quicker
+- more about **writing better code**!
+- save us days/weeks further down the line in exchange for a few hours now
