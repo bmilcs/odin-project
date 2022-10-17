@@ -6341,6 +6341,8 @@ The Single Responsibility Principle states that a class or module should have:
 
 An object's definition should only have to be modified due to changes to it's single responsibility within the system.
 
+A class should have one and only one reason to change, meaning that a class should only have one job.
+
 ### O. Open-Closed
 
 Open-Closed Principle states that code should be:
@@ -6350,6 +6352,10 @@ Open-Closed Principle states that code should be:
 
 We should be able to add additional functionality **by extending the original
 functionality**, without the need to modify it.
+
+> Open for extension means that we should be able to add new features or components to the application without breaking existing code.
+
+> Closed for modification means that we should not introduce breaking changes to existing functionality, because that would force you to refactor a lot of existing code — Eric Elliott
 
 Violation of Open-Closed Principle:
 
@@ -6590,3 +6596,249 @@ Like many of the SOLID principles, the objective is:
 - less about writing less code OR writing it quicker
 - more about **writing better code**!
 - save us days/weeks further down the line in exchange for a few hours now
+
+### Encapsulation
+
+Encapsulation means hiding information and data.
+
+- Object can execute functionality without revealing details to the caller
+- Private variable is only visible to the current function & is not accessible
+  to the global scope/other functions
+
+```js
+const Book = (t, a) => {
+  let title = t;
+  let author = a;
+
+  return {
+    summary() {
+      console.log(`${title} written by ${author}.`);
+    }
+  }
+}
+
+const book1 = new Book('Hippie', 'Paul Coelho');
+book.summary(); // Hippie written by Paulo Coelho.
+```
+
+The `title` and `author` variables are only visible within the scope of the
+function `Book`. `summary()` is visible to the caller of `Book`.
+
+- `title` and `author` are **encapsulated** inside `Book`
+
+### Abstraction
+
+Abstraction means implementation hiding. 
+
+- Hiding implementation details
+- Only showing essential features to the caller
+
+It hides irrelevant details & only shows what's necessary to the outer world. 
+
+A **lack of abstraction** will lead to **problems of code maintainability**.
+
+```js
+const Book = function(getTitle, getAuthor) { 
+   // private variables / properties  
+   let title = getTitle; 
+   let author = getAuthor;
+
+   // public method 
+   this.giveTitle = function() {
+      return title;
+   }
+   
+   // private method
+   const summary = function() {
+      return `${title} written by ${author}.`
+   }
+
+   // public method that has access to private method.
+   this.giveSummary = function() {
+      return summary()
+   } 
+}
+
+const book1 = new Book('Hippie', 'Paulo Coelho');
+book1.giveTitle(); // "Hippie"
+book1.summary(); // Uncaught TypeError: book1.summary is not a function
+book1.giveSummary(); // "Hippie written by Paulo Coelho."
+```
+
+### Reusability & Inheritance
+
+Classes are syntactic sugar for prototypal inheritance under the hood.
+
+``` js
+let Corebook = (title) => {
+  this.title = title;
+}
+
+Corebook.prototype.title = () => {
+  console.log(`title: ${this.title}`);
+}
+
+Corebook.prototype.summary = (author) => {
+  console.log(`${this.title}, written by ${this.author}`);
+}
+
+let Book = (title, author) => {
+  Corebook.call(this, title, author);
+}
+
+Book.prototype = Object.create(Corebook.prototype);
+
+let book1 = new Book('The Alchemist', 'Paulo Coelho');
+book1.title();
+book1.summary();
+```
+
+### Polymorphism
+
+Polymorphism is the ability to call the same method on different objects and
+have each of them respond in their own way.
+
+```js
+let book1 = () => {
+  return 'summary of book1'
+}
+
+let book2 = function() {};
+
+book2.prototype = Object.create(book1.prototype);
+book2.prototype.summary = () => {
+  return 'summary of book2'
+}
+
+let book3 = function() {};
+book3.prototype = Object.create(book1.prototype);
+book3.prototype.summary = () => {
+  return 'summary of book3'
+}
+
+var books = [new book1(), new book2(), new book3()];
+books.forEach((book) => console.log(book.summary());
+
+// summary of book 1
+// summary of book 2
+// summary of book 3
+```
+
+### Relationships Between Objects
+
+#### Association
+
+Association is the relationship between two or more objects.
+
+- Each object is independent
+- Defines the multiplicity between objects
+  - one-to-one, one-to-many, many-to-one, many-to-many
+
+```js
+function Book(title, author) { 
+   this.title = title; 
+   this.author = author; 
+}
+const book1 = new Book ('Hippie', 'Paulo Coelho');
+const book2 = new Book ('The Alchemist', 'Paulo Coelho');
+book2.multiplicity = book1
+```
+
+`book1` is assigned to the `multiplicity` property on `book2`. It shows the
+relationship between objects `book1` and `book2`. Both can be added & removed
+independently.
+
+#### Aggregation
+
+Aggregation is a special case of association.
+
+- Relationship between 2 objects
+- One object can have a more major role than the other.
+
+Aggregation = Ownership, when an object takes more ownership than another one.
+
+- Owner Object: aggregate
+- Owned Object: component
+
+Aggregation is also called 'Has-a' relationship.
+
+```js
+function Book(title, author) { 
+   this.title = title; 
+   this.author = author; 
+}
+
+// components
+const book1 = new Book ('Hippie', 'Paulo Coelho');
+const book2 = new Book ('The Alchemist', 'Paulo Coelho');
+
+// aggregate
+let publication = {
+   "name": "new publication Inc", 
+   "books": []
+}
+publication.books.push(book1);
+publication.books.push(book2);
+```
+
+#### Composition
+
+Composition is a special case of aggregation:
+
+- When an object contains another object
+- Contained object can't live without the container object
+
+```js
+let Book = {
+  "title": "The Alchemist",
+  "author": "Paulo Coelho",
+  "publication": {
+    "name": "new publication inc.",
+    "address": "chennai"
+  }
+}
+```
+
+`publication` is strictly bounded with the `Book` object and can't live without
+it. If `book` object was deleted, then the `publication` would also be deleted.
+
+#### Composition Over Inheritance
+
+Inheritance: When an object is based on another object.
+
+`book1` inherits properties/methods from `Book`: title, author, summary.
+
+- Creates a `book1` ***is-a*** Book relationship
+
+Composition: Collecting simple objects and combining them to build more complex
+objects.
+
+``` js
+const getTitle = (data) => ({
+  title: () => console.log(`title: ${data.title}`)
+});
+
+const getAuthor = () => ({
+  author: () => console.log(`author: ${data.author}`)
+});
+
+const getSummary = (data) => ({
+  summary: () => console.log(`book summary need to update`)
+});
+
+const Book = (title, author) => {
+  const data = {
+    title,
+    author
+  }
+
+  return Object.assign({},
+          getTitle(data),
+          getAuthor(data),
+          getSummary(data),
+  )
+}
+
+let book1 = Book('The Alchemist', 'Paulo Coelho');
+book1.title(); // "title: The Alchemist"
+```
