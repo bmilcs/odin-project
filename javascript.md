@@ -970,7 +970,6 @@ let padded = string.padStart(4, "0"); // 400
 
 `charAt()` method returns character at a specified index.
 `charCodeAt()` method returns the unicode character at a specified index.
-
 ```js
 let text = "HELLO WORLD";
 let char = text.charAt(0); // H
@@ -6674,15 +6673,15 @@ let Corebook = (title) => {
   this.title = title;
 }
 
-Corebook.prototype.title = () => {
+Corebook.prototype.title = function() {
   console.log(`title: ${this.title}`);
 }
 
-Corebook.prototype.summary = (author) => {
+Corebook.prototype.summary = function(author) {
   console.log(`${this.title}, written by ${this.author}`);
 }
 
-let Book = (title, author) => {
+let Book = function(title, author) {
   Corebook.call(this, title, author);
 }
 
@@ -6706,13 +6705,13 @@ let book1 = () => {
 let book2 = function() {};
 
 book2.prototype = Object.create(book1.prototype);
-book2.prototype.summary = () => {
+book2.prototype.summary = function() {
   return 'summary of book2'
 }
 
 let book3 = function() {};
 book3.prototype = Object.create(book1.prototype);
-book3.prototype.summary = () => {
+book3.prototype.summary = function() {
   return 'summary of book3'
 }
 
