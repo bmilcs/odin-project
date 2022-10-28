@@ -14,7 +14,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 | :---------------------- | :---------------------------------------------------------- | :------------------------------------------------------- |
 | **#10 Restaurant Page** | [Live Demo](https://bmilcs.github.io/odin-restaurant-page/) | [GitHub](https://github.com/bmilcs/odin-restaurant-page) |
 | **#9 Tic Tac Toe**      | [Live Demo](https://bmilcs.github.io/odin-tic-tac-toe/)     | [GitHub](https://github.com/bmilcs/odin-tic-tac-toe)     |
-| **#8 Admin Dashboard**  | [Live Demo](https://bmilcs.github.io/odin-library/)         | [GitHub](https://github.com/bmilcs/odin-library)         |
+| **#8 Library**          | [Live Demo](https://bmilcs.github.io/odin-library/)         | [GitHub](https://github.com/bmilcs/odin-library)         |
 
 ### Intermediate HTML and CSS
 
