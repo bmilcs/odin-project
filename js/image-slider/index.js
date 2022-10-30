@@ -16,8 +16,11 @@ const changeSlide = (change, bubble = 0) => {
   else if (change === -1) --curSlide;
   slides[curSlide].classList.add("active");
   bubbles[curSlide].classList.add("active");
+};
 
-  console.log(curSlide);
+const activateAutoSwap = () => {
+  changeSlide(1);
+  setTimeout(activateAutoSwap, 5000);
 };
 
 const generateBubbles = () => {
@@ -40,3 +43,6 @@ next.addEventListener("click", (e) => {
 });
 
 generateBubbles();
+setTimeout(() => {
+  activateAutoSwap();
+}, 5000);

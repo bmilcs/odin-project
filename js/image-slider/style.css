@@ -12,9 +12,17 @@ body {
   border-radius: 1rem;
   overflow: hidden;
 }
+
 .carousel {
   object-fit: cover;
-  transition: all 0.25s ease-in-out;
+}
+
+.slide:not(.active) {
+  display: none;
+}
+.slide.active {
+  animation-fill-mode: forwards;
+  animation: fadein 2s;
 }
 
 .arrow-container {
@@ -30,19 +38,24 @@ body {
   align-items: center;
 }
 
-.slide:not(.active) {
-  display: none;
+.nav-bubbles {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: end;
+  bottom: 20px;
+  width: 100%;
+  height: 10%;
+  position: absolute;
+  z-index: 1;
 }
-
-.slide.active {
-  animation-fill-mode: forwards;
-
-  animation: fadein 0.2s;
-}
-
 .bubble {
+  height: 20px;
+  aspect-ratio: 1/1;
+  background: white;
+  border: 1px solid #00000099;
   border-radius: 50%;
-  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.8));
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
 }
 .bubble.active {
   background: lightblue;
@@ -76,22 +89,4 @@ img {
 svg {
   fill: white;
   filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.8));
-}
-
-.bubble {
-  height: 20px;
-  aspect-ratio: 1/1;
-  background: white;
-  border: 1px solid black;
-}
-.nav-bubbles {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  align-items: end;
-  bottom: 20px;
-  width: 100%;
-  height: 10%;
-  position: absolute;
-  z-index: 1;
 }
