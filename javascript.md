@@ -6890,3 +6890,120 @@ Steps:
    3. Make each circle link to a particular slide
 6. Add a timeout that advances the slide every 5 seconds
 
+## Form Validation w/ JavaScript
+
+Form validation with JS is handled with the Constraint Validation API.
+
+The following DOM interfaces have a set of methods & properties via the Constraint Validation API:
+
+- `HTMLButtonElement`
+- `HTMLFieldSetElement`
+- `HTMLInputElement`
+- `HTMLOutputElement`
+- `HTMLSelectElement`
+- `HTMLTextAreaElement`
+
+Properties available on the above elements:
+
+- `validationMessage`
+- `validity`: returns `ValidityState` object, describing the state of the element:
+  - `patternMismatch` true if pattern isn't met
+  - `tooLong` true if > `maxlength`
+  - `tooShort` true if < `minlength`
+  - `rangeOverflow` true if value > `max`
+  - `rangeUnderflow` true if less than `min`
+  - `typeMismatch` true if value doesn't match `type` = `email` `url` etc.
+  - `valid` true if meets all constraints
+  - `valueMissing` true if empty & `required` is specified
+- `willValidate` true if element will be validated when form is submitted
+
+Properties available on the above elements **and the `form` element**:
+
+- `checkValidity` true if no validity problems
+- `reportValidity` reports invalid fields using events
+  - useful with `preventDefault()` on `onSubmit` event handler
+- `setCustomValidity(message)` add custom message to element
+
+### Customized error message
+
+Automated form validation error message pop-ups are:
+
+- NOT customizable with CSS
+- Depend on the browser locale
+  - language issues: page displayed in one language, errors in another
+
+Customizing these error messages is **one of the most common** use cases of the constraint validation API.
+
+```js
+const email = document.getElementById("mail");
+
+email.addEventListener("input", (event) => {
+  if (email.validity.typeMismatch) {
+    email.setCustomValidity("I am expecting an e-mail address!");
+    email.reportValidity();
+  } else {
+    email.setCustomValidity("");
+  }
+});
+```
+
+`novalidate` attribute on the `form` element turns off the custom error messages.
+
+- Does NOT disable `:valid` pseudo-classes
+
+Example of custom error messages:
+
+```js
+const form = document.querySelector("form");
+const email = document.getElementById("mail");
+const emailError = document.querySelector("#mail + span.error");
+
+email.addEventListener("input", (event) => {
+  // Each time the user types something
+  if (email.validity.valid) {
+    emailError.textContent = ""; // Reset the content of the message
+    emailError.className = "error"; // Reset the visual state of the message
+  } else {
+    showError();
+  }
+});
+
+form.addEventListener("submit", (event) => {
+  if (!email.validity.valid) {
+    showError();
+    event.preventDefault();
+  }
+});
+
+function showError() {
+  if (email.validity.valueMissing) {
+    emailError.textContent = "You need to enter an e-mail address.";
+  } else if (email.validity.typeMismatch) {
+    emailError.textContent = "Entered value needs to be an e-mail address.";
+  } else if (email.validity.tooShort) {
+    emailError.textContent = `Email should be at least ${email.minLength} characters; you entered ${email.value.length}.`;
+  }
+  // Set the styling appropriately
+  emailError.className = "error active";
+}
+```
+
+```css
+.error {
+  width: 100%;
+  padding: 0;
+
+  font-size: 80%;
+  color: white;
+  background-color: #900;
+  border-radius: 0 0 5px 5px;
+
+  box-sizing: border-box;
+}
+
+.error.active {
+  padding: 0.3em;
+}
+```
+
+[More examples](https://www.w3schools.com/js/js_validation_api.asp)
