@@ -1,5 +1,104 @@
 # webpack Cheatsheet
 
+> npm packages
+
+```sh
+npm install --save-dev webpack webpack-cli webpack-merge webpack-dev-server html-webpack-plugin style-loader css-loader sass-loader sass
+```
+
+> webpack.common.js
+
+```js
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  entry: "./src/index.js",
+
+  output: {
+    filename: "[name].js",
+    path: path.resolve(__dirname, "dist"),
+    assetModuleFilename: "img/[name].[ext]",
+    clean: true,
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: "Todo List: Odin Project #11",
+      template: "./src/template.html",
+      filename: "index.html",
+    }),
+  ],
+
+  module: {
+    rules: [
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true,
+              sassOptions: {
+                outputStyle: "compressed",
+              },
+            },
+          },
+        ],
+      },
+
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        type: "asset/resource",
+      },
+    ],
+  },
+};
+```
+
+> webpack.dev.js
+
+```js
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
+
+module.exports = merge(common, {
+  mode: "development",
+  devtool: "inline-source-map",
+  devServer: {
+    static: "./dist",
+  },
+  optimization: {
+    runtimeChunk: "single",
+  },
+});
+```
+
+> webpack.prod.js
+
+```js
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
+
+module.exports = merge(common, {
+  mode: "production",
+});
+```
+
+> package.json
+
+```json
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack serve --open --config webpack.dev.js"
+  },
+```
+
+## Original notes
+
 Installation
 
 ```sh
