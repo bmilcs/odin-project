@@ -1,9 +1,12 @@
-# webpack Cheatsheet
+# npm Cheatsheet
 
 > npm packages
 
 ```sh
-npm install --save-dev webpack webpack-cli webpack-merge webpack-dev-server html-webpack-plugin style-loader css-loader sass-loader sass
+npm install --save-dev \
+  webpack webpack-cli webpack-dev-server webpack-merge \
+  html-webpack-plugin style-loader css-loader sass-loader sass \
+  eslint eslint-config-prettier
 ```
 
 > webpack.common.js
