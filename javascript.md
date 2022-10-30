@@ -970,6 +970,7 @@ let padded = string.padStart(4, "0"); // 400
 
 `charAt()` method returns character at a specified index.
 `charCodeAt()` method returns the unicode character at a specified index.
+
 ```js
 let text = "HELLO WORLD";
 let char = text.charAt(0); // H
@@ -6612,11 +6613,11 @@ const Book = (t, a) => {
   return {
     summary() {
       console.log(`${title} written by ${author}.`);
-    }
-  }
-}
+    },
+  };
+};
 
-const book1 = new Book('Hippie', 'Paul Coelho');
+const book1 = new Book("Hippie", "Paul Coelho");
 book.summary(); // Hippie written by Paulo Coelho.
 ```
 
@@ -6627,38 +6628,38 @@ function `Book`. `summary()` is visible to the caller of `Book`.
 
 ### Abstraction
 
-Abstraction means implementation hiding. 
+Abstraction means implementation hiding.
 
 - Hiding implementation details
 - Only showing essential features to the caller
 
-It hides irrelevant details & only shows what's necessary to the outer world. 
+It hides irrelevant details & only shows what's necessary to the outer world.
 
 A **lack of abstraction** will lead to **problems of code maintainability**.
 
 ```js
-const Book = function(getTitle, getAuthor) { 
-   // private variables / properties  
-   let title = getTitle; 
-   let author = getAuthor;
+const Book = function (getTitle, getAuthor) {
+  // private variables / properties
+  let title = getTitle;
+  let author = getAuthor;
 
-   // public method 
-   this.giveTitle = function() {
-      return title;
-   }
-   
-   // private method
-   const summary = function() {
-      return `${title} written by ${author}.`
-   }
+  // public method
+  this.giveTitle = function () {
+    return title;
+  };
 
-   // public method that has access to private method.
-   this.giveSummary = function() {
-      return summary()
-   } 
-}
+  // private method
+  const summary = function () {
+    return `${title} written by ${author}.`;
+  };
 
-const book1 = new Book('Hippie', 'Paulo Coelho');
+  // public method that has access to private method.
+  this.giveSummary = function () {
+    return summary();
+  };
+};
+
+const book1 = new Book("Hippie", "Paulo Coelho");
 book1.giveTitle(); // "Hippie"
 book1.summary(); // Uncaught TypeError: book1.summary is not a function
 book1.giveSummary(); // "Hippie written by Paulo Coelho."
@@ -6668,26 +6669,26 @@ book1.giveSummary(); // "Hippie written by Paulo Coelho."
 
 Classes are syntactic sugar for prototypal inheritance under the hood.
 
-``` js
+```js
 let Corebook = (title) => {
   this.title = title;
-}
+};
 
-Corebook.prototype.title = function() {
+Corebook.prototype.title = function () {
   console.log(`title: ${this.title}`);
-}
+};
 
-Corebook.prototype.summary = function(author) {
+Corebook.prototype.summary = function (author) {
   console.log(`${this.title}, written by ${this.author}`);
-}
+};
 
-let Book = function(title, author) {
+let Book = function (title, author) {
   Corebook.call(this, title, author);
-}
+};
 
 Book.prototype = Object.create(Corebook.prototype);
 
-let book1 = new Book('The Alchemist', 'Paulo Coelho');
+let book1 = new Book("The Alchemist", "Paulo Coelho");
 book1.title();
 book1.summary();
 ```
@@ -6734,13 +6735,13 @@ Association is the relationship between two or more objects.
   - one-to-one, one-to-many, many-to-one, many-to-many
 
 ```js
-function Book(title, author) { 
-   this.title = title; 
-   this.author = author; 
+function Book(title, author) {
+  this.title = title;
+  this.author = author;
 }
-const book1 = new Book ('Hippie', 'Paulo Coelho');
-const book2 = new Book ('The Alchemist', 'Paulo Coelho');
-book2.multiplicity = book1
+const book1 = new Book("Hippie", "Paulo Coelho");
+const book2 = new Book("The Alchemist", "Paulo Coelho");
+book2.multiplicity = book1;
 ```
 
 `book1` is assigned to the `multiplicity` property on `book2`. It shows the
@@ -6762,20 +6763,20 @@ Aggregation = Ownership, when an object takes more ownership than another one.
 Aggregation is also called 'Has-a' relationship.
 
 ```js
-function Book(title, author) { 
-   this.title = title; 
-   this.author = author; 
+function Book(title, author) {
+  this.title = title;
+  this.author = author;
 }
 
 // components
-const book1 = new Book ('Hippie', 'Paulo Coelho');
-const book2 = new Book ('The Alchemist', 'Paulo Coelho');
+const book1 = new Book("Hippie", "Paulo Coelho");
+const book2 = new Book("The Alchemist", "Paulo Coelho");
 
 // aggregate
 let publication = {
-   "name": "new publication Inc", 
-   "books": []
-}
+  name: "new publication Inc",
+  books: [],
+};
 publication.books.push(book1);
 publication.books.push(book2);
 ```
@@ -6789,13 +6790,13 @@ Composition is a special case of aggregation:
 
 ```js
 let Book = {
-  "title": "The Alchemist",
-  "author": "Paulo Coelho",
-  "publication": {
-    "name": "new publication inc.",
-    "address": "chennai"
-  }
-}
+  title: "The Alchemist",
+  author: "Paulo Coelho",
+  publication: {
+    name: "new publication inc.",
+    address: "chennai",
+  },
+};
 ```
 
 `publication` is strictly bounded with the `Book` object and can't live without
@@ -6807,37 +6808,85 @@ Inheritance: When an object is based on another object.
 
 `book1` inherits properties/methods from `Book`: title, author, summary.
 
-- Creates a `book1` ***is-a*** Book relationship
+- Creates a `book1` **_is-a_** Book relationship
 
 Composition: Collecting simple objects and combining them to build more complex
 objects.
 
-``` js
+```js
 const getTitle = (data) => ({
-  title: () => console.log(`title: ${data.title}`)
+  title: () => console.log(`title: ${data.title}`),
 });
 
 const getAuthor = () => ({
-  author: () => console.log(`author: ${data.author}`)
+  author: () => console.log(`author: ${data.author}`),
 });
 
 const getSummary = (data) => ({
-  summary: () => console.log(`book summary need to update`)
+  summary: () => console.log(`book summary need to update`),
 });
 
 const Book = (title, author) => {
   const data = {
     title,
-    author
-  }
+    author,
+  };
 
-  return Object.assign({},
-          getTitle(data),
-          getAuthor(data),
-          getSummary(data),
-  )
-}
+  return Object.assign({}, getTitle(data), getAuthor(data), getSummary(data));
+};
 
-let book1 = Book('The Alchemist', 'Paulo Coelho');
+let book1 = Book("The Alchemist", "Paulo Coelho");
 book1.title(); // "title: The Alchemist"
 ```
+
+## Dynamic User Interface Interactions
+
+### Drop-down Menus
+
+Example: nav-bar or button. When clicked, a menu slides down nicely.
+
+Things to keep in mind:
+
+- Allow menu to show up on **click** or **hover**
+- Hardcode the menu items into HTML
+  - Hide/reveal them using JavaScript
+  - Via class: `visible`, etc.
+  - Or manually setting style in JS
+- Make sure code is reusable
+  - Should be able to create multiple drop-downs on a page
+  - Without repeating JS code
+- [Bundle code into a module & publish it to npm](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry)
+  - Then you can install it and use it anytime you like
+
+### Mobile Menus
+
+Mobile versions of your site are **definitely** going to need their own menu implementation.
+
+- You could reuse existing menu here
+- Tons of more inventive options out there
+- [Dribble Examples](https://dribbble.com/search/mobile-menu)
+- [Inspiration on Marvel](https://marvelapp.com/blog/hamburger-menu-alternatives-mobile-navigation/)
+
+### Image Slider
+
+Create a simple image carousel.
+
+- Arrows on each side of image to advance forward/backward
+- Automatically move forward every 5 seconds
+- Little navigation circles at bottom to indicate which slide you're on
+  - Clickable to advance to that slide
+
+Steps:
+
+1. Setup a very wide `div`, that contains the individual image slides
+2. Position that `div` inside a container `div`
+   1. A picture frame which determines which image is currently visible
+3. Build the next/previous image functionality
+   1. Make transitions smooth
+4. Setup arrows that activate that functionality
+5. Add in navigation dots
+   1. Horizontal series of empty circles with CSS
+   2. Active image gets filled in
+   3. Make each circle link to a particular slide
+6. Add a timeout that advances the slide every 5 seconds
+
