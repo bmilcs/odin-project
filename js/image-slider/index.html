@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="index.js" defer></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Quick & dirty image slider</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="carousel">
+        <div class="arrow-container">
+          <svg
+            class="prev"
+            xmlns="http://www.w3.org/2000/svg"
+            height="48"
+            width="48"
+          >
+            <path
+              d="M28.05 36 16 23.95 28.05 11.9l2.15 2.15-9.9 9.9 9.9 9.9Z"
+            />
+          </svg>
+          <svg
+            class="next"
+            xmlns="http://www.w3.org/2000/svg"
+            height="48"
+            width="48"
+          >
+            <path
+              d="m18.75 36-2.15-2.15 9.9-9.9-9.9-9.9 2.15-2.15L30.8 23.95Z"
+            />
+          </svg>
+        </div>
+        <div class="slide active">
+          <img src="https://picsum.photos/900/600" alt="" srcset="" />
+        </div>
+        <div class="slide">
+          <img src="https://picsum.photos/901/600" alt="" srcset="" />
+        </div>
+        <div class="slide">
+          <img src="https://picsum.photos/902/600" alt="" srcset="" />
+        </div>
+        <div class="slide">
+          <img src="https://picsum.photos/903/600" alt="" srcset="" />
+        </div>
+        <div class="slide">
+          <img src="https://picsum.photos/904/600" alt="" srcset="" />
+        </div>
+        <div class="nav-bubbles"></div>
+      </div>
+    </div>
+  </body>
+</html>

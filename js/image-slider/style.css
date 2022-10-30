@@ -1,0 +1,97 @@
+body {
+  text-align: center;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+}
+.container {
+  overflow: hidden;
+  height: 600px;
+  width: 900px;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.carousel {
+  object-fit: cover;
+  transition: all 0.25s ease-in-out;
+}
+
+.arrow-container {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  height: 10%;
+  /* width: 100%; */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slide:not(.active) {
+  display: none;
+}
+
+.slide.active {
+  animation-fill-mode: forwards;
+
+  animation: fadein 0.2s;
+}
+
+.bubble {
+  border-radius: 50%;
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.8));
+}
+.bubble.active {
+  background: lightblue;
+}
+.bubble:not(.active) {
+  opacity: 50%;
+}
+
+@keyframes fadein {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  1% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+img {
+  object-fit: cover;
+  user-select: none;
+}
+
+svg {
+  fill: white;
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.8));
+}
+
+.bubble {
+  height: 20px;
+  aspect-ratio: 1/1;
+  background: white;
+  border: 1px solid black;
+}
+.nav-bubbles {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: end;
+  bottom: 20px;
+  width: 100%;
+  height: 10%;
+  position: absolute;
+  z-index: 1;
+}
