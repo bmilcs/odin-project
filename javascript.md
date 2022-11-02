@@ -6890,3 +6890,54 @@ Steps:
    3. Make each circle link to a particular slide
 6. Add a timeout that advances the slide every 5 seconds
 
+## ES6 
+
+**Babel** takes modern JavaScript & **transpiles** it to code that older browsers can understand.
+
+It also allows you to use JavaScript features as they're announced and released, often before they're available in *any* browser!
+
+Adding Babel
+
+``` js
+module: {
+  rules: [
+    {
+      test: /\.m?js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            ['@babel/preset-env', { targets: "defaults" }]
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
+Babel doesn't do anything *out-of-the-box*.
+
+- Babel is built on **presets** & **plugins**
+- Babel plugins do all the work
+  - Each plugin is it's own NPM library
+
+Arrow function transformation plugin example:
+
+
+
+1. Install the plugin
+
+```sh
+npm install --save-dev @babel/plugin-transform-arrow-functions
+```
+
+2. Tell Babel to use the plugin as a dependency
+
+> .babelrc
+```rc
+{
+  "plugins": ["@babel/plugin-transform-arrow-functions"]
+}
+```
