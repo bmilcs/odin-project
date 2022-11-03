@@ -7161,4 +7161,128 @@ let obj = JSON.parse(text);
 document.getElementById("demo").innerHTML = obj.name;
 ```
 
-## [Testing JSON](https://jsonformatter.curiousconcept.com/)
+### [Testing JSON](https://jsonformatter.curiousconcept.com/)
+
+## Asynchronous Code
+
+Fetching data from a server to display on your site takes a decent amount of time.
+
+JavaScript includes **asynchronous functions**
+
+- Functions that happen in the background, *while the rest of your code executes*
+
+### Callbacks
+
+In the recent past and even now are used quite a lot in certain circumstances, **callbacks** were most commonly used to handle this.
+
+A **callback function** is a function passed into another function as an argument.
+
+- It is then evoked inside the outer function
+- Completes some kind of routine/action
+
+```js
+// function is invoked when myDiv is clicked
+myDiv.addEventListener("click", function(){
+  // do something!
+})
+```
+
+- Happens all the time in JS
+
+**Callback Hell**
+
+Using callbacks can get out hand, *especially when chaining several of them together, in a specific order.* 
+
+```js
+// implementing async code:
+var fs = require('fs');
+fs.readFile('movie.mp4', finishedReading);
+
+function finishedReading(error, movieData) {
+  if (error) return console.error(error);
+  // do something w/ moviedata
+}
+
+// OR
+
+var fs = require('fs')
+
+function finishedReading(error, movieData) {
+  if (error) return console.error(error)
+  // do something with the movieData
+}
+
+fs.readFile('movie.mp4', finishedReading)
+
+// OR
+
+var fs = require('fs')
+
+fs.readFile('movie.mp4', function finishedReading(error, movieData) {
+  if (error) return console.error(error)
+  // do something with the movieData
+})
+```
+
+### Promises
+
+One way of handling asynchronous code is **promises**.
+
+- Frequently used in libraries & frameworks
+
+A **promise** is an object that might produce a value at some point in the future. 
+
+
+> Problematic: Unless we tell our code that it takes time to fetch data, it happens instantly
+
+```js
+const getData = function() {
+  // fetch data from API
+  // clean it up
+  return data;
+}
+
+const myData = getData();
+const pieceOfData = myData['whatever'];
+```
+
+The above causes trouble. `getData()` will most likely still be fetching when `myData[]` is called, resulting in `undefined`.
+
+We need to tell our code to **wait until the data is done fetching** to continue. Promises solve this issue:
+
+```js
+const myData = getData(); // if getData() is refactored to return a promise
+
+myData.then(function(data) {
+  const pieceOfData = data['whatever'];
+});
+```
+
+### Promises, Async & Await
+
+Synchronous is easier to follow & debug.
+
+Asynchronous is generally better for performance & flexibility.
+
+Why "hold up the show" when you can trigger multiple requests at once and handle them when they're ready?
+
+```js
+var p = new Promise(function(resolve, reject) {
+	// Do an async task async task and then...
+
+	if(/* good condition */) {
+		resolve('Success!');
+	}
+	else {
+		reject('Failure!');
+	}
+});
+
+p.then(function(result) { 
+	/* do something with the result */
+}).catch(function() {
+	/* error :( */
+}).finally(function() {
+   /* executes regardless or success for failure */ 
+});
+```
