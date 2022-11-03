@@ -6941,3 +6941,154 @@ npm install --save-dev @babel/plugin-transform-arrow-functions
   "plugins": ["@babel/plugin-transform-arrow-functions"]
 }
 ```
+
+## JSON
+
+JavaScript Object Notation is a standardized format for structuring data. 
+
+- Heavily based on syntax for JS Objects
+- Often encounter JSON formatted data when working with
+  - External APIs
+- Universal format for transmitting data on the web
+
+JSON exists **as a string**.
+
+- Useful for transferring across a network.
+- Needs to be converted to native JS Object when you want to access the data
+- JS provides `JSON` global object with methods available for conversion
+
+> Example
+
+```json
+{
+  "squadName": "Super hero squad",
+  "homeTown": "Metro City",
+  "formed": 2016,
+  "secretBase": "Super tower",
+  "active": true,
+  "members": [
+    {
+      "name": "Molecule Man",
+      "age": 29,
+      "secretIdentity": "Dan Jukes",
+      "powers": ["Radiation resistance", "Turning tiny", "Radiation blast"]
+    },
+    {
+      "name": "Madame Uppercut",
+      "age": 39,
+      "secretIdentity": "Jane Wilson",
+      "powers": [
+        "Million tonne punch",
+        "Damage resistance",
+        "Superhuman reflexes"
+      ]
+    },
+    {
+      "name": "Eternal Flame",
+      "age": 1000000,
+      "secretIdentity": "Unknown",
+      "powers": [
+        "Immortality",
+        "Heat Immunity",
+        "Inferno",
+        "Teleportation",
+        "Interdimensional travel"
+      ]
+    }
+  ]
+}
+```
+
+Accessing the data: bracket or dot notation.
+
+```json
+superHeroes.homeTown
+superHeroes['active']
+superHeroes['members'][0]['powers'][2]
+```
+
+### Arrays as JSON
+
+JSON text looks like a JavaScrit object inside a string. We can also convert arrays to/from JSON.
+
+```js
+[
+  {
+    "name": "Molecule Man",
+    "age": 29,
+    "secretIdentity": "Dan Jukes",
+    "powers": ["Radiation resistance", "Turning tiny", "Radiation blast"]
+  },
+  {
+    "name": "Madame Uppercut",
+    "age": 39,
+    "secretIdentity": "Jane Wilson",
+    "powers": [
+      "Million tonne punch",
+      "Damage resistance",
+      "Superhuman reflexes"
+    ]
+  }
+]
+```
+
+### JSON Notes
+
+- Purely a string, with specified data format
+  - No properties
+  - No Methods
+- Requires `"double quotes"` around strings & property names
+  - Single quotes are invalid, except when surrounding the entire JSON string
+- Misplaced comma/colon can break a JSON file
+- JSON can be validated using apps (ie: JSONLint)
+- JSON can be any data type: arrays, objects, **single string**, **number**
+- Only quoted strings can be used as properties
+
+### Requesting JSON from Server
+
+To obtain JSON, we use an API called `Fetch`. Fetch allows us:
+
+- To make network requests
+- Retrieve resources from server via JS
+  - Images
+  - Text
+  - JSON
+  - HTML Snippets
+
+Meaning we can *update small sections of content*, **without having to reload the entire page**.
+
+Steps taken:
+
+1. Declare `requestURL`
+2. Initialize a new `Request` object
+3. Make network request using `fetch()` function
+   1. Returns a `Response` object
+4. Retrieve response as JSON using `Response.json()`
+
+```js
+async function populate() {
+
+  const requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+  const request = new Request(requestURL);
+
+  const response = await fetch(request);
+  const superHeroes = await response.json();
+
+  populateHeader(superHeroes);
+  populateHeroes(superHeroes);
+
+}
+```
+
+`fetch()` API is **asyncronous.** 
+
+- `async` is required before the name of the function that uses the fetch API
+- `await` is required before the calls to any asychronous functions
+
+### Converting to/from JSON
+
+The built-in `JSON` object contains two methods:
+
+- `parse()` converts JSON string TO JavaScript Object
+- `stringify()` converts an object to a JSON string
+
