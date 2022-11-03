@@ -7092,3 +7092,73 @@ The built-in `JSON` object contains two methods:
 - `parse()` converts JSON string TO JavaScript Object
 - `stringify()` converts an object to a JSON string
 
+#### `JSON.parse()`
+
+```js
+const obj = JSON.parse('{"name":"John", "age":30, "city":"New York"}');
+document.getElementById("demo").innerHTML = obj.name;
+```
+
+Parsing dates: Date objects are not allowed in JSON. Dates need to be converted back into an object later:
+
+```js
+const text = '{"name":"John", "birth":"1986-12-14", "city":"New York"}';
+const obj = JSON.parse(text);
+obj.birth = new Date(obj.birth);
+```
+
+`JSON.parse(x, reviver)`
+
+The second parameter is called a reviver, or a function that checks each property before returning a value:
+
+```js
+// example
+JSON.parse(jsonString, function(key, value) {});
+
+const text = '{"name":"John", "birth":"1986-12-14", "city":"New York"}';
+const obj = JSON.parse(text, function (key, value) {
+  // reviver function
+  if (key == "birth") {
+    return new Date(value);
+  } else {
+    return value;
+  }
+});
+
+document.getElementById("demo").innerHTML = obj.name + ", " + obj.birth;
+```
+
+Parsing functions: functions need to be written as a string and converted back to a function later.
+
+```js
+const text = '{"age":"function () {return 30;}", "name":"John", "city":"New York"}';
+const obj = JSON.parse(text);
+obj.age = eval("(" + obj.age + ")");
+
+document.getElementById("demo").innerHTML = obj.name + ", " + obj.age();
+```
+
+#### `JSON.stringify()`
+
+Stringify converts stuff to JSON.
+
+```js
+const obj = {name: "John", age: 30, city: "New York"};
+const myJSON = JSON.stringify(obj);
+```
+
+Storing & Retrieving Data w/ `localStorage`:
+
+```js
+// Storing data:
+const myObj = {name: "John", age: 31, city: "New York"};
+const myJSON = JSON.stringify(myObj);
+localStorage.setItem("testJSON", myJSON);
+
+// Retrieving data:
+let text = localStorage.getItem("testJSON");
+let obj = JSON.parse(text);
+document.getElementById("demo").innerHTML = obj.name;
+```
+
+## [Testing JSON](https://jsonformatter.curiousconcept.com/)
