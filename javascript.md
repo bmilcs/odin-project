@@ -6890,42 +6890,38 @@ Steps:
    3. Make each circle link to a particular slide
 6. Add a timeout that advances the slide every 5 seconds
 
-## ES6 
+## ES6
 
 **Babel** takes modern JavaScript & **transpiles** it to code that older browsers can understand.
 
-It also allows you to use JavaScript features as they're announced and released, often before they're available in *any* browser!
+It also allows you to use JavaScript features as they're announced and released, often before they're available in _any_ browser!
 
 Adding Babel
 
-``` js
+```js
 module: {
   rules: [
     {
       test: /\.m?js$/,
       exclude: /node_modules/,
       use: {
-        loader: 'babel-loader',
+        loader: "babel-loader",
         options: {
-          presets: [
-            ['@babel/preset-env', { targets: "defaults" }]
-          ]
-        }
-      }
-    }
-  ]
+          presets: [["@babel/preset-env", { targets: "defaults" }]],
+        },
+      },
+    },
+  ];
 }
 ```
 
-Babel doesn't do anything *out-of-the-box*.
+Babel doesn't do anything _out-of-the-box_.
 
 - Babel is built on **presets** & **plugins**
 - Babel plugins do all the work
   - Each plugin is it's own NPM library
 
 Arrow function transformation plugin example:
-
-
 
 1. Install the plugin
 
@@ -6936,6 +6932,7 @@ npm install --save-dev @babel/plugin-transform-arrow-functions
 2. Tell Babel to use the plugin as a dependency
 
 > .babelrc
+
 ```rc
 {
   "plugins": ["@babel/plugin-transform-arrow-functions"]
@@ -6944,7 +6941,7 @@ npm install --save-dev @babel/plugin-transform-arrow-functions
 
 ## JSON
 
-JavaScript Object Notation is a standardized format for structuring data. 
+JavaScript Object Notation is a standardized format for structuring data.
 
 - Heavily based on syntax for JS Objects
 - Often encounter JSON formatted data when working with
@@ -7014,22 +7011,18 @@ JSON text looks like a JavaScrit object inside a string. We can also convert arr
 ```js
 [
   {
-    "name": "Molecule Man",
-    "age": 29,
-    "secretIdentity": "Dan Jukes",
-    "powers": ["Radiation resistance", "Turning tiny", "Radiation blast"]
+    name: "Molecule Man",
+    age: 29,
+    secretIdentity: "Dan Jukes",
+    powers: ["Radiation resistance", "Turning tiny", "Radiation blast"],
   },
   {
-    "name": "Madame Uppercut",
-    "age": 39,
-    "secretIdentity": "Jane Wilson",
-    "powers": [
-      "Million tonne punch",
-      "Damage resistance",
-      "Superhuman reflexes"
-    ]
-  }
-]
+    name: "Madame Uppercut",
+    age: 39,
+    secretIdentity: "Jane Wilson",
+    powers: ["Million tonne punch", "Damage resistance", "Superhuman reflexes"],
+  },
+];
 ```
 
 ### JSON Notes
@@ -7055,7 +7048,7 @@ To obtain JSON, we use an API called `Fetch`. Fetch allows us:
   - JSON
   - HTML Snippets
 
-Meaning we can *update small sections of content*, **without having to reload the entire page**.
+Meaning we can _update small sections of content_, **without having to reload the entire page**.
 
 Steps taken:
 
@@ -7067,8 +7060,8 @@ Steps taken:
 
 ```js
 async function populate() {
-
-  const requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+  const requestURL =
+    "https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json";
   const request = new Request(requestURL);
 
   const response = await fetch(request);
@@ -7076,11 +7069,10 @@ async function populate() {
 
   populateHeader(superHeroes);
   populateHeroes(superHeroes);
-
 }
 ```
 
-`fetch()` API is **asyncronous.** 
+`fetch()` API is **asyncronous.**
 
 - `async` is required before the name of the function that uses the fetch API
 - `await` is required before the calls to any asychronous functions
@@ -7113,7 +7105,7 @@ The second parameter is called a reviver, or a function that checks each propert
 
 ```js
 // example
-JSON.parse(jsonString, function(key, value) {});
+JSON.parse(jsonString, function (key, value) {});
 
 const text = '{"name":"John", "birth":"1986-12-14", "city":"New York"}';
 const obj = JSON.parse(text, function (key, value) {
@@ -7131,7 +7123,8 @@ document.getElementById("demo").innerHTML = obj.name + ", " + obj.birth;
 Parsing functions: functions need to be written as a string and converted back to a function later.
 
 ```js
-const text = '{"age":"function () {return 30;}", "name":"John", "city":"New York"}';
+const text =
+  '{"age":"function () {return 30;}", "name":"John", "city":"New York"}';
 const obj = JSON.parse(text);
 obj.age = eval("(" + obj.age + ")");
 
@@ -7143,7 +7136,7 @@ document.getElementById("demo").innerHTML = obj.name + ", " + obj.age();
 Stringify converts stuff to JSON.
 
 ```js
-const obj = {name: "John", age: 30, city: "New York"};
+const obj = { name: "John", age: 30, city: "New York" };
 const myJSON = JSON.stringify(obj);
 ```
 
@@ -7151,7 +7144,7 @@ Storing & Retrieving Data w/ `localStorage`:
 
 ```js
 // Storing data:
-const myObj = {name: "John", age: 31, city: "New York"};
+const myObj = { name: "John", age: 31, city: "New York" };
 const myJSON = JSON.stringify(myObj);
 localStorage.setItem("testJSON", myJSON);
 
@@ -7169,7 +7162,7 @@ Fetching data from a server to display on your site takes a decent amount of tim
 
 JavaScript includes **asynchronous functions**
 
-- Functions that happen in the background, *while the rest of your code executes*
+- Functions that happen in the background, _while the rest of your code executes_
 
 ### Callbacks
 
@@ -7182,21 +7175,21 @@ A **callback function** is a function passed into another function as an argumen
 
 ```js
 // function is invoked when myDiv is clicked
-myDiv.addEventListener("click", function(){
+myDiv.addEventListener("click", function () {
   // do something!
-})
+});
 ```
 
 - Happens all the time in JS
 
 **Callback Hell**
 
-Using callbacks can get out hand, *especially when chaining several of them together, in a specific order.* 
+Using callbacks can get out hand, _especially when chaining several of them together, in a specific order._
 
 ```js
 // implementing async code:
-var fs = require('fs');
-fs.readFile('movie.mp4', finishedReading);
+var fs = require("fs");
+fs.readFile("movie.mp4", finishedReading);
 
 function finishedReading(error, movieData) {
   if (error) return console.error(error);
@@ -7205,23 +7198,23 @@ function finishedReading(error, movieData) {
 
 // OR
 
-var fs = require('fs')
+var fs = require("fs");
 
 function finishedReading(error, movieData) {
-  if (error) return console.error(error)
+  if (error) return console.error(error);
   // do something with the movieData
 }
 
-fs.readFile('movie.mp4', finishedReading)
+fs.readFile("movie.mp4", finishedReading);
 
 // OR
 
-var fs = require('fs')
+var fs = require("fs");
 
-fs.readFile('movie.mp4', function finishedReading(error, movieData) {
-  if (error) return console.error(error)
+fs.readFile("movie.mp4", function finishedReading(error, movieData) {
+  if (error) return console.error(error);
   // do something with the movieData
-})
+});
 ```
 
 ### Promises
@@ -7230,20 +7223,19 @@ One way of handling asynchronous code is **promises**.
 
 - Frequently used in libraries & frameworks
 
-A **promise** is an object that might produce a value at some point in the future. 
-
+A **promise** is an object that might produce a value at some point in the future.
 
 > Problematic: Unless we tell our code that it takes time to fetch data, it happens instantly
 
 ```js
-const getData = function() {
+const getData = function () {
   // fetch data from API
   // clean it up
   return data;
-}
+};
 
 const myData = getData();
-const pieceOfData = myData['whatever'];
+const pieceOfData = myData["whatever"];
 ```
 
 The above causes trouble. `getData()` will most likely still be fetching when `myData[]` is called, resulting in `undefined`.
@@ -7253,8 +7245,8 @@ We need to tell our code to **wait until the data is done fetching** to continue
 ```js
 const myData = getData(); // if getData() is refactored to return a promise
 
-myData.then(function(data) {
-  const pieceOfData = data['whatever'];
+myData.then(function (data) {
+  const pieceOfData = data["whatever"];
 });
 ```
 
@@ -7266,10 +7258,14 @@ Asynchronous is generally better for performance & flexibility.
 
 Why "hold up the show" when you can trigger multiple requests at once and handle them when they're ready?
 
+The `new Promise()` constructor should only be used with legacy tasks:
+
+- `XMLHttpRequest`
+- `setTimeOut`
+
 ```js
 var p = new Promise(function(resolve, reject) {
 	// Do an async task async task and then...
-
 	if(/* good condition */) {
 		resolve('Success!');
 	}
@@ -7278,11 +7274,258 @@ var p = new Promise(function(resolve, reject) {
 	}
 });
 
-p.then(function(result) { 
+p.then(function(result) {
 	/* do something with the result */
 }).catch(function() {
 	/* error :( */
 }).finally(function() {
-   /* executes regardless or success for failure */ 
+  /* executes regardless or success for failure */
 });
 ```
+
+Returning a promise means that you can count on a promise coming out of a given function.
+
+```js
+var userCache = {};
+
+function getUserDetail(username) {
+  // In both cases, cached or not, a promise will be returned
+
+  if (userCache[username]) {
+    // Return a promise without the "new" keyword
+    return Promise.resolve(userCache[username]);
+  }
+
+  // Use the fetch API to get the information
+  // fetch returns a promise
+  return fetch("users/" + username + ".json")
+    .then(function (result) {
+      userCache[username] = result;
+      return result;
+    })
+    .catch(function () {
+      throw new Error("Could not find user: " + username);
+    });
+}
+```
+
+^ A promise is always returned. Therefore, you can always use the `then` and `catch` methods.
+
+#### Then
+
+All promise instances gets a `then` method:
+
+- Allows you to react to a promise
+- First `then` method callback receives the result given to it by the `resolve()` call
+
+```js
+new Promise(function (resolve, reject) {
+  // A mock async action using setTimeout
+  setTimeout(function () {
+    resolve(10);
+  }, 3000);
+}).then(function (result) {
+  console.log(result);
+});
+
+// From the console:
+// 10
+```
+
+`then` is triggered when the promise is resolved. `then` statements can be chained together.
+
+- Each `then` receives the result from the previous `then`'s return value
+- If a promise has already been resolved, but `then` is called again, the callback fires **immediately.**
+- If a promise is rejected and you call `then` after the rejection, the callback is never called.
+
+```js
+new Promise(function (resolve, reject) {
+  // A mock async action using setTimeout
+  setTimeout(function () {
+    resolve(10);
+  }, 3000);
+})
+  .then(function (num) {
+    console.log("first then: ", num);
+    return num * 2;
+  })
+  .then(function (num) {
+    console.log("second then: ", num);
+    return num * 2;
+  })
+  .then(function (num) {
+    console.log("last then: ", num);
+  });
+```
+
+#### Catch
+
+`catch` callback is called when a promise is rejected:
+
+```js
+new Promise(function (resolve, reject) {
+  // A mock async action using setTimeout
+  setTimeout(function () {
+    reject("Done!");
+  }, 3000);
+})
+  .then(function (e) {
+    console.log("done", e);
+  })
+  .catch(function (e) {
+    console.log("catch: ", e);
+  });
+
+// From the console:
+// 'catch: Done!'
+```
+
+#### Finally
+
+`finally` is _always_ called: rejected or resolved.
+
+```js
+new Promise((resolve, reject) => {
+  reject("Nope");
+})
+  .then(() => {
+    console.log("success");
+  })
+  .catch(() => {
+    console.log("fail");
+  })
+  .finally((res) => {
+    console.log("finally");
+  });
+```
+
+#### Promise All
+
+`Promise.all` is used when:
+
+- Trigger multiple async interactions
+- Only want to respond when **all of them are completed**
+
+`Promise.all` accepts an array of promises and fires one callback once they are resolved:
+
+```js
+Promise.all([promise1, promise2])
+  .then(function (results) {
+    // Both promises resolved
+  })
+  .catch(function (error) {
+    // One or more promises was rejected
+  });
+```
+
+A perfect way of thinking about `Promise.all` is firing off multiple AJAX (via `fetch`) requests at one time:
+
+```js
+var request1 = fetch("/users.json");
+var request2 = fetch("/articles.json");
+
+Promise.all([request1, request2]).then(function (results) {
+  // Both promises done!
+});
+```
+
+Combining APIs is possible if they both return promises.
+
+> `fetch` & Battery API
+
+```js
+Promise.all([fetch("/users.json"), navigator.getBattery()]).then(function (
+  results
+) {
+  // Both promises done!
+});
+```
+
+Dealing with rejection is difficult. If any promise is rejected, the `catch` fires for the 1st rejection.
+
+```js
+var req1 = new Promise(function (resolve, reject) {
+  // A mock async action using setTimeout
+  setTimeout(function () {
+    resolve("First!");
+  }, 4000);
+});
+var req2 = new Promise(function (resolve, reject) {
+  // A mock async action using setTimeout
+  setTimeout(function () {
+    reject("Second!");
+  }, 3000);
+});
+Promise.all([req1, req2])
+  .then(function (results) {
+    console.log("Then: ", results);
+  })
+  .catch(function (err) {
+    console.log("Catch: ", err);
+  });
+
+// From the console:
+// Catch: Second!
+```
+
+#### Promise Race
+
+`Promise.race` triggers as soon as any promise in the array is resolved OR rejected. A use case could be triggering a request to a primary source and a secondary source, in case either one is unavailable.
+
+```js
+var req1 = new Promise(function (resolve, reject) {
+  // A mock async action using setTimeout
+  setTimeout(function () {
+    resolve("First!");
+  }, 8000);
+});
+var req2 = new Promise(function (resolve, reject) {
+  // A mock async action using setTimeout
+  setTimeout(function () {
+    resolve("Second!");
+  }, 3000);
+});
+Promise.race([req1, req2])
+  .then(function (one) {
+    console.log("Then: ", one);
+  })
+  .catch(function (one, two) {
+    console.log("Catch: ", one);
+  });
+
+// From the console:
+// Then: Second!
+```
+
+## Event Loop
+
+JS is a single threaded language: Can do one thing at a time
+
+- Heap
+- Callstack
+- WebAPIs
+- Event Loop
+- Callback Queue
+
+**Call Stack**: Data structure that records where in the program we are.
+
+`main()`
+
+- Call a function: push something **onto the stack.**
+- Return: pop something **off of the stack.**
+
+Stack trace: State of the stack when an error occurs.
+
+Blowing the stack: Infinite loop > ultimately, crashes browser: `Range Error: Maximum Call Stack Exceeded`
+
+Blocking: code that is slow.
+
+**Event Loop**: Can't execute code until the stack is empty.
+
+- `setTimeOut` of 0
+  - Hits the WebAPI (waits for 0ms)
+  - The callback is then sent to Event Loop
+- Event loop waits for stack to clear
+  - Defers execution
+- Once empty, it gets pushed to the stack
+- Executes
