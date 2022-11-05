@@ -7615,6 +7615,39 @@ Promise.race([req1, req2])
 // Then: Second!
 ```
 
+#### [Promise / Fetch Walkthrough](https://www.youtube.com/watch?v=vQ3MoXnKfuQ)
+
+```js
+const myPromise = new Promise((resolve, reject) => {
+  setTimeOut(() => {
+    resolve("p #1");
+  }, 3000);
+});
+
+const my2ndPromise = new Promise((resolve, reject) => {
+  setTimeOut(() => {
+    reject("p #2");
+  }, 1500);
+});
+
+Promise.all([myPromise, my2ndPromise]).then((data) => {
+  console.log(data); // ["p #1", "p #2"]
+});
+
+// -------------------------------
+
+// fetch returns a response object
+fetch("https://someapi/").then((res) => {
+  // .json returns another promise, resolves the data > javascript object
+  res.json().then((data) => {
+    console.log(data);
+  });
+  .catch((err) => {
+    console.log(err);
+  })
+});
+```
+
 ## Event Loop
 
 JS is a single threaded language: Can do one thing at a time
@@ -7647,3 +7680,5 @@ Blocking: code that is slow.
   - Defers execution
 - Once empty, it gets pushed to the stack
 - Executes
+
+## APIs
