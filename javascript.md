@@ -7709,3 +7709,48 @@ Blocking: code that is slow.
 - Executes
 
 ## APIs
+
+APIs: **Application Programming Interfaces**
+
+APIs are:
+
+- Mostly accessed by URL
+- Specifics of query are determined by the service you're using
+
+```sh
+# Weather data based on specific location: London
+api.openweathermap.org/data/2.5/weather?q=London
+```
+
+[Specifics can be found in OpenWeatherMap's API Documentation](https://openweathermap.org/current)
+
+APIs usually require that you create an account & request an **API Key**. 
+
+Every request made to the API will require the API key as another parameter in the URL query:
+
+```sh
+# API request w/ API key parameter
+https://api.openweathermap.org/data/2.5/weather?q=London&APPID=1111111111
+```
+
+**API Keys** allow:
+
+- API service to track abuse of systems/data
+- API services to mitigate & recuperate operating costs
+
+Single API requests can cost less than a fraction of a penny. However, if a very popular app is created, used all over the world, you can easily have 1000s of people accessing that data every minute.
+
+Costs could then skyrocket to significant amounts of money for the API service.
+
+Many APIs offer:
+
+- Free tier
+  - Limit requests
+- Paid tier
+  - More frequent requests, more access to info
+
+Because your API key is **your** key, **securing them is important -- especially if you're using a paid tier.**
+
+Bots automatically crawl through GitHub repos solely for hardcoded/unsecured API keys.
+
+  - Allowing **bad agents** to access/utilize services/data you've paid for.
