@@ -7300,9 +7300,19 @@ myDiv.addEventListener("click", function () {
 
 - Happens all the time in JS
 
-**Callback Hell**
+Two core issues with **callbacks**:
 
-Using callbacks can get out hand, _especially when chaining several of them together, in a specific order._
+- **Callback Hell**
+
+  Using callbacks can get out hand, _especially when chaining several of them together, in a specific order._
+
+  Your brain processes code sequentially. Callbacks do NOT follow this paradigm.
+
+- **Inversion of Control**
+
+  Inversion of control occurs when handing over critical functionality to a third party service.
+
+  You lose trust - uncertain of the outcome.
 
 ```js
 // implementing async code:
@@ -7342,6 +7352,23 @@ One way of handling asynchronous code is **promises**.
 - Frequently used in libraries & frameworks
 
 A **promise** is an object that might produce a value at some point in the future.
+
+- Addresses inversion of control issue
+- We can expect what's going to be returned when it's finished
+- Then our code can decide what to do next
+
+Real life example:
+
+  - Place an order at restaurant: cheeseburger, $1.47
+  - Placing order & paying: make request for a value back (cheeseburger)
+  - Receive Receipt w/ Order # (IOU promise), representing a future cheeseburger
+  - While waiting, you do other things: text friend, join me for lunch, I'm going to eat a cheeseburger
+    - Even though cheeseburger doesn't exist, the placeholder (future value) can used to reason about what to do next
+
+    **Outcomes:** Success or Failure
+  - Receive cheeseburger, swap future value for the value itself: value-promise > value
+  - Cashier: "No cheeseburgers are available"
+  - Everytime I order a cheeseburger, I'll get a cheeseburger or notice that one isn't available, requiring another plan
 
 > Problematic: Unless we tell our code that it takes time to fetch data, it happens instantly
 
