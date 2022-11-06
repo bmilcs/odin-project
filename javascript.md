@@ -8015,7 +8015,47 @@ async function getPersonsInfo(name) {
 
 `try/catch` may look messy, but it's a very easy way to handle errors without using `.catch()` method.
 
-### Converting Promises GIPHY example to Async/Await
+Throwing errors:
+
+```js
+async function f() {
+  await Promise.reject(new Error("Whoops));
+};
+
+// is the same as:
+
+async function f() {
+  throw new Error("Whoops!");
+}
+```
+
+```js
+// async try/catch
+
+async function f() {
+  try {
+    let response = await fetch("no-such-url");
+    let user = await response.json();
+  } catch (err) {
+    // catches errors for both response, response.json()
+    alert(err);
+  }
+}
+
+// .catch() alternative to try/catch
+async function f() {
+  let response = await fetch("no-such-url");
+}
+
+// f() becomes a rejected promise
+f().catch(alert); // type error
+```
+
+Without a `try/catch` or `.catch()`, errors will be displayed to the console.
+
+### Async Await & Promise
+
+### Converting GIPHY Promises example to Async/Await
 
 > Promises:
 
@@ -8068,3 +8108,113 @@ getCats();
 ```
 
 Remember: `async/await` are just **promises**, written in a different way.
+
+### Async/Await Summary
+
+`async` keyword has 2 effects:
+
+- makes a function always return a promise
+- allows `await` to be used in it
+
+`await` keyword before a promise makes it wait until the promise settles, then:
+
+- if error, an exception is generated (same as if `throw error` were called)
+- otherwise returns the result
+- Only use await when one operation is dependent on another
+- Promise.all([a, b]) to run those operations concurrently
+
+`async/await`
+
+- Introduced in ES7
+- Functions nested inside an async function (subfunctions) will cause issues
+  - Parent async function will not wait for subfunctions
+
+```js
+let docs = [{}, {}, {}];
+
+// WARNING: this won't work
+docs.forEach(async function (doc, i) {
+  await db.post(doc);
+  console.log(i);
+});
+// synchronous - outside of async
+console.log("main loop done");
+
+// main loop done
+// 0
+// 1
+// 2
+```
+
+### Error Catching Higher Order Function
+
+[From Wes Bos' Async Await Video](https://www.youtube.com/watch?v=9YkUCxvaLEk)
+
+```js
+// function that handles errors
+// params: a function
+// return: same function but with a catch
+function handleError(fn) {
+  return function (...params) {
+    return fn(...params).catch(function (err) {
+      console.error(`Oops!`, err);
+    });
+  };
+}
+
+// es6 version:
+onst handleError = fn => (...params) => fn(...params).catch(console.error);
+
+// examle use case:
+const safeMyFun = handleError(myFun);
+safeMyFun();
+```
+
+### Async/Await & Loops
+
+`forEach()` `map()` combined with `async` run concurrently & do not wait for a promise.
+
+```js
+const fruits = ["peach", "pineapple", "strawberry"];
+
+// when async is used in a 'map' or 'foreach'
+// each LOOP is RUN AT THE SAME TIME (concurrently)
+const smoothie = fruits.map(async (v) => {
+  const emoji = await getFruit(v);
+  log(emoji);
+  return emoji;
+});
+```
+
+If you want to await a promise from each loop, you need to use a traditional loop:
+
+```js
+const fruitLoop = async () => {
+  // wait for the promise to resolve
+  // BEFORE next iteration
+  for (const f of fruits) {
+    const emoji = await getFruit(f);
+    log(emoji);
+  }
+};
+
+// OR
+
+const fruitLoop = async () => {
+  // you can use 'await' within the loop declaration
+  for await (const emoji of smoothie) {
+    log(emoji);
+  }
+};
+
+// OR
+
+const fruitInspection = async () => {
+  // await within conditionals
+  if ((await getFruit("peach")) === "Peach") {
+    console.log("Peaches rule.");
+  }
+};
+
+fruitLoop();
+```
