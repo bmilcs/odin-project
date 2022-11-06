@@ -7359,16 +7359,18 @@ A **promise** is an object that might produce a value at some point in the futur
 
 Real life example:
 
-  - Place an order at restaurant: cheeseburger, $1.47
-  - Placing order & paying: make request for a value back (cheeseburger)
-  - Receive Receipt w/ Order # (IOU promise), representing a future cheeseburger
-  - While waiting, you do other things: text friend, join me for lunch, I'm going to eat a cheeseburger
-    - Even though cheeseburger doesn't exist, the placeholder (future value) can used to reason about what to do next
+- Place an order at restaurant: cheeseburger, $1.47
+- Placing order & paying: make request for a value back (cheeseburger)
+- Receive Receipt w/ Order # (IOU promise), representing a future cheeseburger
+- While waiting, you do other things: text friend, join me for lunch, I'm going to eat a cheeseburger
 
-    **Outcomes:** Success or Failure
-  - Receive cheeseburger, swap future value for the value itself: value-promise > value
-  - Cashier: "No cheeseburgers are available"
-  - Everytime I order a cheeseburger, I'll get a cheeseburger or notice that one isn't available, requiring another plan
+  - Even though cheeseburger doesn't exist, the placeholder (future value) can used to reason about what to do next
+
+  **Outcomes:** Success or Failure
+
+- Receive cheeseburger, swap future value for the value itself: value-promise > value
+- Cashier: "No cheeseburgers are available"
+- Everytime I order a cheeseburger, I'll get a cheeseburger or notice that one isn't available, requiring another plan
 
 > Problematic: Unless we tell our code that it takes time to fetch data, it happens instantly
 
@@ -7724,7 +7726,7 @@ api.openweathermap.org/data/2.5/weather?q=London
 
 [Specifics can be found in OpenWeatherMap's API Documentation](https://openweathermap.org/current)
 
-APIs usually require that you create an account & request an **API Key**. 
+APIs usually require that you create an account & request an **API Key**.
 
 Every request made to the API will require the API key as another parameter in the URL query:
 
@@ -7753,4 +7755,150 @@ Because your API key is **your** key, **securing them is important -- especially
 
 Bots automatically crawl through GitHub repos solely for hardcoded/unsecured API keys.
 
-  - Allowing **bad agents** to access/utilize services/data you've paid for.
+- Allowing **bad agents** to access/utilize services/data you've paid for.
+
+### Fetching Data
+
+A few years ago, the main way to access API data was using an `XMLHttpRequest`.
+
+> Still works, but is painful:
+
+```js
+// Just getting XHR is a mess!
+if (window.XMLHttpRequest) {
+  // Mozilla, Safari, ...
+  request = new XMLHttpRequest();
+} else if (window.ActiveXObject) {
+  // IE
+  try {
+    request = new ActiveXObject("Msxml2.XMLHTTP");
+  } catch (e) {
+    try {
+      request = new ActiveXObject("Microsoft.XMLHTTP");
+    } catch (e) {}
+  }
+}
+
+// Open, send.
+request.open("GET", "https://url.com/some/url", true);
+request.send(null);
+```
+
+Developers began writing 3rd party libraries to make it easier: **axios** and **superagent**.
+
+Recently, web browsers began to implement a new _native function_ for making HTTP requests: `fetch`!
+
+> Fetch uses promises!
+
+```js
+// URL (required), options (optional)
+fetch("https://url.com/some/url")
+  .then(function (response) {
+    // Successful response :)
+  })
+  .catch(function (err) {
+    // Error :(
+  });
+```
+
+`fetch` uses `.then()` and `.catch()`, because it uses promises.
+
+### CORS
+
+**CORS**: Cross Origin Resource Sharing
+
+For security reasons & by default, browsers **restrict HTTP requests to outside sources.** This is exactly what we're trying to achieve with APIs.
+
+In order to use `fetch`, you need to supply a JavaScript options object and include `mode: 'cors'`.
+
+```js
+fetch("url.url.com/api", {
+  mode: "cors",
+});
+```
+
+CORS protects the internet from evil hackers. For many years, a script from one site could not access the content of another site.
+
+There are two types of cross-origin requests:
+
+1. Safe requests
+2. All the others
+
+Safe requests satisfy 2 conditions:
+
+1. Safe method: `GET` `POST` `HEAD`
+2. Safe headers:
+   - `Accept`
+   - `Accept-Language`
+   - `Content-Language`
+   - `Content-Type`
+     - Values: `application/x-www-form-urlencoded`, `multipart/form-data`, `text/plain`
+
+All other request is considered "unsafe". For example: `PUT` method or w/ an `API-Key` HTTP-header does not fit the limitations.
+
+**CORS for safe requests**
+
+- CORS: Mechanism that allows restricted resources on a webpage to be requested from another domain _outside the domain_ from which the first resource was served.
+- CORS defines how browser/servers can interact to determine whether it is safe to allow cross-origin requests
+
+### Fetch API Example
+
+Use the GIFFY API to retrieve & display a GIF assignment:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="#" />
+    <input type="text" id="searchterm" />
+    <button>New Image</button>
+    <script>
+      const img = document.querySelector("img");
+      const btn = document.querySelector("button");
+      const searchInput = document.querySelector("input");
+      const renderImg = () => {
+        let searchTerm = searchInput.value.trim().replace(/\s+/gi, "%20");
+        if (!searchTerm) searchTerm = "cat";
+        fetch(
+          `https://api.giphy.com/v1/gifs/translate?api_key=XXXXXXXXXXXX&s=${searchTerm}`,
+          { mode: "cors" }
+        )
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (response) {
+            const newUrl = response.data.images.original.url;
+            if (newUrl === img.src) renderImg();
+            else img.src = response.data.images.original.url;
+          })
+          .catch((e) => {
+            console.log(`Error! "${e}"`);
+          });
+      };
+      btn.addEventListener("click", (e) => {
+        renderImg();
+      });
+      renderImg();
+    </script>
+  </body>
+</html>
+```
+
+### Free API Lists
+
+1. [Public APIs](https://github.com/n0shake/Public-APIs)
+2. [Public APIs](https://github.com/public-apis/public-apis)
