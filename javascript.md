@@ -7902,3 +7902,169 @@ Use the GIFFY API to retrieve & display a GIF assignment:
 
 1. [Public APIs](https://github.com/n0shake/Public-APIs)
 2. [Public APIs](https://github.com/public-apis/public-apis)
+
+## Async & Async Await
+
+Asynchronous code can become difficult to follow when it has a lot of things going on.
+
+`async` and `await`are two keywords that make asynchronous read more like synchronous code.
+
+- Helps code look cleaner, while retaining benefits of async code
+
+> Two examples of getting info from a server & returning a promise:
+
+```js
+// Standard promise
+function getPersonsInfo(name) {
+  return server.getPeople().then((people) => {
+    return people.find((person) => {
+      return person.name === name;
+    });
+  });
+}
+
+// Appears like synchronous code, using async/await
+async function getPersonsInfo(name) {
+  const people = await server.getPeople();
+  const person = people.find((person) => {
+    return person.name === name;
+  });
+  return person;
+}
+```
+
+### `async` keyword
+
+`async` keyword lets the JS engine know that you're declaring an asynchronous function.
+
+- Requireds `await` inside the function
+- Functions declared w/ `async` **automatically return a promise**
+- `Return` within an `async` function is the same as **resolving a promise**.
+- Throwing an error will **reject the promise**.
+
+Async functions are just syntactical sugar for promises.
+
+- Can be used with any other ways of creating functions:
+
+```js
+const myAsyncFunction = async () => {
+  // do something async & return promise
+  return results;
+};
+```
+
+```js
+myArray.forEach(async (item) => {
+  // do something async for each item in array
+});
+myArray.map(async (item) => {
+  // return array of promises
+});
+```
+
+```js
+server.getPeople().then(async (people) => {
+  people.forEach((person) => {
+    // do something async for each person
+  });
+});
+```
+
+### `await` Keyword
+
+`await` is pretty simple:
+
+- tells JS to wait for an async action to finish before continuing the function
+- "pause until done"
+
+Await is used to get a value from a function where you would normally use `.then()`.
+
+Instead of calling `then()` after the async function:
+
+- Assign a variable to the result using `await`
+- Result can be used as if you're writing synchronous code
+
+### Error handling
+
+Handling errors in `async` functions is very easy.
+
+- Promises use the `.catch()` method for handling rejected promises.
+- Async functions return a promise, so `.catch()` is used.
+
+```js
+asyncFunctionCall().catch((err) => {
+  console.log(err);
+});
+```
+
+Another way of handling errors: the `try/catch` block.
+
+```js
+async function getPersonsInfo(name) {
+  try {
+    const people = await server.getPeople();
+    const person = people.find((person) => {
+      return person.name === name;
+    });
+    return person;
+  } catch (error) {
+    // error handle me!
+  }
+}
+```
+
+`try/catch` may look messy, but it's a very easy way to handle errors without using `.catch()` method.
+
+### Converting Promises GIPHY example to Async/Await
+
+> Promises:
+
+```js
+const img = document.querySelector("img");
+fetch("https://api.giphy.com/v1/gifs/translate?api_key=YOUR_KEY_HERE&s=cats", {
+  mode: "cors",
+})
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (response) {
+    img.src = response.data.images.original.url;
+  });
+```
+
+`await` doesn't work on the **global scope.** It requires an `async` function.
+
+```js
+const img = document.querySelector("img");
+
+async function getCats() {
+  fetch(
+    "https://api.giphy.com/v1/gifs/translate?api_key=YOUR_KEY_HERE&s=cats",
+    { mode: "cors" }
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (response) {
+      img.src = response.data.images.original.url;
+    });
+}
+```
+
+From there, the code can be refactored to use `await` instead of `.then()`:
+
+```js
+const img = document.querySelector("img");
+
+async function getCats() {
+  const response = await fetch(
+    "https://api.giphy.com/v1/gifs/translate?api_key=YOUR_KEY_HERE&s=cats",
+    { mode: "cors" }
+  );
+  const catData = await response.json();
+  img.src = catData.data.images.original.url;
+}
+getCats();
+```
+
+Remember: `async/await` are just **promises**, written in a different way.
