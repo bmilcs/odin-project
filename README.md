@@ -10,13 +10,13 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 ### JavaScript
 
-| Project                 | URL                                                         | Source Code                                               |
-| :---------------------- | :---------------------------------------------------------- | :-------------------------------------------------------- |
-| **#12 Weather App**     | [Live Demo](https://bmilcs.github.io/odin-weather-app/)     | [GitHub](https://github.com/bmilcs/odin-weather-app)      |
-| **#11 Todo List**       | [Live Demo](https://bmilcs.github.io/odin-todo-list/)       | [GitHub](https://github.com/bmilcs/odin-todo-list)        |
-| **#10 Restaurant Page** | [Live Demo](https://bmilcs.github.io/odin-restaurant-page/) | [GitHub](https://github.com/bmilcs/odin-restqaurant-page) |
-| **#9 Tic Tac Toe**      | [Live Demo](https://bmilcs.github.io/odin-tic-tac-toe/)     | [GitHub](https://github.com/bmilcs/odin-tic-tac-toe)      |
-| **#8 Library**          | [Live Demo](https://bmilcs.github.io/odin-library/)         | [GitHub](https://github.com/bmilcs/odin-library)          |
+| Project                 | URL                                                         | Source Code                                              |
+| :---------------------- | :---------------------------------------------------------- | :------------------------------------------------------- |
+| **#12 Weather App**     | [Live Demo](https://bmilcs.github.io/odin-weather-app/)     | [GitHub](https://github.com/bmilcs/odin-weather-app)     |
+| **#11 Todo List**       | [Live Demo](https://bmilcs.github.io/odin-todo-list/)       | [GitHub](https://github.com/bmilcs/odin-todo-list)       |
+| **#10 Restaurant Page** | [Live Demo](https://bmilcs.github.io/odin-restaurant-page/) | [GitHub](https://github.com/bmilcs/odin-restaurant-page) |
+| **#9 Tic Tac Toe**      | [Live Demo](https://bmilcs.github.io/odin-tic-tac-toe/)     | [GitHub](https://github.com/bmilcs/odin-tic-tac-toe)     |
+| **#8 Library**          | [Live Demo](https://bmilcs.github.io/odin-library/)         | [GitHub](https://github.com/bmilcs/odin-library)         |
 
 ### Intermediate HTML and CSS
 
