@@ -202,3 +202,38 @@ const Formatter = (function () {
 
 Formatter.writeToDOM("#target", "Hi there");
 ```
+
+## Traversing Objects
+
+Recursion example: check if a value exists within an object.
+
+```js
+// search js object
+
+function contains(obj, value) {
+  // loop through all keys
+  for (const key in obj) {
+    if (typeof objKey === "object") {
+      return contains(objKey, value);
+    }
+
+    if (obj[key] === value) return true;
+    return false;
+  }
+}
+
+var nestedObject = {
+  data: {
+    info: {
+      stuff: {
+        thing: {
+          moreStuff: {
+            magicNumber: 44,
+            something: "foo2",
+          },
+        },
+      },
+    },
+  },
+};
+```

@@ -58,7 +58,7 @@ function countDownRecursive(n) {
 //   return
 // return
 
-countDownRecursive(3);
+// countDownRecursive(3);
 
 const tree = {
   name: "John",
@@ -170,3 +170,148 @@ function power(base, exponent) {
 
 // console.log(power(2, 4));
 // console.log(power(2, 3));
+
+function factorial(n) {
+  if (n === 1) return 1;
+  return n * factorial(n - 1);
+}
+
+// console.log(factorial(5));
+
+function all(array, callback) {
+  // return array.some(callback);
+  let copy = array.slice();
+
+  if (array.length === 0) return true;
+
+  if (callback(copy[0])) {
+    copy.shift(); // remove 1st element
+    return all(copy, callback);
+  } else return false;
+}
+
+var allAreLessThanSeven = all([1, 2, 9], function (num) {
+  return num < 10;
+});
+
+// console.log(allAreLessThanSeven);
+
+// function productOfArray(array, product = 1) {
+//   if (array.length === 0) return product;
+//   return productOfArray(array, product * array.pop());
+// }
+
+function productOfArray(array) {
+  if (array.length === 0) return 1;
+  return array.shift() * productOfArray(array);
+}
+
+var six = productOfArray([1, 2, 3]); // 6
+var sixty = productOfArray([1, 2, 3, 10]); // 60
+
+// console.log(six);
+// console.log(sixty);
+
+//-----------------------------------
+// search js object
+//  if it contains a value, return true
+
+function contains(obj, value) {
+  // loop through all keys
+  for (const key in obj) {
+    if (typeof objKey === "object") {
+      return contains(objKey, value);
+    }
+
+    if (obj[key] === value) return true;
+    return false;
+  }
+}
+
+var nestedObject = {
+  data: {
+    info: {
+      stuff: {
+        thing: {
+          moreStuff: {
+            magicNumber: 44,
+            something: "foo2",
+          },
+        },
+      },
+    },
+  },
+};
+
+// console.log(contains(nestedObject));
+
+let hasIt = contains(nestedObject, 44); // true
+let doesntHaveIt = contains(nestedObject, "foo"); // false
+
+// ----------------------------------
+// parse multi-dimensional array
+// ----------------------------------
+
+function totalIntegers(array) {
+  if (array.length === 0) return 0;
+
+  let total = 0;
+  let first = array.shift();
+
+  if (Array.isArray(first)) {
+    total += totalIntegers(first);
+  } else if (Number.isInteger(first)) {
+    total += 1;
+  }
+
+  return total + totalIntegers(array);
+}
+
+const seven = totalIntegers([[[5], 3], 0, 2, ["foo"], [], [4, [5, 6]]]); // 7
+// console.log(seven);
+
+// ----------------------------------
+// Sums squares of umbers in list, which may contain more lists
+// ----------------------------------
+
+function SumSquares(arr) {
+  if (arr.length === 0) return 0;
+
+  let total = 0;
+  let first = arr.shift();
+
+  if (Array.isArray(first)) {
+    total += SumSquares(first);
+  } else if (Number.isInteger(first)) {
+    total += first * first;
+  }
+
+  return total + SumSquares(arr);
+}
+
+var l = [1, 2, 3];
+// console.log(SumSquares(l)); // 1 + 4 + 9 = 14
+
+l = [[1, 2], 3];
+// console.log(SumSquares(l)); // 1 + 4 + 9 = 14
+
+l = [[[[[[[[[1]]]]]]]]];
+// console.log(SumSquares(l)); // 1 = 1
+
+l = [10, [[10], 10], [10]];
+// console.log(SumSquares(l)); // 100 + 100 + 100 + 100 = 400
+
+//
+// return array containing reptitions of the number arg
+// replicate(3,5) = 5,5,5
+// negative = return empty array
+//
+
+console.log(replicate(3, 5)); // [5, 5, 5]
+console.log(replicate(1, 69)); // [69]
+console.log(replicate(-2, 6)); // []
+
+function replicate(reps, num) {
+  if (reps <= 0) return [];
+  return [num].concat(replicate(reps - 1, num));
+}
