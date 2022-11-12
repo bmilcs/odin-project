@@ -8218,3 +8218,238 @@ const fruitInspection = async () => {
 
 fruitLoop();
 ```
+
+## Computer Science
+
+**Algorithm**: Method of solving problems
+
+- Step by step instructions
+
+**Pseudo-code**: English-like way to state an algorithm
+
+```
+- input user for a number
+- multiply number by itself & store value in a variable squared
+- print squared output
+```
+
+### Recursion
+
+Recursion: A function that calls itself.
+
+- Recursion **step**: when function calls itself
+- **Basis** of recursion: function arguments that make the task so simple no further calls are needed.
+
+It is used to take a big problem and break it down into smaller & smaller pieces: **Divide & Conquer**. It continues to feed the solution _back into the original function_, until some sort of answer is achieved and the whole chain unwinds.
+
+**Divide and Conquer Algorithms** (D&C)
+
+- D&C is based on **multi-branched recursion**
+- Recursively breaks down a problem into two or more sub-problems of the same/related type, until they become simple enough to be solved directly.
+- Sub-problems are combined to give a solution to the original problem
+
+Recursion should be used selectively:
+
+- Any problem that recursion solves can also be done with **iterators** that you know & love
+- If you find yourself saying, "Why not use a `while` loop here?", you probably should have
+- Some problems break down into **far too many pieces** & totally overwhelm your computer's memory. _There's a balance._
+
+#### Execution Context & Stack
+
+Functions execute and the information about their processes is stored in its **execution context**.
+
+Execution context:
+
+- internal data structure
+- contains details about the execution of a function
+  - where control flow currently is
+  - current variables
+  - value of `this`
+  - few other internal details
+
+Each function has a single execution control associated with it.
+
+When a function makes a **nested call**:
+
+- current function is paused
+- execution context of current function is stored in `execution context stack`
+- nested call executes
+- old execution context is retrieved from the stack
+- outer function is resumed where it stopped
+
+#### Recursive Traversals
+
+```js
+let company = {
+  sales: [
+    {
+      name: "John",
+      salary: 1000,
+    },
+    {
+      name: "Alice",
+      salary: 1600,
+    },
+  ],
+
+  development: {
+    sites: [
+      {
+        name: "Peter",
+        salary: 2000,
+      },
+      {
+        name: "Alex",
+        salary: 1800,
+      },
+    ],
+
+    internals: [
+      {
+        name: "Jack",
+        salary: 1300,
+      },
+    ],
+  },
+};
+```
+
+- Two departments
+- Development department is split into subdepartments
+  - `sites` & `internals`
+- When department grows, it can be further split in subsubdepartments
+  - `siteA` and `siteB`
+
+**Goal**: Function that sums ALL of the salaries
+
+Iterative approach to this would **not be easy**, because the structure is not simple and would require nested subloops.
+
+Recursive approach:
+
+- 1. Simple department w/ array of people
+  - Sum salaries in simple loop
+- 2. An object, with `N` subdepartments
+  - Make `N` recursive calls, to get sum for each of the subdeps
+  - Combine results
+
+1st case: **Base of recursion** - trivial case
+
+2nd case: Object is the **recursive step**.
+
+```js
+let company = {
+  // the same object, compressed for brevity
+  sales: [
+    { name: "John", salary: 1000 },
+    { name: "Alice", salary: 1600 },
+  ],
+  development: {
+    sites: [
+      { name: "Peter", salary: 2000 },
+      { name: "Alex", salary: 1800 },
+    ],
+    internals: [{ name: "Jack", salary: 1300 }],
+  },
+};
+
+// The function to do the job
+function sumSalaries(department) {
+  if (Array.isArray(department)) {
+    // case (1)
+    return department.reduce((prev, current) => prev + current.salary, 0); // sum the array
+  } else {
+    // case (2)
+    let sum = 0;
+    for (let subdep of Object.values(department)) {
+      sum += sumSalaries(subdep); // recursively call for subdepartments, sum the results
+    }
+    return sum;
+  }
+}
+```
+
+#### Recursive Structures
+
+Recursively defined data structures are data structures that can be defined using itself.
+
+- **Linked Lists**
+
+Example: store an ordered list of objects
+
+```js
+let arr = [obj1, obj2, obj3];
+```
+
+'Delete element' and 'insert element' operations are **expensive**. `unshift()` has to _renumber_ all elements to make room for a new `obj`. If the array is big, it takes time. Same w/ `shift()`.
+
+Only structural modifications that **do not require mass-renumbering** are those that operate with the _end of th array_: `push` and `pop`.
+
+Alternatively, if fast insertion/deletion is needed, **linked list** is another good choice.
+
+Linked lists is recursively defined as an object with:
+
+- `value`
+- `next` property referencing _next linked list_ or `null` (if its the end)
+
+```js
+let list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {
+        value: 4,
+        next: null,
+      },
+    },
+  },
+};
+
+// Alternative code:
+let list = { value: 1 };
+list.next = { value: 2 };
+list.next.next = { value: 3 };
+list.next.next.next = { value: 4 };
+list.next.next.next.next = null;
+
+// List can easily be split into multiple parts
+let secondList = list.next.next;
+list.next.next = null;
+
+// and later joined back:
+list.next.next = secondList;
+```
+
+To prepend a new value, we need to update the _head of the list_:
+
+```js
+let list = { value: 1 };
+list.next = { value: 2 };
+list.next.next = { value: 3 };
+list.next.next.next = { value: 4 };
+
+// prepend the new value to the list
+list = { value: "new item", next: list };
+```
+
+To remove a value from the middle, change `next` to the previous one:
+
+```js
+list.next = list.next.next;
+```
+
+Unlike arrays, there's **no mass-renumbering** & we can easily rearrange elements.
+
+Lists are not _always_ better than arrays, otherwise no one would use arrays.
+
+Main drawback: **can't** easily access an element by it's number
+
+- ie: `arr[n]` a direct reference
+- in a list, you need to start from item #1 and go `next` `N` times to get the Nth element.
+
+Lists can be enhanced:
+
+- `prev` property to go backwards
+- `tail` to reference last element in the list
+  - update it when adding/removing elements from end
