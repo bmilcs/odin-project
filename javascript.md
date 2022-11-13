@@ -8453,3 +8453,27 @@ Lists can be enhanced:
 - `prev` property to go backwards
 - `tail` to reference last element in the list
   - update it when adding/removing elements from end
+
+### Data Structures
+
+Data structures: Storing data in a way that meets the needs of your particular application.
+
+- **Giant Array**: Time consuming to locate a specific value, if you had a significantly large number & depth of items
+
+Alternative data structures typically have trade-offs:
+
+- How long it takes to first populate it
+- How long it takes to add/find elements
+- How large the structure is in memory
+
+Structures & strategies are relevant when:
+
+- trying to search through large batch of data for a single value
+- plan out a strategy several moves in advance
+
+Common algorithms:
+
+- Sorting
+- Searching\*
+
+When **searching through enormous data sets**, the _quality of your search algorithm_ is incredibly important and milliseconds _count_.
