@@ -205,6 +205,61 @@ function postorder(rootNode) {
 }
 ```
 
+### Is Binary Tree a Binary SEARCH Tree
+
+A binary search tree requires that all left nodes are less than the root node and all right nodes are greater than the root node.
+
+Algorithm:
+
+```js
+node = {
+  data,
+  nodeLeft,
+  nodeRight,
+};
+
+function isBinarySearchTree(rootNode) {
+  // base case
+  if (rootNode === null) return;
+
+  if (
+    isSubtreeLesser(rootNode.leftNode, rootNode.data) &&
+    isSubtreeGreater(rootNode.rightNode, rootNode.data) &&
+    isBinarySearchTree(rootNode.leftNode) &&
+    isBinarySearchtree(rootNode.rightNode)
+  )
+    return true;
+  return false;
+}
+
+function isSubtreeLesser(rootNode, value) {
+  // base case
+  if (root === NULL) return true;
+
+  if (
+    rootNode.data <= value &&
+    isSubtreeLesser(rootNode.leftNode, value) &&
+    isSubtreeLesser(rootNode.rightNode, value)
+  )
+    return true;
+  return false;
+}
+
+function isSubtreeGreater(rootNode, value) {
+  // base case
+  if (root === NULL) return true;
+
+  if (
+    rootNode.data > value &&
+    isSubtreeGreater(rootNode.leftNode, value) &&
+    isSubtreeGreater(rootNode.rightNode, value)
+  ) {
+    return true;
+  }
+  return false;
+}
+```
+
 ## Stacks & Queues
 
 **Stack**: Can only add/remove from top of stack
