@@ -44,3 +44,113 @@ const mergeSort = (array) => {
   return merge(mergeSort(left), mergeSort(array));
 };
 ```
+
+## Binary Search
+
+Binary Search is a divide & conquer algorithm for searching an array.
+
+- Requires a **sorted** array
+- Reduces search area by half each time
+
+Best case: `O 1`
+Worst case: `log n`
+
+Instructions:
+
+- Repeat until subarray is size 0 (base case)
+  - When start point > end point
+- Calculate mid point of current array
+- If search target = midpoint, stop
+- If target < midpoint, repeat, changing end point to be just left of middle
+- If target > midpoint, repeat, start point to be just right of the middle
+
+Information needed:
+
+- Target
+- Start point
+- End point
+- Mid point
+
+## Binary Search Tree
+
+![Binary Search Tree](./img/algo-binary-search-tree.png)
+
+Root node
+
+- If less than root node, the next number goes to left
+- If more than root node, the next number goes to right
+- If equal to root node, the next number goes to right
+  - Equal to = greats treated as "not less than"
+
+## Binary Tree Traversal
+
+Binary tree traversal is:
+
+- Process of visiting each node in the tree
+- Exactly once
+- In some order
+
+> Visiting: Reading & processing data in a node
+
+Binary tree's are not a linear data structure.
+
+From each node, there are 2 possible directions you can travel.
+
+Tree traversal can be classified by two categories:
+
+              A
+            /   \
+          D       J
+         / \     / \
+        B   E   G   K
+       / \       \
+      A   C       I
+                 /
+                H
+
+- **Breadth-first**:
+
+  - Visit all nodes at the current level
+  - Level order
+  - Queue: A, D, J, B, E, G, K, A, C, I, H
+
+- **Depth-first**:
+  - Visit all children of a given path
+  - Stack: A, D, B, A, C, E, J, G, I, H, K
+  - Preorder: Root, Left, Right
+    - Data, L, R
+  - Inorder: Left, Root, Right
+    - L, Data, R
+  - Postorder: Left, Right, Root
+    - L, R, Data
+
+## Stacks & Queues
+
+**Stack**: Can only add/remove from top of stack
+
+- Elements are sorted by **insertion order**
+- Last element in is first out (**LIFO**)
+- Elements have no index
+- Can only add/remove from the top
+
+Undo button
+Back/Forward in web browser
+
+_Stack of books_
+
+- Add book to the top of the pile
+- Remove book from the top of the pile
+
+**Queues**: Front & back
+
+- Elements are sorted by **insertion order**
+- First element in is first out (**FIFO**)
+- Elements have no index
+- Can only add to back (enqueue) & remove from the front (dequeue)
+
+- **Enqueue**: Add to back
+- **Dequeue**: Remove from front
+
+Queues are good for managing resources, such as a print queue or web site access.
+
+- The person who's been waiting the longest goes first
