@@ -108,21 +108,102 @@ Tree traversal can be classified by two categories:
                  /
                 H
 
-- **Breadth-first**:
+### **Breadth-first** (Level-order)
 
-  - Visit all nodes at the current level
-  - Level order
-  - Queue: A, D, J, B, E, G, K, A, C, I, H
+![Breadth-First Binary Tree Traversal](./img/algo-breadth-first-traversal.png)
 
-- **Depth-first**:
-  - Visit all children of a given path
-  - Stack: A, D, B, A, C, E, J, G, I, H, K
-  - Preorder: Root, Left, Right
-    - Data, L, R
-  - Inorder: Left, Root, Right
-    - L, Data, R
-  - Postorder: Left, Right, Root
-    - L, R, Data
+- Visit all nodes at the current level
+- Queue: A, D, J, B, E, G, K, A, C, I, H
+
+Time complexity: `O(n)`
+Space complexity:
+
+- Best: `O(1)`
+- Worst: `O(n)`
+- Avg: `O(n)`
+
+Algorithm pseudo-code:
+
+```js
+// data structure
+node = {
+  data
+  leftChild
+  rightChild
+}
+
+function levelOrder(rootNode) {
+  if (rootNode === null) return;
+    queueArr.push(rootNode);
+    while (queue is not empty) {
+      currentNode = queueArr[queueArr.length-1];
+      console.log(currentNode);
+      if (currentNode.leftChild !== null) queueArr.push(currentNode.leftChild);
+      if (currentNode.rightChild !== null) queueArr.push(currentNode.rightChild);
+      queueArr.pop(); // remove last element
+    }
+
+}
+
+```
+
+### **Depth-first** (One Side)
+
+![Depth First Binary Tree Traversal](./img/algo-depth-first-traversal.png)
+
+- Visit all children of a given path
+- Stack: A, D, B, A, C, E, J, G, I, H, K
+- Preorder:
+  - Root, Left, Right
+  - Data, L, R
+- Inorder
+  - Left, Root, Right
+  - L, Data, R
+- Postorder:
+  - Left, Right, Root
+  - L, R, Data
+
+Time Complexity: `O(n)`
+Space Complexity: `O(h)` height of tree
+
+- Worst: `O(n)`
+- Best: `O(log n)`
+- Avg: `O(log n)`
+
+```js
+Node = {
+  data,
+  leftNode,
+  rightNode,
+};
+
+// preorder: D, L, R
+function preorder(rootNode) {
+  if (rootNode === null) return;
+
+  console.log(rootNode.data);
+  preorder(rootNode.leftNode);
+  preorder(rootNode.rightNode);
+}
+
+// inorder: L, D, R
+function inorder(rootNode) {
+  if (rootNode === null) return;
+
+  inorder(rootNode.left);
+  console.log(rootNode.data);
+  inorder(rootNode.rightNode);
+}
+
+// postorder: L, R, D
+function postorder(rootNode) {
+  if (rootNode === null) return;
+
+  postorder(rootNode.leftNode);
+  postorder(rootNode.rightNode);
+  console.log(rootNode.data);
+}
+```
 
 ## Stacks & Queues
 
