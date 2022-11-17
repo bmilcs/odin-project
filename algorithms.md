@@ -75,12 +75,20 @@ Information needed:
 
 ![Binary Search Tree](./img/algo-binary-search-tree.png)
 
-Root node
+Binary Search Tree Ground Rules:
 
-- If less than root node, the next number goes to left
-- If more than root node, the next number goes to right
-- If equal to root node, the next number goes to right
-  - Equal to = greats treated as "not less than"
+1. Parent nodes have, **at most**, 2 child nodes.
+2. Left child node is **always** less than parent node.
+3. Right child is **always** greater than or equal to parent node.
+
+Creating a binary search tree from an array:
+
+`[10, 7, 14, 20, 1, 5, 8]`
+
+1. Set root node: `10`
+2. All remaining values will be **children of the root node**
+   - If less than root node, the next number goes to left
+   - If equal to OR greater than root node, the next number goes to right
 
 ## Binary Tree Traversal
 
