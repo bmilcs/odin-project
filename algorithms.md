@@ -96,7 +96,11 @@ Binary tree's are not a linear data structure.
 
 From each node, there are 2 possible directions you can travel.
 
-Tree traversal can be classified by two categories:
+Tree traversal can be classified by two categories: breadth-first (level-order) and depth-first.
+
+### **Breadth-first** (Level-order)
+
+![Breadth-First Binary Tree Traversal](./img/algo-breadth-first-traversal.png)
 
               A
             /   \
@@ -107,10 +111,6 @@ Tree traversal can be classified by two categories:
       A   C       I
                  /
                 H
-
-### **Breadth-first** (Level-order)
-
-![Breadth-First Binary Tree Traversal](./img/algo-breadth-first-traversal.png)
 
 - Visit all nodes at the current level
 - Queue: A, D, J, B, E, G, K, A, C, I, H
