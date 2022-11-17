@@ -260,7 +260,7 @@ function isSubtreeGreater(rootNode, value) {
 }
 ```
 
-## Stacks & Queues
+## Stacks
 
 **Stack**: Can only add/remove from top of stack
 
@@ -269,13 +269,43 @@ function isSubtreeGreater(rootNode, value) {
 - Elements have no index
 - Can only add/remove from the top
 
-Undo button
-Back/Forward in web browser
-
 _Stack of books_
 
 - Add book to the top of the pile
 - Remove book from the top of the pile
+
+Real life examples:
+
+- Undo button
+- Back/Forward in web browser
+
+![Stacks Summary](./img/algo-stacks.png)
+
+Stacks have two functions:
+
+- `Push`: Add to top of stack
+  - Look for pointer
+  - Push item there
+  - Move pointer up +1
+- `Pop`: Remove top most item
+  - Move pointer down -1
+  - Remove element
+
+Error Conditions:
+
+- Pushing to a full stack
+  - If pointer is at `n` (array size) or greater
+  - Disable push
+- Popping from an empty stack
+  - If pointer points to element 0 (stack is empty)
+  - Disable pop
+
+Stacks require:
+
+- Array
+- Variable pointing to top of stack
+
+## Queues
 
 **Queues**: Front & back
 
@@ -284,9 +314,37 @@ _Stack of books_
 - Elements have no index
 - Can only add to back (enqueue) & remove from the front (dequeue)
 
-- **Enqueue**: Add to back
-- **Dequeue**: Remove from front
+![Queues Summary](./img/algo-queues.png)
+
+Queues have two functions:
+
+- **Enqueue**: Add to back (_offer_)
+- **Dequeue**: Remove from front (_poll_)
 
 Queues are good for managing resources, such as a print queue or web site access.
 
 - The person who's been waiting the longest goes first
+
+Basic Logic:
+
+- 2 Pointers: Front & Back
+  - Back pointer: points to next empty slot
+  - Front pointer: points to a number
+- Dequeue:
+  - Remove item @ front pointer location
+  - Move front pointer +1
+- Enqueue
+  - Add item to back pointer location
+  - Move pointer +1
+- Loop to beginning of array if end of array it reached
+  - Use Modulo: for array of size 5
+  - Position 4, use `(pointer + 1) % 5` => `5 % 5` becomes [0]
+
+Error Conditions:
+
+- Enqueue to a full queue
+  - To see if a queue is full, check if the back pointer is directly to the left of the front pointer
+  - Full: back=3, front=4
+- Dequeueing from an empty queue
+  - To see if a queue is empty, check if front pointer & back pointer are the same value
+  - Empty: back=0, front=0
