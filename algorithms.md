@@ -307,6 +307,10 @@ Stacks require:
 
 ## Queues
 
+Queues are good for managing resources, such as a print queue or web site access.
+
+- The person who's been waiting the longest goes first
+
 **Queues**: Front & back
 
 - Elements are sorted by **insertion order**
