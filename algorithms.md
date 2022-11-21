@@ -360,3 +360,87 @@ Error Conditions:
 - Dequeueing from an empty queue
   - To see if a queue is empty, check if front pointer & back pointer are the same value
   - Empty: back=0, front=0
+
+## Linked Lists
+
+Linked Lists are one of the most basic & fundamental data structures.
+
+- Similar to array
+- List elements can be easily inserted & removed **without reallocating other elements**
+- Allows us to dynamically allocate data
+
+Structure of a linked list:
+
+- Linear collection of data elements called **nodes**
+- **Nodes** point to the next node by means of a **pointer**
+- Each node holds:
+  - single element of data
+  - link/pointer to the next node in the list
+
+> A node only knows about what data it contains and who its neighbor is.
+
+**Head node**: first node in the list
+
+- Not a separate node
+- Reference to first node
+
+**Tail node**: last node in the list
+
+```js
+[ NODE(head) ] -> [ NODE ] -> [ NODE(tail) ] -> null
+```
+
+**Linear Data Structures**: there is a **sequence** and **an order** to how they are constructed and traversed.
+
+- Game of hopscotch
+  - In order to reach the end of the list, we need to go through all of the items in the list in order, or _sequentially_
+- Arrays
+
+**Non-linear Data Structures**: items don't need to be arranged in order. We can traverse the data structure _non-sequentially_.
+
+- Hashes (ie: dictionaries)
+
+## **Arrays Vs. Linked Lists**
+
+Main difference is how they _use memory._
+
+Dynamically typed languages (JS, Python, Ruby) don't require us to think about how much memory an array uses in our code
+
+- Layers of abstraction allow us to not worry about it
+- Abstraction: Hides away the real benefit of linked list and their power
+
+![Memory Useage: Array vs Linked List](./img/algo-linked-lists-vs-array-memory.jpeg)
+
+**Arrays**
+
+- require one contiguous block of memory
+- static data structure: require& all resources to be allocated when it's created
+- if it needs to be expanded, we need to copy the data or that array & recreate it with more memory in order to add more elements to it
+
+**Linked Lists**
+
+- don't need to be contiguous in memory and can grow dynamically
+- dynamic data structure
+- can grow and shrink with minimal effort: change a few pointer references
+
+## Types of Linked Lists
+
+![Linked List Types](./img/algo-linked-lists-types.jpeg)
+
+**Singly Linked Lists**: only go in one direction
+
+- Single track we can traverse in
+- Head node to the last node (null value)
+
+**Doubly Linked Lists**: can go in both directions
+
+- Two references within each node
+- Next node & previous node
+
+**Circular Linked Lists**: doesn't end with a node pointing to a null value.
+
+- Has a node that acts as the _tail_ of the list (rather than a head node)
+- Node after the tail is the beginning of the list
+- Easy to add something to end of list
+- Can begin traversing it at the tail node
+  - Because first & last element point to one another
