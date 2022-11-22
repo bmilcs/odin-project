@@ -8477,3 +8477,40 @@ Common algorithms:
 - Searching\*
 
 When **searching through enormous data sets**, the _quality of your search algorithm_ is incredibly important and milliseconds _count_.
+
+## Testing Basics
+
+Test Driven Development (TDD) is a **big deal** in modern development.
+
+- Start by writing automated tests
+- BEFORE writing code that is being tested
+
+Test-Running Systems in JavaScript:
+
+- Mocha
+- Jasmine
+- Tape
+- Jest
+
+> Syntax for all test running systems is very similar.
+
+Benefits:
+
+- Produces clean code that works (goal of TDD)
+- Forces us to think through requirements/design before writing functional code
+- Keeps you out of the debugger
+- Reduces bugs in new/existing features
+- Reduces cost of change
+- Improves design
+- Encourages refactoring
+- Builds a safety net to defend against other programmers
+- Is Fun
+- Speeds up development by eliminating waste
+- Reduces fear
+- Improves productivity
+- Helps devs maintain focus
+- Improves communication
+- Communicate design decisions
+- Loosely-coupled design
+
+**[WHY?](https://www.youtube.com/watch?v=Eu35xM76kKY&list=PL0zVEGEvSaeF_zoW9o66wa_UCNE3a7BEr&index=1)**
