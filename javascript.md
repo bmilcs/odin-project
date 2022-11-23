@@ -8641,7 +8641,7 @@ expect(() => compileAndroidCode()).toThrow();
 expect(() => compileAndroidCode()).toThrow(Error);
 ```
 
-## Mock Tests
+#### Mock Tests
 
 Running lots of tests to API's can become unfeasible: charging credit cards, etc.
 
@@ -8692,3 +8692,78 @@ it("no qty specified", () =>
     items: [{ name: "dragon candy", price: 3 }],
   }).then((result) => expect(result).toBe(3)));
 ```
+
+### More Testing
+
+Another important basic concept is **testing in isolation.** Only one method should be tested at a time and your tests should not depend on an external function behaving correctly --- especially if that function's being tested elsewhere.
+
+Main reason for testing in isolation:
+
+- When tests fail, you want to be able to narrow down the cause of this failure as quickly as possible
+- If a test depends on several functions, it can be difficult to tell what exactly is going wrong
+
+### Pure Functions
+
+Tightly coupled code is hard to test.
+
+For example:
+
+```js
+function guessingGame() {
+  const magicNumber = 22;
+  const guess = prompt("guess a number between 1 and 100!");
+  if (guess > magicNumber) {
+    alert("YOUR GUESS IS TOO BIG");
+  } else if (guess < magicNumber) {
+    alert("YOUR GUESS IS TOO SMALL");
+  } else if (guess == magicNumber) {
+    alert("YOU DID IT! 🎉");
+  }
+}
+```
+
+Making this testable requires splitting up **all the different things that are happening.** What we need to test is the number logic, which is much easier to untangle it:
+
+```js
+function evaluateGuess(magicNumber, guess) {
+  // * Only function that needs to be tested*
+  if (guess > magicNumber) {
+    return "YOUR GUESS IS TOO BIG";
+  } else if (guess < magicNumber) {
+    return "YOUR GUESS IS TOO SMALL";
+  } else if (guess == magicNumber) {
+    return "YOU DID IT! 🎉";
+  }
+}
+
+function guessingGame() {
+  const magicNumber = 22;
+  const guess = prompt("guess a number between 1 and 100!");
+  const message = evaluateGuess(magicNumber, guess);
+  alert(message);
+}
+
+guessingGame();
+```
+
+This implementation is much nicer:
+
+- Clear input
+- Clear output
+- Doesn't call any external functions
+- Easier to extend
+
+If this was written _with TDD_, it would have looked more like the 2nd example.
+
+**TDD encourages better program architecture** because it encourges us to write **PURE FUNCTIONS.**
+
+### Mocking
+
+Tightly coupled code has two solutions:
+
+1. Best\*: Remove those dependencies, as we did in example 2.
+2. **Mocking**: writing fake versions of a function that always behaves exactly how you want.
+
+Mocking example: testing a function that gets info from DOM input. You don't want to have to setup a webpage and dynamically insert something into the input just to run your tests.
+
+With a mock function, we can create a fake version of the input-grabbing that always returns a specific value --- and use THAT in your test.
