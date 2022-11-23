@@ -8767,3 +8767,7 @@ Tightly coupled code has two solutions:
 Mocking example: testing a function that gets info from DOM input. You don't want to have to setup a webpage and dynamically insert something into the input just to run your tests.
 
 With a mock function, we can create a fake version of the input-grabbing that always returns a specific value --- and use THAT in your test.
+
+_Too much mocking_ can be a bad thing. It is _sometimes_ necessary, but if you have to setup an elaborate system of mocks to test any bit of your code, that means **your code is too tightly coupled.**
+
+One thing you should NEVER do: **Share state between tests**.
