@@ -8227,11 +8227,9 @@ fruitLoop();
 
 **Pseudo-code**: English-like way to state an algorithm
 
-```
 - input user for a number
 - multiply number by itself & store value in a variable squared
 - print squared output
-```
 
 ### Recursion
 
@@ -8514,3 +8512,183 @@ Benefits:
 - Loosely-coupled design
 
 **[WHY?](https://www.youtube.com/watch?v=Eu35xM76kKY&list=PL0zVEGEvSaeF_zoW9o66wa_UCNE3a7BEr&index=1)**
+
+### Jest
+
+> installation
+
+```js
+npm i -D jest
+```
+
+```json
+// package.json
+"scripts": {
+  "test": "jest",
+  "watch": "jest --watch *.js",
+}
+```
+
+> tdd syntax with Jest
+
+```js
+// somefile.test.js
+it("description", () => {
+  expect(1).toBe(1); // pass
+});
+
+it("ordertotal, single item", () => {
+  expect(
+    orderTotal({
+      items: [{ name: "dragon candy", price: 2, quantity: 3 }],
+    }).toBe(6)
+  );
+});
+```
+
+> running jest
+
+```sh
+npm run test # single test
+npm run watch # continuous feedback loop
+```
+
+#### Common Matchers
+
+`.toBe()` uses `Object.is` to test exact equality.
+
+To check the value **of an object**, use `.toEqual()` or `toStrictEqual()` instead.
+
+- `toStrictEqual()` is _preferred_
+- `toEqual()` ignores undefined
+
+```js
+test("object assignment", () => {
+  const data = { one: 1 };
+  data["two"] = 2;
+  expect(data).toEqual({ one: 1, two: 2 });
+});
+```
+
+To test the inverse of something, add `.not` to the matcher:
+
+```js
+test("add positive numbers is not zero", () => {
+  for (let a = 1; a < 10; a++) {
+    for (let b = 1; b < 10; b++) {
+      expect(a + b).not.toBe(0);
+    }
+  }
+});
+```
+
+**Truthiness Matchers:**
+
+- `toBeNull`
+- `toBeUndefined`
+- `toBeDefined`
+- `toBeTruthy`
+- `toBeFalsy`
+
+**Numbers:**
+
+- `toBeGreaterThan`
+- `toBeGreaterThanOrEqual`
+- `toBeLessThan`
+- `toBeLessThanOrEqual`
+- `toBeCloseTo` \* floating point equality
+  - ie: `0.1 + 0.2` `.toBeCloseTo(0.3)`-- NOT `.toBe()`
+
+**Strings** Using Regex
+
+- `toMatch(/stop/)`
+
+```js
+test("there is no I in team", () => {
+  expect("team").not.toMatch(/I/);
+});
+
+test('but there is a "stop" in Christoph', () => {
+  expect("Christoph").toMatch(/stop/);
+});
+```
+
+**Arrays & Iterables**
+
+- `toContain`
+
+```js
+const shoppingList = [
+  "diapers",
+  "kleenex",
+  "trash bags",
+  "paper towels",
+  "milk",
+];
+
+test("the shopping list has milk on it", () => {
+  expect(shoppingList).toContain("milk");
+  expect(new Set(shoppingList)).toContain("milk");
+});
+```
+
+**Exceptions** Error Throwing
+
+To test if a function will throw an error: `.toThrow`
+
+```js
+expect(() => compileAndroidCode()).toThrow();
+expect(() => compileAndroidCode()).toThrow(Error);
+```
+
+## Mock Tests
+
+Running lots of tests to API's can become unfeasible: charging credit cards, etc.
+
+Examples: VAT (value added tax) varies based on the country. [VAT API](https://vatapi.com/).
+
+- Change thinking process
+-
+
+```js
+function orderTotal(fetch, order) {
+  fetch();
+  return Promise.resolve(
+    order.items.reduce((prev, cur) => cur.price * (cur.quantity || 1) + prev, 0)
+  );
+}
+
+module.exports = orderTotal;
+```
+
+```js
+//  sandbox.js
+const fetch = require("node-fetch");
+
+const result = fetch("vatapi.com/...")
+  .then((response) => response.json())
+  .then((data) => data.rates.standard.value);
+```
+
+> Change tests to expect a promise
+
+```js
+const orderTotal = require("./order-total");
+const emptyFunction = () => {};
+
+it("calls vatapi.com if country code specified", () => {
+  let isFakeFetchCalled = false;
+  const fakeFetch = (url) => {
+    isFakeFetchCalled = true;
+  };
+  orderTotal(fakeFetch, {
+    country: "DE",
+    items: [{ name: "dragon waffles", price: 20, quantity: 2 }],
+  }).then((result) => expect(isFakeFetchCalled).toBe(true));
+});
+
+it("no qty specified", () =>
+  orderTotal(emptyFunction, {
+    items: [{ name: "dragon candy", price: 3 }],
+  }).then((result) => expect(result).toBe(3)));
+```

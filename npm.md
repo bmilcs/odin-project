@@ -6,7 +6,8 @@
 npm install --save-dev \
   webpack webpack-cli webpack-dev-server webpack-merge \
   html-webpack-plugin style-loader css-loader sass-loader sass \
-  eslint eslint-config-prettier
+  eslint eslint-config-prettier \
+  jest
 npx install-peerdeps --dev eslint-config-airbnb-base
 ```
 
@@ -95,7 +96,8 @@ module.exports = merge(common, {
 
 ```json
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "watch": "jest --watch *.js",
     "build": "webpack --config webpack.prod.js",
     "start": "webpack serve --open --config webpack.dev.js"
   },
@@ -326,4 +328,46 @@ npm install --save-dev webpack-dev-server
 "scripts": {
   "start": "webpack serve --open",
 }
+```
+
+## Jest
+
+### Jest
+
+> installation
+
+```js
+npm i -D jest
+```
+
+```json
+// package.json
+"scripts": {
+  "test": "jest",
+  "watch": "jest --watch *.js",
+}
+```
+
+> tdd syntax with Jest
+
+```js
+// somefile.test.js
+it("description", () => {
+  expect(1).toBe(1); // pass
+});
+
+it("ordertotal, single item", () => {
+  expect(
+    orderTotal({
+      items: [{ name: "dragon candy", price: 2, quantity: 3 }],
+    }).toBe(6)
+  );
+});
+```
+
+> running jest
+
+```sh
+npm run test # single test
+npm run watch # continuous feedback loop
 ```
