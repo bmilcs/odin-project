@@ -8768,6 +8768,50 @@ Mocking example: testing a function that gets info from DOM input. You don't wan
 
 With a mock function, we can create a fake version of the input-grabbing that always returns a specific value --- and use THAT in your test.
 
+### [Why I use Tape Instead of Mocha & So Should You](https://medium.com/javascript-scene/why-i-use-tape-instead-of-mocha-so-should-you-6aa105d8eaf4)
+
 _Too much mocking_ can be a bad thing. It is _sometimes_ necessary, but if you have to setup an elaborate system of mocks to test any bit of your code, that means **your code is too tightly coupled.**
 
 One thing you should NEVER do: **Share state between tests**.
+
+Testing is NOT what you should spend most of your time doing.
+
+Test assertions (`.equal`, `.deepEqual`) should be **dead simple** and completely free of magic. WHY?
+
+- Provide quality info about expectations
+- Lead to concise test cases
+- Easy to read & maintain
+
+Test cases should be written just like a bug report:
+
+1. Describe the feature you're testing in plain English.
+2. Provide expected outcome.
+3. Compare expectation to the actual value.
+
+When a unit test fails, the _error message_ is your _bug report._
+
+- Your automated test error messages are your bug reports.
+
+Your test descriptions should be clear enough to use as documentation:
+
+```js
+import test from "tape";
+
+test("A passing test", (assert) => {
+  assert.pass("This test will pass.");
+  assert.end();
+});
+
+test("Assertions with tape.", (assert) => {
+  const expected = "something to test";
+  const actual = "sonething to test";
+
+  assert.equal(
+    actual,
+    expected,
+    "Given two mismatched values, .equal() should produce a nice bug report"
+  );
+
+  assert.end();
+});
+```
