@@ -922,3 +922,83 @@ Performance hits due to returning a new object
 Pure functions can be memoized: cache/save pre-calculated values in a lookup table.
 
 Pure functions allow you to safely distribute complex computations over large clusters of processors (divide & conquer).
+
+## _WHAT_ to test in your code base
+
+Incoming Messages > (Object Under Test > Messages Sent to Self) > Outgoing Messages
+
+Query Message
+
+- **Return something**
+- Change nothing
+
+Command:
+
+- Return nothing
+- **Change something**
+
+Command & queries are often used together: `queue.pop()`
+
+| Message      | Query          | Command                              |
+| ------------ | -------------- | ------------------------------------ |
+| Incoming     | Assert Results | Assert direct public side effects    |
+| Sent to Self | IGNORE         | IGNORE                               |
+| Outgoing     | IGNORE         | Expect to send (Mocks / test double) |
+
+**Incoming Query Messages**
+
+- Test **incoming query** messages by making _assertions_ about _what they send back_
+  - Gear Inches > `ratio * wheel.diameter`
+- Test the **interface** NOT the implementation
+
+**Incoming Command Messages**
+
+- Test **incoming command** messages by making _assertions_ about _direct public side effects_
+  - Create instance of an object
+  - Create a side effect
+  - Assert about the value of the side effect
+  - `gear = new Gear()` > `gear.set_cog(27)` > `assert(27, gear.cog)`
+
+**DRY It Out**
+
+_Receiver_ of incoming message has _sole responsibility_ for asserting _the result direct public side effects_
+
+**Messages Sent To Self**
+
+- DO NOT test _private_ methods
+- Do NOT make _assertions_ about their result
+- Do NOT _expect_ to send them
+- Caveat: Break rule if it saves **$$$** during development
+
+**Outgoing Query Message**
+
+- Same rules as sent to self
+- `gear_inches > GEAR > diameter (outgoing) > incoming query > WHEEL`
+
+If a message has no visible side-effects, the sender should NOT send it
+
+**Outgoing Command Message**
+
+- **Expect** to send outgoing command messages
+- Break rule if side effects are stable and cheap
+- Mocks: Honor the contract
+
+  - Ensure test doubles stay in sync with the API
+  - Further away & more expensive
+
+  gear_inches ----> GEAR
+  set_cog --------> \* outgoing, side effects
+
+  diameter -------> WHEEL
+
+  changed --------> OBS \* side effects
+
+**Summary**
+
+- Be a minimalist
+- Use good judgement
+- Test everything once
+- Test the interface
+- Trust collaborators
+- Insist on simplicity
+- Practice the tricks
