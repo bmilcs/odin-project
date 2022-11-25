@@ -3,12 +3,14 @@
 > npm packages
 
 ```sh
-npm install --save-dev \
-  webpack webpack-cli webpack-dev-server webpack-merge \
+npm install --save-dev webpack webpack-cli webpack-dev-server webpack-merge \
   html-webpack-plugin style-loader css-loader sass-loader sass \
-  eslint eslint-config-prettier \
-  jest
+  eslint prettier eslint-config-prettier eslint-plugin-prettier jest @babel/preset-env babel-jest
+  @babel/plugin-transform-modules-commonjs
 npx install-peerdeps --dev eslint-config-airbnb-base
+
+# setup eslint
+npx eslint --init
 ```
 
 > webpack.common.js
@@ -101,6 +103,37 @@ module.exports = merge(common, {
     "build": "webpack --config webpack.prod.js",
     "start": "webpack serve --open --config webpack.dev.js"
   },
+```
+
+> .prettierrc.json
+
+```json
+{
+  "singleQuote": true
+}
+```
+
+> .eslintrc.json
+
+```json
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["airbnb-base", "prettier"],
+  "plugins": ["prettier"],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "quotes": "off",
+    "no-console": 1
+  }
+}
 ```
 
 ## Original notes
@@ -208,6 +241,19 @@ template.html
 ```html
 <!-- page title -->
 <title><%= htmlWebpackPlugin.options.title %></title>
+```
+
+.babelrc
+
+```rc
+{
+  "presets": ["@babel/preset-env"],
+  "env": {
+  "test": {
+  "plugins": ["@babel/plugin-transform-modules-commonjs"]
+}
+}
+}
 ```
 
 ## CSS
