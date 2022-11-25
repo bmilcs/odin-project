@@ -923,6 +923,17 @@ Pure functions can be memoized: cache/save pre-calculated values in a lookup tab
 
 Pure functions allow you to safely distribute complex computations over large clusters of processors (divide & conquer).
 
+### Side Effects
+
+Side Effects include, but are not limited to:
+
+- Making HTTP Request
+- Mutating data
+- Printing to a screen or console
+- DOM query/manipulation
+- `Math.random()`
+- Getting current time
+
 ## _WHAT_ to test in your code base
 
 Incoming Messages > (Object Under Test > Messages Sent to Self) > Outgoing Messages
