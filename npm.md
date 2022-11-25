@@ -332,8 +332,6 @@ npm install --save-dev webpack-dev-server
 
 ## Jest
 
-### Jest
-
 > installation
 
 ```js
@@ -370,4 +368,70 @@ it("ordertotal, single item", () => {
 ```sh
 npm run test # single test
 npm run watch # continuous feedback loop
+```
+
+### [Jest with Webpack](https://jestjs.io/docs/webpack)
+
+```sh
+npm install --save-dev @babel/preset-env babel-jest
+```
+
+```rc
+<!-- .babelrc -->
+{
+  "presets": ["@babel/preset-env"]
+}
+```
+
+```js
+// jest.config.js
+module.exports = {
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js",
+    "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+  },
+};
+```
+
+```js
+// __mocks__/styleMock.js
+module.exports = {};
+```
+
+```js
+// __mocks__/fileMock.js
+module.exports = "test-file-stub";
+```
+
+**Mocking CSS Modules**
+
+```sh
+npm install --save-dev identity-obj-proxy
+```
+
+```js
+// jest.config.js | CSS MODULES
+module.exports = {
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+      "<rootDir>/__mocks__/fileMock.js",
+    "\\.(css|less)$": "identity-obj-proxy",
+  },
+};
+```
+
+**Configuring Jest to find our files**
+
+```js
+// jest.config.js
+module.exports = {
+  moduleFileExtensions: ["js", "jsx"],
+  moduleDirectories: ["node_modules", "bower_components", "shared"],
+
+  moduleNameMapper: {
+    "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+    "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
+  },
+};
 ```
