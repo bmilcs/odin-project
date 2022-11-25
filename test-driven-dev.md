@@ -340,6 +340,205 @@ If a test passes when it's alone but fails as part of a larger suite, **it's a g
 - Can often fix this by clearing a shared state with `beforeEach`
 - Can also use a `beforeEach` statement to log data
 
+### Jest Mock Functions
+
+Mock functions allow you to:
+
+- test links between code by erasing the actual implementation of a function
+- capturing calls to the function & the parameters
+- capturing instances of constructor functions when instantiated with `new`
+- test-time configuration of return values
+
+Two ways to mock functions:
+
+- Creating mock function to use in test code
+- Writing `manual mock` to override a module dependency
+
+> Example: testing a function `forEach` > invokes a callback on each item in an array
+
+```js
+function forEach(items, callback) {
+  for (let i = 0; i < items.length; i++) {
+    callback(items[i]);
+  }
+}
+```
+
+To test this function, we can use a mock function & inspect the mock's state to ensure the callback is invoked as expected:
+
+```js
+const mockCallback = jest.fn((x) => 42 + x);
+forEach([0, 1], mockCallback);
+
+expect(mockCallback.mock.calls.length).toBe(2);
+expect(mockCallback.mock.calls[0][0]).toBe(0);
+expect(mockCallback.mock.calls[1][0]).toBe(1);
+expect(mockCallback.mock.results[0].value).toBe(42);
+```
+
+### Jest `.mock` property
+
+All mock functions have a special `.mock` property. It contains
+
+- data about _how_ the function has been called
+- what the function returned
+- tracks value of `this` for each call
+
+```js
+const myMock1 = jest.fn();
+const a = new myMock1();
+console.log(myMock1.mock.instances);
+// > [ <a> ]
+
+const myMock2 = jest.fn();
+const b = {};
+const bound = myMock2.bind(b);
+console.log(myMock2.mock.contexts);
+// > [ <b> ]
+
+// The function was called exactly once
+expect(someMockFunction.mock.calls.length).toBe(1);
+
+// The first arg of the first call to the function was 'first arg'
+expect(someMockFunction.mock.calls[0][0]).toBe("first arg");
+
+// The second arg of the first call to the function was 'second arg'
+expect(someMockFunction.mock.calls[0][1]).toBe("second arg");
+
+// The return value of the first call to the function was 'return value'
+expect(someMockFunction.mock.results[0].value).toBe("return value");
+
+// The function was called with a certain `this` context: the `element` object.
+expect(someMockFunction.mock.contexts[0]).toBe(element);
+
+// This function was instantiated exactly twice
+expect(someMockFunction.mock.instances.length).toBe(2);
+
+// The object returned by the first instantiation of this function
+// had a `name` property whose value was set to 'test'
+expect(someMockFunction.mock.instances[0].name).toBe("test");
+
+// The first argument of the last call to the function was 'test'
+expect(someMockFunction.mock.lastCall[0]).toBe("test");
+```
+
+### Mock Return Values
+
+```js
+const filterTestFn = jest.fn();
+
+// Make the mock return `true` for the first call,
+// and `false` for the second call
+filterTestFn.mockReturnValueOnce(true).mockReturnValueOnce(false);
+
+const result = [11, 12].filter((num) => filterTestFn(num));
+
+console.log(result);
+// > [11]
+console.log(filterTestFn.mock.calls[0][0]); // 11
+console.log(filterTestFn.mock.calls[1][0]); // 12
+```
+
+### Mock Modules
+
+> users.js
+
+```js
+import axios from "axios";
+
+class Users {
+  static all() {
+    return axios.get("/users.json").then((resp) => resp.data);
+  }
+}
+
+export default Users;
+```
+
+> users.test.js
+
+```js
+import axios from "axios";
+import Users from "./users";
+
+jest.mock("axios");
+
+test("should fetch users", () => {
+  const users = [{ name: "Bob" }];
+  const resp = { data: users };
+  axios.get.mockResolvedValue(resp);
+
+  // or you could use the following depending on your use case:
+  // axios.get.mockImplementation(() => Promise.resolve(resp))
+
+  return Users.all().then((data) => expect(data).toEqual(users));
+});
+```
+
+### Mock Implementations
+
+Define the default implementation of a mock function **that is created from another module**:
+
+```js
+jest.mock("../foo"); // this happens automatically with automocking
+const foo = require("../foo");
+
+// foo is a mock function
+foo.mockImplementation(() => 42);
+foo();
+// > 42
+```
+
+Recreate complex behavior of a mock function - multiple function calls that produce different results:
+
+```js
+const myMockFn = jest
+  .fn()
+  .mockImplementationOnce((cb) => cb(null, true))
+  .mockImplementationOnce((cb) => cb(null, false));
+
+myMockFn((err, val) => console.log(val)); // > true
+myMockFn((err, val) => console.log(val)); // > false
+
+//
+// default implementation (calls beyond first/second)
+//
+
+const myMockFn = jest
+  .fn(() => "default")
+  .mockImplementationOnce(() => "first call")
+  .mockImplementationOnce(() => "second call");
+
+console.log(myMockFn(), myMockFn(), myMockFn(), myMockFn());
+// > 'first call', 'second call', 'default', 'default'
+
+//
+// methods that are chained (always need to return this)
+//
+
+const myObj = {
+  myMethod: jest.fn().mockReturnThis(),
+};
+
+// is the same as
+
+const otherObj = {
+  myMethod: jest.fn(function () {
+    return this;
+  }),
+};
+
+//
+// Mock Function Names, instead of displaying jest.fn()
+//
+
+const myMockFn = jest
+  .fn()
+  .mockReturnValue("default")
+  .mockImplementation((scalar) => 42 + scalar)
+  .mockName("add42");
+```
+
 ### Mock Tests
 
 Running lots of tests to API's can become unfeasible: charging credit cards, etc.
@@ -347,7 +546,6 @@ Running lots of tests to API's can become unfeasible: charging credit cards, etc
 Examples: VAT (value added tax) varies based on the country. [VAT API](https://vatapi.com/).
 
 - Change thinking process
--
 
 ```js
 function orderTotal(fetch, order) {
