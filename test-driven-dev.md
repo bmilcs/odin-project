@@ -163,6 +163,183 @@ expect(() => compileAndroidCode()).toThrow();
 expect(() => compileAndroidCode()).toThrow(Error);
 ```
 
+### Asynchronous Code Tests
+
+Promises:
+
+```js
+test("the data is peanut butter", () => {
+  return fetchData().then((data) => {
+    expect(data).toBe("peanut butter");
+  });
+});
+```
+
+Async/Await:
+
+```js
+test("the data is peanut butter", async () => {
+  const data = await fetchData();
+  expect(data).toBe("peanut butter");
+});
+
+test("fetch fails w/ error", async () => {
+  expect.assertions(1);
+  try {
+    await fetchData();
+  } catch (e) {
+    expect(e).toMatch("error");
+  }
+});
+```
+
+Async/Await with `.resolves` or `.rejects`
+
+```js
+test("data is peanut butter", async () => {
+  await expect(fetchData()).resolves.toBe("peanut butter");
+});
+
+test("fetch fails w/ error", async () => {
+  await expect(fetchData()).rejects.toMatch("error");
+});
+```
+
+### Repeating Setup
+
+If work needs to be repeated for many tests, you can use `beforeEach` and `afterEach` hooks.
+
+> Example: several tests that interact with a database
+
+```js
+beforeEach(() => initializeCityDatabase());
+afterEach(() => clearCityDatabase());
+
+test("city database has Vienna", () => {
+  expect(isCity("Vienna")).toBeTruthy();
+});
+```
+
+`beforeEach` and `afterEach` can handle async code like `tests`:
+
+- take a `done` parameter
+- return a `promise`
+
+```js
+// if initializeCityDatabase() returned a promise that resolved
+// when the db was initialized, we want to return that promise:
+
+beforeEach(() => {
+  return initializeCityDatabase();
+});
+```
+
+### One-Time Setup
+
+In some cases, you only need to setup once, at the beginning of a file. To prevent setups from running before each test, use `beforeAll` and `afterAll` hooks:
+
+```js
+beforeAll(() => {
+  return initializeCityDatabase();
+});
+afterAll(() => {
+  return clearCityDatabase();
+});
+test("city database has Vienna", () => {
+  expect(isCity("Vienna")).toBeTruthy();
+});
+test("city database has San Juan", () => {
+  expect(isCity("San Juan")).toBeTruthy();
+});
+```
+
+### Scoping
+
+By default, `beforeAll` and `afterAll` blocks apply to every test in a file.
+
+To group tests together, use a `describe` block. When inside a `describe` block, `beforeAll`/`afterAll` blocks apply to tests within the `describe` block only.
+
+```js
+describe("matching cities to foods", () => {
+  // Applies only to tests in this describe block
+  beforeEach(() => {
+    return initializeFoodDatabase();
+  });
+
+  test("Vienna <3 veal", () => {
+    expect(isValidCityFoodPair("Vienna", "Wiener Schnitzel")).toBe(true);
+  });
+
+  test("San Juan <3 plantains", () => {
+    expect(isValidCityFoodPair("San Juan", "Mofongo")).toBe(true);
+  });
+});
+```
+
+### Order of Execution
+
+Jest executes
+
+1. ALL `describe` handlers in a file first
+2. Actual tests second
+
+After `describe` blocks are complete, Jest runs all the tests in the order they were encountered in the collection phase. Each test waits on the previous test to complete before beginning.
+
+```js
+beforeEach(() => console.log("connection setup"));
+beforeEach(() => console.log("database setup"));
+
+afterEach(() => console.log("database teardown"));
+afterEach(() => console.log("connection teardown"));
+
+test("test 1", () => console.log("test 1"));
+
+describe("extra", () => {
+  beforeEach(() => console.log("extra database setup"));
+  afterEach(() => console.log("extra database teardown"));
+
+  test("test 2", () => console.log("test 2"));
+});
+
+// connection setup
+// database setup
+// test 1
+// database teardown
+// connection teardown
+
+// connection setup
+// database setup
+// extra database setup
+// test 2
+// extra database teardown
+// database teardown
+// connection teardown
+```
+
+### General Advice
+
+If a test is failing, one of the **first things to check** should be:
+
+- If that test fails when it's the _only test_ that runs.
+- To complete a single test within a test file containing many tests, change `test` to `test.only`
+
+```js
+// test.only
+test.only("this will be the only test that runs", () => {
+  expect(true).toBe(false);
+});
+
+// ignored with test.only present
+test("this test will not run", () => {
+  expect("A").toBe("A");
+});
+```
+
+If a test passes when it's alone but fails as part of a larger suite, **it's a good bet that something from a _different_ test is interfering**.
+
+- Can often fix this by clearing a shared state with `beforeEach`
+- Can also use a `beforeEach` statement to log data
+
 ### Mock Tests
 
 Running lots of tests to API's can become unfeasible: charging credit cards, etc.
@@ -381,3 +558,131 @@ Functional code is less susceptible. Functional code uses **pure functions** as 
 - **Do One Thing** (DOT): Avoid responsibility overload, which plague object & class-based code.
 - **Structure, not instructions**: Pure functions can be replaced with a lookup table (input/output values).
   - Pure functions describe _the structural relationship between data_ - NOT instructions for the computer to follow
+
+### Composition & Mocking
+
+Software development: process of breaking large problem into smaller, independent pieces (**_decomposition_**) and composing the solutions to form an app that solves the large problem (**_composition_**).
+
+**Mocking is required WHEN our decomposition strategy has failed.**
+
+When decomposition succeeds, we can use a generic composition utility to compose the pieces back together:
+
+- Function composition: `lodash/fp/compose`
+- Component Composition: composing higher-order components w/ function composition
+- State store/model composition: Redux combineReducers
+- Object or factory composition: mixins, functional mixins
+- Process composition: transducers
+- Promise/monadic composition: `asyncPipe()`, `composeM()`
+
+**Function composition** = applying a function to the return value of another function.
+
+- Create pipeline of functions
+- Pass value to pipeline
+- Value goes thru each function (stage in an assembly line)
+- Transforms value in some way before it's passed to the next function in the pipeline
+- Last function returns final value
+
+```js
+const pipe =
+  (...fns) =>
+  (x) =>
+    fns.reduce((y, f) => f(y), x);
+// Applying a function to the return value of another function
+const pipe =
+  (...fns) =>
+  (val) =>
+    fns.reduce((prevVal, fun) => fun(prevVal), val);
+
+// EXAMPLE
+// initialValue -> [plusOne] -> [timesTwo] -> result
+const plusOne = (n) => n + 1;
+const timesTwo = (n) => n * 2;
+
+const declarativeComposition = pipe(plusOne, timesTwo);
+console.log(declarativeComposition(20));
+```
+
+This is the **primary means of organizing application code** in _every_ mainstream language, regardless of paradigm.
+
+JavaScript has _first-class functions_, which allows you to compose functions automatically (declaratively).
+
+- Imperative: commanding the computer to do something step by step
+- Declarative: telling computer the relationships between things
+  - A description of structure using equational reasoning
+
+`declarativeComposition()` is the **piped composition** of `plusOne` and `timesTwo`.
+
+### How To Remove Coupling
+
+Loose Coupling:
+
+- Module imports without side-effects
+- Message passing/pubsub
+- Immutable parameters
+
+To remove coupling:
+
+- **Use Pure Functions** as the atomic unit of composition
+  - Instead of classes, imperative procedures, mutating functions
+- **Isolate Side-Effects** from the rest of your logic.
+  - Don't mix logic with I/O (network I/O, rendering UI, logging)
+- **Remove Dependent Logic** from imperative compositions
+
+DON'T unit test I/O.
+
+I/O is for integrations. Use integration tests, instead.
+
+_It's perfectly okay to mock and fake for integration tests._
+
+### Pure Functions
+
+Pure functions
+
+- Can't mutate global variables
+- Can't mutate arguments passed into them
+- Can't mutate the network
+- Can't mutate the disk
+- Can't mutate the screen
+
+Pure functions can ONLY **return a value**.
+
+If passed an array/object, pure functions have to create a new copy of the array/object with the require changes.
+
+- Arrays methods: `concat`, `filter`, `map`,`reduce`,`slice`
+- Object methods: `Object.assign`
+
+```js
+// NOT PURE * BAD
+const signInUser = (user) => (user.isSignedIn = true);
+const foo = {
+  name: "Foo",
+  isSignedIn: false,
+};
+// Foo was mutated * BAD
+console.log(
+  signInUser(foo), // true
+  foo // { name: "Foo", isSignedIn: true }
+);
+
+// VERSUS
+// PURE * GOOD -> returns a new object
+const signInUser = (user) => ({ ...user, isSignedIn: true });
+const foo = {
+  name: "Foo",
+  isSignedIn: false,
+};
+// Foo was not mutated
+console.log(
+  signInUser(foo), // { name: "Foo", isSignedIn: true }
+  foo // { name: "Foo", isSignedIn: false } * NOT MUTATED
+);
+```
+
+Performance hits due to returning a new object
+
+- Side-effect: we can detect changes to objects by using `===` identity comparison
+- Don't have to traverse through an entire object to discover changes
+
+Pure functions can be memoized: cache/save pre-calculated values in a lookup table.
+
+Pure functions allow you to safely distribute complex computations over large clusters of processors (divide & conquer).
