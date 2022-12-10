@@ -203,3 +203,66 @@ Example:
 2. Commit current state of your code to `temp`
 3. Push `temp` to your GitHub repo: `git push origin temp`
 4. Now others can view your `temp` branch on GitHub using the dropdown
+
+## Changing History
+
+### Changing Last Commit
+
+To add something to the last commit, use `git commit --amend`.
+
+Only `amend` commits that have **NOT BEEN PUSHED** anywhere!
+
+- `amend` does NOT simply edit the last commit
+- it **replaces that commit with an entirely new one**
+- could potentially destroy commit other devs are working on
+
+When rewriting history always make sure that you do so in a safe manner and that **coworkers are aware of what you're doing**.
+
+```sh
+git add file
+git commit --amend
+```
+
+### Changing Multiple Commits
+
+In order to change commits further back in history, we use the `rebase` command.
+
+`rebase -i` allows us to:
+
+- interactively stop after each commit we're trying to modify
+- make whatever changes we wish
+
+To edit the last two commits:
+
+```sh
+git rebase -i HEAD~2
+```
+
+An interactive window pops up allowing us to edit commits. In order to edit a commit, change `pick` to `edit`, write & exit the file.
+
+To change the commit message, run `git commit --amend`, make the changes and then `rebase --continue`.
+
+In a shared repo, make sure you rebase for a **very good reason** that your **coworkers are aware of.**
+
+### Squashing Commits
+
+Using `squash` helps keep our Git history tidy.
+
+- Squash process may be the standard on some dev teams
+- Makes it easier to understand the history of your project
+
+When a feature is merged, we end up with some visually complex logs of all changes a feature branch had on a main branch.
+
+- Important during development
+- Aren't necessary while looking through entire history of your main branch
+
+To squash the 2nd commit INTO the 1st: `Create first file`:
+
+```sh
+# rebase back to root commit
+git rebase -i --root
+# pick first commit, squash 2nd
+pick e30ff48 Create first file
+squash 92aa6f3 Create second file
+pick 05e5413 Create third file and create fourth file
+```
