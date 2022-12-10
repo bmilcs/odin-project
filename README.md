@@ -78,7 +78,7 @@ These assignments were tackled with a growth mindset and I did not reference the
   - [x] JavaScript in the Real World
   - [x] Asynchronous JavaScript and APIs
   - [x] A Bit of Computer Science
-  - [ ] Testing JavaScript
+  - [x] Testing JavaScript
   - [ ] Intermediate Git
   - [ ] React JS
   - [ ] JavaScript and the Backend
