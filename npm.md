@@ -3,9 +3,11 @@
 > npm packages
 
 ```sh
-npm install --save-dev webpack webpack-cli webpack-dev-server webpack-merge \
-  html-webpack-plugin style-loader css-loader sass-loader sass \
-  eslint prettier eslint-config-prettier eslint-plugin-prettier jest @babel/preset-env babel-jest
+npm install --save-dev \
+  webpack webpack-cli webpack-dev-server webpack-merge \
+  html-webpack-plugin style-loader css-loader sass-loader sass raw-loader \
+  eslint prettier eslint-config-prettier eslint-plugin-prettier \
+  jest @babel/preset-env babel-jest @types/jest \
   @babel/plugin-transform-modules-commonjs
 npx install-peerdeps --dev eslint-config-airbnb-base
 
@@ -55,10 +57,13 @@ module.exports = {
           },
         ],
       },
-
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        test: /\.(png|jpg|jpeg|gif)$/i,
         type: "asset/resource",
+      },
+      {
+        test: /\.svg$/i,
+        use: "raw-loader",
       },
     ],
   },
@@ -98,8 +103,7 @@ module.exports = merge(common, {
 
 ```json
   "scripts": {
-    "test": "jest",
-    "watch": "jest --watch *.js",
+    "test": "jest --watchAll --verbose",
     "build": "webpack --config webpack.prod.js",
     "start": "webpack serve --open --config webpack.dev.js"
   },
@@ -132,6 +136,17 @@ module.exports = merge(common, {
   "rules": {
     "quotes": "off",
     "no-console": 1
+  }
+}
+```
+
+jsconfig.json
+
+```json
+// jest autocomplete in vs code
+{
+  "typeAcquisition": {
+    "include": ["jest"]
   }
 }
 ```
@@ -387,8 +402,7 @@ npm i -D jest
 ```json
 // package.json
 "scripts": {
-  "test": "jest",
-  "watch": "jest --watch *.js",
+ "test": "jest --watchAll --verbose",
 }
 ```
 
