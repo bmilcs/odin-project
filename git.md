@@ -261,8 +261,59 @@ To squash the 2nd commit INTO the 1st: `Create first file`:
 ```sh
 # rebase back to root commit
 git rebase -i --root
+
 # pick first commit, squash 2nd
 pick e30ff48 Create first file
 squash 92aa6f3 Create second file
 pick 05e5413 Create third file and create fourth file
+
+# delete two commit messages & enter a new one:
+Create first and second file
+
+# write & exit file
 ```
+
+### Splitting Up A Commit
+
+To split a previous commit up into individual commits:
+
+```sh
+# open up interactive rebase
+git rebase -i
+
+# change pick to edit for the commit
+edit ... commit to be changed
+
+# reset HEAD^ (resets commit to one right before HEAD)
+git reset HEAD^
+
+# add changes individually
+git add test3.md && git commit -m 'Create third file'
+git add test4.md && git commit -m 'Create fourth file'
+```
+
+When we run `git reset HEAD^`, we:
+
+- Reset current branch, pointing HEAD at the commit _right before it_
+- Also, updated the index (staging area) with the contents of wherever HEAD is now pointed
+
+If you want to move to **where HEAD points to** but _don't_ want to touch the staging area, run `git reset --soft`.
+
+- `soft` only moves HEAD to point elsewhere
+- Doesn't touch the index / staging area
+
+`git reset --hard` does the following:
+
+- all steps of `git reset`
+  - moves HEAD
+  - updates index
+- **Also updates the working directory**
+
+`hard` resets can be dangerous as it can potentially destroy data.
+
+Hard resets overwrites the files in the working directory:
+
+- makes it look exactly like the staging area where HEAD points to
+- like `git commit --amend`, `hard` resets are a destructive command that overwrites history
+
+**Make sure you know exactly why you're using it & your coworkers are also aware of how and why you're using it.**
