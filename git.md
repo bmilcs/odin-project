@@ -879,3 +879,62 @@ Rebase **rewrites history**.
 When using `git rebase`, you can tell it the sequence of events you want to create:
 
 `git rebase first_this then_this`
+
+### [Reset demystified](https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified)
+
+`reset` and `checkout` can be understood by thinking of git as a:
+
+- Manager of **three trees**
+  - HEAD
+  - Index
+  - Working Directory
+
+**HEAD**: snapshot of your last commit on that branch
+
+- pointer: current branch reference
+- in turn, it is a pointer to the last commit
+- HEAD will be the parent of the next commit
+
+**INDEX**: proposed next commit
+
+- same as the "staging area"
+- it's what git looks at when you run `git commit`
+- git populates the index with:
+  - list of all file contents that were checked out into your working directory
+  - what they looked like when they were originally checked out
+  - you then replace some of those files w/ new versions & commit converts that into the tree for a new commit
+
+**WORKING DIRECTORY**: working tree
+
+- HEAD/INDEX: store content efficiently but inconveniently in the `.git` folder
+- WORKING DIRECTORY unpacks them into actual files
+  - Makes it much easier for you to edit them
+- Sandbox: lets you try changes before commiting them to your index & then history
+
+**`git reset`** directly manipulates all three files:
+
+1. **Move HEAD**
+
+- Doesn't change HEAD itself
+- Moves the branch that HEAD points to
+
+IF HEAD is set to `master` branch (currently on `master`) and you run `git reset <last_commit>`:
+
+- Changes Master to point to <last_commit>
+- Essentially undid the last `git commit`
+- `--soft` will stop here.
+- Resetting back to `HEAD~` moves a branch back to where it was **without changing the index or working directory.**
+  - You can then update the index & `git commit` and accomplish exactly what `commit --amend` does.
+
+2. **Update the Index**
+
+- Updates the index with the contents of whatever snapshot now points to
+- `--mixed` will stop here.
+- Still undid your last `commit` and also **unstaged everything**.
+- You rolled back to before you ran all your `git add` and `git commit` commands
+
+3. **Update the Working Directory**
+
+- `--hard` will cause this step to occur
+- Makes the working directory look like the index
+- Only version that **CANNOT BE UNDONE**
