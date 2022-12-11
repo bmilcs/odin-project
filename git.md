@@ -786,3 +786,96 @@ In the savepoint pattern, if you want to back out of the merge, you can just as 
 - `git log` to find the `SHA-1` of the commit
 - `git reset --hard 1234asdf`
 - Git would behave exactly the same
+
+### Rebase
+
+Warning: **It is generally considered rude to rewrite history in public!**
+
+- Make sure everyone who works on your project is comfortable working with rebase
+- Consider changing everyone's default pull strategy to `rebase` instead of `merge`
+
+### Cherry Picking
+
+Cherry picking does the following:
+
+**Given 1+ existing commits, apply the change each one introduces, recording a new commit for each.**
+
+Example:
+
+![Reachability](img/graph-reachability.png)
+
+`git cherry-pick C D E` would result in:
+
+![Git Cherry Pick After](img/git-cherry-pick-after.png)
+
+- Diff from B & C => H
+- Diff from C & D => C
+- Diff from D & E => D
+
+### Using Cherry Picking to Simulate Rebase
+
+![Repo Before Rebase](img/git-before-rebase.png)
+
+```sh
+# make sure we're on H
+git checkout foo
+
+# create/swap to newbar
+git checkout -b newbar
+
+# apply changes from C D E, creating new commits C', D', E'
+# and update 'newbar' branch so it points at E
+git cherry-pick C D E
+```
+
+> Result of the above commands
+
+![Repo after cherry pick](./img/git-cherry-pick-qua-rebase-example-midpoint.png)
+
+```sh
+# switch to branch bar
+git checkout bar
+
+# force move bar branch pointer to point to same place as `newbar` branch
+# --hard updates our working directory to match the new location
+git reset --hard newbar
+
+# delete the temporary newbar branch
+git branch -d newbar
+```
+
+> Result of the above commands:
+
+![Endpoint after cherry pick](img/git-cherry-pick-qua-rebase-example-endpoint.png)
+
+### Rebase Summary
+
+**ALL of the above can be accomplished by using**:
+
+```sh
+git rebase foo bar
+
+# In other words,
+# IS EQUAL TO DOING:
+
+git checkout foo
+git checkout -b newbar
+git cherry-pick C D E
+git checkout bar
+git reset --hard newbar
+git branch -d newbar
+```
+
+`git rebase` lets you:
+
+- pick up an entire section of a repo
+- move them somewhere else
+
+Rebase **rewrites history**.
+
+- "Hey, you know those things that happened over there on that completely different timeline?"
+- "I want you to pretend that they happened here instead."
+
+When using `git rebase`, you can tell it the sequence of events you want to create:
+
+`git rebase first_this then_this`
