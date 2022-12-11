@@ -317,3 +317,105 @@ Hard resets overwrites the files in the working directory:
 - like `git commit --amend`, `hard` resets are a destructive command that overwrites history
 
 **Make sure you know exactly why you're using it & your coworkers are also aware of how and why you're using it.**
+
+## Working With Remotes
+
+### Git Push Force
+
+Normally, Git will only let you push changes IF you've updated your local branch w/ the latest commits from a remote repo.
+
+If you don't update your local branch before a commit, you create a **conflict** on the remote repo & get an error message
+
+- **Great Thing**: Prevents overwriting commits created by others, which could be disastrous
+- Error = your history is outdated
+
+`git commit --force` overwrites the remote repo with your own local history.
+
+- **Very dangerous command!**
+- Should be used with caution when collaborating with others
+
+Alternatively, you can fix your outdated history error by:
+
+- `fetch` update local history
+- `merge`
+- `push` again
+
+After pushing a mistake to a remote repo, we will want to undo this commit. It's tempting to just force the push, but again, this is **very dangerous**.
+
+If we can, use a safer command instead: `git revert`
+
+```sh
+git revert HEAD
+git push origin main
+```
+
+Common use cases for `git push --force`:
+
+- Updating pull requests
+- When sensitive info is accentally uploaded to a repo
+  - Remove all occurences of it
+
+A command that some companies use by default is `git push --force-with-lease`.
+
+- `force-with-lease` is a fail safe
+- Checks if the branch you're pushing to has been updated
+- Sends you an error if it has
+- Gives you an opportunity to `fetch` the work & update your local repo
+
+### Dangers & Best Practices
+
+Dangerous commands when working with others:
+
+- `amend`
+- `rebase`
+- `reset`
+- `push --force`
+
+They can **destroy others work**. When attempting to rewrite history, always check the _dangers of a particular command_ before using & folow these best practices:
+
+1. If working on a team, make sure rewriting history is safe to do & let others know you're doing it.
+2. Ideally, stick to using these commands on branches that you're working with by yourself.
+3. Using the `-f` flag to force something **should scare you**. You should have a **really good reason for using it**.
+4. **Don't push after every single commit.** Changing published history should be avoided when possible.
+5. `git amend`: never amend commits that have been pushed to remote repos
+6. `git rebase`: never rebase a repo that others may work off of
+7. `git reset`: never reset commits that have been pushed to remote repos
+8. `git push --force`: only use when appropriate. Use it with caution & preferably default to using `git push --force-with-lease`
+
+## Branches Are Pointers
+
+Branches hold multiple _alternate reality_ versions of our files.
+
+Commits are described as snapshots. Every time you type in `git commit`, your computer is taking a picture of the file contents that have been staged with `git add`.
+
+In other words, **your entire workspace gets copied.**
+
+**Branches** are actually a **pointer to a single commit**!
+
+"_If a branch is just a finger pointing to a single commit, how does that commit know about all the commits that came before it?_"
+
+- Each **commit** is **also a pointer that points to the commit that came before it!**
+
+**HEAD**:
+
+- Special pointer, keeps track of the branch you're currently on
+- Points to our most recent commit in the current branch
+
+`git rebase -i HEAD~2`: starts with HEAD pointer & follows subsequence pointers to find which two commits to edit.
+
+**SUMMARY**:
+
+- **Branch**: pointer to a single commit
+- **Commit**: snapshot & a pointer to the previous commit in history
+
+## Merge Conflicts
+
+Merge conflicts happen when...
+
+- You merge branches that have competing commits
+- Git needs help to decide which changes to incorporate in the final merge
+
+Git can often resolve differences between branches and _merge them automatically_.
+
+- Usually, changes are on different lines or files
+- Makes merging simple for computers to understand
