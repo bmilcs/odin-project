@@ -408,7 +408,7 @@ In other words, **your entire workspace gets copied.**
 - **Branch**: pointer to a single commit
 - **Commit**: snapshot & a pointer to the previous commit in history
 
-## Merge Conflicts
+## [Merge Conflicts](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts)
 
 Merge conflicts happen when...
 
@@ -419,3 +419,370 @@ Git can often resolve differences between branches and _merge them automatically
 
 - Usually, changes are on different lines or files
 - Makes merging simple for computers to understand
+
+### Resolving Merge Conflicts on GitHub
+
+In the GitHub repo, click on:
+
+- `Pull Requests`
+- In the Pull Requests list, click on the conflict
+- `Resolve Conflicts`
+- Delete the conflict markers `<<<<` `>>>>` `====`
+  - Incorporate the changes you want to keep
+- Click `Commit Merge`
+- If prompted, review the branch you're committing to
+  - Choose to create a new branch
+- `Merge pull request`
+
+### Resolving Merge Conflicts via CLI / Command Line
+
+```sh
+cd REPO_PATH
+
+# edit conflicted files in your IDE
+
+git add .
+git commit -m "Resolve merge conflict by incorporating both suggestions"
+```
+
+### Removed file merge conflicts
+
+To resolve a merge conflict caused by competing changes to a file (ie: person A deletes a file, person B edits the same file):
+
+```sh
+cd REPO_PATH
+git status
+
+# open file with merge conflicts in your editor
+# decide if you want to keep or remove the file
+
+# to add it back
+git add README.md
+
+# to remove it
+git rm README.md
+
+git commit -m "Resolved conflict by keeping README"
+```
+
+## [Think Like (a) Git](https://think-like-a-git.net/)
+
+"... git commands are named _graph manipulation_ commands, creating & deleting nodes, moving pointers around"
+
+### _Graph Theory_: a graph is a collection of:
+
+- nodes
+- a collection of edges that connect pairs of nodes
+
+Example: **Maps**
+
+- **Places to go**
+- **Ways to get there**
+
+![Graph Theory Bridges Map](./img/graph-theory-bridges.jpg)
+
+> Question: Is it possible to walk through the city and **cross every bridge once.**
+
+**NOPE: No such route could exist** = Graph Theory (Leonhard Euler)
+
+![Euler's Version of the Bridge Map](./img/graph-theory-euler-version.png)
+
+Euler threw away all the unnecessary information.
+
+- **Node**: Land Mass - _Places to Go_
+- **Edges**: Bridge between two nodes - _Ways to get there_
+
+Attaching labels to nodes:
+
+- How programmers/computer scientists use them to compute some kind of meaningful results
+
+Attaching labels to edges:
+
+- **Names**: 12th avenue
+- **Numbers**: Weights, distances, or speeds
+- **Types**: Relationships, 'friend', 'coworker', 'parent of'
+- **Direction**: Bidirectional (friends), Parent (one way)
+
+### **Directed vs Undirected Graphs**
+
+![Directed Graph](img/graph-directed.png)
+
+> Directed Graph
+
+![Undirected Graph](img/graph-undirected.png)
+
+> Undirected Graph
+
+Directed & undirected graphs simply means:
+
+- **Is a graph bidirectional or not?**
+- **One way or two way street?**
+
+### Reachability
+
+![Reachability](img/graph-reachability.png)
+
+^ Graph:
+
+- **set of three parallel universes**
+- time flows from left to right
+  **A**: beginning of recorded history
+  **B**: _follows_ A
+
+From **E**, the history you see is **E > D > C > B > A**
+
+From **H**, the history you see is **H > G > F > B > A**
+
+From **K**, the history you see is **K > J > I > C > B > A**
+
+Important concept:
+
+- **some parts of the graph are unreachable to you**.
+- **depending on where you start, you can reach parts of the graph you couldn't get to otherwise**
+
+### Graphs & GIT
+
+A Git repo is _one giant graph_.
+
+**Commits** consists of two things (at the surface level):
+
+- **A pointer** to the state of your code at a moment in time
+- **0+ Pointers** to parent commits
+
+> Pointer = talking about graphs
+
+A Git commit is a **node in a graph** and each node can point to other nodes that came before them.
+
+### Visualizing Git Repos
+
+Visualizers help you make sense of your branch history:
+
+```sh
+# flattened view
+git log --oneline --abbrev-commit --all
+
+# graph view
+git log --oneline --abbrev-commit --all --graph
+
+# see branch & tag labels: decorate
+git log --oneline --abbrev-commit --all --graph --decorate
+
+# add color:
+git log --oneline --abbrev-commit --all --graph --decorate --color
+
+# setup a git alias to do the same:
+git config --global alias.graph "log --graph --oneline –decorate=short"
+```
+
+### References are Pointers to Commits
+
+**References**: local branch, remote branch and tag.
+
+**Local Branch Reference** (single repo)
+
+- a file in `.git/refs/heads/`
+- contains a commit id that the reference points to
+- 40-bytes in size
+- "cheap-branching": super fast
+
+**Remote Branch References** (single repo)
+
+- Repo that's been previously been defined as a remote
+- Commands for remote branch references:
+  - `fetch`
+  - `push`
+  - `pull` (_combines `fetch` & `merge`/`rebase`_)
+
+**Tag References**
+
+- Branch references that never move
+- Once created, a tag will never change.
+  - exception: `--force`
+- Uses
+  - marking specific versions of a software package
+  - marking exactly what got deployed to a production server on a particular date
+- Only affected by `tag` command
+
+### Git Visualizers
+
+Visualizers hide commits from you.
+
+### Garbage Collection
+
+`git commit --amend` tack on new changes to a previous commit
+
+Git commit's ID is a `SHA-1 hash`. The hash contains info on:
+
+- Contents of the commit
+- IDs of its parent commits
+
+`commit --amend`:
+
+- builds a completely different commit
+- points your local branch reference to it instead
+
+After building a different commit with `--amend`, **the original 1st commit is still on disk** AND you **can get back to it.**
+
+- `git log`/visualizers will not show it to you
+- Git doesn't think you care about it
+
+Git runs garbage collection on it's own and can be trigged manually w/ `git gc`.
+
+- Git walks through the graph
+- Builds a list of every commit & tag it can reach
+- It deletes all commits it doesn't visit
+
+### REFERENCES MAKE COMMITS REACHABLE
+
+- **References**: local branch, remote branch, tag
+- **Make Commits**: nodes in a graph
+- **Reachable**:
+
+### Branches As Savepoints
+
+Git branches are 40-byte files:
+
+- It takes longer for you to type out the command
+- Than the computer to do it
+
+Branches are references and references make commits reachable.
+
+**Creating a branch** is a way to **nail down** part of the graph that you might want to come back to later.
+
+`git merge` & `git rebase` will change your existing commit. Commit ID: hash of its contents & its history.
+
+**You can create a temporary branch any time you want to try something you're unsure about.**
+
+In other words:
+
+**Before merging or rebasing, you can create a branch to save your game before you battle the boss.**
+
+### Playing with Git Merge
+
+Two simple recipes that help you play around with merges:
+
+**Scout Pattern**
+
+- if you're unclear what `merge` does
+- or it's likely you'll decide to back out of the merge
+
+**Savepoint Pattern**
+
+- pretty sure what you want to do
+- leaving yourself an undo button in case things get messy
+
+### Scout Pattern
+
+**Scout Pattern**: Send a scouting party to check out what the terrain is like.
+
+- If they radio back everything's okay, move ahead & join them
+- If not, it was a small scouting party and we can tell their families they died with honor
+
+1. Make sure you're on the right branch and that you have a clean working state.
+1. Create a new branch (I often name it test_merge) and switch to it.
+1. Do the merge.
+1. Switch to your visualizer and predict how its view will change when you refresh it.
+1. Refresh your visualizer and see whether your prediction was correct.
+1. Are you happy with the result?
+   1. If YES: Move your real branch forward to where the test_merge branch is.
+   2. If NO: Delete the test_merge branch.
+
+```sh
+# example
+git status
+# On branch master
+nothing to commit (working directory clean)
+
+git checkout -b test_merge
+git status
+# on test_merge branch
+
+git merge spiffy_new_feature
+# to abort at this point:
+git reset --hard
+
+# switch to your visualizer & predict how its view will change when you refresh it
+
+# are you happy with the result?
+# yes: move master branch forward to WHERE test_merge branch is
+git checkout master
+git merge test_merge
+
+# no: drop the test_merge branch
+git checkout master
+git branch -D test_merge
+```
+
+### Savepoint Pattern
+
+1. Make sure you're on the right branch and that you have a clean working state.
+1. Create a new branch to use as a savepoint, but don't switch to it.
+1. Do the merge.
+1. Switch to your visualizer and predict how its view will change when you refresh it.
+1. Refresh your visualizer and see whether your prediction was correct.
+1. Are you happy with the result?
+   1. If YES: Delete the savepoint.
+   2. If NO: Reset your branch to the savepoint.
+
+```sh
+# make sure you're on the right branch
+git status
+# On branch master
+nothing to commit (working directory clean)
+
+# create a new savepoint branch
+git branch savepoint
+git status
+# on master branch
+
+# do the merge
+git merge spiffy_new_feature
+# to undo:
+git reset --hard
+
+# switch to visualizer & predict how it'll change
+# refresh and see results
+
+# are you happy with the result?
+# yes: delete the savepoint.
+git branch -d savepoint
+
+# no: reset your branch to the savepoint.
+git reset --hard savepoint
+# cleanup: del savepoint
+git branch -d savepoint
+```
+
+### Black Belt Merging
+
+Once comfortable with the Savepoint pattern, you'll get tired of creating the extra branch & having to remember to delete it afterward.
+
+_You don't actually need a savepoint branch for merges_.
+
+- Merge commits end up with a _branch label pointing at them_.
+- One of the branch's parent commits will be the commit that that the branch label was just moved from
+
+**The commit you started on will always be reachable.**
+
+Git doesn't care what you call your branches. Branches are just 40-nyte files that points to commit's `SHA-1 hash`, which is what git really uses for all of its work.
+
+- Branches: human-friendly name pointing to a part of the graph
+
+At the end of the savepoint pattern, you reset your branch to the savepoint via `git reset --hard savepoint`.
+
+- `git reset -h` final argument is a **`<commit>`**
+- `<commit-ish>`: older versions said this, meaning anything that Git can turn into a `SHA-1 hash`
+
+**Anytime a `<commit>` is needed as an argument, you can use:**
+
+- Branch names
+- Tags
+- Relative references: `HEAD^`, `HEAD^^`, `HEAD~3`
+- Partial `SHA1 hashes`: provide just enough of a hash that it'll be unique and git autofills the rest
+- `SHA-1 hashes`
+
+In the savepoint pattern, if you want to back out of the merge, you can just as easily:
+
+- `git log` to find the `SHA-1` of the commit
+- `git reset --hard 1234asdf`
+- Git would behave exactly the same
