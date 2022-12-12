@@ -938,3 +938,40 @@ IF HEAD is set to `master` branch (currently on `master`) and you run `git reset
 - `--hard` will cause this step to occur
 - Makes the working directory look like the index
 - Only version that **CANNOT BE UNDONE**
+
+## Git Workflow (Odin Project App)
+
+**`origin`**: forked repo
+**`upstream`**: original repo
+
+**Setup**
+
+1. Fork the original **"upstream"** repo into your own GitHub account.
+2. Clone the **forked repo** on your local machine.
+   - Cloning gives you a **remote** that points to **origin** (fork on GitHub)
+3. Add the original official repo (`upstream`), so we can pull from it.
+   - `git remote add upstream git@github.com:theOdinProject/theodinproject.git`
+
+**Making Changes**
+
+1. Create a new feature branch & commit changes
+2. Make sure your main branch is up to date
+   - `git fetch upstream`
+3. Merge upstream's changes into your local version of `main`
+   - `git checkout main`
+   - `git merge upstream/main`
+
+Note: `fetch pull upstream/branch` is the exact same as doing `fetch upstream/branch` & `merge upstream/branch`
+
+4. With `main` branch up-to-date, merge `main` INTO your feature branch.
+   - Feature branch is **dirty**
+   - It may contain conflicts
+   - `git checkout feature_branch`
+   - `git merge main`
+5. Resolve any conflicts
+
+**Sending Your Pull Request**
+
+1. Send your feature branch back up to your forked repo:
+   - `git push origin feature_branch`
+2. Submit a pull request to merge your feature branch into the original `upstream` repo's `main` branch via the GitHub interface.
