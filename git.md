@@ -975,3 +975,106 @@ Note: `fetch pull upstream/branch` is the exact same as doing `fetch upstream/br
 1. Send your feature branch back up to your forked repo:
    - `git push origin feature_branch`
 2. Submit a pull request to merge your feature branch into the original `upstream` repo's `main` branch via the GitHub interface.
+
+## [Oh Sh\*t, Git?!?](https://ohshitgit.com/#change-last-commit)
+
+Magic time machine: something went terribly wrong and I need to undo some changes.
+
+```sh
+# list everything you've done in git
+# across all branches
+git reflog
+
+# find the commit before you broke everything
+# magic time machine:
+git reset HEAD@{index}
+```
+
+I committed & I need to make one small change:
+
+```sh
+# make your change
+git add .
+# add change to your last commit
+git commit --amend --no-edit
+```
+
+Change your last commit message:
+
+```sh
+git commit --amend
+```
+
+I accidentally committed to master BUT should've been on a new branch:
+
+```sh
+# create a new branch from current master
+git branch new_branch
+# remove the last commit
+git reset HEAD~ --hard
+# commit now lives here:
+git checkout new_branch
+```
+
+I accidentally comitted to the wrong branch:
+
+```sh
+# undo the last commit (leaving changes available)
+git reset HEAD~ --soft
+git stash
+# move to the correct branch
+git checkout correct_branch
+git stash pop
+git add .
+git commit -m "moved to the right branch!"
+
+#
+# OR
+#
+
+git checkout correct_branch
+# grab last commit to master
+git cherry-pick master
+# delete it from master
+git checkout master
+git reset HEAD~ --hard
+```
+
+I need to undo a commit from 5 commits ago:
+
+```sh
+# find the commit to undo
+git log
+
+# undo the commit:
+git revert commit
+
+# git will create a new commit that undoes the commit
+```
+
+I need to undo my changes to a file:
+
+```sh
+# find the commit to undo
+git log
+# save the commit
+git checkout commit -- path/to/file
+# old version will be in your index
+git commit -m "Removed the bad commit"
+```
+
+Nuke it all:
+
+```sh
+# get the latest state of origin
+git fetch origin
+git checkout master
+# delete untracked files/dirs
+git reset --hard origin/master
+# repeat checkout/reset/clean for each bad branch
+git clean -d --force
+```
+
+## [Undo Basically Anything In Git](https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/)
+
+## [Git Fix Um / Fix Up](https://sethrobertson.github.io/GitFixUm/fixup.html)
