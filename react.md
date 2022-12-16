@@ -549,3 +549,317 @@ function sum(a, b) {
 ```
 
 **All React components must act like pure functions with respect to their props.**
+
+## Props (Odin)
+
+Props are used to **share values** or **functionality between components.**
+
+Props are short for: **Object Property**
+
+Example:
+
+```js
+//
+// MyComponent.js
+//
+
+import React, { Component } from "react";
+
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+      </div>
+    );
+  }
+}
+
+export default MyComponent;
+
+//
+// App.js
+//
+
+import React, { Component } from 'react';
+import MyComponent from './MyComponent';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <MyComponent title="React" />
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+In the above code:
+
+- `MyComponent` is imported into `App`
+- `MyComponent` is rendered as a child component of `App`
+- In `App`, we pass the property `title="React"`
+
+To access the `title` prop within `MyComponent`, we use the syntax:
+
+`this.props.title`
+
+In `MyComponent`, you MUST:
+
+- `prop` object must be passed **to the constructor**
+- `super()` must be called **within the constructor**
+
+With functional components, `props` work the same way.
+
+```js
+//
+// MyComponent.js
+//
+
+import React, { Component } from 'react';
+
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+        <button onClick={this.props.onButtonClicked}>Click Me!</button>
+      </div>
+    );
+  }
+}
+
+export default MyComponent;
+
+//
+// App.js
+//
+
+import React, { Component } from 'react';
+import MyComponent from './MyComponent';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onClickBtn = this.onClickBtn.bind(this);
+  }
+
+  onClickBtn() {
+    console.log('Button has been clicked!');
+  }
+
+  render() {
+    return (
+      <div>
+        <MyComponent title="React" onButtonClicked={this.onClickBtn} />
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+
+`{this.props.onButtonClicked}` is assigned to `onClick` event of the component:
+
+- `MyComponent` expects a prop to be passed to it: `onButtonClicked`
+- Value of propr should be a function
+- Attach the function to the click event of our button
+
+In React, we assign event listeners **directly in the JSX** - not `addEventListener()`.
+
+We can rename props between parent/child components:
+
+- `App`:
+  - Actual function name: `onButtonClick()`
+  - MyComponent prop: `onButtonClicked={this.onClickBtn}`
+- `MyComponent`:
+  - `onClick={this.props.onButtonClicked}`
+
+With class components, you have to **bind methods to `this`**.
+
+- Recommended way: via **the constructor** & _below the `super()` call_.
+- WHY? Functions that are passed to another component need to stay in the _same context in which it was declared_.
+
+```js
+// MyComponent.js
+
+import React, { Component } from "react";
+
+class MyComponent extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { title, onButtonClicked } = this.props;
+
+    return (
+      <div>
+        <h1>{title}</h1>
+        <button onClick={onButtonClicked}>Click Me!</button>
+      </div>
+    );
+  }
+}
+
+export default MyComponent;
+```
+
+Passing properties & functions via `this.props.SOMETHING` is a pain.
+
+Destructuring allows us to use their base names:
+
+```js
+const { title, onButtonClicked } = this.props;
+```
+
+## React Event Handling
+
+Event handlers in React are passed instances of `SyntheticEvent`, a wrapper around the standard browser event.
+
+It contains the same interface as the browser's native event:
+
+- `stopPropogation()`
+- `preventDefault()`
+
+To access the underlying browser event, use the `nativeEvent` attribute.
+
+Synthetic events are different than the native events. Event names:
+
+```js
+// Keyboard
+- event: onKeyDown onKeyPress onKeyUp
+- props: boolean altKey
+         number charCode
+         boolean ctrlKey
+         boolean getModifierState(key)
+         string key
+         number keyCode
+         string locale
+         number location
+         boolean metaKey
+         boolean repeat
+         boolean shiftKey
+         number which
+
+// Mouse Events
+- event: onClick onContextMenu onDoubleClick
+         onDrag onDragEnd onDragEnter onDragExit
+         onDragLeave onDragOver onDragStart onDrop
+         onMouseDown onMouseEnter onMouseLeave
+         onMouseMove onMouseOut onMouseOver onMouseUp
+- props: boolean altKey
+         number button
+         number buttons
+         number clientX
+         number clientY
+         boolean ctrlKey
+         boolean getModifierState(key)
+         boolean metaKey
+         number pageX
+         number pageY
+         DOMEventTarget relatedTarget
+         number screenX
+         number screenY
+         boolean shiftKey
+
+// Form
+- event: onChange onInput onInvalid onReset onSubmit
+
+// Animation
+- event: onAnimationStart onAnimationEnd onAnimationIteration
+- props: string animationName
+         string pseudoElement
+         float elapsedTime
+
+// Transition
+- event: onTransitionEnd
+- props: string propertyName
+         string pseudoElement
+         float elapsedTime
+
+// Select
+- event: onSelect
+
+// UI
+- event: onScroll
+- props: number detail
+         DOMAbstractView view
+
+// Wheel
+- event: onWheel
+- props: number deltaMode
+         number deltaX
+         number deltaY
+         number deltaZ
+
+// Clipboard
+- event: onCopy onCut onPaste
+- props: DOMDataTransfer clipboardData
+
+// Other
+- event: onToggle
+
+// Image
+- event: onLoad onError
+
+// Composition
+- event: onCompositionEnd onCompositionStart onCompositionUpdate
+- props: string data
+
+// Focus
+- event: onFocus onBlur
+- props: DOMEventTarget relatedTarget
+
+// Generic
+- event: onError onLoad
+
+// Pointer
+- event: onPointerDown onPointerMove onPointerUp onPointerCancel
+         onGotPointerCapture onLostPointerCapture onPointerEnter
+         onPointerLeave onPointerOver onPointerOut
+- props: number pointerId
+         number width
+         number height
+         number pressure
+         number tangentialPressure
+         number tiltX
+         number tiltY
+         number twist
+         string pointerType
+         boolean isPrimary
+
+// Touch
+- event: onTouchCancel onTouchEnd onTouchMove onTouchStart
+- props: boolean altKey
+         DOMTouchList changedTouches
+         boolean ctrlKey
+         boolean getModifierState(key)
+         boolean metaKey
+         boolean shiftKey
+         DOMTouchList targetTouches
+         DOMTouchList touches
+
+// Media
+- event: onAbort onCanPlay onCanPlayThrough onDurationChange onEmptied onEncrypted
+         onEnded onError onLoadedData onLoadedMetadata onLoadStart onPause onPlay
+         onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend
+         onTimeUpdate onVolumeChange onWaiting
+```
