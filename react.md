@@ -730,6 +730,54 @@ Destructuring allows us to use their base names:
 const { title, onButtonClicked } = this.props;
 ```
 
+## State (Odin)
+
+State is what we use to handle values that **can change over time.**
+
+Example: An app w/ a counter & button to increment it:
+
+```js
+import React, { Component } from "react";
+
+class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      count: 0,
+    };
+
+    this.countUp = this.countUp.bind(this);
+  }
+
+  countUp() {
+    this.setState({
+      count: this.state.count + 1,
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.countUp}>Click Me!</button>
+        <p>{this.state.count}</p>
+      </div>
+    );
+  }
+}
+```
+
+State is ALWAYS declared **in the constructor** of a class component.
+
+In the above code, we declared our state **as an object** with a property `count` set to an initial value of `0`.
+
+`setState()` method is called inside the `countUp` method, which sets the state to a new value.
+
+- State should be treated as **immutable**.
+- NEVER directly change the state (without using `setState`)
+  - NEVER do: `this.state.count = 3` or `this.state.count++`
+- ALWAYS use `setState()` method
+
 ## React Event Handling
 
 Event handlers in React are passed instances of `SyntheticEvent`, a wrapper around the standard browser event.
