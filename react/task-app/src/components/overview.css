@@ -1,0 +1,12 @@
+img {
+  width: 1rem;
+  height: 1rem;
+  padding-right: 0.5rem;
+}
+
+li {
+  list-style: none;
+  font-size: 1rem;
+  font-weight: 600;
+  padding-block: 0.25rem;
+}

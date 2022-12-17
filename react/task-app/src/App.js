@@ -1,59 +1,69 @@
-import React from "react";
-import Overview from "./components/Overview";
+// App.js
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+import React, { Component } from "react";
+import Overview from "./components/Overview";
+import uniqid from "uniqid";
+
+class App extends Component {
+  constructor() {
+    super();
 
     this.state = {
-      listArray: [],
-      inputValue: "",
+      task: {
+        text: "",
+        id: uniqid(),
+        num: 1,
+      },
+      tasks: [],
     };
-
-    this.handleAddTask = this.handleAddTask.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleAddTask(e) {
-    e.preventDefault();
-    const { inputValue, listArray } = this.state;
-
-    inputValue
-      ? this.setState({
-          listArray: [...listArray, inputValue],
-          inputValue: "",
-        })
-      : alert("Error: Please input something!");
-  }
-
-  handleInputChange(e) {
-    const value = e.target.value;
+  handleChange = (e) => {
     this.setState({
-      inputValue: value,
+      task: {
+        text: e.target.value,
+        id: this.state.task.id,
+        num: this.state.task.num,
+      },
     });
-  }
+  };
+
+  onSubmitTask = (e) => {
+    e.preventDefault();
+    this.setState({
+      tasks: this.state.tasks.concat(this.state.task),
+      task: {
+        text: "",
+        id: uniqid(),
+        num: this.state.task.num + 1,
+      },
+    });
+  };
+
+  handleDeleteTask = (e) => {
+    const taskID = e.target.getAttribute("data-task-id");
+    const index = this.state.tasks.findIndex((task) => task.id === taskID);
+    this.setState({
+      tasks: this.state.tasks.filter((task, i) => i !== index),
+    });
+  };
 
   render() {
-    const divStyles = {
-      padding: "1rem",
-      display: "grid",
-      gap: ".25rem",
-      font: "inherit",
-      fontSize: "1rem",
-      fontFamily: "Arial",
-    };
+    const { task, tasks } = this.state;
 
     return (
-      <div style={divStyles}>
-        <label htmlFor="task-input">Task Description</label>
-        <input
-          type="text"
-          id="task-input"
-          value={this.state.inputValue}
-          onChange={this.handleInputChange}
-        ></input>
-        <button onClick={this.handleAddTask}>Add Task</button>
-        <Overview list={this.state.listArray}></Overview>
+      <div>
+        <form onSubmit={this.onSubmitTask}>
+          <label htmlFor="taskInput">Enter task</label>
+          <input
+            onChange={this.handleChange}
+            value={task.text}
+            type="text"
+            id="taskInput"
+          />
+          <button type="submit">Add Task</button>
+        </form>
+        <Overview tasks={tasks} deleteMethod={this.handleDeleteTask} />
       </div>
     );
   }
