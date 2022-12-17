@@ -849,6 +849,28 @@ const {title} = props;
 
 **React Hooks** allow us to set and access state in functional components.
 
+## Passing Arguments to Event Handlers
+
+To pass an extra parameter to an event handler, you can do the following:
+
+```js
+<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+// or
+<button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+```
+
+## Prevent Component from Rendering
+
+```js
+function WarningBanner(props) {
+  if (!props.warn) {
+    return null;
+  }
+
+  return <div>Not rendered if props.warn exists</div>;
+}
+```
+
 ## React Event Handling
 
 Event handlers in React are passed instances of `SyntheticEvent`, a wrapper around the standard browser event.
