@@ -778,6 +778,77 @@ In the above code, we declared our state **as an object** with a property `count
   - NEVER do: `this.state.count = 3` or `this.state.count++`
 - ALWAYS use `setState()` method
 
+**Passing State as a Prop** is one of the greatest & most powerful fetures of React:
+
+- Ability to pass one component's state down to multiple children
+- When that piece of state is changed, _each child component_ that uses it will be automatically re-rendered w/ the new value
+
+Example: `Forum`, passing username to multiple components of the app via the parent component
+
+- `NavBar` & `Forum` will auto update on changes to `username`
+- `Footer` will NOT update
+
+```js
+// in the render method of App.js
+return (
+  <div>
+    <NavBar username={this.state.username} />
+    <Forum username={this.state.username} />
+    <Footer />
+  </div>
+);
+```
+
+## State & Props in Functional Components
+
+Functional components differ in that:
+
+- `props` are passed as an argument to the function
+- `props` are accessed via `props.someFunction` (no `this` keyword)
+
+Example:
+
+```js
+// MyComponent.js
+
+import React from 'react';
+
+function MyComponent(props) {
+  return <div>{props.title}</div>;
+}
+
+export default MyComponent;
+
+// App.js
+
+import React from 'react';
+import MyComponent from './MyComponent';
+
+function App() {
+  return (
+    <div>
+      <MyComponent title="Hello World" />
+    </div>
+  );
+}
+
+export default App;
+```
+
+Destructuring props:
+
+```js
+function MyComponent({ title }) {
+  /...
+}
+
+// OR
+
+const {title} = props;
+```
+
+**React Hooks** allow us to set and access state in functional components.
+
 ## React Event Handling
 
 Event handlers in React are passed instances of `SyntheticEvent`, a wrapper around the standard browser event.
