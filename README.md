@@ -12,6 +12,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 | Project                     | URL                                                         | Source Code                                                  |
 | :-------------------------- | :---------------------------------------------------------- | :----------------------------------------------------------- |
+| **#19 CV Application**      | [Live Demo](https://bmilcs.github.io/odin-cv-application/)  | [GitHub](https://github.com/bmilcs/odin-cv-application)      |
 | **#18 Battleship**          | [Live Demo](https://bmilcs.github.io/odin-battleship/)      | [GitHub](https://github.com/bmilcs/odin-battleship)          |
 | **#17 Testing Practice**    | N/A                                                         | [GitHub](https://github.com/bmilcs/odin-testing-practice)    |
 | **#16 Knights Travails**    | N/A                                                         | [GitHub](https://github.com/bmilcs/odin-knights-travails)    |
