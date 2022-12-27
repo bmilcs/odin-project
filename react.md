@@ -1071,3 +1071,176 @@ It is often used for cleanup tasks, cleaning up `componentDidMount`'s additions,
 - Remove event listeners
 - Cancel network requests
 - Other cleanup routines
+
+## Hooks
+
+Lifecycle methods such as `componentDidMount`, `componentDidUpdate`, and `render` can **ONLY be called in class components**.
+
+Before Hooks, functional components were considered 'dumb' or 'stateless'. Hooks have changed that completely.
+
+**Hooks allow functional components to also have a lifecycle as well as a state.**
+
+### useState
+
+The `useState` hook lets you use state in functional components.
+
+1. Import `useState` hook from React.
+2. Declare state: `const [count, setCount] = useState(0)`
+   1. `count` and `setCount` can be called anything
+   2. Naming convention: `[ something, setSomething]`
+   3. `useState(0)` initializes state with a value of `0`
+
+```js
+import React, { useState } from "react";
+
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  const incrementCount = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div>
+      <div>{count}</div>
+      <button onClick={incrementCount}>Increment</button>
+    </div>
+  );
+};
+
+export default App;
+```
+
+**Note:**
+
+- Setting State is an **ASYNCHRONOUS TASK**.
+- Setting State causes a **RE-RENDER**
+
+### useEffect
+
+`useEffect` is a better alternative to:
+
+- `componentDidMount`
+- `componentDidUpdate`
+- `componentWillUnmount`.
+
+React defers running `useEffect` **until AFTER the browser has painted**. Doing _extra work here_ is less of a problem.
+
+The syntax for `useEffect` is:
+
+```js
+useEffect(() => {}, []);
+
+useEffect(
+  () => {
+    // code to be executed
+  },
+  [
+    // dependency: state, prop or context
+  ]
+);
+```
+
+`useEffect` is triggered **based on changes in the dependencies listed**.
+
+- ESLint will warn you if it _expects a dependency_
+- However, they are **NOT required**
+
+```js
+import React, { useState, useEffect } from "react";
+
+const App = () => {
+  const [color, setColor] = useState("black");
+
+  useEffect(() => {
+    const changeColorOnClick = () => {
+      if (color === "black") {
+        setColor("red");
+      } else {
+        setColor("black");
+      }
+    };
+
+    document.addEventListener("click", changeColorOnClick);
+
+    return () => {
+      document.removeEventListener("click", changeColorOnClick);
+    };
+  }, [color]);
+
+  return (
+    <div>
+      <div
+        id="myDiv"
+        style={{
+          color: "white",
+          width: "100px",
+          height: "100px",
+          position: "absolute",
+          left: "50%",
+          top: "50%",
+          backgroundColor: color,
+        }}
+      >
+        This div can change color. Click on me!
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
+
+There are three different options for the dependency array:
+
+1. **Leave it empty**
+   - equal to `componentDidMount`
+   - runs **one time** when component mounts (inserted in DOM tree)
+
+```js
+useEffect(() => {
+  // Do something ONCE
+  // [] will always equal [] so this will not trigger again
+}, []);
+```
+
+2. **Add a dependency to the array**
+
+   - Similar to `componentDidUpdate`
+   - Only difference: only runs when certain condition has changed
+   - **Will re-run anytime the dependency (color) changes**
+
+```js
+useEffect(() => {
+  // Do something WHEN color changes
+}, [color]);
+```
+
+3. **Leave out the dependency array**
+
+   - equal to `componentDidMount` AND `componentDidUpdate` combined
+   - Runs anytime the component is updated **AND** right after the initial render
+
+```js
+useEffect(() => {
+  // Do something on MOUNT AND UPDATE
+});
+```
+
+The **`return`** statement in our useEffect function is **equal to `componentWillUnmount`** method.
+
+```js
+return () => {
+  document.removeEventListener("click", changeColorOnClick);
+};
+```
+
+### Hook Rules
+
+Only Call Hooks **At the TOP Level**.
+
+- Don't call Hooks inside loops, conditions, or nested functions.
+
+Only Call Hooks from React Functions.
+
+- Don't call Hooks from regular JavaScript functions
