@@ -1240,6 +1240,8 @@ return () => {
 Only Call Hooks **At the TOP Level**.
 
 - Don't call Hooks inside loops, conditions, or nested functions.
+- Add conditional logic **INSIDE useEffect Call**
+- React **relies on the ORDER in which Hooks are called**
 
 Only Call Hooks from React Functions.
 
