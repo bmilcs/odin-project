@@ -1004,3 +1004,70 @@ Synthetic events are different than the native events. Event names:
          onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend
          onTimeUpdate onVolumeChange onWaiting
 ```
+
+## Lifecycle Methods
+
+Lifecycle methods are special methods used to **operate on components throughout their duration in the DOM**.
+
+For example, when the component:
+
+- Mounts
+- Renders
+- Updates
+- Unmounts
+
+`render` is the most important lifecycle method.
+
+Lifecycle methods **can ONLY be used in `class components`**.
+
+### Lifecycle
+
+React uses a _virtual DOM_. Its stages include:
+
+1. `componentDidMount` Creation of the component
+2. `render` render of the component
+3. `componentDidUpdate` update of the component - _optional_
+4. `componentWillUnmount` death of the component
+
+### ComponentDidMount
+
+`componentDidMount` runs when the component _is mounted_ (when it's inserted into the DOM tree).
+
+Common tasks completed in `componentDidMount` method:
+
+- Connect to web APIs & JS frameworks
+- Set Timers: `setTimeout` and `setInterval`
+- Add event listeners
+
+### Render
+
+`render` is a **required** method for all class components.
+
+It contains all logic your component **should display on the screen**. It might also contain a `null` value if you don't want to show anything.
+
+### ComponentDidUpdate
+
+`componentDidUpdate` is:
+
+- NOT called on initial render
+- IS called any other time that the component updates/changes
+- Prone to infinite loops
+  - if used to update state in a way that would cause a re-render
+  - should contain conditional statements to prevent that
+  - ie: compare new props with previous props to make sure some value has changed
+
+This method is a great place:
+
+- To work & operate on the DOM when the component has updated.
+- Send network requests when conditions are met
+- ie: User changed accounts > fetch data for new account during this lifecycle method
+
+### ComponentWillUnmount
+
+`componentWillUnmount` is called **when the component is removed from the DOM tree**.
+
+It is often used for cleanup tasks, cleaning up `componentDidMount`'s additions, such as:
+
+- Remove event listeners
+- Cancel network requests
+- Other cleanup routines
