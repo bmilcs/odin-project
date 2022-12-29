@@ -1246,3 +1246,71 @@ Only Call Hooks **At the TOP Level**.
 Only Call Hooks from React Functions.
 
 - Don't call Hooks from regular JavaScript functions
+
+## Router
+
+Once an application has **multiple pages**, you need to setup a reliable routing system to **handle the component or page** that should be rendered.
+
+**Client-Side Routing** is:
+
+- internal routing inside the JS file
+- rendered to client (front-end)
+- helps build single-page applications **(SPAs)** without refreshing
+- ie: user clicks navbar > URL changes & view of page is modified _within the client_
+
+Benefits:
+
+- Faster user experiences
+- Browser doesn't need to request entirely new document
+- Or need to re-evaluate CSS & JavaScript assets for next page
+- Enables more dynamic UX with **animation**
+
+### [React Router](https://reactrouter.com/en/main/start/overview)
+
+**React Router** is the standard routing library for React apps.
+
+Install: `npm i react-router-dom`
+
+> Example config
+
+```js
+// RouteSwitch.js
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import App from "./App";
+import Profile from "./Profile";
+
+const RouteSwitch = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/*" element={<Error />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default RouteSwitch;
+
+// App.js
+import RouteSwitch from "./RouteSwitch";
+
+// ...
+
+root.render(
+  <React.StrictMode>
+    <RouteSwitch />
+  </React.StrictMode>
+);
+```
+
+1. **Route**: routes with a path (URL path) & component to render
+2. **BrowserRouter**: router
+   - Uses **history API**: `pushState`, `replaceState`, `popstate` event
+   - Keeps UI in sync with URL
+   - Assume `BrowserRouter` is **at the root of all your projects**
+3. **Routes**: renders 1st child Route that matches the location
+   - First Route path that matches the URL _exactly_ will be rendered
+   - All others are ignored (by default)
+   - Old versions required `exact` keyword to achieve this
