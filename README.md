@@ -12,6 +12,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 | Project                     | URL                                                         | Source Code                                                  |
 | :-------------------------- | :---------------------------------------------------------- | :----------------------------------------------------------- |
+| **#20 Memory Card**         | [Live Demo](https://bmilcs.github.io/odin-memory-card/)     | [GitHub](https://github.com/bmilcs/odin-memory-card)         |
 | **#19 CV Application**      | [Live Demo](https://bmilcs.github.io/odin-cv-application/)  | [GitHub](https://github.com/bmilcs/odin-cv-application)      |
 | **#18 Battleship**          | [Live Demo](https://bmilcs.github.io/odin-battleship/)      | [GitHub](https://github.com/bmilcs/odin-battleship)          |
 | **#17 Testing Practice**    | N/A                                                         | [GitHub](https://github.com/bmilcs/odin-testing-practice)    |
