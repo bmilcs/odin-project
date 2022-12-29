@@ -1314,3 +1314,210 @@ root.render(
    - First Route path that matches the URL _exactly_ will be rendered
    - All others are ignored (by default)
    - Old versions required `exact` keyword to achieve this
+
+## React Testing Part 1
+
+In order to do testing inside React, we need to import some packages inside of our testing file:
+
+```js
+import React from "react";
+import { ... } from "@testing-library/react";
+import "@testing-library/jest-dom";  // optional
+import userEvent from "@testing-library/user-event";
+import TestComponent from "path-to-test-component";
+```
+
+- `@testing-library/react`: useful functions - `render()`
+- `@testing-library/jest-dom`: custom matchers, assertive functions - `toBeInTheDocument` ([complete list](https://github.com/testing-library/jest-dom))
+  - Element attributes
+  - Text Content
+  - Classes, etc.
+- `@testing-library/user-event`: `userEvent` API
+  - Simulates user interactions with a web page
+- _No need to import `jest`_: automatically detected in `.test.jsx?` files
+
+Note: All of these packages are included in `create-react-app` AND the scripts are preconfigured in `package.json`
+
+### First Query
+
+```js
+// App.js
+import React from "react";
+
+const App = () => <h1>Our First Test</h1>;
+export default App;
+
+// App.test.js
+
+import React from "react";
+import { render } from "@testing-library/react";
+import App from "./App";
+
+describe("App component", () => {
+  it("renders correct heading", () => {
+    const { getByRole } = render(<App />);
+    expect(getByRole("heading").textContent).toMatch(/our first test/i);
+  });
+});
+```
+
+The `byRole` methods (with `name` option) are the **preferred method for querying**.
+
+- Ensure our UI is accessible to everyone
+- Regardless of what they use to navigate the page: mouse, assistive tech
+
+To improve the above example, we should use:
+
+```js
+getByRole("heading", { name: "Our First Test" });
+```
+
+#### [Testing Library Queries](https://testing-library.com/docs/queries/about/)
+
+Priority of queries: Accessible to **Everyone** (including assistive technology)
+
+[List of Roles](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques#roles)
+
+- \*`getRoleBy`: every element in **accessibility tree**.
+  - `name` option: filter returned elements by their **accessible name**
+  - should be top preference **for just about everything**
+- `getByLabelText`: form field label text
+- `getByText`: text content (non-interactive), ie: divs, spans, paragraphs
+- `getDisplayValue`: form filled in values
+- `getByPlaceholderText`
+
+**TextMatch**: string, regex, or function of signature
+
+### Simulating User Events
+
+Live user feedback & interaction is #1.
+
+Confidence in our components can be built through **tests**.
+
+```js
+// Changes heading of App:
+import React, { useState } from "react";
+
+const App = () => {
+  const [heading, setHeading] = useState("Magnificent Monkeys");
+
+  const clickHandler = () => {
+    setHeading("Radical Rhinos");
+  };
+
+  return (
+    <>
+      <button type="button" onClick={clickHandler}>
+        Click Me
+      </button>
+      <h1>{heading}</h1>
+    </>
+  );
+};
+
+export default App;
+```
+
+To test if the _button works as intended_, the `screen` object has all the methods needed for querying.
+
+With `screen`, we don't have to worry about keeping `render`'s destructuring up-to-date.
+
+- Better to use `screen` to access queries
+- Rather than to destructure `render`
+
+```js
+// App.test.js
+
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import App from "./App";
+
+describe("App component", () => {
+  it("renders magnificent monkeys", () => {
+    // since screen does not have the container property, we'll destructure render to obtain container for this test
+    const { container } = render(<App />);
+    expect(container).toMatchSnapshot();
+  });
+
+  it("renders radical rhinos after button click", () => {
+    render(<App />);
+    const button = screen.getByRole("button", { name: "Click Me" });
+
+    userEvent.click(button);
+
+    expect(screen.getByRole("heading").textContent).toMatch(/radical rhinos/i);
+  });
+});
+```
+
+First test: utilizes **snapshots** to check whether all nodes render as we expect them to.
+
+Second test: simulate click event & check if heading changed
+
+`toMatch` is one of many assertions we can make.
+
+Note: React Testing Library _unmounts the rendered components_.
+
+- We must **render for each test**
+- `beforeEach` Jest function is great for lots of tests
+
+### What are Snapshots?
+
+Snapshot testing: Comparing our rendered component with an associated snapshot file.
+
+- Example: "magnificent monkeys renders" test generated this snapshot:
+
+```js
+// App.test.js.snap
+
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`magnificent monkeys render 1`] = `
+<div>
+  <button
+    type="button"
+  >
+    Click Me
+  </button>
+  <h1>
+    Magnificent Monkeys
+  </h1>
+</div>
+`;
+```
+
+Snapshots are **HTML representations** of our components.
+
+- Compared against `App` in future snapshot assertions
+- If `App` changes, the test fails.
+
+Snapshots are **fast** & **easy** to write.
+
+- `toMatchSnapshot`: assertion saving us from writing multiple lines of code
+- Don't have to test the existence of button/heading
+- Prevent unexpected changes to creep into our code
+
+**[Jest Snapshot Testing](https://jestjs.io/docs/snapshot-testing)**
+
+```js
+import renderer from "react-test-renderer";
+import Link from "../Link";
+
+it("renders correctly", () => {
+  const tree = renderer
+    .create(<Link page="http://www.facebook.com">Facebook</Link>)
+    .toJSON();
+  expect(tree).toMatchSnapshot();
+});
+```
+
+- Renders UI component
+- Creates a snapshot
+- Compares snapshot to reference file stored alongside the test
+
+To update a snapshot, run the command:
+
+```sh
+jest --updateSnapshot
+```

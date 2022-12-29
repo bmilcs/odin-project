@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component renders magnificent monkeys 1`] = `
+<div>
+  <button
+    type="button"
+  >
+    Click Me
+  </button>
+  <h1>
+    Magnificent Monkeys
+  </h1>
+</div>
+`;
