@@ -1651,3 +1651,112 @@ test("render with a setup function", async () => {
   // ...
 });
 ```
+
+## React Testing Part 2
+
+What is **Mocking**?
+
+Mocking function calls allows you to 'fake' API calls and return a static set of data, overriding the real function in your code.
+
+### Testing Callback Handlers
+
+Every single user interaction involves callbacks.
+
+Sometimes they're passed in as props to alter state of the parent component.
+
+```js
+// FavoriteInput.js
+
+import React from "react";
+
+const FavoriteInput = ({ onChange: onInputChange, id }) => {
+  const inputHandler = (event) => onInputChange(event.target.value);
+
+  return (
+    <label htmlFor={id}>
+      What is your favorite wild animal?
+      <input id={id} onChange={inputHandler} />
+    </label>
+  );
+};
+
+export default FavoriteInput;
+```
+
+- `FavoriteInput`: single component, couple of props passed in
+- `onChange` prop: no idea what it does or how it affects the application
+- All we know: must be called when users type in the input box
+
+Testing the component:
+
+```js
+// FavoriteInput.test.js
+
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
+import FavoriteInput from "./FavoriteInput";
+
+describe("Favorite Input", () => {
+  it("calls onChange correct number of times", () => {
+    const onChangeMock = jest.fn();
+    render(<FavoriteInput onChange={onChangeMock} />);
+    const input = screen.getByRole("textbox");
+
+    userEvent.type(input, "Lion");
+
+    expect(onChangeMock).toHaveBeenCalledTimes(4);
+  });
+
+  it("calls onChange with correct argument(s) on each input", () => {
+    const onChangeMock = jest.fn();
+    render(<FavoriteInput onChange={onChangeMock} />);
+    const input = screen.getByRole("textbox");
+
+    userEvent.type(input, "Ox");
+
+    expect(onChangeMock).toHaveBeenNthCalledWith(1, "O");
+    expect(onChangeMock).toHaveBeenNthCalledWith(2, "Ox");
+  });
+
+  it("input has correct values", () => {
+    const onChangeMock = jest.fn();
+    render(<FavoriteInput onChange={onChangeMock} />);
+    const input = screen.getByRole("textbox");
+
+    userEvent.type(input, "Whale");
+
+    expect(input).toHaveValue("Whale");
+  });
+});
+```
+
+Three tests & we're done.
+
+`onChange` handler is mocked using Jest's `jest.fn()` function.
+
+1. Number of times `onChange` is called
+2. Check the arguments as they're passed to `onChange`
+3. Alternative/redudant test: check input value contains userEvent type
+
+Mocks could be setup in a `beforeEach` block:
+
+- Fine in most cases
+- However, having all setup inside the test makes it easier to understand
+  - Don't have to look around the file for context
+  - Makes reviewing changes in the future _substantially easier_
+  - Decreases chances of leakage creating problems throughout the test suite
+
+Unless our test file is getting really long and the test prep is dozens of lines in length, test setup should be done within the same block.
+
+### Mocking Child Components
+
+In React, component trees can get large, causing tests to become convoluted.
+
+For components higher up in the tree, mocking child components can be necessary.
+
+- Doesn't happen often
+- Beneficial to know this concept
+
+### React Testing In The Real World
