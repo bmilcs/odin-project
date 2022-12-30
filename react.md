@@ -1519,5 +1519,31 @@ it("renders correctly", () => {
 To update a snapshot, run the command:
 
 ```sh
+# update all
 jest --updateSnapshot
+
+# update specific tests
+jest --updateSnapshot --testNamePattern <NAME PATTERN>
 ```
+
+To **interactively** update a snapshot after it fails in the command line, follow the prompt: `Press i to update failing snapshots interactively.`
+
+Tips for snapshot testing:
+
+- Treat snapshots as code: commit & review them
+- Tests should be deterministic: same output everytime
+  - ie: `Date.now()` should be mocked to `Date.now = jest.fn(() => 1482363367071)`
+- Use descriptive snapshot names:
+  - `<UserName /> should render null`
+  - `<UserName /> should render Alan Turing`
+
+**Things to consider (Cons)**:
+
+- What _exactly_ are we testing? What's being validated? Is it even correct?
+- Snapshots may cause **false positives**
+  - We can't be sure of the validity of our snapshot test
+  - Can make us overconfident in our code
+- Snapshots may cause **false negatives**
+  - Fixing puncutation: FAIL
+  - Replacing HTML tag: FAIL
+  - We may lose confidence in our test suite altogether
