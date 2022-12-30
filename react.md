@@ -1547,3 +1547,107 @@ Tips for snapshot testing:
   - Fixing puncutation: FAIL
   - Replacing HTML tag: FAIL
   - We may lose confidence in our test suite altogether
+
+**Benefits of Snapshot Testing**:
+
+- Snapshot tests can be written **faster**
+- Snapshot tests check if components behave correctly
+- Snapshots allow conditional rendering tests
+
+**Disadvantages of Snapshot Testing**:
+
+- Problems w/ larger snapshots
+  - Solution: npm's `no-large-snapshots`
+- Issues with translations: multi-language apps
+-
+
+### Text Matching
+
+Given this HTML:
+
+```html
+<div>Hello World</div>
+```
+
+The following **WILL FIND** the `<div>`:
+
+```js
+// Matching a string:
+getByText(container, "Hello World"); // full string match
+getByText(container, "llo Worl", { exact: false }); // substring match
+getByText(container, "hello world", { exact: false }); // ignore case
+
+// Matching a regex:
+getByText(container, /World/); // substring match
+getByText(container, /world/i); // substring match, ignore case
+getByText(container, /^hello world$/i); // full string match, ignore case
+getByText(container, /Hello W?oRlD/i); // advanced regex
+
+// Matching with a custom function:
+getByText(container, (content, element) => content.startsWith("Hello"));
+```
+
+### ByTestId
+
+`ByTestId` can be used to target `data-testid` attribute:
+
+```js
+// App.js
+<div data-testid="custom-element" />;
+
+// App.Test.js
+import { render, screen } from "@testing-library/react";
+
+render(<MyComponent />);
+const element = screen.getByTestId("custom-element");
+```
+
+```js
+getByTestId,
+  queryByTestId,
+  getAllByTestId,
+  queryAllByTestId,
+  findByTestId,
+  findAllByTestId;
+```
+
+### User Events
+
+`fireEvent`: dispatches DOM events
+
+`userEvent`: simulates _full interactions_
+
+#### Writing tests w/ `userEvent`:
+
+**Recommended**:
+
+- invoke `userEvent.setup()` before rendering the component
+- **DON'T** render or use `userEvent` OUTSIDE of the test itself
+  - ie: no `before` / `after` hook
+
+```js
+// inlining
+test("trigger some awesome feature when clicking the button", async () => {
+  const user = userEvent.setup();
+  render(<MyComponent />);
+
+  await user.click(screen.getByRole("button", { name: /click me!/i }));
+
+  // ...assertions...
+});
+
+// OR
+
+// setup function
+function setup(jsx) {
+  return {
+    user: userEvent.setup(),
+    ...render(jsx),
+  };
+}
+
+test("render with a setup function", async () => {
+  const { user } = setup(<MyComponent />);
+  // ...
+});
+```
