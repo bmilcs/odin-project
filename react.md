@@ -1921,3 +1921,12 @@ it("should display fetched data", async () => {
   expect(el.innerHTML).toBe("42");
 });
 ```
+
+#### [Mocking Child Component(s)](https://medium.com/@taylormclean15/jest-testing-mocking-child-components-to-make-your-unit-tests-more-concise-18691ef6a0c2)
+
+Mocked child components should:
+
+- accurately capture the functionality of the original component
+- needs to present the same API as the original
+  - same props
+  - same callbacks
