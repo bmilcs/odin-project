@@ -1617,7 +1617,7 @@ getByTestId,
 
 `userEvent`: simulates _full interactions_
 
-#### Writing tests w/ `userEvent`:
+#### Writing tests w/ `userEvent`
 
 **Recommended**:
 
@@ -1760,3 +1760,164 @@ For components higher up in the tree, mocking child components can be necessary.
 - Beneficial to know this concept
 
 ### React Testing In The Real World
+
+- [Odin Project Submissions List](https://github.com/TheOdinProject/theodinproject/blob/main/app/javascript/components/project-submissions/components/submissions-list.jsx)
+- [Odin Project Submissions List Jest Tests](https://github.com/TheOdinProject/theodinproject/blob/main/app/javascript/components/project-submissions/components/__tests__/submissions-list.test.jsx)
+
+#### [`act() API`](https://github.com/mrdulin/react-act-examples/blob/master/sync.md)
+
+Wrap test **interactions** with `act(() => ...)`. React will take care of the rest.
+
+`act()` guarentees 2 things:
+
+- Any **state** updates will be executed
+- Any enqueued **effects** will be executed
+
+`act()` helps with:
+
+- events
+- timers
+- promises
+
+> Event Test
+
+```js
+// App
+function App() {
+  let [counter, setCounter] = useState(0);
+  // use setState(xxx => xxx + 1), not setState(state+1)
+  return <button onClick={() => setCounter((x) => x + 1)}>{counter}</button>;
+}
+
+// App.test
+it("should increment a counter", () => {
+  const el = document.createElement("div");
+  document.body.appendChild(el);
+  // we attach the element to document.body to ensure events work
+  ReactDOM.render(<App />, el);
+  const button = el.childNodes[0];
+  act(() => {
+    for (let i = 0; i < 3; i++) {
+      button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    }
+  });
+  expect(button.innerHTML).toBe(3); // this fails, it's actually "1"!
+});
+```
+
+> Timer Test
+
+```js
+// App
+function App() {
+  const [ctr, setCtr] = useState(0);
+  useEffect(() => {
+    setTimeout(() => setCtr(1), 1000);
+  }, []);
+  return ctr;
+}
+
+// App.test * fake timers
+it("should tick to a new value", () => {
+  jest.useFakeTimers();
+  const el = document.createElement("div");
+  act(() => {
+    ReactDOM.render(<App />, el);
+  });
+  expect(el.innerHTML).toBe("0");
+  act(() => {
+    jest.runAllTimers();
+  });
+  expect(el.innerHTML).toBe("1");
+});
+
+// App.test * "real" timers with async version of act
+it("should tick to a new value", async () => {
+  // a helper to use promises with timeouts
+  function sleep(period) {
+    return new Promise((resolve) => setTimeout(resolve, period));
+  }
+  const el = document.createElement("div");
+  act(() => {
+    ReactDOM.render(<App />, el);
+  });
+  expect(el.innerHTML).toBe("0");
+  await act(async () => {
+    await sleep(1100); // wait *just* a little longer than the timeout in the component
+  });
+  expect(el.innerHTML).toBe("1");
+});
+```
+
+> Promises Test
+
+```js
+// App
+function App() {
+  let [data, setData] = useState(null);
+  useEffect(() => {
+    fetch("/some/url").then(setData);
+  }, []);
+  return data;
+}
+
+// App.test
+it("should display fetched data", () => {
+  // a rather simple mock, you might use something more advanced for your needs
+  let resolve;
+  function fetch() {
+    return new Promise((_resolve) => {
+      resolve = _resolve;
+    });
+  }
+
+  const el = document.createElement("div");
+  act(() => {
+    ReactDOM.render(<App />, el);
+  });
+
+  expect(el.innerHTML).toBe("");
+  await act(async () => {
+    resolve(42);
+  });
+  expect(el.innerHTML).toBe("42");
+});
+```
+
+> Async / Await Tests
+
+```js
+// App
+function App() {
+  let [data, setData] = useState(null);
+  async function somethingAsync() {
+    // this time we use the await syntax
+    let response = await fetch("/some/url");
+    setData(response);
+  }
+  useEffect(() => {
+    somethingAsync();
+  }, []);
+  return data;
+}
+
+// App.test
+it("should display fetched data", async () => {
+  // a rather simple mock, you might use something more advanced for your needs
+  let resolve;
+  function fetch() {
+    return new Promise((_resolve) => {
+      resolve = _resolve;
+    });
+  }
+  const el = document.createElement("div");
+  act(() => {
+    ReactDOM.render(<App />, el);
+  });
+  expect(el.innerHTML).toBe("");
+  await act(async () => {
+    resolve(42);
+  });
+  expect(el.innerHTML).toBe("42");
+});
+```
