@@ -1930,3 +1930,210 @@ Mocked child components should:
 - needs to present the same API as the original
   - same props
   - same callbacks
+
+## Advanced Concepts
+
+### [PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
+
+JavaScript does not allow you to declare types for variables and properties. However, many programmers agree that the **pattern of declaring types is preferable because:**
+
+- Allows you to catch errors
+- ie: Passing string to variable that _should_ be a number
+
+React provides type declaration using `PropTypes`.
+
+TypeScript is another option to use with React.
+
+[React's Documentation on PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
+
+```sh
+# Installing PropTypes:
+npm install --save prop-types
+```
+
+```js
+// class components
+import PropTypes from "prop-types";
+
+class Greeting extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+
+Greeting.propTypes = {
+  name: PropTypes.string,
+};
+
+// functional components
+
+import PropTypes from "prop-types";
+
+function HelloWorldComponent({ name }) {
+  return <div>Hello, {name}</div>;
+}
+
+// name must be a string
+HelloWorldComponent.propTypes = {
+  name: PropTypes.string,
+};
+
+// sets the default values for props:
+HelloWorldComponent.defaultProps = {
+  name: "Stranger",
+};
+
+// require a single child element:
+HelloWorldComponent.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+
+export default HelloWorldComponent;
+```
+
+### [Styled Components](https://styled-components.com/docs/basics#)
+
+The style-components package provides the ability to write CSS directly to React components for easy reuse & consistency.
+
+With styled components, you get:
+
+- **Automatic critical CSS**: only loads css styles that are necessary for what's rendered. Users load the minimal amount of code necessary.
+- **No Class Name Bugs**: generates unique class names for styles automatically.
+- **Easier Deletion of CSS**: every bit of styling is tied to specific components.
+- **Simple Dynamic Styling**: adapting styling of a component based on props or a global theme is simple & intuitive
+- **Painless Maintenance**: never have to hunt across files to find out what style is affecting a component
+- **Automatic Vendor Prefixing**: write css in the current standard & styled-components handles the rest
+
+```sh
+npm install --save styled-components
+```
+
+```json
+// package.json
+{
+  "resolutions": {
+    "styled-components": "^5"
+  }
+}
+```
+
+```js
+// Create a Title component that'll render an <h1> tag with some styles
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`;
+
+// Create a Wrapper component that'll render a <section> tag with some styles
+const Wrapper = styled.section`
+  padding: 4em;
+  background: papayawhip;
+`;
+
+// Use Title and Wrapper like any other React component – except they're styled!
+render(
+  <Wrapper>
+    <Title>Hello World!</Title>
+  </Wrapper>
+);
+```
+
+Conditional styling based on props:
+
+```js
+const Button = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: ${(props) => (props.primary ? "palevioletred" : "white")};
+  color: ${(props) => (props.primary ? "white" : "palevioletred")};
+`;
+```
+
+Extending Styles:
+
+```js
+// The Button from the last section without the interpolations
+const Button = styled.button`
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
+
+// A new component based on Button, but with some override styles
+const TomatoButton = styled(Button)`
+  color: tomato;
+  border-color: tomato;
+`;
+```
+
+To change the tag or component that a styled component renders, you can use the `as=""` prop.
+
+Example: Mix of `<button>` and `<a>` tags that you want to style the same way:
+
+```js
+render(
+  <div>
+    <Button>Normal Button</Button>
+    <Button as="a" href="#">
+      Link with Button styles
+    </Button>
+    <TomatoButton as="a" href="#">
+      Link with Tomato Button styles
+    </TomatoButton>
+  </div>
+);
+```
+
+`as` works with components too:
+
+```js
+const ReversedButton = (props) => (
+  <Button {...props} children={props.children.split("").reverse()} />
+);
+
+render(
+  <div>
+    <Button>Normal Button</Button>
+    <Button as={ReversedButton}>Custom Button with Normal Button styles</Button>
+  </div>
+);
+```
+
+Styling any component:
+
+```js
+// This could be react-router-dom's Link for example
+const Link = ({ className, children }) => (
+  <a className={className}>{children}</a>
+);
+
+const StyledLink = styled(Link)`
+  color: palevioletred;
+  font-weight: bold;
+`;
+```
+
+Passed props:
+
+```js
+// Create an Input component that'll render an <input> tag with some styles
+const Input = styled.input`
+  padding: 0.5em;
+  margin: 0.5em;
+  color: ${(props) => props.inputColor || "palevioletred"};
+  background: papayawhip;
+  border: none;
+  border-radius: 3px;
+`;
+
+// Render a styled text input with the standard input color, and one with a custom input color
+render(
+  <div>
+    <Input defaultValue="@probablyup" type="text" />
+    <Input defaultValue="@geelen" type="text" inputColor="rebeccapurple" />
+  </div>
+);
+```
