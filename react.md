@@ -2172,7 +2172,7 @@ npx create-react-app my-app --template redux
 npx create-react-app my-app --template redux-typescript
 ```
 
-A basic example of redux:
+Redux example:
 
 ```js
 import { createStore } from "redux";
@@ -2219,3 +2219,289 @@ store.dispatch({ type: "counter/incremented" });
 store.dispatch({ type: "counter/decremented" });
 // {value: 1}
 ```
+
+Redux Tookit Example:
+
+```js
+import { createSlice, configureStore } from "@reduxjs/toolkit";
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: {
+    value: 0,
+  },
+  reducers: {
+    incremented: (state) => {
+      // Redux Toolkit allows us to write "mutating" logic in reducers. It
+      // doesn't actually mutate the state because it uses the Immer library,
+      // which detects changes to a "draft state" and produces a brand new
+      // immutable state based off those changes
+      state.value += 1;
+    },
+    decremented: (state) => {
+      state.value -= 1;
+    },
+  },
+});
+
+export const { incremented, decremented } = counterSlice.actions;
+
+const store = configureStore({
+  reducer: counterSlice.reducer,
+});
+
+// Can still subscribe to the store
+store.subscribe(() => console.log(store.getState()));
+
+// Still pass action objects to `dispatch`, but they're created for us
+store.dispatch(incremented());
+// {value: 1}
+store.dispatch(incremented());
+// {value: 2}
+store.dispatch(decremented());
+// {value: 1}
+```
+
+### Context API
+
+As applications grow in size, we end up passing props through a lot of components or we might have a lot of components that require the same props.
+
+This is known as **PROP DRILLING**.
+
+To avoid this, we can use the `Context API`:
+
+- Lets parent component provide data to ALL child components in its tree
+- **WITHOUT** passing props
+
+Example: Dark theme with a lot of components. `context` lets all child components have access to the theme data.
+
+> [React Beta docs example:](https://beta.reactjs.org/learn/passing-data-deeply-with-context)
+
+```js
+// App.js
+import Heading from "./Heading.js";
+import Section from "./Section.js";
+
+export default function ProfilePage() {
+  return (
+    <Section>
+      <Heading>My Profile</Heading>
+      <Post title="Hello traveller!" body="Read about my adventures." />
+      <AllPosts />
+    </Section>
+  );
+}
+
+function AllPosts() {
+  return (
+    <Section>
+      <Heading>Posts</Heading>
+      <RecentPosts />
+    </Section>
+  );
+}
+
+function RecentPosts() {
+  return (
+    <Section>
+      <Heading>Recent Posts</Heading>
+      <Post title="Flavors of Lisbon" body="...those pastéis de nata!" />
+      <Post title="Buenos Aires in the rhythm of tango" body="I loved it!" />
+    </Section>
+  );
+}
+
+function Post({ title, body }) {
+  return (
+    <Section isFancy={true}>
+      <Heading>{title}</Heading>
+      <p>
+        <i>{body}</i>
+      </p>
+    </Section>
+  );
+}
+
+//
+// Section.js
+//
+
+import { useContext } from 'react';
+import { LevelContext } from './LevelContext.js';
+
+export default function Section({ children, isFancy }) {
+  const level = useContext(LevelContext);
+  return (
+    <section className={
+      'section ' +
+      (isFancy ? 'fancy' : '')
+    }>
+      <LevelContext.Provider value={level + 1}>
+        {children}
+      </LevelContext.Provider>
+    </section>
+  );
+}
+
+//
+// Heading.js
+//
+
+import { useContext } from 'react';
+import { LevelContext } from './LevelContext.js';
+
+export default function Heading({ children }) {
+  const level = useContext(LevelContext);
+  switch (level) {
+    case 0:
+      throw Error('Heading must be inside a Section!');
+    case 1:
+      return <h1>{children}</h1>;
+    case 2:
+      return <h2>{children}</h2>;
+    case 3:
+      return <h3>{children}</h3>;
+    case 4:
+      return <h4>{children}</h4>;
+    case 5:
+      return <h5>{children}</h5>;
+    case 6:
+      return <h6>{children}</h6>;
+    default:
+      throw Error('Unknown level: ' + level);
+  }
+}
+
+//
+// LevelContext.js
+//
+
+import { createContext } from 'react';
+
+export const LevelContext = createContext(0);
+```
+
+### [Context, Reducer & State](https://beta.reactjs.org/learn/scaling-up-with-reducer-and-context)
+
+Reducers let you consolidate a component's state update logic.
+
+As components grow, so does the **amount of state logic sprinkled throughout it**. To reduce complexity and **keep all your logic in one easy-to-access place**, you can:
+
+- Move state logic into a single function
+- Outside your component
+- Called a reducer
+
+To migrate **FROM `useState` TO `useReducer`**:
+
+1. Move from setting state to dispatching actions
+2. Write a reducer function
+3. Use the reducer from your component
+
+Context lets you pass info deep down to other components. You can **combine reducers & context together** to manage state of a complex screen.
+
+### [Higher-Order Components](https://www.smashingmagazine.com/2020/06/higher-order-components-react/)
+
+A higher-order component (_HOC_) is a technique for **reusing component logic**.
+
+HOC component are functions that:
+
+- Take 1+ components
+- Return a new, upgraded component
+- Don't modify or mutate components: Create new ones
+- Used to compose components for code reuse
+- Pure function: no side effects
+
+Real world HOC examples:
+
+- react-redux: `connect(mapStateToProps, mapDispatchToProps)(UserPage)`
+- react-router: `withRouter(UserPage)`
+- material-ui: `withStyles(styles)(UserPage)`
+
+Structure of a HOC:
+
+- Component
+- Takes another component as an argument
+- Returns a new component
+- The returned component can render the original component that was passed to it
+
+```js
+import React from "react";
+// Take in a component as argument WrappedComponent
+const higherOrderComponent = (WrappedComponent) => {
+  // And return another component
+  class HOC extends React.Component {
+    render() {
+      return <WrappedComponent />;
+    }
+  }
+  return HOC;
+};
+```
+
+Use cases:
+
+- Loader while component waits for data
+- `WithLoading` example below
+
+#### With Loading HOC Example
+
+```js
+import React from "react";
+
+// List component
+const List = (props) => {
+  const { repos } = props;
+  if (!repos) return null;
+  if (!repos.length) return <p>No repos, sorry</p>;
+  return (
+    <ul>
+      {repos.map((repo) => {
+        return <li key={repo.id}>{repo.full_name}</li>;
+      })}
+    </ul>
+  );
+};
+
+// withLoading HOC
+function WithLoading(Component) {
+  return function WithLoadingComponent({ isLoading, ...props }) {
+    if (!isLoading) return <Component {...props} />;
+    return <p>Hold on, fetching data might take some time.</p>;
+  };
+}
+
+// Supercharged List
+const ListWithLoading = WithLoading(List);
+
+// App
+class App extends React.Component {
+  constructor() {
+    this.state = {
+      loading: false,
+      repos: null,
+    };
+  }
+
+  componentDidMount() {
+    this.setState({ loading: true });
+    fetch(`https://api.github.com/users/hacktivist123/repos`)
+      .then((json) => json.json())
+      .then((repos) => {
+        this.setState({ loading: false, repos: repos });
+      });
+  }
+
+  render() {
+    return (
+      // Supercharged List: Built w/ HOC withLoading
+      <ListWithLoading
+        isLoading={this.state.loading}
+        repos={this.state.repos}
+      />
+    );
+  }
+}
+export default App;
+```
+
+#### Conditional Rendering Components
