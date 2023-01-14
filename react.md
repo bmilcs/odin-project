@@ -2505,3 +2505,100 @@ export default App;
 ```
 
 #### Conditional Rendering Components
+
+Example: Render a component when a user has been authenticated (ie: a protected component)
+
+`withAuth` is a HOC that takes a component and returns a new component named `AuthenticatedComponent`, that checks whether the user is authenticated.
+
+If not authenticated, the `loginErrorMessage` component is returned.
+
+```js
+// withAuth
+import React from "react";
+
+function withAuth(Component) {
+  return class AuthenticatedComponent extends React.Component {
+    isAuthenticated() {
+      // has to be set from your app's logic
+      return this.props.isAuthenticated;
+    }
+
+    render() {
+      const loginErrorMessage = (
+        <div>
+          Please <a href="/login">login</a> in order to view this part of the
+          application.
+        </div>
+      );
+
+      return (
+        <div>
+          {this.isAuthenticated === true ? (
+            <Component {...this.props} />
+          ) : (
+            loginErrorMessage
+          )}
+        </div>
+      );
+    }
+  };
+}
+
+// MyProtectedComponent
+class MyProectedComponent extends React.Component {
+  render() {
+    return <div>This is only viewable by authenticated users.</div>;
+  }
+}
+
+// Add authentication to MyPrivateComponent:
+const ProtectedComponent = withAuth(MyPrivateComponent);
+
+<ProtectedComponent isAuthenticated=false />
+```
+
+#### Provide Component With Any Prop You Want
+
+A popular case for HOCs is creating a wrapper HOC to provide components with a reusable prop, that's needed by many components.
+
+```js
+// simple component
+const HelloComponent = ({ name, ...otherProps }) => (
+  <div {...otherProps}>Hello {name}!</div>
+);
+
+// HOC: withNameChange, sets a name prop on base component to "New Name"
+const withNameChange = (BaseComponent) => (props) =>
+  <BaseComponent {...props} name="New Name" />;
+
+// Using HOC to create a new, pure component
+const EnhancedHello = withNameChange(HelloComponent);
+
+<EnhancedHello />; // <div>Hello New Name</div>
+
+<EnhancedHello name="bmilcs" />; // <div>Hello bmilcs</div>
+```
+
+#### Building a High-Order Component
+
+```js
+import React from "react";
+
+const Hello = ({ name }) => <h1>Hello {name}!</h1>;
+
+function withName(WrappedComponent) {
+  return class extends React.Component {
+    render() {
+      return <WrappedComponent name="Smashing Magazine" {...this.props} />;
+    }
+  };
+}
+
+const HelloWithName = withName(Hello);
+
+const App = () => (
+  <div>
+    <HelloWithName />
+  </div>
+);
+```
