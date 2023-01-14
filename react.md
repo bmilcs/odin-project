@@ -2602,3 +2602,91 @@ const App = () => (
   </div>
 );
 ```
+
+### More Hooks
+
+[List of React Hooks](https://reactjs.org/docs/hooks-reference.html)
+
+`useTransition`: returns a stateful value for pending state **of the transition** & a function **to start it**
+
+- `const [isPending, startTransition] = useTransition();`
+
+`useId`: generate unique IDs, stable across server/client, avoiding hydration mismatches
+
+#### Building Custom Hooks
+
+Custom Hooks let you extract commonly used logic from the UI into JS functions.
+
+- Prevent code duplication
+- Make logic reuseable within multiple components
+
+Rules for custom hooks:
+
+- Must being with `use` (ie: `useToggle`)
+- Must be called within a React component
+- Must be called in the highest level of a component
+  - No nesting: functions, etc.
+
+Example: Return a response from API URL ([Free Code Camp Example](https://www.freecodecamp.org/news/the-beginners-guide-to-react-hooks/))
+
+```js
+//useFetch.js
+import { useState, useEffect } from "react";
+
+export function useFetch(url) {
+  //values
+  const [data, setData] = useState(null);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("something wrong, çould not connect to resource");
+        }
+        setData(res.json());
+      })
+      .then(() => {
+        setError("");
+      })
+      .catch((error) => {
+        console.warn(`sorry an error occurred, due to ${error.message} `);
+        setData(null);
+        setError(error.message);
+      });
+  }, [url]);
+  return [data, error];
+}
+```
+
+[Another example](https://www.youtube.com/watch?v=aeMJfoGfWT4)
+
+```js
+// useToggle.js
+import { useContext, useEffect, useState } from "react";
+
+export const useToggle = (initialVal = false) => {
+  const [state, setState] = useState(initialVal);
+
+  const toggle = () => {
+    setState((prev) => !prev);
+  };
+
+  // differs from a normal react component (logic, not UI/dom)
+  return [state, toggle];
+};
+```
+
+```js
+// App.js
+import { useToggle } from "./useToggle";
+
+function App() {
+  const [isVisible, toggle] = useToggle();
+  return (
+    <div className="App">
+      <button onClick={toggle}>{isVisible ? "Hide" : "Show"}</button>
+      {isVisible && <h1>Secret Text</h1>}
+    </div>
+  );
+}
+```
