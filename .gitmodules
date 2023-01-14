@@ -4,6 +4,3 @@
 [submodule "git"]
 	path = git
 	url = https://github.com/bmilcs/odin-git-deeper-look
-[submodule "baas/codelab-friendlychat-web"]
-	path = baas/codelab-friendlychat-web
-	url = https://github.com/firebase/codelab-friendlychat-web
