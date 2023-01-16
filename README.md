@@ -83,7 +83,7 @@ These assignments were tackled with a growth mindset and I did not reference the
   - [x] A Bit of Computer Science
   - [x] Testing JavaScript
   - [x] Intermediate Git
-  - [ ] React JS
+  - [x] React JS
   - [ ] JavaScript and the Backend
   - [ ] Finishing Up with JavaScript
 
