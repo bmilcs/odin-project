@@ -1,4 +1,4 @@
-# Backend As A Service (BaaS)
+# Backend As A Service (BaaS) with Firebase
 
 Unless you use `localStorage`, our apps forget the user's preferences and any changes made, as soon as the page gets reloaded.
 
@@ -41,4 +41,55 @@ Cloud Firestore features:
     - pattern matching on your data
     - more
   - Integrates w/ Firebase Authentication
-  -
+
+## Cloud Functions
+
+`/functions/src/index.js`:
+
+```js
+const functions = require("firebase-functions");
+```
+
+HTTP Functions (invoked from a web url)
+
+```js
+// http request #1: respond with a value
+exports.randomNumber = functions.https.onRequest((request, response) => {
+  const number = Math.random() * 100;
+  response.send(number.toString()); // needs to be string for web
+});
+
+// http request #2: redirect to another url
+exports.toAWebsite = functions.https.onRequest((request, response) => {
+  response.redirect("https://www.bmilcs.com");
+});
+```
+
+Callable Functions (invoked within firebase app):
+
+```js
+exports.sayHello = functions.http.onCall((data, context) => {
+  return `Hello world`;
+});
+
+// using the function:
+const sayHello = firebase.functions().httpsCallable("sayHello");
+// async: returns a promise
+sayHello().then((result) => {
+  console.log(result.data);
+});
+```
+
+Passing arguments to Callable Functions:
+
+```js
+exports.sayHello = functions.http.onCall((data, context) => {
+  const name = data.name;
+  return `Hello ${name}`;
+});
+
+// async function w/ a parameter
+sayHello({ name: "bryan" }).then((result) => {
+  console.log(result.data);
+});
+```
