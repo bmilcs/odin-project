@@ -42,15 +42,80 @@ Cloud Firestore features:
     - more
   - Integrates w/ Firebase Authentication
 
+## Emulator setup:
+
+`functions/package.json:`
+
+```json
+// functions/package.json
+
+// custom scripts to add:
+"scripts": {
+  "build": "tsc -w",
+  "db": "firebase emulators:start --import db/",
+  "emulate": "firebase emulators:start",
+}
+```
+
+```sh
+# make sure this is installed:
+npm install -g firebase-tools
+
+# init emulators:
+cd functions/
+firebase init emulators
+
+# start emulator:
+npm run build # auto-update on code changes w/ custom scripts above
+firebase emulators:start --only functions # serve up cloud functions locally
+npm run db # optional: serve up exported database
+```
+
+To auto update the emulator's code, add `-w` watch to the command.
+
+firebase.ts
+
+```js
+import { getApp } from "firebase/app";
+import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
+
+const functions = getFunctions(app);
+// Makes functions run locally:
+connectFunctionsEmulator(functions, "localhost", 5000);
+```
+
+## [Exporting Firestore Data for Emulation](https://medium.com/firebase-developers/how-to-import-production-data-from-cloud-firestore-to-the-local-emulator-e82ae1c6ed8)
+
+Install gcloud:
+
+```sh
+sudo apt-get install apt-transport-https ca-certificates gnupg
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+sudo apt-get update && sudo apt-get install google-cloud-cli
+```
+
+Login:
+
+```sh
+firebase login
+gcloud auth login
+```
+
+```
+firebase use # project name
+gcloud firestore export gs://your-project-name.appspot.com/<your-choosen-folder-name>
+```
+
 ## Cloud Functions
+
+### HTTP Functions (invoked from a web url)
 
 `/functions/src/index.js`:
 
 ```js
 const functions = require("firebase-functions");
 ```
-
-HTTP Functions (invoked from a web url)
 
 ```js
 // http request #1: respond with a value
@@ -65,7 +130,7 @@ exports.toAWebsite = functions.https.onRequest((request, response) => {
 });
 ```
 
-Callable Functions (invoked within firebase app):
+### Callable Functions (invoked within firebase app):
 
 ```js
 exports.sayHello = functions.http.onCall((data, context) => {
