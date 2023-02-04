@@ -8,14 +8,19 @@ The purpose of this repo is to track progress, to showcase project work and to p
 
 These assignments were tackled with a growth mindset and I did not reference the work of others while completing them. In other words, these are _learner's solutions_, written with the intent of practicing the fundamentals and developing problem solving skills.
 
-### JavaScript
+### React
+
+| Project                | URL                                                        | Source Code                                             |
+| :--------------------- | :--------------------------------------------------------- | :------------------------------------------------------ |
+| **#22 Where's Waldo**  | [Live Demo](https://bmilcs.github.io/odin-wheres-waldo/)   | [GitHub](https://github.com/bmilcs/odin-wheres-waldo)   |
+| **#21 Shopping Cart**  | [Live Demo](https://bmilcs.github.io/odin-shopping-cart/)  | [GitHub](https://github.com/bmilcs/odin-shopping-cart)  |
+| **#20 Memory Card**    | [Live Demo](https://bmilcs.github.io/odin-memory-card/)    | [GitHub](https://github.com/bmilcs/odin-memory-card)    |
+| **#19 CV Application** | [Live Demo](https://bmilcs.github.io/odin-cv-application/) | [GitHub](https://github.com/bmilcs/odin-cv-application) |
+
+### JavaScript (Vanilla)
 
 | Project                     | URL                                                         | Source Code                                                  |
 | :-------------------------- | :---------------------------------------------------------- | :----------------------------------------------------------- |
-| **#22 Where's Waldo**       | [Live Demo](https://bmilcs.github.io/odin-wheres-waldo/)    | [GitHub](https://github.com/bmilcs/odin-wheres-waldo)        |
-| **#21 Shopping Cart**       | [Live Demo](https://bmilcs.github.io/odin-shopping-cart/)   | [GitHub](https://github.com/bmilcs/odin-shopping-cart)       |
-| **#20 Memory Card**         | [Live Demo](https://bmilcs.github.io/odin-memory-card/)     | [GitHub](https://github.com/bmilcs/odin-memory-card)         |
-| **#19 CV Application**      | [Live Demo](https://bmilcs.github.io/odin-cv-application/)  | [GitHub](https://github.com/bmilcs/odin-cv-application)      |
 | **#18 Battleship**          | [Live Demo](https://bmilcs.github.io/odin-battleship/)      | [GitHub](https://github.com/bmilcs/odin-battleship)          |
 | **#17 Testing Practice**    | N/A                                                         | [GitHub](https://github.com/bmilcs/odin-testing-practice)    |
 | **#16 Knights Travails**    | N/A                                                         | [GitHub](https://github.com/bmilcs/odin-knights-travails)    |
