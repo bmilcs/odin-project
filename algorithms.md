@@ -444,3 +444,446 @@ Dynamically typed languages (JS, Python, Ruby) don't require us to think about h
 - Easy to add something to end of list
 - Can begin traversing it at the tail node
   - Because first & last element point to one another
+
+## Time Complexity
+
+Other than making code readable and maintainable, efficiency & performance are very important.
+
+We can measure the efficiency of our code in two ways:
+
+- Time complexity
+- Space complexity
+
+### Efficiency Basics
+
+```js
+function oddNumbersLessThanTen() {
+  let currentNumber = 1;
+
+  while (currentNumber < 10) {
+    if (currentNumber % 2 !== 0) {
+      console.log(currentNumber);
+    }
+
+    currentNumber += 1;
+  }
+}
+```
+
+- `1, 3, 5, 7, 9`
+- Ran in the terminal, this should take a fraction of a second
+- Ran again, it might take the same time, faster or slower
+
+Important: **Never measure efficiency** of an algorithm by **how long it takes to execute**
+
+To measure code efficiency, we evaluate how many steps it takes to complete.
+
+- If one algorithm takes 5 steps & another takes 20 steps to accomplish the same task:
+  - 5 Step algorithm will always run faster than the 20 step algorithm
+
+In the above algorithm:
+
+1. Assign number 1 to var (**1 step**)
+2. Loop: for each iteration...
+   1. Compare currentNumber < 10 (**1 step**)
+   2. Check if odd (**1 step**)
+      1. If odd, we output to terminal (**1 step every 2 iterations**)
+   3. Increase currentNumber by 1 (**1 step**)
+
+There are **3 steps** for every loop iteration and it iterates 9 times which is 27 steps. Then we have one step which iterates only half the loop iteration, which is 5 steps.
+
+Assigning initial value is 1 step.
+
+Total: 33 steps (27 + 5 + 1)
+
+Our algorithm takes 33 steps to complete.
+
+**While useful to know, this isn't actually helpful for comparing algorithms.**
+
+```js
+// Accepts an input instead of a hard value of 10
+function oddNumbers(maxNumber) {
+  let currentNumber = 1;
+
+  while (currentNumber < maxNumber) {
+    if (currentNumber % 2 !== 0) {
+      console.log(currentNumber);
+    }
+
+    currentNumber += 1;
+  }
+}
+```
+
+How many steps does this take? _It depends_. It can't be measured concretely.
+
+What we need to measure is **how the number of steps our algorithm changes when the data changes.**
+
+To do that, we use **Asymptotic Notations** & in particular, **Big O**
+
+### Asymptotic Notations
+
+Aysmptotic Notations describe the **running time** of an algorithm.
+
+Running time can vary based on the input. The 3 most common ways to measure running time:
+
+- **Big O Notation**: worst case - upper bound of an algorithm
+- **Omega Notation**: best case - lower bound of an algorithm
+- **Theta Notation**: average case - upper & lower bound of an algorithm
+
+Big O is the most commonly referenced because _you need to be sure the worst-case scenario is scalable._
+
+The differences in how the 3 asymptotic notations **measure efficiency**
+
+### What is Big O?
+
+Big O = consistent way to measure efficiency of an algorithm.
+
+- Measurement of **time it takes to run** as input grows
+- Used to directly compare performance of 2 algorithms
+- Pick best one
+
+To use big one, you need to measure how the # of steps changes as the data grows. You can then apply a Big O Notation to it and measure it against other algorithms.
+
+### Big O Notation
+
+From **FASTEST** to **SLOWEST**:
+
+| Big O      | Complexy               |
+| ---------- | ---------------------- |
+| O(1)       | constant complexity    |
+| O(log N)   | logarithmic complexity |
+| O(N)       | linear complexity      |
+| O(N log N) | N x log N complexity   |
+| O(n^2)     | quadratic complexity   |
+| O(n^3)     | cubic complexity       |
+| O(2^n)     | exponential complexity |
+| O(N!)      | factorial complexity   |
+
+### O(1) Constant Complexity
+
+`arr = [1,2,3,4,5]`
+
+To look up index 2, we use `arr[2]` = 1 step.
+
+`arr = [1,2,3,4,5,6,7,8,9,10]` (if the array doubles)
+
+We can access any element in 1 step.
+
+Complexity is **constant**.
+
+**Gotcha**: Technically not 1 step. Computer must first loop up where the array is in memory. From the 1st element it must jump to the index provided. _it's at least a couple of steps._
+
+However, the 2 steps are merely incidental. With an array of 10,000 elements, **it still takes the same amount of steps.**
+
+Big O doesn't concern itself with incidental numbers.
+
+- Big O = tells us an algorithm's complexity **relative to the size of the input**
+
+### O(log N) Logarithmic Complexity
+
+Logarithmic: as data DOUBLES, steps increase by 1.
+
+Going from 5000 to 10000 data elements = 1 additional step.
+
+Example: **Binary Search.**
+
+`arr = [1,2,3,4,5,6,7,8,9,10]`
+
+Binary Search for 7:
+
+- Guess middle item: 6
+- Anything to left cannot be 7
+
+`arr = [-, -, -, -, -, 6, 7, 8, 9, 10]`
+
+- 1 Step: Eliminated half of the array
+
+| Size | Steps |
+| ---- | ----- |
+| 1    | 1     |
+| 2    | 2     |
+| 4    | 3     |
+| 8    | 4     |
+| 16   | 5     |
+| 32   | 6     |
+
+Very efficient.
+
+### O(N) Linear Complexity
+
+Linear Complexity: number of inputs & steps grow at same rate
+
+Example: Iterating over an array
+
+`arr = [1, 2, 3, 4, 5]` = 5 inputs, 5 steps
+`arr = [1, 2, 3, 4, 5, 6, 7,]` = 7 inputs, 7 steps
+
+### O(N Log N) - N x Log N Complexity
+
+Initial Algorithm: O(log N)
+
+- Binary Search: repeatedly breaks array in half
+
+O(N Log N):
+
+- Repeatedly break array in half
+- Each half is processed by another algorithm with a complexity of O(N).
+
+Example: **Merge sort**
+
+### O(n^2) - Quadratic Complexity
+
+Quadratic complexity: Loop over dataset & within each loop, you loop over it again.
+
+- Input +1, 2 extra iterations are required.
+- Input +2, 4 extra iterations are required.
+- Input +3, 9 extra iterations are required.
+- Input +4, 16 extra iterations are required.
+
+### O(n^3) - Cubic Complexity
+
+Cubic complexity: Nested loops - 1 extra item = 3 extra steps
+
+- Input +1, 3 extra iterations are required.
+- Input +2, 8 extra iterations are required.
+- Input +3, 27 extra iterations are required.
+- Input +100, ~1,000,000 extra iterations are required.
+
+### O(2n) - Exponential Complexity
+
+Exponential complexity: each item added, number of steps doubles from the previous number of steps.
+
+**Avoid this if at all possible!**
+
+| Size | Steps |
+| ---- | ----- |
+| 1    | 2     |
+| 2    | 4     |
+| 3    | 8     |
+| 4    | 16    |
+| 5    | 32    |
+| 6    | 64    |
+
+### O(N!) - Factorial Complexity
+
+Factorial complexity: product of the sequence of _n_ integers.
+
+- Factorial of 4(4!): 4 x 3 x 2 x 1
+
+Factorial complexity = need to calculate permutations or combinations.
+
+- _If you have an array and have to work out all of the combinations you can make from the array_.
+- Manageable for small inputs, but the leap from each item in a dataset can be huge.
+- Factorial of 3: 6 (3 x 2 x 1)
+- Factorial of 4: 24 (4 x 3 x 2 x 1)
+- Factorial of 10: 3,628,800
+
+### Big Ω (Omega Notation) - alternative to Big O
+
+Omega notation: best case scenario for our algorithm.
+
+```js
+function findValue(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    let item = arr[i];
+    if (item === 1) {
+      return item;
+    }
+  }
+}
+```
+
+Big O (worst case): O(N) - linear complexity. If the value isn't in our array, we must iterate over every single value.
+
+Big Omega (best case): (1) - constant complexity. If value is in the first index
+
+- Not as useful as Big O: it's unlikely our item will be the 1st item in our data structure
+
+### Big-Θ (Big-Theta Notation) - alternative to Big O
+
+Theta notation: looks to give us the exact value or a useful range between narrow upper and lower bounds.
+
+Iterating over an array: always run at O(1) constant complexity.
+
+- Best & Worst case: O(1)
+- Theta performance: O(1) - exact performance
+
+### Why Big O?
+
+Big O = worst case scenario. It makes sure our algorithm will scale in all outcomes.
+
+### Algorithms with the same complexity
+
+If two algorithms are written with the same complexity, does that mean they're equally good to use?
+
+```js
+// algo 1
+function oddNumbers(maxNumber) {
+  let currentNumber = 1;
+
+  while (currentNumber < maxNumber) {
+    if (currentNumber % 2 !== 0) {
+      console.log(currentNumber);
+    }
+
+    // increases # by 1
+    currentNumber += 1;
+  }
+}
+
+// algo 2
+function oddNumbers(maxNumber) {
+  let currentNumber = 1;
+
+  while (currentNumber < maxNumber) {
+    if (currentNumber % 2 !== 0) {
+      console.log(currentNumber);
+    }
+
+    // increases # by 2
+    currentNumber += 2;
+  }
+}
+```
+
+Not much of a change between the two. For an input of `n`, the number of steps is roughly **half** as we iterate by 2 each time.
+
+Big O doesn't care about **constants**. Comparing O(N/2 + 5N) to O(N + 5 / 2N) wouldn't be fun.
+
+**Both algorithms are O(N).**
+
+### Examples
+
+[Doable Danny](https://www.doabledanny.com/big-o-notation-in-javascript)
+
+Time Complexity: how runtime of an algorithm changes as input increases
+
+Space Complexity: space required by algorithm, not including inputs
+
+> Constant time complexity
+
+```js
+// O(1) constant complexity: always same amount of time
+function timesTwo(num) {
+  return 2 * num;
+}
+
+// O(1) constant complexity: NOT O(2)
+// - Input does not change the # of steps taken
+function manyTimes(num) {
+  let total = 4 * num;
+  return total * 3;
+}
+```
+
+> Linear time complexity
+
+```js
+// O(N) linear complexity: NOT O(2n)
+// - 3 elements: 6 operations
+// - 6 elements: 12 operations
+// - 12 elements: 24 operations
+function reverseArray(arr) {
+  let newArr = [];
+  for (let i = arr.length - 1; i >= 0; i--) {
+    newArr.push(arr[i]);
+  }
+  return newArr;
+}
+const reversedArray1 = reverseArray([1, 2, 3]); // [3, 2, 1]
+const reversedArray2 = reverseArray([1, 2, 3, 4, 5, 6]); // [6, 5, 4, 3, 2, 1]
+```
+
+![Big O](img/bigo.jpg)
+
+> Quadratic time complexity
+
+```js
+// O (n^2) quadratic complexity
+// - nested loop
+function multiplyAll(arr1, arr2) {
+  if (arr1.length !== arr2.length) return undefined;
+  let total = 0;
+  for (let i of arr1) {
+    for (let j of arr2) {
+      total += i * j;
+    }
+  }
+  return total;
+}
+let result1 = multiplyAll([1, 2], [5, 6]); // 33
+let result2 = multiplyAll([1, 2, 3, 4], [5, 3, 1, 8]); // 170
+```
+
+> Built-in Array Methods:
+
+```js
+// O(1) - constant time - end of array
+arr.push(5);
+arr.pop();
+
+// O(n) - linear time complexity - front of array
+// - reindexes the rest of the array
+arr.unshift(0);
+arr.shift();
+```
+
+> Logarithmic time complexity:
+
+Logarithmic: "qty representing the **power** to which a fixed number (base) must be raised to produce a given number"
+
+Log 2(16) = x
+
+- 2 is the base (bottom of log)
+- What power do we need to raise by to get 16?
+- x = 4 (2 x 2 x 2 x 2)
+
+In computer science, the base of log(20) is assumed to be **2** or Binary Logarithm (not 10).
+
+```js
+// O(log N) - Logarithmic time complexity
+function logTime(arr) {
+  let numberOfLoops = 0;
+  for (let i = 1; i < arr.length; i *= 2) {
+    numberOfLoops++;
+  }
+  return numberOfLoops;
+}
+
+let loopsA = logTime([1]); // 0 loops
+let loopsB = logTime([1, 2]); // 1 loop
+let loopsC = logTime([1, 2, 3, 4]); // 2 loops
+let loopsD = logTime([1, 2, 3, 4, 5, 6, 7, 8]); // 3 loops
+let loopsE = logTime(Array(16)); // 4 loops
+```
+
+![Big O Expanded](img/bigo2.jpg)
+
+> Linearithmic time complexity O(n log n)
+
+```js
+// O(n log n) - Linearithmic time complexity
+function linearithmic(n) {
+  // linear complexity
+  for (let i = 0; i < n; i++) {
+    // log n complexity
+    for (let j = 1; j < n; j = j * 2) {
+      console.log("Hello");
+    }
+  }
+}
+```
+
+> Exponential time complexity
+
+```js
+// O(n^2) - exponential time complexity
+function fibonacci(num) {
+  // Base cases
+  if (num === 0) return 0;
+  else if (num === 1) return 1;
+  // Recursive part
+  return fibonacci(num - 1) + fibonacci(num - 2);
+}
+```
