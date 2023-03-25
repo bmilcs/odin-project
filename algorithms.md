@@ -887,3 +887,307 @@ function fibonacci(num) {
   return fibonacci(num - 1) + fibonacci(num - 2);
 }
 ```
+
+> Factorial time complexity
+
+Traveling salesman problem: Given a list of cities & distances between each pair, what is the shortest route taken to visit each city exactly once & return to the origin city?
+
+3 Cities: A, B, C (1 x 2 x 3 = 6 permutations)
+
+- A -> B -> C
+- A -> C -> B
+- B -> A -> C
+- B -> C -> A
+- C -> A -> B
+- C -> B -> A
+
+```js
+// O(n!)
+// 5 = 1 * 2 * 3 * 4 * 5 = 120
+// Recursive factorial algorithm
+
+function factorial(n) {
+  let num = n;
+  if (n === 0) return 1;
+  for (let i = 0; i < n; i++) {
+    num = n * factorial(n - 1);
+  }
+  return num;
+}
+
+factorial(1); // 0.02 ms
+factorial(2); // 0.04 ms
+factorial(10); // 42.08 ms
+factorial(12); // 5231.54 ms => 5 seconds
+factorial(13); // 69565.01 ms => 70 SECONDS!
+factorial(14); // SMOKE & FLAMES!!
+```
+
+## Comparing Complexity
+
+Steps:
+
+- Break functions into individual steps
+- Calc each step
+- Add each step together
+
+Rules:
+
+- Always assume worst scenario (Big O)
+- Inputs = unique variable
+- Drop constants
+- Drop non-dominant terms
+
+> Linear O(n) example
+
+```js
+const productList = [
+  { name: "Laptop", price: 18487 },
+  { name: "Keyboard", price: 356 },
+  { name: "Monitor", price: 8345 },
+  // ...assuming 10000 more items here in between
+  { name: "Tablet", price: 9875 },
+];
+
+function lookupPrice(name, list) {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].name === name) {
+      console.log(`Price of '${list[i].name}' is: ${list[i].price}`);
+      break;
+    }
+  }
+}
+
+lookupPrice("Monitor", productList);
+// => OUTPUT: "Price of 'Monitor' is: 8345"
+```
+
+### Multiple inputs must have a unique name
+
+```js
+// function receives 2 different inputs, let's call them 'a' and 'b'
+function printLists(listOne, listTwo) {
+  // iterates through input 'listOne' -> O(a) Linear time
+  for (let i = 0; i < listOne.length; i++) {
+    console.log(listOne[i]);
+  }
+  // iterates through input 'listTwo' -> O(b) Linear time
+  for (let i = 0; i < listTwo.length; i++) {
+    console.log(listTwo[i]);
+  }
+}
+```
+
+**Result**: O(a + b)
+
+Why is this not O(n)?
+
+- Two different inputs
+- Loops 1st list: O(n)
+- Loops 2nd list: O(n)
+
+**2nd List has to wait until the 1st is done**
+
+- Loop #1: 0(a)
+- Loop #2: O(b)
+- Result: O(a+b) => takes both linear times to finish execution
+
+> Nested Loop w/ 2 different inputs
+
+```js
+const drinks = ["water", "coffee"];
+const persons = ["person 1", "person 2", "person 3", "person 4"];
+
+// function recieves 2 different inputs, let's call them 'a' and 'b'
+function servingDrinks(drinkList, personsList) {
+  // iterates through input 'drinkList' -> O(a) Linear time
+  for (let i = 0; i < drinkList.length; i++) {
+    // iterates through input 'personsList' -> O(b) Linear time
+    for (let j = 0; j < personsList.length; j++) {
+      console.log(`Gives ${drinkList[i]} to ${personsList[j]}`);
+    }
+  }
+}
+
+servingDrinks(drinks, persons);
+
+// End result for Big O => O (a * b)
+
+/*
+OUTPUT:
+'Gives water to person 1'
+'Gives water to person 2'
+'Gives water to person 3'
+'Gives water to person 4'
+'Gives coffee to person 1'
+'Gives coffee to person 2'
+'Gives coffee to person 3'
+'Gives coffee to person 4'
+*/
+```
+
+- 1st input: O(a)
+- 2nd input: O(b)
+- Result: O(a \* b) due to nesting
+
+NOT O(a^2) because two different inputs are being looped over
+
+### Reminders
+
+**Multiple inputs:**
+
+- Loop **2 separate arrays**, one after another => O(a+b)
+  - Any step after another => +
+- Loop **2 nested arrays** => O(a\*b)
+  - Nested steps => \*
+
+**Single inputs:**
+
+- Loop **same array one after another** => O(n+n) => O(2n) => O(n) linear time
+- Loop **same array with 2 nested loops** => O(n^2) quadratic time
+
+### **Drop the constants**
+
+- **Constants**: Don't change, regardless of how big input size is
+- **Constants**: DON'T AFFECT SCALING
+
+```js
+const numbers = [1, 2, 3, 4, 5, 6];
+
+// function receives a single input
+function printFirstHalf(list) {
+  // iterates through list -> O(n) Linear time
+  for (let i = 0; i < list.length / 2; i++) {
+    console.log(list[i]);
+  }
+}
+
+printFirstHalf(numbers);
+// Big O total => O (n / 2)
+
+/* 
+OUTPUT:
+1
+2
+3
+*/
+```
+
+**Result**: O(n) Linear time
+
+- Only iterates over half of the array: O(n/2)
+- Execution time is **dependent on input length**
+- Drop the constant: `/2`
+  - O(n/2) becomes O(n)
+
+```js
+const numbers = [1, 2, 3];
+
+// function recieves a single input
+function printTwiceForNoReason(list) {
+  // iterates through list -> O(n) Linear time
+  for (let i = 0; i < list.length; i++) {
+    console.log(list[i]);
+  }
+  // iterates through the same list again -> O(n) Linear time
+  for (let j = 0; j < list.length; j++) {
+    console.log(list[j]);
+  }
+}
+
+printTwiceForNoReason(numbers);
+
+// Big O total => O (n + n) => O (2n)
+
+/*
+OUTPUT:
+1
+2
+3
+1
+2
+3
+*/
+```
+
+Result: O(n) linear time
+
+- Same input, loop after loop: O(n + 2) => O(2n)
+- Drop constants: O(n)
+
+### Calculating Big O
+
+When adding up steps:
+
+- Define constants: **numbers**
+- Define scalable(s): **letters**
+- End up with lots of letters & numbers
+- **^ Will be removed to only focus on scaling pattern**
+
+### Drop non-dominant terms
+
+Always assume the worst case.
+
+- Compare all steps (complexities)
+- Pick worst scaling one (dominant term)
+  - ^ Last rule to finish Big O calculations (finalize analysis of an algorithm)
+
+```js
+const fruits = ["apple", "strawberry", "watermelon"];
+
+// function recieves a single input
+function printAndPair(arr) {
+  // iterates through list -> O(n) Linear time
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+  }
+
+  // declares variable -> O(1) Constant time
+  const totalPairs = arr.length * arr.length;
+  // prints given value -> O(1) Constant time
+  console.log("Estimated paired elements length:", totalPairs);
+
+  // nested loop using the same array -> O(n ^ 2) Quadratic time
+  for (let j = 0; j < arr.length; j++) {
+    for (let k = 0; k < arr.length; k++) {
+      console.log(`${arr[j]} - ${arr[k]}`);
+    }
+  }
+}
+
+printAndPair(fruits);
+
+// Big O total => O (n) + O(1) + O(1) + O(n ^ 2)
+
+/*
+OUTPUT:
+'apple'
+'strawberry'
+'watermelon'
+
+'Estimated paired elements length:' 9
+
+'apple - apple'
+'apple - strawberry'
+'apple - watermelon'
+'strawberry - apple'
+'strawberry - strawberry'
+'strawberry - watermelon'
+'watermelon - apple'
+'watermelon - strawberry'
+'watermelon - watermelon'
+*/
+```
+
+Function has **4 operations** w/ various time complexities:
+
+Result: O(n) + O(1) + O(1) + O(n^2)
+
+1. Add all constants:
+   1. O(n) + O(2) + O(n^2)
+2. Remove all constants:
+   1. O(n) + O(n^2)
+3. Which one scales worst? (of non-constant time complexities)
+   1. O(n^2)
+
+Result: **O(n^2)**
