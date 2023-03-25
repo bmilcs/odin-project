@@ -3195,3 +3195,99 @@ el.addEventListener("transitionstart", signalStart, true);
   - `contain: content`
 
 ### [Cubic Bezier Generator](https://www.cssportal.com/css-cubic-bezier-generator/)
+
+## Keyframes (Animations)
+
+- Transitions: animate element, one state, to another
+
+  - Can loop, but weren't meant to
+  - Animations: were designed to explicitly enable loop
+
+- Transitions: need a trigger: hover, focus, toggling classes
+
+  - Animations: do NOT need a trigger
+
+- Transitions: not as flexible as animations
+  - Transitions: straight line, point a to point b
+
+### Animation Properties
+
+```css
+#ball {
+  /* ... other CSS properties ... */
+  animation-duration: 2s;
+  animation-name: change-color; /* @keyframes */
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+```
+
+### Keyframes
+
+```css
+@keyframes change-color {
+  from {
+    background-color: red;
+  }
+
+  to {
+    background-color: green;
+  }
+}
+```
+
+Keyframes at-rule (single cycle - not a complete loop)
+
+- **from**: alias for 0% (at zero seconds)
+- **to**: alias for 100% (at 2 seconds/animation-duration value)
+
+Shorthand Notation:
+
+```css
+#ball {
+  /* ... other CSS properties ... */
+  background-color: red;
+  animation: 2s change-color infinite alternate;
+}
+
+@keyframes change-color {
+  from {
+    background-color: red;
+  }
+
+  50% {
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+  }
+
+  to {
+    background-color: green;
+  }
+}
+```
+
+- 50% (percentage of animation-duration)
+  - 50% of 1s duration: 0.5s
+- Only `0/100%` can use `from/to` aliases
+
+### Chaining Animations
+
+```css
+div {
+  /* unique durations/iteration counts */
+  animation-name: fadeInOut, moveLeft300px, bounce;
+  animation-duration: 2.5s, 5s, 1s;
+  animation-iteration-count: 2, 1, 5;
+
+  /* all 3 animations share duration/count */
+  animation-name: fadeInOut, moveLeft300px, bounce;
+  animation-duration: 3s;
+  animation-iteration-count: 1;
+}
+```
+
+### Walkthrough
+
+- Back & forth: `animation-direction: alternate;`
+- Loops: `animation-iteration-count: infinite`

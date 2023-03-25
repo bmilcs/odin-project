@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+      }
+      p {
+        max-width: 50vw;
+        /* font-size: 2rem; */
+        font-weight: bold;
+      }
+
+      /* code along animations */
+      .slidein {
+        animation-duration: 3s;
+        animation-name: slidein;
+        animation-iteration-count: 3;
+        animation-direction: alternate;
+      }
+
+      @keyframes slidein {
+        from {
+          margin-left: 100%;
+          width: 300%;
+        }
+
+        to {
+          margin-left: 0%;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <p>bmilcs</p>
+      <p class="slidein">
+        The Caterpillar and Alice looked at each other for some time in silence:
+        at last the Caterpillar took the hookah out of its mouth, and addressed
+        her in a languid, sleepy voice.
+      </p> -->
+      <h1 id="watchme">Watch me move</h1>
+      <p>
+        This example shows how to use CSS animations to make <code>H1</code>
+        elements move across the page.
+      </p>
+      <p>
+        In addition, we output some text each time an animation event fires, so
+        you can see them in action.
+      </p>
+      <ul id="output"></ul>
+    </div>
+
+    <script>
+      const element = document.getElementById("watchme");
+      element.addEventListener("animationstart", listener, false);
+      element.addEventListener("animationend", listener, false);
+      element.addEventListener("animationiteration", listener, false);
+      element.className = "slidein";
+
+      function listener(event) {
+        const l = document.createElement("li");
+        switch (event.type) {
+          case "animationstart":
+            l.textContent = `Started: elapsed time is ${event.elapsedTime}`;
+            break;
+          case "animationend":
+            l.textContent = `Ended: elapsed time is ${event.elapsedTime}`;
+            break;
+          case "animationiteration":
+            l.textContent = `New loop started at time ${event.elapsedTime}`;
+            break;
+        }
+        document.getElementById("output").appendChild(l);
+      }
+    </script>
+  </body>
+</html>
