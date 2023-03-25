@@ -2813,7 +2813,7 @@ Basics:
 
 ### 2D Transforms
 
-#### **Rotate**
+#### ** rotate(0.05turn) translate(50%, -50%);**
 
 ```css
 .element {
@@ -3291,3 +3291,16 @@ div {
 
 - Back & forth: `animation-direction: alternate;`
 - Loops: `animation-iteration-count: infinite`
+
+Animate drop down menu:
+
+```css
+.container {
+  /* offscreen, above viewport */
+  transform: translate(-50%, -75vh);
+  /* first moves the container in position, then fades out after */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease;
+}
+
+.container
+```
