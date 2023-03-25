@@ -3069,3 +3069,129 @@ Because of the Pixel Pipeline, transform property is great.
 - Skew (seldomly used)
 
 ### [3D Transforms MDN](https://www.w3schools.com/css/css3_3dtransforms.asp)
+
+## Transitions
+
+Transitions: change an element's **initial** & **end** state.
+
+- Hover effects
+
+`transition` is a shorthand property for:
+
+- `transition-property`
+  - _what css property will be transitioned_
+- `transition-duration`
+  - _how long it takes_
+- `transition-timing-function`
+  - _speed of transition_
+- `transition-delay`
+  - _delay before transition starts_
+
+```css
+div {
+  transition: <property> <duration> <timing-function> <delay>;
+}
+
+/* example */
+
+button {
+  /* ... other CSS properties ... */
+  background-color: white;
+  transition: background-color 1s ease-out 0.25s;
+}
+
+button:hover {
+  background-color: black;
+}
+```
+
+### Performance
+
+Performance: Generally _not an issue_. There are a few gotchas:
+
+```css
+div {
+  width: 100px;
+  height: 100px;
+  transition: transform 2s 1s;
+}
+
+div:hover {
+  transform: rotate(180deg);
+}
+```
+
+- Stacking contexts **causes nested elements to repaint every time the parent does.**
+- Restrict animations to **opacity** & **transform** (for performance reasons)
+  - Things like **background-color** are expensive operations
+
+### [Transitions & JS](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions#javascript_examples)
+
+```js
+const f = document.getElementById("foo");
+document.addEventListener(
+  "click",
+  (ev) => {
+    f.style.transform = `translateY(${ev.clientY - 25}px)`;
+    f.style.transform += `translateX(${ev.clientX - 25}px)`;
+  },
+  false,
+);
+```
+
+```css
+.ball {
+  border-radius: 25px;
+  width: 50px;
+  height: 50px;
+  background: #c00;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 1s;
+}
+```
+
+### Detecting Start & Stop of Transition w/ JS
+
+```js
+el.addEventListener("transitionend", updateTransition, true);
+// before any delay
+el.addEventListener("transitionrun", signalStart, true);
+// after any delay
+el.addEventListener("transitionstart", signalStart, true);
+```
+
+### [High Performance Animations](https://web.dev/animations-guide/)
+
+### [Debugging Layout Repaint Issues](https://dzhavat.github.io/2021/02/18/debugging-layout-repaint-issues-triggered-by-css-transition.html)
+
+- What exactly am I animating?
+- Could it be "layers"?
+  - "Layer borders" in Edge DevTools
+- What about "stacking context"?
+  - "3D View" panel in Edge DevTools
+
+### Stacking Context
+
+- Root `<html>`
+- `z-index` other than `auto` AND
+  - `position: relative/absolute`
+  - `flex` child w/ `z-index`
+  - `grid` child w/ `z-index`
+- `position: fixed/sticky`
+- `opacity` other than `1`
+- `mix-blend-mode` other than normal
+- `transform`
+- `filter`
+- `backdrop-filter`
+- `perspective`
+- `clip-path`
+- `mask / mask-image / mask-border`
+- `isolation`
+- `will-change`
+- `contain` value layout, paint, composite:
+  - `contain: strict`
+  - `contain: content`
+
+### [Cubic Bezier Generator](https://www.cssportal.com/css-cubic-bezier-generator/)
