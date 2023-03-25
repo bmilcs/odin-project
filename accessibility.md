@@ -208,3 +208,150 @@ Landmarks & headings:
 > [Importance of headings/landmarks](https://www.youtube.com/watch?v=vAAzdi1xuUY&list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g&index=20)
 
 > [Landmarks & HTML Sectioning Elements](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/HTML5.html)
+
+## Accessible Colors
+
+Color contrast ratio:
+
+- 21:1 - Highest: black text, white background
+- 1:1 - Lowest: white text & background
+
+Two conformance levels for contrast ratios:
+
+1. Normal text:
+   1. Regular: < 24px
+   2. Bold: < 18.66px
+2. Large text:
+   1. Regular: > 24px
+   2. Bold: > 18.66px
+
+**Level AA** (minimum contrast)
+
+- 4.5:1 - Normal Text
+- 3:1 - Large Text
+
+**Level AAA** (enhanced contrast):
+
+- 7:1 - Normal Text
+- 4.5:1 - Large Text
+
+**Exceptions to conformance levels:**
+
+- Incidental text within an image
+- Inactive/disabled user interface component
+  - Disabled button / lowered opacity
+- Logo or brand name text
+
+Checking Contrast:
+
+- [Contrast Checker](https://webaim.org/resources/contrastchecker/)
+- Chrome DevTools
+  - Element picker & hover over
+  - Color picker for color property under styles
+
+## Conveying Information
+
+**Color blindness**: _Never use color to convey information_
+
+Required fields: red **with asterisk \***
+
+## Keyboard Navigation
+
+### Focus
+
+We need to make **all interactive elements** focusable & have event handlers.
+
+Another issue w/ `<div>` `<span>`:
+
+- not focusable
+- don't have any event handling
+
+> Here's how we make the Rock Paper Scissors example keyboard friendly:
+
+```html
+<!-- The `tabindex` attribute makes the `<div>` elements focusable. -->
+<div class="button-container">
+  <div class="rock button" tabindex="0">Rock</div>
+  <div class="paper button" tabindex="0">Paper</div>
+  <div class="scissors button" tabindex="0">Scissors</div>
+</div>
+```
+
+```js
+// We also need to manually add in event handling for both mouse and keyboard events.
+const buttons = document.querySelectorAll(".button");
+
+function nameAlerter(e) {
+  if (e.type === "click" || e.key === " " || e.key === "Enter") {
+    alert(e.target.textContent);
+  }
+}
+
+buttons.forEach((button) => {
+  button.addEventListener("click", nameAlerter);
+  button.addEventListener("keydown", nameAlerter);
+});
+```
+
+**However**, this makes it _less understandable_ for a screen reader.
+
+Using `<button>`:
+
+- Provides context
+- Focusable
+- Event handling by default
+
+Pressing space/enter key triggers a click.
+
+### Focus Styles
+
+Focusable elements need to indicate that they're focused:
+
+- Leave default style
+- Create custom focus styles
+  - `transform: scale()`
+  - Outlines to a link
+  - Increase border size
+
+No focus styles = impossible for keyboard users to navigate.
+
+### Tab Order
+
+**Tab order**: what elements receive focus when pressing tab key.
+
+By default, the order is the same as order of elements in the HTML.
+
+```html
+<!-- 1ST TAB -->
+<div tabindex="0">This is the first element listed in the HTML.</div>
+
+<!-- 2ND TAB -->
+<div tabindex="0">This is the second element listed in the HTML.</div>
+```
+
+Sometimes we need to change the order of elements using css or tab order via `tabindex`.
+
+- Make sure: **Tab Order = Visual order of elements**
+
+### Hidden Content
+
+Sometimes we need to **hide content** until an event occurs.
+
+- Button click => Open Menu Or Modal Box
+
+Hidden content must be:
+
+- Visually hidden
+- **Hidden from assistive technologies**
+
+If not hidden, keyboard users can tab into things off the screen & lose track of visual focus on the page.
+
+**`tabindex="-1"`** (not so good)
+
+- Prevents element from receiving focus via tab
+- However, **assistive technologies still have access to & can announce this hidden content**
+
+**Best solutions** (removes tab order & prevents assistive tech)
+
+- `diplay: none`
+- `visibility: hidden`
