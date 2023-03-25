@@ -1191,3 +1191,103 @@ Result: O(n) + O(1) + O(1) + O(n^2)
    1. O(n^2)
 
 Result: **O(n^2)**
+
+## Space Complexity
+
+Space Complexity: Total space used by algorithm, relative to input size
+
+- Want to know: how efficiency changes when input changes
+
+Measuring space complexity:
+
+- **Input**
+- **Auxillary space**: extra space used by algorithm
+
+Auxillary space:
+
+- Temporary variables
+- **MEMORY** needed by our algorithm
+
+### Importance of Space Complexity
+
+- Space complexity is **not very important** vs time complexity
+  - Memory = Cheap vs Processing power
+  - Most algorithms deal w/ smaller input sizes
+  - Rarely run into slow apps due to low memory
+
+However, memory = fixed amount.
+
+- Can't expand memory on the fly
+- Time complexity: you can allow program to run for longer w/o issue
+- _Space complexity: can't do this_
+
+### Measuring Space Complexity
+
+Measuring space complexity = measuring time complexity:
+
+- O(1) - Constant Complexity
+- O(log N) - Logarithmic Complexity
+- O(N) - Linear Complexity
+- O(N log N) - N x log N Complexity
+- O(n²) - Quadratic Complexity
+- O(n³) - Cubic Complexity
+- O(2ⁿ) - Exponential Complexity
+- O(N!) - Factorial Complexity
+
+#### O(1) - Constant Complexity
+
+```js
+function multiply(num1, num2) {
+  return num1 * num2; // 2 variables are created, always
+}
+```
+
+#### O(N) - Linear Complexity
+
+O(N) = Most common space complexity
+
+```js
+function sumArr(arr) {
+  const copyArr = arr.slice();
+  let sum = 0;
+  copyArr.forEach((number) => {
+    sum += number;
+  });
+  return sum;
+}
+```
+
+Two variables:
+
+- `sum`
+- `copyArr`
+
+Amount of space used: depends on array passed to it.
+
+- Could be 3 or 300 elements
+
+When we don't know length of array: `N`
+
+- N + 1 (sum var) => drop constants
+- O(N)
+
+> As object size increases, space grows in linear way
+
+```js
+function sumObjectValues(obj) {
+  const copyObject = { ...obj };
+  let sum = 0;
+  Object.values(copyObject).forEach((value) => {
+    sum += value;
+  });
+  return sum;
+}
+```
+
+- [Big O Cheatsheet](https://www.bigocheatsheet.com/)
+
+### Considerations
+
+In JS, arrays & objects passed as an argument to a function are passed **by reference**.
+
+- Should they be counted towards the space complexity of an algorithm? (input size)?
