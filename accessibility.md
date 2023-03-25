@@ -355,3 +355,98 @@ If not hidden, keyboard users can tab into things off the screen & lose track of
 
 - `diplay: none`
 - `visibility: hidden`
+
+## Meaningful Text
+
+Meaningful Text: users should be able to immediately understand what text means without any surrounding context.
+
+### Links
+
+> Examples
+
+```html
+<!-- Example 1: Where's "here"? -->
+<a href="...">Click here</a> to start your career in web development!
+
+<!-- Example 2: I love that place! -->
+Visit <a href="...">The Odin Project</a> to start your career in web
+development!
+```
+
+Users who use a screen reader:
+
+- Can navigate between each element of a specific type
+- If looping through links, `<a>Click here</a>` provides no context
+
+Example #2: `<a>The Odin Project</a>`:
+
+- Makes sense for ALL users
+- Screen readers announce: "The Odin Project, link"
+
+Rules for adding links:
+
+- Make text content indicate _where link redirects to_ & make it _brief (< 100 characters)_
+- If opens/downloads a file, include file type & file size
+- If opens in a new tab `target="_blank"`, indicate it to the user:
+
+```html
+<!-- Example 1: Now the user is aware that this link will open or download a PDF file. -->
+<a href="...">2021 Sign Up Statistics (PDF, 1MB)</a>
+
+<!-- Example 2: And now the user knows this link opens in a new tab! -->
+<a href="...">GitHub (opens in new tab)</a>
+```
+
+**TIP**: **Read the link out loud.**
+
+### Forms
+
+Provide meaningful errors to users filling out forms.
+
+```html
+<!-- Example 1: Huh? -->
+<div class="input-error">Error: Invalid input.</div>
+
+<!-- Example 2: That makes more sense. -->
+<div class="input-error">Error: Email is invalid.</div>
+
+<!-- Example 3: Even better! -->
+<div class="input-error">
+  Error: 'JohnSmith@@test.com' is not valid. Example of a valid email:
+  example@yourdomain.com.
+</div>
+```
+
+Questions to ask:
+
+- What input is invalid?
+- Why is it invalid?
+- How can I fix it?
+
+Provide meaningful text via instructions:
+
+- Password requirements: letters, numbers, symbols
+- Place alongside input element
+- Global instructions be placed at the top of the form
+  - `* indicates a required field`
+- Field requirements be placed in/alongside the label
+  - `Name (required)`
+
+[Usable & Accessible Form Validation & Error Recovery](https://webaim.org/techniques/formvalidation/)
+
+### Alternative Text
+
+Image elements have the `alt` attr.
+
+```html
+<!-- Example 1 -->
+<img src="..." alt="" />
+
+<!-- Example 2 -->
+<img src="..." alt="Odin" />
+```
+
+Both examples are valid:
+
+- `alt=""` = **no meaningful text, purely decorative, not important**
+- `alt="Odin"` = announced "Odin, graphic", alerts the user what the image is of
