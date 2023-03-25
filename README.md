@@ -81,7 +81,7 @@ These assignments were tackled with a growth mindset and I did not reference the
   - [x] Forms
   - [x] Grid
 
-- [ ] **JavaScript**
+- [x] **JavaScript**
 
   - [x] Introduction
   - [x] Organizing your JavaScript Code
@@ -92,11 +92,11 @@ These assignments were tackled with a growth mindset and I did not reference the
   - [x] Intermediate Git
   - [x] React JS
   - [x] JavaScript and the Backend
-  - [ ] Finishing Up with JavaScript
+  - [x] Finishing Up with JavaScript
 
 - [ ] **Advanced HTML & CSS**
 
-  - [ ] Animation
+  - [x] Animation
   - [ ] Accessibility
   - [ ] Responsive Design
 
