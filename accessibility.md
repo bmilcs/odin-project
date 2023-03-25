@@ -65,3 +65,41 @@ Multi-story Building with no elevator
 - Enhance Your Brand: Diversity/inclusion
 - Extend Market Reach: Disabled Global Market 1+ Billion People ($6 Trillion) & Improves online experience for all
 - Minimize Legal Risk: Prevent lawsuits
+
+## Web Content Accessibility Guides (WCAG)
+
+WCAG exists to create a shared standard for web accessibility.
+
+### Four Principles
+
+1. **Perceivable**
+   1. Must understand info & interfaces
+2. **Operable**
+   1. Must be able to operate interfaces & navigation
+   2. Drop-down menu _w/ keyboard nav_
+3. **Understandable**
+   1. Info must be understandable
+   2. Form submit, Error: "Error 113: Bad data" = unclear
+4. **Robust**
+   1. Assistive technology friendly
+
+### Conformance Levels
+
+WCAG has 3 conformance levels:
+
+1. **Level A**
+   1. Essential support (minimal level)
+2. **Level AA**
+   1. Ideal support (many strive for)
+3. **Level AAA**
+   1. Specialized support (not recommended for entire sites to meet in full)
+   2. Some content = impossible to reach this level
+
+### Before Implementing Accessibility
+
+- Goal of these lessons = introduce _some_ of the common/simpler concepts.
+- No site is 100% accessible
+- First few steps matters as much as those that follow
+- Any minor addition could be a huge improvement for more users than you realize
+
+### [WCAG 2 Overview](https://www.w3.org/WAI/standards-guidelines/wcag/)
