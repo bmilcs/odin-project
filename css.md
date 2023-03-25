@@ -2795,3 +2795,277 @@ If your design originates with the content first, Flexbox is a good choice when 
 If given a specific overall layout to adhere to (explicit placement of elements in **two dimensions**).
 
 Ultimately, it's PERSONAL PREFERENCE.
+
+## Transforms
+
+Transforms:
+
+- change appearance of elements
+- **don't affect natural document flow**
+
+Basics:
+
+- Takes 1+ CSS transform functions as values
+- Each ^ function takes own value: angle or number
+- All elements can have transform, except for:
+  - `<col>` `<colgroup>`
+  - `<span>`, `<b>`, `<em>` (non-replaced inline elements)
+
+### 2D Transforms
+
+#### **Rotate**
+
+```css
+.element {
+  transform: rotate();
+}
+
+/* examples */
+.rotate-by-deg {
+  transform: rotate(45deg);
+}
+
+.rotate-by-rad {
+  transform: rotate(-1rad);
+}
+
+.rotate-by-turn {
+  transform: rotate(0.3turn);
+}
+```
+
+#### **Scale**
+
+```css
+.element {
+  transform: scaleX();
+  transform: scaleY();
+  transform: scale();
+}
+
+/* examples */
+.scaleX {
+  transform: scaleX(0.25);
+}
+
+.scaleY {
+  transform: scaleY(1.5);
+}
+
+.scaleXY {
+  transform: scale(0.25, 1.5);
+}
+
+.scale {
+  transform: scale(0.5);
+}
+```
+
+#### **Skew**
+
+Skew: `| |` to `\ \`
+
+```css
+.element {
+  transform: skewX();
+  transform: skewY();
+  transform: skew();
+}
+
+/* examples */
+.skewX {
+  transform: skewX(45deg);
+}
+
+.skewY {
+  transform: skewY(-0.5rad);
+}
+
+.skewXY {
+  transform: skew(45deg, -0.5rad);
+}
+
+.skew {
+  /* single value behaves the same as skewX */
+  transform: skew(45deg);
+}
+```
+
+#### **Translate**
+
+```css
+.element {
+  transform: translateX();
+  transform: translateY();
+  transform: translate();
+}
+
+/* examples */
+.translateX {
+  transform: translateX(20px);
+}
+
+.translateY {
+  /* percent values are of the element's width */
+  transform: translateY(-33%);
+}
+
+.translateXY {
+  transform: translate(20px, -33%);
+}
+```
+
+#### Chaining Multiple Transforms
+
+Transforms are executed from left > right.
+
+```html
+<div class="red-box"></div>
+<div class="blue-box"></div>
+```
+
+```css
+.red-box,
+.blue-box {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+}
+
+.red-box {
+  background: red;
+  transform: rotate(45deg) translate(200%);
+}
+
+.blue-box {
+  background: blue;
+  transform: translate(200%) rotate(45deg);
+}
+```
+
+### 3D Transforms
+
+`perspective` is required to work on a 3d plane:
+
+- `rotate`, `scale` and `translate` work on a 3d plane as well.
+
+#### Perspective
+
+[How perspective works](https://css-tricks.com/how-css-perspective-works/)
+
+Setting a perspective value: object should render as if we're viewing it from a specific distance on the z-axis.
+
+- Perspective must be declared 1st w/ multiple transform functions
+
+```css
+.element {
+  transform: perspective();
+}
+```
+
+**Perspective Rotate:**
+
+```css
+.element {
+  transform: rotateX();
+  transform: rotateY();
+  transform: rotateZ();
+  transform: rotate3d();
+}
+
+/* examples */
+.rotateX {
+  transform: rotateX(60deg);
+}
+
+.rotateY {
+  transform: rotateY(60deg);
+}
+
+.rotateZ {
+  transform: rotateZ(60deg);
+}
+
+.rotate3d {
+  transform: rotate3d(x, y, z, a);
+}
+```
+
+**Perspective Scale:**
+
+```css
+.element {
+  transform: scaleZ();
+  transform: scale3d();
+}
+```
+
+**Perspective Translate:**
+
+```css
+.element {
+  transform: translateZ();
+  transform: translate3d();
+}
+```
+
+`translateZ()` & `perspective`: create illusion of 3d distance
+
+**Matrix** (uncommonly used):
+
+- Combines all transform functions into one
+
+### Pixel Pipeline
+
+Most devices: 60fps
+
+- Screens refresh 60 times a second
+- Animations/transitions/scrolling: browser needs to match ^ refresh rate
+- Each frame: budget of 16ms (1 second / 60)
+- Brower has maintenance to do: work needs to finish in 10ms
+
+If you fail to meet the budget, frame rate drops & content judders.
+
+- ie: **jank**
+
+Pixel Pipeline: 5 areas where you have the most control
+
+- **JavaScript / CSS animations/transitions / Web Animations API**
+- **Style calculations**: each element > which rules to apply where & then applied
+- **Layout**: calculates how much space is taken up & where on screen, how elements affect one another
+- **Paint**: filling in pixels, drawing text, colors, images, borders, etc. **on layers**
+- **Composite**: when multiple layers are drawn ^, they need to be drawn in the correct order. (overlapping)
+
+The type of changes made affect the pixel pipeline:
+
+1. Layout: element geometry, height, width, etc.
+   1. browser has to check all other elements
+   2. JS > Style > Layout > Paint > Composite
+2. Paint only: background image, text color, shadows
+   1. browser skips _Layout_ step
+   2. JS > Style > Paint > Composite
+3. **Animations/scrolling**
+   1. **Skips layout & paint**
+   2. **JS > Style > Composite**
+
+### Benefits of Transforms
+
+Because of the Pixel Pipeline, transform property is great.
+
+- It occurs during **composition**
+- Can be hardware-accelerated (device's GPU)
+
+### [Most Common Uses of Transform](https://www.joshwcomeau.com/css/transforms/)
+
+- Translate
+  - move item around
+  - close button outside of modal
+- Scale
+  - grow or shrink an element
+  - old time tv: `transform: scale(0.5, 0);` (shrinks width 50%, height 100%)
+- Rotate
+  - rotate elements
+  - `0.2turn` for percentages (of 360 degrees)
+- Skew (seldomly used)
+
+### [3D Transforms MDN](https://www.w3schools.com/css/css3_3dtransforms.asp)
