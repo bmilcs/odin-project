@@ -205,9 +205,7 @@ Landmarks & headings:
   - help navigate the page
     - screen readers: keyboard navigation commands / opening menu
 
-> [Importance of headings/landmarks](https://www.youtube.com/watch?v=vAAzdi1xuUY&list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g&index=20)
-
-> [Landmarks & HTML Sectioning Elements](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/HTML5.html)
+> [Importance of headings/landmarks](https://www.youtube.com/watch?v=vAAzdi1xuUY&list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g&index=20) > [Landmarks & HTML Sectioning Elements](https://www.w3.org/WAI/ARIA/apg/patterns/landmarks/examples/HTML5.html)
 
 ## Accessible Colors
 
@@ -450,3 +448,352 @@ Both examples are valid:
 
 - `alt=""` = **no meaningful text, purely decorative, not important**
 - `alt="Odin"` = announced "Odin, graphic", alerts the user what the image is of
+
+## WAI-ARIA
+
+WAI-ARIA is a specification that stands for:
+
+- Web
+- Accessibility
+- Initiative's
+- Accessible
+- Rich
+- Internet
+- Application
+
+Purpose: ARIA makes web content more accessible **when native html is unable to do so**
+
+- Fills in gaps left by native HTML
+- ARIA **can modify the semantics or context** of an element.
+
+ARIA:
+
+- **CAN'T** modify element appearance
+- **CAN'T** modify element behavior
+- **CAN'T** add focusability
+- **CAN'T** add keyboard event handling
+  - Acronym: ABFK
+
+### Five Rules of ARIA
+
+ARIA can be extremely powerful, but equally as dangerous if used incorrectly:
+
+1. Use native elements & attributes over ARIA when possible
+2. Never change native semantics, unless you have no choice
+3. All interactive ARIA controls must be usable with a keyboard.
+4. On focusable elements, NEVER use `role='presentation'` or `aria-hidden='true'`
+5. All interactive elements must have an accessible name
+
+### Accessibility Tree
+
+Accessibility Tree is based on the DOM.
+
+- DOM: nodes & objects that make up a web page
+- Accessibility Tree: only accessibility related info, used by assistive tech
+
+ARIA modifies properties of objects that make up the accessibility tree.
+
+Properties:
+
+- `Name`: "accessible name"
+  - is announced to users
+  - separates elements of same type from one another
+  - set by native labels: `<label>`, `<alt>`
+- `Description`: announced in addition to its ^ Name
+
+### ARIA Labels
+
+ARIA Labels: help assistive tech users understand context on a page
+
+- Overrides native labels
+- Or provides additional descriptive text
+- Unlike `<label>`
+  - ARIA Labels = not limited to a few select elements
+
+`id` attribute:
+
+- void using it when NOT necessary
+- Many ARIA attributes **require** `id`
+
+When using ARIA attributes:
+
+- provide `id` to one element
+- pass `id` value to another element's ARIA attr value
+  - similar to `<label>` & `<input>`
+
+### `aria-label`
+
+- overrides native labels
+- modifies name property in accessibility tree
+- best used **when elements don't have a native label**
+
+When adding an `aria-label`:
+
+- pass in string value
+- becomes element's accessible name
+- doesn't work on every HTML element
+  - ie: no effect on `<div>` & `<span>`
+
+> Common use case: "close" button, menus & modals
+
+```html
+<!-- announces "X, button" -->
+<button type="button">X</button>
+
+<!-- announces: "Close menu, button" -->
+<button type="button" aria-label="Close menu">X</button>
+```
+
+Screen reader announcing **"X, button"** doesn't make sense to the user. However, **"Close menu, button"** does.
+
+> Another use case: landmark elements
+
+```html
+<nav aria-label="main navigation">...</nav>
+```
+
+Screen reader reads **"Main navigation, navigation landmark"**
+
+- Multiple nav elements could be given a different `aria-label`
+- Separate them from one another
+- More understandable for screen reader users
+
+Some words **may be mispronounced** by screen readers:
+
+- DON'T USE `aria-label` to change how a word is phonetically pronounced
+- May fix how a word is announced by a screen reader
+- Could make no sense when announced by _other assistive technologies_
+  - ie: **braille reader**
+
+### `aria-labelledby`
+
+- Overrides native labels
+- Overrides `aria-label`
+
+Elements with a `aria-labelledby` have it's name changed by id'ed element passed in:
+
+- to a concatenated string
+- OR text contents of `alt` attr (those w/ `id` passed in)
+
+Example:
+
+```html
+<!-- Here's the labelling element -->
+<h2 id="label">Shirts</h2>
+
+<!-- And here's the labelled element. Note the order of the ID references passed in -->
+<button type="button" id="shop-btn" aria-labelledby="label shop-btn">
+  Shop Now
+</button>
+```
+
+^ gets announced as: "Shirts, Shop Now, button"
+
+- `label` id: Shirts
+- `shop-btn` id: Shop Now
+- Element type itself: Button
+
+Benefits:
+
+- Makes 'shop now' buttons unique
+- Even if visually hidden (`hidden` attr or w/ CSS), it will still modify the accessible name of the labeled element
+
+Works similarly to `<label>`, except:
+
+- `aria-labelledby` doesn't have same event handling by default
+- To achieve event handling, add JS
+
+```html
+<!-- Clicking the <label> element gives focus to the input element -->
+<label for="name">Name:</label>
+<input id="name" type="text" />
+
+<!-- Clicking the <div> element won't give focus to the input element -->
+<div id="label">Name:</div>
+<input type="text" aria-labelledby="label" />
+```
+
+### `aria-describedby`
+
+- Modifies description property in accessibility tree
+- Similar to `aria-labelledby`: pass in `id` of other elements
+- Passed in `id` elements can be visually hidden
+
+```html
+<label
+  >Password:
+  <input type="password" aria-describedby="password-requirements" />
+</label>
+
+<!-- Meaningful text + ARIA! -->
+<span id="password-requirements"
+  >Password must be at least 10 characters long.</span
+>
+```
+
+When `<input>` receives focus, a screen reader announces:
+
+- "Password, edit protected, password must be at least ten characters long"
+- ^ immediately notifies screen reader user **any time the input receives focus**
+
+### Hidden Content From The Accessibility Tree
+
+`aria-hidden` is similar to visually hiding elements with:
+
+- `hidden`
+- `display`
+- `visibility`
+
+However:
+
+- `aria-hidden` => element is visible to sighted users.
+
+```html
+<!-- #1 "Add add book, button" -->
+<button type="button">
+  <span class="material-icons">add</span>
+  Add Book
+</button>
+
+<!-- #2 "Add book, button" -->
+<button type="button">
+  <span class="material-icons" aria-hidden="true">add</span>
+  Add Book
+</button>
+```
+
+^ Visually, both look identical to sighted users
+
+- #1: Announced as "Add add book, button"
+  - `<span>` & `<button>` text content are concatenated
+- #2: Announced as "Add book, button"
+  - `<span>` has `aria-hidden="true"`
+
+\* **ALL children become hidden as well** (Be careful)
+
+- `aria-hidden="false"` has no effect if parent has `aria-hidden="true"`
+
+**Never add `aria-hidden="false"` to focusable elements!**
+
+- Element receives focus & nothing announced
+- Breaks screen reader / keyboard nav
+
+### [ARIA Roles](https://www.a11yproject.com/posts/an-indepth-guide-to-aria-roles/#landmark-roles)
+
+ARIA Roles are used to describe elements:
+
+- May not exist within HTML
+- May not have full cross-browser support
+- May have implementation gaps (screen readers / assistive tech)
+
+IE: Roles are useful when native HTML semantics are not well understood in legacy user agents
+
+Examples:
+
+- `role="toolbar"`
+- `role="tooltip"`
+
+```html
+<!-- toolbar -->
+<div role="toolbar">
+  <div class="text-characteristics">
+    <button>Bold</button>
+    <button>Italic</button>
+    <button>Underline</button>
+  </div>
+</div>
+
+<!-- tooltip -->
+<button aria-describedby="notifications-desc">Notifications</button>
+<div role="tooltip" id="notifications-desc">View and manage notifications</div>
+```
+
+Landmarks:
+
+- `banner` for `<header>`
+- `complementary` for `<aside>`
+- `contentinfo` for `<footer>`
+
+Navigation:
+
+- `navigation` for `<nav>`
+
+Search:
+
+- `search` for `form`
+
+Live Region:
+
+- `alert` for error messages, etc. `<div role='alert'>`
+- should NOT be focusable
+
+**Widgets Roles:**
+
+Tabs role:
+
+- `tablist`
+- `tab`
+- `tabpanel`
+
+Example:
+
+```html
+<div>
+  <div role="tablist" aria-label="Fruits">
+    <button
+      role="tab"
+      aria-selected="true"
+      aria-controls="apples-tab"
+      id="apples"
+    >
+      Apples
+    </button>
+    <button
+      role="tab"
+      aria-selected="false"
+      aria-controls="oranges-tab"
+      id="oranges"
+    >
+      Oranges
+    </button>
+  </div>
+
+  <div role="tabpanel" id="apples-tab" aria-labelledby="apples">
+    <p>Apples tab content</p>
+  </div>
+
+  <div role="tabpanel" id="oranges-tab" aria-labelledby="oranges">
+    <p>Oranges tab content</p>
+  </div>
+</div>
+```
+
+**Window Roles:**
+
+Alert Dialog:
+
+- `alertdialog` alert message / focus is set to element inside of it
+
+```html
+<div role="alertdialog">
+  <h2>Confirmation</h2>
+  <p>Are you sure you want to discard all of your notes?</p>
+  <div>
+    <button type="button">No</button>
+    <button type="button">Yes</button>
+  </div>
+</div>
+```
+
+Dialog:
+
+- `dialog` can be modal or not
+
+```html
+<div role="dialog" aria-labelledby="dialog-label">
+  <h2 id="dialog-label">Dialog Title</h2>
+  <p>This is the dialog content.</p>
+
+  <button>Close Dialog</button>
+</div>
+```
