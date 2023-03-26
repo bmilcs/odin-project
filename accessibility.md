@@ -797,3 +797,68 @@ Dialog:
   <button>Close Dialog</button>
 </div>
 ```
+
+## Accessibility Auditing
+
+Accessibility DevTools: great for "quick audit"
+
+- Contrast ratios
+- Accessibility properties
+- Accessibility Tree
+
+Third party tools:
+
+- [axe DevTools](https://chrome.google.com/webstore/detail/axe-devtools-web-accessib/lhdoppojpmngadmnindnejefpokejbdd?hl=en-US)
+- [Lighthouse](https://developers.google.com/web/tools/lighthouse)
+- [WebAIM's WAVE](https://developers.google.com/web/tools/lighthouse)
+
+### Chrome DevTools
+
+#### Accessibility Pane:
+
+- Elements tab
+- DOM Tree > select element
+- Click accessibility tab
+
+#### Explore full-page accessibility tree:
+
+- Check 'Enable full-page accessibility tree'
+- Reload DevTools
+- Click top right icon of person (in DOM Tree)
+
+#### View an element's ARIA attributes:
+
+- Select element
+- Accessibility Tab (at bottom)
+
+#### View source order of elements on screen:
+
+- Inspect element
+- Elements > Accessibility > Source Order Viewer
+- Check "Show Source Order"
+
+#### Computed Properties:
+
+- Select element
+- Accessibility tab
+
+#### Discover low contrast:
+
+- Open DevTools
+  - CTRL SHIFT + J (JS => console)
+  - CTRL SHIFT + C (CSS => dom tree / select element)
+  - CTRL SHIFT + I (Your choice => last pane)
+- Ctrl + C & hover over element
+
+- CSS Overview Tab (enable > other tools menu)
+
+#### Emulate Vision Deficiencies
+
+- Open Rendering Tab
+- Set a "Emulate Vision Deficiencies"
+  - Color blindness
+  - Blurred vision
+
+#### Open Issues Tab
+
+- More Tools > Issues
