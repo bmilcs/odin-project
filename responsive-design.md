@@ -456,3 +456,213 @@ Use media queries:
   }
 }
 ```
+
+### [Responsive Images 101](https://cloudfour.com/thinks/responsive-images-101-definitions/)
+
+## Media Queries
+
+Media queries let us completely restyle our sites based on the size of the user's screen.
+
+Syntax:
+
+```css
+body {
+  margin: 24px;
+}
+
+@media (max-width: 600px) {
+  body {
+    margin: 8px;
+  }
+}
+```
+
+^ On all screens _less than `600px`_
+
+Measurements:
+
+- `max-width`
+- `min-width`
+- `max-height`
+- `min-height`
+
+### Limit Media Queries
+
+It's possible to create an unlimited # of media queries.
+
+Best practice:
+
+- Use minimal media queries
+- Rely on natural flexibility of layouts
+- K.I.S.S.
+
+### Common Breakpoints
+
+Breakpoint: screen-size triggers
+
+Think about the user's screen sizes:
+
+- Mobile < `500px`
+- Tablets `500px` - `1000px`
+- Desktop: `1000px+`
+
+Each project will have different requirements based on the design you use.
+
+- Limit breakpoints to what _you need_
+
+### Zooming
+
+Most browsers, zooming changes the effective resolution of the page.
+
+Zooming in on a window that's `1000px` = behaves as if it's smaller.
+
+**Zooming out** = handy for debugging issues that arise
+
+### Print Styles
+
+Media queries are often defined with `screen` keyword:
+
+```css
+@media screen and (max-width: 480px) {
+}
+```
+
+^ Mostly unnecessary.
+
+^ Points to another useful capability of media queries:
+
+- Changing styles based **on media-type**
+- Everything so far is intended to be viewed on a screen, so specifying screen is redudant
+- It's possible to create a set of styles for when it is sent to yourr printer
+  - `print` keyword: print preview
+
+```css
+@media print {
+  /* print styles go here! */
+  background: white;
+  color: black;
+}
+```
+
+> For example, make print black/white for printing
+
+### [MDN Using Media Queries](https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries)
+
+- Media types: all (default), print, screen
+- Media features:
+  - any-hover
+  - any-pointer
+  - aspect-ratio
+  - color
+  - color-gamut
+  - color-index
+  - device-aspect-ratio Deprecated
+  - device-height Deprecated
+  - device-width Deprecated
+  - display-mode
+  - dynamic-range
+  - forced-colors
+  - grid
+  - height
+  - hover
+  - inverted-colors
+  - monochrome
+  - orientation
+  - overflow-block
+  - overflow-inline
+  - pointer
+  - prefers-color-scheme
+  - prefers-contrast
+  - prefers-reduced-motion
+  - resolution
+  - scripting
+  - update
+  - video-dynamic-range
+  - width
+
+Targetting media features:
+
+```css
+@media (hover: hover) {
+  /* … */
+}
+```
+
+> Targetting users w/ a mouse (hover)
+
+### Combining Multiple Types/Features
+
+Landscape mode & min-width:
+
+```css
+@media (min-width: 30em) and (orientation: landscape) {
+  /* … */
+}
+```
+
+### Inverting Query's Meaning
+
+`not` keyword inverts the meaning of an entire media query:
+
+```css
+@media not all and (monochrome) {
+  /* … */
+}
+
+/* above is evaluated as: */
+@media not (all and (monochrome)) {
+  /* … */
+}
+```
+
+### Improving Compatibility w/ older browsers
+
+```css
+@media only screen and (color) {
+  /* … */
+}
+```
+
+^ `only` prevents older browsers that don't support media queries
+
+### Level 4 Syntax Improvements
+
+````css
+@media (max-width: 30em) {
+  /* … */
+}
+
+/* can be written as */
+```@media (width <= 30em) {
+  /* … */
+}
+
+@media (min-width: 30em) and (max-width: 50em) {
+  /* … */
+}
+
+/* This would convert to the Level 4 syntax as: */
+
+@media (30em <= width <= 50em) {
+  /* … */
+}
+````
+
+### Negating a feature
+
+`not()` around a media feature negates it.
+
+- ie: `not(hover)`
+- matches devices that don't have hover (phones)
+
+### Testing for multiple features
+
+`or` can match multiple features:
+
+```css
+@media (not (color)) or (hover) {
+  /* … */
+}
+```
+
+^ Monochrome devices OR devices that can hover (mouse)
