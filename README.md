@@ -97,7 +97,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 - [ ] **Advanced HTML & CSS**
 
   - [x] Animation
-  - [ ] Accessibility
+  - [x] Accessibility
   - [ ] Responsive Design
 
 - [ ] **NodeJS**
