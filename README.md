@@ -16,13 +16,13 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 ### React
 
-| Project                                       | URL                                                                  | Source Code                                                       |
-| :-------------------------------------------- | :------------------------------------------------------------------- | :---------------------------------------------------------------- |
-| **#23 JavaScript Final Project** (TypeScript) | [Live Demo](https://bmilcs.github.io/odin-javascript-final-project/) | [GitHub](https://github.com/bmilcs/odin-javascript-final-project) |
-| **#22 Where's Waldo** (TypeScript)            | [Live Demo](https://bmilcs.github.io/odin-wheres-waldo/)             | [GitHub](https://github.com/bmilcs/odin-wheres-waldo)             |
-| **#21 Shopping Cart**                         | [Live Demo](https://bmilcs.github.io/odin-shopping-cart/)            | [GitHub](https://github.com/bmilcs/odin-shopping-cart)            |
-| **#20 Memory Card**                           | [Live Demo](https://bmilcs.github.io/odin-memory-card/)              | [GitHub](https://github.com/bmilcs/odin-memory-card)              |
-| **#19 CV Application**                        | [Live Demo](https://bmilcs.github.io/odin-cv-application/)           | [GitHub](https://github.com/bmilcs/odin-cv-application)           |
+| Project                                       | URL                                                        | Source Code                                                       |
+| :-------------------------------------------- | :--------------------------------------------------------- | :---------------------------------------------------------------- |
+| **#23 JavaScript Final Project** (TypeScript) | [Live Demo](https://comedy.bmilcs.com)                     | [GitHub](https://github.com/bmilcs/odin-javascript-final-project) |
+| **#22 Where's Waldo** (TypeScript)            | [Live Demo](https://bmilcs.github.io/odin-wheres-waldo/)   | [GitHub](https://github.com/bmilcs/odin-wheres-waldo)             |
+| **#21 Shopping Cart**                         | [Live Demo](https://bmilcs.github.io/odin-shopping-cart/)  | [GitHub](https://github.com/bmilcs/odin-shopping-cart)            |
+| **#20 Memory Card**                           | [Live Demo](https://bmilcs.github.io/odin-memory-card/)    | [GitHub](https://github.com/bmilcs/odin-memory-card)              |
+| **#19 CV Application**                        | [Live Demo](https://bmilcs.github.io/odin-cv-application/) | [GitHub](https://github.com/bmilcs/odin-cv-application)           |
 
 ### JavaScript (Vanilla)
 
