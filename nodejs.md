@@ -133,3 +133,50 @@ Web servers:
 ### Static Sites
 
 Static site: same hard-coded content on request
+
+- User wants to nav to a page
+- Browser sends HTTP "GET" w/ url
+- Server retrieves document from file system
+- Returns HTTP response with:
+  - File found:
+    - requested document
+    - success status: `200 OK`
+  - File not found:
+    - error status
+
+![basic static server app](img/basic_static_app_server.png)
+
+### Dynamic Sites
+
+Dynamic websites:
+
+- some page content is generated dynamically, or as needed
+- data is put into placeholders in HTML templates (_much more efficient for large amounts of data_)
+- can return different data for a url based on:
+  - info given by user
+  - stored preferences
+- can perform other operations as part of returning response
+  - ie: send notifications
+
+Dynamic website code must run on the **back-end** (most of it).
+
+- IE: _Server-side programming_ OR _back-end scripting_
+
+![dynamic website: server-side programming](img/web_application_with_html_and_steps.png)
+
+- Browser send HTTP requests to server
+- Server processes requests
+  - Static resources are handled like static sites
+  - Dynamic resources:
+    - Server interprets request
+    - Reads required info from DB
+    - Combines retrieved data with HTML Templates
+- Server returns HTTP responses
+
+### Server-side vs Client-side Programming
+
+The code is significantly different:
+
+- different purposes & concerns
+- generally don't use the same language (except JS)
+- run on different os environments
