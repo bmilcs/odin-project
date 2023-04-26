@@ -112,3 +112,156 @@ var isAnagram = function (s, t) {
 
   return true;
 };
+
+//
+// is a palindrome
+//
+
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+
+var isPalindrome = function (s) {
+  const str = s.split("");
+  const regex = /^[a-z0-9]+$/i;
+  const filteredStr = str
+    .filter((letter) => letter.match(regex))
+    .map((letter) => letter.toLowerCase());
+  let left = 0;
+  let right = filteredStr.length - 1;
+
+  while (left < right) {
+    if (filteredStr[left] !== filteredStr[right]) return false;
+    left++;
+    right--;
+  }
+
+  return true;
+};
+
+//
+//   String to Integer (atoi)
+//
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var myAtoi = function (s) {
+  const str = s.toString();
+  let ans = "";
+  let sign = "";
+
+  for (let x = 0; x < s.length; x++) {
+    const isANumber = str[x].match(/[0-9]/i);
+    const isWhiteSpace = str[x].match(/\s/i);
+    const isPlusOrMinus = str[x] === "-" || str[x] === "+";
+    const isNumberComplete = ans && !isANumber;
+    const lastIndexIsPlusOrMinus = str[x - 1] === "-" || str[x - 1] === "+";
+
+    if (isNumberComplete) break;
+
+    if (isPlusOrMinus) {
+      const signAlreadyAssigned = sign;
+      if (signAlreadyAssigned) return 0;
+
+      sign = str[x];
+      continue;
+    }
+
+    if (lastIndexIsPlusOrMinus && !isANumber) break;
+
+    if (isWhiteSpace) continue;
+
+    if (!isANumber) break;
+
+    ans = `${ans}${str[x]}`;
+  }
+
+  if (!ans) return 0;
+
+  if (sign === "-") ans = `-${ans}`;
+
+  if (+ans >= 2147483648) return 2147483647;
+  else if (+ans < -2147483648) return -2147483648;
+
+  return +ans;
+};
+
+//
+// implement strStr()
+//
+
+// Input: haystack = "sadbutsad", needle = "sad"
+// Output: 0
+// Explanation: "sad" occurs at index 0 and 6.
+// The first occurrence is at index 0, so we return 0.
+
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+var strStr = function (haystack, needle) {
+  haystack = haystack.split("");
+  needle = needle.split("");
+
+  let needleIdx = 0;
+  let ans = -1;
+
+  for (let x = 0; x < haystack.length; x++) {
+    const areLettersMatching = haystack[x] === needle[needleIdx];
+
+    if (!areLettersMatching) {
+      const idxAfterFirstNeedleMatch = x - needleIdx;
+      x = idxAfterFirstNeedleMatch;
+      needleIdx = 0;
+      continue;
+    }
+
+    const isFullMatch = needleIdx === needle.length - 1;
+
+    if (isFullMatch) {
+      ans = x - needle.length + 1;
+      break;
+    }
+
+    needleIdx++;
+  }
+
+  return ans;
+};
+
+//
+// longest common prefix
+//
+
+// Input: strs = ["flower", "flow", "flight"];
+// Output: "fl";
+
+// Input: strs = ["dog", "racecar", "car"];
+// Output: "";
+
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function (strs) {
+  strs = strs.map((str) => str.split(""));
+  let ans = "";
+
+  for (let x = 0; x < strs[0].length; x++) {
+    const letterToCompare = strs[0][x];
+
+    const allLettersAreSame = strs.every((letter) => {
+      return letter[x] === letterToCompare;
+    });
+
+    if (!allLettersAreSame) break;
+
+    ans = `${ans}${letterToCompare}`;
+  }
+
+  return ans;
+};
