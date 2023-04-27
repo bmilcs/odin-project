@@ -1,3 +1,49 @@
+//
+// remove duplicates
+//
+
+// Input: nums = [1,1,2]
+// Output: 2, nums = [1,2,_]
+// Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+// It does not matter what you leave beyond the returned k(hence they are underscores).
+
+function removeDuplicates(nums) {
+  const answer = [];
+  for (let x = 0; x < nums.length; x++) {
+    if (x === 0 || nums[x] !== nums[x - 1]) {
+      answer.push(nums[x]);
+    }
+  }
+
+  return answer.length;
+}
+
+//
+// best time to sell
+//
+
+// Input: prices = [7,1,5,3,6,4]
+// Output: 7
+// Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.
+// Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.
+// Total profit is 4 + 3 = 7.
+
+/**
+ * @param {number[]} prices
+ * @return {number}
+ */
+var maxProfit = function (prices) {
+  let answer = 0;
+  for (let x = 0; x < prices.length; x++) {
+    const today = prices[x];
+    const tomorrow = prices[x + 1];
+
+    // if tomorrow > today, buy today
+    if (tomorrow > today) answer += tomorrow - today;
+  }
+  return answer;
+};
+
 // rotate an array of numbers k times
 // [1,2,3], 2 => [2,3,1]
 
