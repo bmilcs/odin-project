@@ -288,3 +288,98 @@ Web browsers communicate with web servers using HTTP.
   - Client-side cookes
     - Contain session data about client
     - Keys that server uses to determine login status, permissions, access to resources
+
+Web Servers wait for requests, process them as they arrive & reply with an HTTP response message.
+
+Web Server responses include:
+
+- HTTP Response Status Code
+  - `200 OK`
+  - `404 Not Found`
+  - `403 Forbidden`
+- Body of successful response:
+  - Data of requested resource (`GET` request)
+
+If `HTML` page is returned, it is rendered by the browser
+
+- Browser discovers links to other resources: JavaScript, CSS Files
+- Browser sends separate HTTP requests to download those files
+
+### `GET` Request Example
+
+```
+GET /en-US/search?q=client+server+overview&topic=apps&topic=html&topic=css&topic=js&topic=api&topic=webdev HTTP/1.1
+Host: developer.mozilla.org
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Referer: https://developer.mozilla.org/en-US/
+Accept-Encoding: gzip, deflate, sdch, br
+Accept-Charset: ISO-8859-1,UTF-8;q=0.7,*;q=0.7
+Accept-Language: en-US,en;q=0.8,es;q=0.6
+Cookie: sessionid=6ynxs23n521lu21b1t136rhbv7ezngie; csrftoken=zIPUJsAZv6pcgCBJSCj1zU6pQZbfMUAT; dwf_section_edit=False; dwf_sg_task_completion=False; _gat=1; _ga=GA1.2.1688886003.1471911953; ffo=true
+```
+
+Lines #1 & #2 contain:
+
+- Request type: `GET`
+- Target resource URL: `en-US/search`
+- URL parameters: `q=client%2Bserver%2Boverview&topic=apps&topic=html&topic=css&topic=js&topic=api&topic=webdev`
+- Target host: `developer.mozilla.org`
+- Protocol version: `HTTP/1.1`
+
+Last Line:
+
+- client-side cookies
+- session id
+
+Remaining lines:
+
+- info about browser used & responses it can handle
+- browser: `User-Agent` is Firefox: `Mozilla/5.0`
+- accept gzip compression: `Accept-Encoding: gzip`
+- accept character sets: `Accept-Language: en-US,en;q=0.8,es;q=0.6`
+- origin url of request: `Referer: https://developer.mozilla.org/en-US/`
+
+### `GET` Response Example
+
+Response **Header** contains:
+
+- `200 OK` response code = success
+- `text/html` is the `Content-Type`
+- `charset=utf-8` for character set
+- `Content-length: 41823` how big it is
+- **body** content: actual HTML
+
+Remainder of response header includes:
+
+- when response was generated
+- the server
+- how it expects browser to handle the page
+  - `X-Frame-Options: DENY` = No `<iframe>` access
+
+```
+HTTP/1.1 200 OK
+Server: Apache
+X-Backend-Server: developer1.webapp.scl3.mozilla.com
+Vary: Accept, Cookie, Accept-Encoding
+Content-Type: text/html; charset=utf-8
+Date: Wed, 07 Sep 2016 00:11:31 GMT
+Keep-Alive: timeout=5, max=999
+Connection: Keep-Alive
+X-Frame-Options: DENY
+Allow: GET
+X-Cache-Info: caching
+Content-Length: 41823
+
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" class="redesign no-js"  data-ffo-opensanslight=false data-ffo-opensans=false >
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+  …
+```
