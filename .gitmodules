@@ -1,6 +1,3 @@
 [submodule "css/normalize.css"]
-	path = css/normalize.css
-	url = https://github.com/necolas/normalize.css
-[submodule "git"]
-	path = git
-	url = https://github.com/bmilcs/odin-git-deeper-look
+path = css/normalize.css
+url = https://github.com/necolas/normalize.css
