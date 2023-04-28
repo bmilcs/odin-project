@@ -106,7 +106,7 @@ http
   .listen(8080);
 ```
 
-## Server-Side Website Programming
+## [Server-Side Website Programming](https://developer.mozilla.org/en-US/docs/Learn/Server-side/First_steps/Introduction)
 
 Websites communicate w/ web servers via **HTTP** (hypertext transfer protocol).
 
@@ -167,11 +167,11 @@ Dynamic website code must run on the **back-end** (most of it).
 - Browser send HTTP requests to server
 - Server processes requests
   - Static resources are handled like static sites
-  - Dynamic resources:
+  - Dynamic resources are forwarded to server-side code
     - Server interprets request
     - Reads required info from DB
     - Combines retrieved data with HTML Templates
-- Server returns HTTP responses
+- Server returns HTTP responses: containing generated HTML
 
 ### Server-side vs Client-side Programming
 
@@ -180,3 +180,111 @@ The code is significantly different:
 - different purposes & concerns
 - generally don't use the same language (except JS)
 - run on different os environments
+
+Client-side Code:
+
+- primarily concerns: appearance & behavior of a rendered page
+- selecting & styling ui components
+- creating layouts
+- navigation
+- form validation
+
+Server-side Code:
+
+- primary concerns: choosing _which_ content is returned to browser in response to requests
+- validates submitted data & requests
+- uses databases to store/retrieve data
+- send correct data to client
+- **has full access to server operating system**
+- frameworks: session support, users support, authentication, database access, templating libraries
+
+### What You Can Do On Server-side
+
+Server-side: Efficiently deliver info _tailored for individual users_
+
+**Amazon**:
+
+- constructs search results for products
+- targetted product suggestions based on user preferences, previous purchases
+- simplify purchases
+
+**Banks**:
+
+- store account info
+- allow only authorized users to view/make transactions
+
+**Social Media**:
+
+- highlight, share & control access to interesting content
+
+### Efficient Storage & Delivery of Info
+
+Server-side programming allows us to:
+
+- store info in a db
+- dynamically construct & return:
+  - html, pdf's, images
+  - data: json, xml (for client-side web frameworks, reducing processing burden on server)
+
+### Customized User Experience
+
+- servers store & use info about clients
+- provide convenient & tailored user experience
+  - credit cards (don't have to enter them again and again)
+  - locations (google maps)
+
+### Controlled access to content
+
+- restrict access to authorized users
+- social networking
+
+### Store session/state information
+
+- sessions: allows servers to store info on current user
+- send different responses based on that info
+  - user has previously logged in
+  - displays links to their email or order history
+  - state of a game
+
+### Notifications & Communication
+
+- servers can send notifications
+- email, sms, instant messaging, video conversations, other communication services
+
+### Data Analysis
+
+- collect a lot of data about users
+- what they search for, buy, recommend
+- how long they stay on each page
+
+## [Client-Server Overiew](https://developer.mozilla.org/en-US/docs/Learn/Server-side/First_steps/Client-Server_overview)
+
+### Web Servers & HTTP
+
+Web browsers communicate with web servers using HTTP.
+
+**REQUESTS** include:
+
+- URL: target server & resource - _html file, data point, tool to run_
+- METHOD: action - _get file, save/update data_
+  - `GET` get a resource - _html file, list products_
+  - `POST` create new resource - _article to wiki, contact to db_
+  - `HEAD` get metadata about resource - _last time resource was updated, determine if download is needed_
+  - `PUT` update resource _or create if doesn't exist_
+  - `DELETE` delete resource
+  - `TRACE`, `OPTIONS`, `CONNECT`, `PATCH`
+- INFO: additional - _form data_
+  - URL parameters
+    - `GET` requests encode data in the URL sent to server
+    - Adds name/value pairs to end of it `http://example.com?name=Fred&age=11`
+    - `?` separates URL from URL parameters
+    - `=` separates name from values
+    - `&` separates each pair
+    - **INSECURE**: can be changed by users & resubmitted
+    - **NOT used for requests that update data on the server**
+  - `POST` data
+    - `POST` requests _add new resources_
+    - Data is encoded within request body
+  - Client-side cookes
+    - Contain session data about client
+    - Keys that server uses to determine login status, permissions, access to resources
