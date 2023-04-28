@@ -100,11 +100,11 @@ These assignments were tackled with a growth mindset and I did not reference the
   - [x] JavaScript and the Backend
   - [x] Finishing Up with JavaScript
 
-- [ ] **Advanced HTML & CSS**
+- [x] **Advanced HTML & CSS**
 
   - [x] Animation
   - [x] Accessibility
-  - [ ] Responsive Design
+  - [x] Responsive Design
 
 - [ ] **NodeJS**
 
