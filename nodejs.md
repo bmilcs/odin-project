@@ -654,3 +654,53 @@ server.listen(port, hostname, () => {
 - `res.statusCode = 200`: successful response
 - `res.setHeader('Content-Type', 'text/plain')`: content-type header
 - `res.end('Hello World\n')`: close the response, with content added as an arg
+
+## Node From The Command Line
+
+To run node, you can:
+
+Use globally available `node` command w/ name of file
+
+```sh
+node app.js
+```
+
+OR you can **add a shebang line** to your JS file.
+
+> a shebang is the 1st line in a file that tells the OS which interpreter to use
+
+```sh
+#!/usr/bin/node
+```
+
+Using a shebang requires the file to be executable. To make a file executable:
+
+```sh
+chmod u+x app.js
+```
+
+Pass string arguments to node instead of a file:
+
+```sh
+node -e "console.log(123)"
+```
+
+`node` has to be re-executed in bash whenever a change in the application is made.
+
+To automatically restart node on change, use the `nodemon` module:
+
+```sh
+# globally install it
+sudo npm i -g nodemon
+
+# add as a dev dependency
+npm i --save-dev nodemon
+```
+
+If installed as a dev dependency, run `nodemon` with an npm script or `npx nodemon`
+
+Run the app using `nodemon` w/ app's name:
+
+```sh
+nodemon app.js
+```
