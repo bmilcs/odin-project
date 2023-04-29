@@ -552,3 +552,37 @@ def junior(request):
 After `junior()` gets a list of junior teams:
 
 - Calls `render()` with original `HttpReqest`, HTML template & `context` object
+
+## What is NodeJS?
+
+NodeJS is:
+
+- JS runtime built on Chrome V8 JS Engine
+- Uses event-driven, non-blocking I/O model
+  - Lightweight & efficient
+- Package ecosystem `npm` = largest open source library ecosystem
+
+![JS Event Loop](img/js-event-loop.png)
+
+The JS Event Loop:
+
+- Push `main()` onto call stack
+- Push `console.log()` onto call stack
+  - Runs right away & pops off stack
+- Push `setTimeout(2000)` onto call stack
+  - `setTimeout(2000)` is a Node API
+  - It gets called & we register the event-callback pair
+- `setTimeout(2000)` gets registered in the API & is popped off the call stack
+- Push `setTimeout(0)` onto call stack
+- `setTimeout(0)` gets registered in the API & is popped off the call stack
+- Wait 0 seconds
+- `setTimeout(0)` is moved to callback queue
+- Wait 2 seconds
+- `setTimeout(2000)` is moved to callback queue
+- Callback queue waits for call stack to be empty
+  - Only one statement can execute at a time
+  - Taken care of by event loop
+- Last `console.log()` runs
+- `main()` is popped from the stack
+- Event loop sees **call stack is empty** and **callback queue is NOT empty**
+- Event loop moves callbacks to call stack for execution (FIFO - first in first out)
