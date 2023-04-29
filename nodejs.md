@@ -383,3 +383,172 @@ Content-Length: 41823
   <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
   …
 ```
+
+### `POST` Request Example
+
+Example: User submits new profile details
+
+- Simimlar to `GET` request BUT first line = `POST`
+- Main difference: **No URL parameters**
+- Info from the form is encoded in the body of the request
+  - ie `&user-username=hamishwillee`
+
+```
+POST /en-US/profiles/hamishwillee/edit HTTP/1.1
+Host: developer.mozilla.org
+Connection: keep-alive
+Content-Length: 432
+Pragma: no-cache
+Cache-Control: no-cache
+Origin: https://developer.mozilla.org
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Referer: https://developer.mozilla.org/en-US/profiles/hamishwillee/edit
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.8,es;q=0.6
+Cookie: sessionid=6ynxs23n521lu21b1t136rhbv7ezngie; _gat=1; csrftoken=zIPUJsAZv6pcgCBJSCj1zU6pQZbfMUAT; dwf_section_edit=False; dwf_sg_task_completion=False; _ga=GA1.2.1688886003.1471911953; ffo=true
+
+csrfmiddlewaretoken=zIPUJsAZv6pcgCBJSCj1zU6pQZbfMUAT&user-username=hamishwillee&user-fullname=Hamish+Willee&user-title=&user-organization=&user-location=Australia&user-locale=en-US&user-timezone=Australia%2FMelbourne&user-irc_nickname=&user-interests=&user-expertise=&user-twitter_url=&user-stackoverflow_url=&user-linkedin_url=&user-mozillians_url=&user-facebook_url=
+```
+
+### `POST` Response Example
+
+- `302 Found` tells browser: post succeeded
+- Browser must issue a 2nd HTTP request to load the page specified in the `Location` field
+
+```
+HTTP/1.1 302 FOUND
+Server: Apache
+X-Backend-Server: developer3.webapp.scl3.mozilla.com
+Vary: Cookie
+Vary: Accept-Encoding
+Content-Type: text/html; charset=utf-8
+Date: Wed, 07 Sep 2016 00:38:13 GMT
+Location: https://developer.mozilla.org/en-US/profiles/hamishwillee
+Keep-Alive: timeout=5, max=1000
+Connection: Keep-Alive
+X-Frame-Options: DENY
+X-Cache-Info: not cacheable; request wasn't a GET or HEAD
+Content-Length: 0
+```
+
+### Static Sites #2
+
+- Returns same hardcoded content, always, to every user
+- Can get inefficient
+
+Example:
+
+1. Browser sends `GET` HTTP request w/ URL of HTML page
+2. Server retrieves doc from file system
+3. Server returns HTTP response with
+   1. HTTP response status code `200 OK`, `404 Not Found` `301 Moved Permanently`
+
+^ Important because _dynamic_ sites use the same method for CSS, JS, static images, etc.
+
+### Dynamic Sites #2
+
+- Generates & returns content based on request URL & data
+  - Data from a db
+- On receiving `GET` request for product
+  - Server determines product ID
+  - Fetches data from db
+  - Constructs HTML page by inserting data into HTML template
+
+#### Anatomy of Dynamic Requests
+
+Example context:
+
+- Sports-team manager where coaches select team name & size in a form
+- Get back 'best lineup' for next game
+
+Coach submits the form w/ team name & # of players:
+
+1. Browser creates HTTP `GET` request (only fetching data)
+   1. Base URL for resource `/best`
+   2. Encodes team & player number as
+      1. URL parameters: `/best?team=my_team_name&show=11`
+      2. URL pattern: `/best/my_team_name/11/`
+2. Server detects request is dynamic
+3. Server forwards to _Web Application_ for processing
+4. Web App determines how to handle different URLS based on pattern matching rules
+5. Web App id's intention of request from the URL
+   1. get best team `/best/`
+   2. finds team name & # of players
+6. Web App gets info from the db
+7. Web App dynamically creates HTML page data > placeholders in HTML template
+8. Web App returns generated HTML to browser (via Server) & `200` success
+   1. Or `404` team doesn't exist
+9. Browser processes HTML
+10. Browser sends requests for CSS/JS from the HTML
+11. Server loads static files from file system & returns them to browser
+
+To update record in db, the same would occur except it'd be a `POST` request
+
+#### Other Work
+
+Web Apps: receive HTTP requests & return HTTP responses
+
+They also can do other things at same time:
+
+- Interact w/ DB: get/update info
+- Send emails to users to confirm registration
+- Perform logging
+- Other operations
+
+#### Returning Other Files
+
+Server-side code doesn't have to return HTML.
+
+They can dynamically create & return
+
+- files: text, pdf, csv
+- data: json, xml
+
+### Web Frameworks Simplify Server-Side Programming
+
+Frameworks provide:
+
+- Simple ways to map URLS to resources
+- Maintenance: change URL without changing handler function
+
+Django example:
+
+```py
+# file: best/urls.py
+#
+
+from django.conf.urls import url
+
+from . import views
+
+urlpatterns = [
+    # example: /best/ > passed to index() fn in views
+    url(r'^$', views.index),
+    # example: /best/junior/ > junior() fn in views
+    url(r'^junior/$', views.junior),
+]
+```
+
+Frameworks also help with databases
+
+Example: get teams w/ `team_type` of `junior` from `Team` model
+
+```py
+#best/views.py
+
+from django.shortcuts import render
+
+from .models import Team
+
+def junior(request):
+    list_teams = Team.objects.filter(team_type__exact="junior")
+    context = {'list': list_teams}
+    return render(request, 'best/index.html', context)
+```
+
+After `junior()` gets a list of junior teams:
+
+- Calls `render()` with original `HttpReqest`, HTML template & `context` object
