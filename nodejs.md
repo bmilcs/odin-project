@@ -553,7 +553,7 @@ After `junior()` gets a list of junior teams:
 
 - Calls `render()` with original `HttpReqest`, HTML template & `context` object
 
-## What is NodeJS?
+## [What is NodeJS?](https://medium.freecodecamp.org/what-exactly-is-node-js-ae36e97449f5)
 
 NodeJS is:
 
@@ -586,3 +586,33 @@ The JS Event Loop:
 - `main()` is popped from the stack
 - Event loop sees **call stack is empty** and **callback queue is NOT empty**
 - Event loop moves callbacks to call stack for execution (FIFO - first in first out)
+
+### NPM Node Package Manager
+
+`require` is a function:
+
+- accepts "path" parameter
+- returns module.exports
+
+`require` does 3 things:
+
+- loads modules bundled with Node.js: file system, HTTP from Node.js API
+- loads third party libraries: Express, Mongoose (installed from npm)
+- require your own files: modularize the project
+
+### V8 Turbo-charges JS by leveraging C++
+
+V8: open source runtime engine written in C++
+
+- JavaScript > V8 (C++) > Machine Code
+- Run standalone
+- Can be embedded into any C++ app
+- Hooks for writing C++ available to JS
+
+### Events
+
+Something happens that we can respond to
+
+1. System Events: C++ core, library called libuv
+   1. finished reading a file
+2. Custom events: JavaScript core
