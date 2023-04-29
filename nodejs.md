@@ -616,3 +616,41 @@ Something happens that we can respond to
 1. System Events: C++ core, library called libuv
    1. finished reading a file
 2. Custom events: JavaScript core
+
+## Introduction to Node.js
+
+```js
+const http = require("http");
+
+const hostname = "127.0.0.1";
+const port = 3000;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/plain");
+  res.end("Hello World\n");
+});
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
+```
+
+^ Includes Node.js `http module`
+
+- `http`'s `createServer()` method: creates a new HTTP server & returns it
+- listens on specific port & hostname
+- when server is ready, the callback is called, running the console.log statement
+- when new requests are receivered, the response event is called
+  - provides 2 objects:
+    - request: `http.IncomingMessage` obj
+    - response: `http.ServerResponse` obj
+  - ^ essential to handle HTTP calls
+
+`http.IncomingMessage`: provides request details (req headers & data)
+
+`http.ServerResponse`: returns data to the caller
+
+- `res.statusCode = 200`: successful response
+- `res.setHeader('Content-Type', 'text/plain')`: content-type header
+- `res.end('Hello World\n')`: close the response, with content added as an arg
