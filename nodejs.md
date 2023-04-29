@@ -841,3 +841,132 @@ req.end();
 ```
 
 `PUT` & `DELETE` requests use the same format as `POST` but with a different `options.method`
+
+## `fs` File System Module
+
+`fs` is a part of Node.js core.
+
+To use it:
+
+```js
+const fs = require("fs");
+```
+
+`fs` will give you access to:
+
+- `fs.access()`: check if the file exists and Node.js can access it with its permissions
+- `fs.appendFile()`: append data to a file. If the file does not exist, it's created
+- `fs.chmod()`: change the permissions of a file specified by the filename passed. Related: fs.lchmod(), fs.fchmod()
+- `fs.chown()`: change the owner and group of a file specified by the filename passed. Related: fs.fchown(), fs.lchown()
+- `fs.close()`: close a file descriptor
+- `fs.copyFile()`: copies a file
+- `fs.createReadStream()`: create a readable file stream
+- `fs.createWriteStream()`: create a writable file stream
+- `fs.link()`: create a new hard link to a file
+- `fs.mkdir()`: create a new folder
+- `fs.mkdtemp()`: create a temporary directory
+- `fs.open()`: opens the file and returns a file descriptor to allow file manipulation
+- `fs.readdir()`: read the contents of a directory
+- `fs.readFile()`: read the content of a file. Related: fs.read()
+- `fs.readlink()`: read the value of a symbolic link
+- `fs.realpath()`: resolve relative file path pointers (., ..) to the full path
+- `fs.rename()`: rename a file or folder
+- `fs.rmdir()`: remove a folder
+- `fs.stat()`: returns the status of the file identified by the filename passed. Related: fs.fstat(), fs.lstat()
+- `fs.symlink()`: create a new symbolic link to a file
+- `fs.truncate()`: truncate to the specified length the file identified by the filename passed. Related: fs.ftruncate()
+- `fs.unlink()`: remove a file or a symbolic link
+- `fs.unwatchFile()`: stop watching for changes on a file
+- `fs.utimes()`: change the timestamp of the file identified by the filename passed. Related: fs.futimes()
+- `fs.watchFile()`: start watching for changes on a file. Related: fs.watch()
+- `fs.writeFile()`: write data to a file. Related: fs.write()
+
+All `fs` module methods are **asynchronous**, but can be made synchronous by appending `Sync`
+
+Example: Rename a file
+
+```js
+fs.rename("before.json", "after.json", (err) => {
+  if (err) {
+    return console.error(err);
+  }
+
+  // tada! done!
+});
+```
+
+Synchronous API can be done with try/catch block (EXPERIMENTAL):
+
+> this **BLOCKS** execution of your script!!!
+
+```js
+try {
+  fs.rename("before.json", "after.json");
+} catch (err) {
+  console.error(err);
+}
+```
+
+`fs/promises` module uses a promise-based API: prevents callback hell
+
+Example: read a file, change it & read again
+
+```js
+const fileName = "./test_file";
+
+fs.readFile(fileName, "utf8", (err, data) => {
+  if (err) {
+    console.err(err);
+    return;
+  }
+
+  // read data
+  console.log(data);
+
+  // change the data
+  const content = "new content here!!";
+
+  fs.writeFile(fileName, content, (err2) => {
+    if (err2) {
+      console.error(err);
+      return;
+    }
+
+    console.log("wrote some new content!");
+
+    // read file again
+    fs.readFile(fileName, "utf8", (err3, data3) => {
+      if (err3) {
+        console.error(err3);
+        return;
+      }
+
+      console.log(err3);
+    });
+  });
+});
+```
+
+Using a promise-based API (BLOCKING):
+
+```js
+// Example: Read a file and change its content and read
+// it again using promise-based API.
+const fs = require("fs/promises");
+
+async function example() {
+  const fileName = "/Users/joe/test.txt";
+  try {
+    const data = await fs.readFile(fileName, "utf8");
+    console.log(data);
+    const content = "Some content!";
+    await fs.writeFile(fileName, content);
+    console.log("Wrote some content!");
+    const newData = await fs.readFile(fileName, "utf8");
+    console.log(newData);
+  } catch (err) {
+    console.log(err);
+  }
+}
+example();
+```
