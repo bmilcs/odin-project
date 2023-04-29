@@ -704,3 +704,39 @@ Run the app using `nodemon` w/ app's name:
 ```sh
 nodemon app.js
 ```
+
+## ENV Files
+
+`process` core module of Node.js provides `env` property
+
+- hosts all environmental variables that were set when process was started
+
+Example: set `USER_ID` & `USER_KEY` env variables _for testing purposes_
+
+```sh
+USER_ID=123 USER_KEY=foobar node app.js
+```
+
+For production, you want a bash script to export variables.
+
+To access env variables, we use the `process` statement
+
+> `process` doesn't need a `require` statement
+
+```js
+// app.js
+process.env.USER_ID; // 123
+process.env.USER_KEY; // foobar
+```
+
+To set multiple env variables, you can create a `.env` in the root of your project and then use `dotenv` package to load them during runtime.
+
+```sh
+# install package
+npm i --save dotenv
+```
+
+```js
+// app.js
+require("dotenv").config();
+```
