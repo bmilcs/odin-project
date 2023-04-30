@@ -970,3 +970,105 @@ async function example() {
 }
 example();
 ```
+
+## Writing Files With NodeJS
+
+Easiest way to write to files:
+
+```js
+const fs = require("fs");
+
+const content = "Some content!";
+
+fs.writeFile("/Users/joe/test.txt", content, (err) => {
+  if (err) {
+    console.error(err);
+  }
+  // file written successfully
+});
+```
+
+Synchronous write to file:
+
+```js
+const fs = require("fs");
+
+const content = "Some content!";
+
+try {
+  fs.writeFileSync("/Users/joe/test.txt", content);
+  // file written successfully
+} catch (err) {
+  console.error(err);
+}
+```
+
+Promise-based write to file:
+
+```js
+const fs = require("fs/promises");
+
+async function example() {
+  try {
+    const content = "Some content!";
+    await fs.writeFile("/Users/joe/test.txt", content);
+  } catch (err) {
+    console.log(err);
+  }
+}
+example();
+```
+
+By default, `writeFile` **overwrites** the content of a file.
+
+To modify the default behavior, use a flag:
+
+- `r+` open file for reading/writing
+- `w+` open file for reading/writing, positioning the stream at the beginning of the file. (file is created if it doesn't exist.)
+- `a` open file for writing, positioning the stream at the end of the file. (file is created if it doesn't exist.)
+- `a+` open file for reading/writing, positioning the stream at the end of the file. (file is created if it doesn't exist.)
+
+```js
+fs.writeFile("/Users/joe/test.txt", content, { flag: "a+" }, (err) => {});
+```
+
+## Appending to a File
+
+To append to the end of a file: use `fs.appendFile()` / `fs.appendFileSync`
+
+```js
+const fs = require("fs");
+
+const content = "File append content!";
+
+fs.appendFile("file.log", content, (err) => {
+  if (err) {
+    console.error(err);
+  }
+  // done!
+});
+```
+
+Promise-based append:
+
+```js
+const fs = require("fs/promises");
+
+async function example() {
+  try {
+    const content = "Some content!";
+    await fs.appendFile("/Users/joe/test.txt", content);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+example();
+```
+
+## Using Streams
+
+`writeFile` & `appendFile` write the full content to the file **before returning control back to your program**
+
+- in async version, this means executing the callback
+- a better option is to write the file content **using streams**
