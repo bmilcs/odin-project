@@ -1121,3 +1121,178 @@ example();
 - All three file reading methods read **the full content of the file BEFORE returning the data**.
 - **Big files** are going to have a **large impact** on memory consumption & execution speed
 - Better option for big files: **streams**
+
+## URL Class
+
+`node:url` module provides utilities for URL resolution and parsing.
+
+- **WHATWG Url Standard**
+- legacy Node-specific API
+
+URL anatomy:
+
+```
+https:   //    user   :   pass   @ sub.example.com : 8080   /p/a/t/h  ?  query=string   #hash
+```
+
+Parse URL string:
+
+```js
+// WHATWG API
+const myURL = new URL(
+  "https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash",
+);
+
+// legacy API
+const myURL = url.parse(
+  "https://user:pass@sub.example.com:8080/p/a/t/h?query=string#hash",
+);
+```
+
+### Constructing URL from component parts
+
+```js
+const myURL = new URL("https://example.org");
+myURL.pathname = "/a/b/c";
+myURL.search = "?d=e";
+myURL.hash = "#fgh";
+```
+
+### Getting Constructed URL string
+
+```js
+const pathname = "/a/b/c";
+const search = "?d=e";
+const hash = "#fgh";
+const myURL = new URL(`https://example.org${pathname}${search}${hash}`);
+```
+
+### URL Constructor Parameters
+
+`new URL(input[, base]);`
+
+```js
+const example = newURL("http://www.example.com/path");
+const example2 = newURL("/path", "http://www.example.com");
+```
+
+### URL WHATCHA API
+
+- `url.hash`: "#contact"
+- `url.hostname`: "example.org"
+- `url.href`: "https://example.com/bar"
+  - equivalent to `url.toString()`
+- `url.origin`: "https://example.org"
+- `url.pathname`: "/path/to"
+- `url.port`: 443
+- `url.protocol`: "https"
+- `url.search`: "?123"
+- `url.searcHParams`: "?foo=~bar"
+- `url.username`
+- `url.password`
+- `url.toString()`: serialized URL
+- `url.toJSON()`: serialized URL
+
+### URL `canParse`
+
+Checks if input relative to the base can be parsed to a URL:
+
+```js
+const isValid = URL.canParse("/foo", "https://example.org/"); // true
+const isNotValid = URL.canParse("/foo"); // false
+```
+
+### URL Search Params Obj
+
+From a string:
+
+```js
+let params;
+
+params = new URLSearchParams("user=abc&query=xyz");
+console.log(params.get("user"));
+// Prints 'abc'
+console.log(params.toString());
+```
+
+From an object:
+
+```js
+const params = new URLSearchParams({
+  user: "abc",
+  query: ["first", "second"],
+});
+console.log(params.getAll("query"));
+// Prints [ 'first,second' ]
+console.log(params.toString());
+// Prints 'user=abc&query=first%2Csecond'
+```
+
+Iterable Search Params:
+
+```js
+let params;
+
+// Using an array
+params = new URLSearchParams([
+  ["user", "abc"],
+  ["query", "first"],
+  ["query", "second"],
+]);
+console.log(params.toString());
+// Prints 'user=abc&query=first&query=second'
+
+// Using a Map object
+const map = new Map();
+map.set("user", "abc");
+map.set("query", "xyz");
+params = new URLSearchParams(map);
+console.log(params.toString());
+// Prints 'user=abc&query=xyz'
+```
+
+Other methods:
+
+```js
+// add params
+urlSearchParams.append(name, value);
+
+// delete params
+urlSearchParams.delete(name);
+
+// returns ES6 iterator
+urlSearchParams.entries();
+
+// loop over search params
+urlSearchParams.forEach(fn[, thisArg])
+
+const myURL = new URL('https://example.org/?a=b&c=d');
+myURL.searchParams.forEach((value, name, searchParams) => {
+  console.log(name, value, myURL.searchParams === searchParams);
+});
+// Prints:
+//   a b true
+//   c d true
+
+// get name-value pair
+urlSearchParams.get(name)
+
+// get all matching name-value pairs
+urlSearchParams.getAll(name)
+
+// boolean: if search param exists
+urlSearchParams.has(name)
+
+// ES6 iterator for names
+urlSearchParams.keys()
+
+const params = new URLSearchParams('foo=bar&foo=baz');
+for (const name of params.keys()) {
+  console.log(name);
+}
+// Prints:
+//   foo
+//   foo
+
+//
+```
