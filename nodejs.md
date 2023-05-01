@@ -1296,3 +1296,67 @@ for (const name of params.keys()) {
 
 //
 ```
+
+## NPM
+
+`npm` is Node.js's standard package manager
+
+Installing dependencies for a project:
+
+```sh
+npm install
+```
+
+Install package:
+
+```sh
+# adds package-name to package.json file dependencies by default
+npm install package-name
+```
+
+`npm` flags:
+
+- `--save-dev` `-D`installs/adds entry to _devDependencies_ in `package.json`
+- `--no-save` installs but doesn't add entry to `package.json`
+- `--save-optional` `-O` installs & adds entry to _optionalDependencies_ in `package.json`
+- `--no-optional` prevents optional dependencies from being installed
+
+note:
+
+- devDependencies: development tools, testing library, etc.
+- dependencies: bundled with production app
+
+Update dependencies:
+
+```sh
+# all
+npm update
+
+# specific package
+npm update <package-name>
+
+# specific version of a package
+npm install <package-name>@<version>
+```
+
+Run tasks:
+
+```sh
+npm run <task-name>
+```
+
+> package.json
+
+```json
+{
+  "scripts": {
+    "watch": "webpack --watch --progress --colors --config webpack.conf.js",
+    "dev": "webpack --progress --colors --config webpack.conf.js",
+    "prod": "NODE_ENV=production webpack -p --config webpack.conf.js"
+  }
+}
+```
+
+```sh
+npm run watch
+```
