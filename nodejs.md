@@ -1360,3 +1360,190 @@ npm run <task-name>
 ```sh
 npm run watch
 ```
+
+## `package.json`
+
+Package.json is a central repository of configuration for tools & where `npm` & `yarn` stores names/versions of installed packages.
+
+Breakdown of properties:
+
+- `version` indicates the current version
+- `name` sets the application/package name
+- `description` is a brief description of the app/package
+- `main` sets the entry point for the application
+- `private` if set to true prevents the app/package to be accidentally published on npm
+- `scripts` defines a set of node scripts you can run
+- `dependencies` sets a list of npm packages installed as dependencies
+- `devDependencies` sets a list of npm packages installed as development dependencies
+- `engines` sets which versions of Node.js this package/app works on
+- `browserslist` is used to tell which browsers (and their versions) you want to support
+
+Author:
+
+```json
+{
+  "author": "Joe <joe@whatever.com> (https://whatever.com)"
+}
+
+// Or
+
+{
+  "author": {
+    "name": "Joe",
+    "email": "joe@whatever.com",
+    "url": "https://whatever.com"
+  }
+}
+```
+
+Contributors:
+
+```json
+{
+  "contributors": ["Joe <joe@whatever.com> (https://whatever.com)"]
+}
+
+// OR
+
+{
+  "contributors": [
+    {
+      "name": "Joe",
+      "email": "joe@whatever.com",
+      "url": "https://whatever.com"
+    }
+  ]
+}
+```
+
+Bugs:
+
+```json
+{
+  "bugs": "https://github.com/whatever/package/issues"
+}
+```
+
+Version: three numbers
+
+- major version
+- minor version
+- patch version
+
+```json
+"version": "1.1.1"
+```
+
+Keywords: array, what your package does
+
+```json
+"keywords": [
+  "email",
+  "machine learning",
+  "ai"
+]
+```
+
+Description:
+
+```json
+"description": "A package to work with strings"
+```
+
+Repository:
+
+```json
+"repository": "github:whatever/testing",
+
+"repository": "gitlab:whatever/testing",
+
+"repository": "bitbucket:whatever/testing",
+
+// explicitly set vcs
+"repository": {
+  "type": "git",
+  "url": "https://github.com/whatever/testing.git"
+}
+```
+
+Private: prevents app from being published to `npm`
+
+```json
+"private": true
+```
+
+Main: Entry point, where your app will search for module exports
+
+```json
+"main": "src/main.js"
+```
+
+Scrips:
+
+```json
+"scripts": {
+  "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+  "start": "npm run dev",
+  "unit": "jest --config test/unit/jest.conf.js --coverage",
+  "test": "npm run unit",
+  "lint": "eslint --ext .js,.vue src test/unit",
+  "build": "node build/build.js"
+}
+```
+
+Engines: sets version of Node.js & other commands used in the project:
+
+```json
+"engines": {
+  "node": ">= 6.0.0",
+  "npm": ">= 3.0.0",
+  "yarn": "^0.13.0"
+}
+```
+
+Browsers List: browsers that you support
+
+```json
+"browserslist": [
+  "> 1%",
+  "last 2 versions",
+  "not ie <= 8"
+]
+```
+
+## Global vs Local Packages
+
+- **local packages**: installed in directory where you run `npm install` & are put in `node_modules` folder
+- **global packages**: installed in a single location on your system, regardless of where you run `npm install -g`
+
+In your code, you can **only require LOCAL packages**:
+
+```js
+require("local-package");
+```
+
+Most packages **should be installed LOCALLY**
+
+- makes sure you can run specific versions of software for each application
+- updating a global package would make all of your projects use the new release
+
+Packages with CLI executable commands **should be installed globally.**
+
+- Or you can install locally & execute commands w/ `npx`
+
+Global package examples:
+
+- `npm`
+- `vue-cli`
+- `grunt-cli`
+- `mocha`
+- `react-native-cli`
+- `gatsby-cli`
+- `forever`
+- `nodemon`
+
+List global packages:
+
+```sh
+npm list -g --depth 0
+```
