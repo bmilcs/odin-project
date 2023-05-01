@@ -1072,3 +1072,52 @@ example();
 
 - in async version, this means executing the callback
 - a better option is to write the file content **using streams**
+
+## Reading Files
+
+Simplest readFile:
+
+```js
+const fs = require("fs");
+
+fs.readFile("/Users/joe/test.txt", "utf8", (err, data) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(data);
+});
+```
+
+Synchronous readFile (code blocking):
+
+```js
+const fs = require("fs");
+
+try {
+  const data = fs.readFileSync("/Users/joe/test.txt", "utf8");
+  console.log(data);
+} catch (err) {
+  console.error(err);
+}
+```
+
+Promise-based readFile
+
+```js
+const fs = require("fs/promises");
+
+async function example() {
+  try {
+    const data = await fs.readFile("/Users/joe/test.txt", { encoding: "utf8" });
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+example();
+```
+
+- All three file reading methods read **the full content of the file BEFORE returning the data**.
+- **Big files** are going to have a **large impact** on memory consumption & execution speed
+- Better option for big files: **streams**
