@@ -1593,3 +1593,100 @@ EventEmitter object has a lot of methods to interact with events, such as:
 - `once()` one time listener
 - `removeListener()` / `off()` remove an event listener from an event
 - `removeAllListeners()` removes all listeners from an event
+
+Event listener has these built-in events:
+
+- `newListener` triggered when listener is added
+- `removeListener` triggered when listener is removed
+
+### Useful Methods
+
+- `emitter.addListener()` alias for `emitter.on()`
+
+Return array of strings that represent events registered on the emitter object:
+
+```js
+emitter.eventNames();
+```
+
+Get max # of listeners one can add to an emitter object
+
+- defaults to 10
+- can be increased/decreased via `setMaxListeners()`
+
+```js
+emitter.getMaxListeners();
+```
+
+Get listener count of the event passed as a parameter:
+
+```js
+emitter.listenerCount("open");
+```
+
+Get array of listeners of the event passed as parameter:
+
+```js
+emitter.listeners("open");
+```
+
+Remove listener:
+
+```js
+emitter.off();
+```
+
+Add listener:
+
+```js
+emitter.on("open", () => {
+  console.log("open triggered");
+});
+```
+
+Add one-time-only listener:
+
+```js
+emitter.once("open", () => {
+  // call this function once!
+});
+```
+
+When adding a listener via `on` or `addListener`, it's added last & called last (to the queue of listeners).
+
+Add & call a listener before other listeners:
+
+```js
+emitter.prependListener();
+```
+
+When adding a listener via `once`, it's added last & called last (to the queue of listeners).
+
+Add & call a listener once before other listeners:
+
+```js
+emitter.prependOnceListener();
+```
+
+Remove all listeners of an `EventEmitter` object listening to a specific event
+
+```js
+emitter.removeAllListeners();
+```
+
+Remove a specific listener:
+
+```js
+const doSomething = () => {};
+emitter.on("open", doSomething);
+emitter.removeListener("open", doSomething);
+```
+
+Set the max number of listeners one can add to an `EventEmitter` object
+
+- Default: 10
+- Can be increased/lowered
+
+```js
+emitter.setMaxListeners(50);
+```
