@@ -1547,3 +1547,49 @@ List global packages:
 ```sh
 npm list -g --depth 0
 ```
+
+## [Event Emitter](https://nodejs.org/api/events.html)
+
+- Similar to handling user interactions with JavaScript in the browser
+- Node's `events` module offers `EventEmitter` Class for handling our events
+
+To initialize the event emitter:
+
+```js
+const EventEmitter = require("events");
+
+const eventEmitter = new EventEmitter();
+```
+
+EventEmitter objects have many methods, including `on` and `emit`:
+
+- `emit` trigger an event
+- `on` when event is triggered, execute a callback function
+
+Example: a `start` event
+
+```js
+// listens for the start event
+eventEmitter.on("start", () => {
+  console.log("started");
+});
+
+// triggers the event
+eventEmitter.emit("start");
+```
+
+You can pass additional arguments to emit():
+
+```js
+eventEmitter.on("start", (start, end) => {
+  console.log(`started from ${start} to ${end}`);
+});
+
+eventEmitter.emit("start", 1, 100);
+```
+
+EventEmitter object has a lot of methods to interact with events, such as:
+
+- `once()` one time listener
+- `removeListener()` / `off()` remove an event listener from an event
+- `removeAllListeners()` removes all listeners from an event
