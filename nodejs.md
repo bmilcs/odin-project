@@ -1690,3 +1690,5 @@ Set the max number of listeners one can add to an `EventEmitter` object
 ```js
 emitter.setMaxListeners(50);
 ```
+
+## [W3Schools Tutorial](https://www.w3schools.com/nodejs/nodejs_get_started.asp)
