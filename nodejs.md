@@ -1692,3 +1692,5 @@ emitter.setMaxListeners(50);
 ```
 
 ## [W3Schools Tutorial](https://www.w3schools.com/nodejs/nodejs_get_started.asp)
+
+## [NodeJS Crash Course](https://www.youtube.com/watch?v=fBNz5xF-Kx4)
