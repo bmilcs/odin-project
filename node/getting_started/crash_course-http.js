@@ -101,7 +101,7 @@ const server = http.createServer((req, res) => {
 });
 
 // listen on a port number
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 server.listen(PORT, () => {
   console.log(`server running on port: ${PORT}`);

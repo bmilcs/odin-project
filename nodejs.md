@@ -1694,3 +1694,34 @@ emitter.setMaxListeners(50);
 ## [W3Schools Tutorial](https://www.w3schools.com/nodejs/nodejs_get_started.asp)
 
 ## [NodeJS Crash Course](https://www.youtube.com/watch?v=fBNz5xF-Kx4)
+
+## [Debugging](https://code.visualstudio.com/docs/nodejs/nodejs-debugging#_javascript-debug-terminal)
+
+VS Code's built-in debugging support for NodeJS
+
+- auto-attach to debug processes ran in VS Code's integrated terminal
+- JS debug terminal
+- launch config: start program or attach to a process inside vs code
+
+Debugging a local app:
+
+```sh
+node --inspect server.js
+```
+
+`--inspect` flag allows third-party debuggers:
+
+- to attach to your app
+- access all app files
+
+To access this info with Chrome DevTools, navigate to:
+
+```
+chrome://inspect
+```
+
+- Click configure to the right of discover network targets
+- Add url:port of the app
+- Click the node icon in the Chrome DevTools
+- Add breakpoints
+- Refresh
