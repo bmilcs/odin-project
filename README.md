@@ -10,9 +10,9 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 ### NodeJS
 
-| Project                          | URL                                                                        | Source Code                                                       |
-| :------------------------------- | :------------------------------------------------------------------------- | :---------------------------------------------------------------- |
-| **#25 Basic Informational Site** | [Live Demo](https://odin-basic-informational-site--bmilcsxreplit.repl.co/) | [GitHub](https://github.com/bmilcs/odin-basic-informational-site) |
+| Project                          | URL                                                                            | Source Code                                                       |
+| :------------------------------- | :----------------------------------------------------------------------------- | :---------------------------------------------------------------- |
+| **#25 Basic Informational Site** | [Live Demo](https://replit.com/@bmilcsxreplit/Basic-Informational-Site-NodeJS) | [GitHub](https://github.com/bmilcs/odin-basic-informational-site) |
 
 ### Advanced HTML & CSS
 
