@@ -8,6 +8,12 @@ The purpose of this repo is to track progress, to showcase project work and to p
 
 These assignments were tackled with a growth mindset and I did not reference the work of others while completing them. In other words, these are _learner's solutions_, written with the intent of practicing the fundamentals and developing problem solving skills.
 
+### NodeJS
+
+| Project                          | URL                                                                        | Source Code                                                       |
+| :------------------------------- | :------------------------------------------------------------------------- | :---------------------------------------------------------------- |
+| **#25 Basic Informational Site** | [Live Demo](https://odin-basic-informational-site--bmilcsxreplit.repl.co/) | [GitHub](https://github.com/bmilcs/odin-basic-informational-site) |
+
 ### Advanced HTML & CSS
 
 | Project                                       | URL                             | Source Code                                   |
@@ -108,7 +114,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 - [ ] **NodeJS**
 
-  - [ ] Introduction to NodeJS
+  - [x] Introduction to NodeJS
   - [ ] MongoDB
   - [ ] Express & Mongoose
   - [ ] Authentication
