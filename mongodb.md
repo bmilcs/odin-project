@@ -246,3 +246,191 @@ Indexes:
 
 - support efficient execution of queries
 - should be considered for fields which your app reads often
+
+## Data Modeling
+
+- data accessed together should be stored together
+- documents in the same collection can contain different structures
+  - polymorphism
+- embedded document model
+  - enables us to build complex relationships among data
+- can normalize data by using database references
+- **how your app uses data** > **how it's stored**
+  - opposite of relational database
+- store, query & use resources optimally (for performance)
+
+### Data Relationships
+
+Relationship types:
+
+- One-to-one
+  - data entity in one set connect to exactly on data entry in another
+  - in relational dbs: directors table & movies table w/ a join
+- One-to-many
+  - data entity in one set is connected to any number of data entities in another set
+  - movie with a cast of many actors
+  - nested array
+- Many-to-many
+  - any number of data entities in one set are connected to any number of data entities in another set
+
+Ways to model relationships:
+
+- Embedding
+  - Related data is inserted into your document
+- Referencing
+  - Refer to documents in another collection
+
+Structure data to **match the way your app queries/updates it**
+
+- data accessed together => stored together
+
+### Embedding
+
+Embedding or nested documents:
+
+- 1-to-many
+- many-to-many
+
+```json
+{
+  "name": {
+    "first": "bryan",
+    "last": "miller"
+  }
+}
+```
+
+Warning
+
+- Embedding data in a single document **can create LARGE documents**
+  - Excessive memory & add latency for reads
+  - Large docs must be read in FULL: slow performance
+- Continuously adding data without limit **created unbounded documents**
+  - may exceed the max BSON document size: 16mb
+  - unbounded: schema antipatterns
+
+### Referencing
+
+References
+
+- Relate 2 or more separate collections to one another
+- Save `_id` field of one document in another document as a link between the two
+- simple & sufficient for most use cases
+- called "linking" or "data normalization"
+
+Pros:
+
+- no duplication of data
+- smaller documents
+
+Cons:
+
+- querying from multiple documents costs **extra resources** & **impacts read performance**
+
+### Choosing Referencing vs Embedding
+
+| Embedding                              | Referencing                               |
+| -------------------------------------- | ----------------------------------------- |
+| Single query to retrieve data          | No duplication                            |
+| Single operation to update/delete data | Smaller documents                         |
+| Data duplication                       | Need to join data from multiple documents |
+| Large documents                        |                                           |
+
+### Scaling Data Model
+
+Optimum Efficiency:
+
+- query result times
+- memory usage
+- cpu usage
+- storage
+
+Avoid unbounded documents, or documents that grow indefinitely
+
+- cause: embedding
+
+Comments array problem as it grows larger:
+
+- will take up more space in memory
+- may impact write performance
+  - as new comments are added, the entire document is rewritten into storage
+- difficult to perform pagination
+- comments can't be filtered for a single post
+- all comments will have to be read
+- maximum document size of 16 mb (storage problems)
+
+Solution:
+
+- create 2 collections:
+  - blog_post
+  - comments
+- reference `blog_entry_id` in each comment
+
+### Schema Tips
+
+**Schema design patterns**: guidelines help devs plan, organize & model data
+
+If best practices for schemas are not followed (Schema anti-pattern results):
+
+- sub-optimal performance
+- non-scalable solutions
+
+Examples of schema anti-patterns:
+
+- massive arrays
+- mass number of collections
+- bloated documents
+- unnecessary indexes
+- queries without indexes
+- data accessed together, but stored in separate collections
+
+Data Explorer in Atlas:
+
+- Collections > Indexes: shows indexes & stats
+  - Order by usage, drop unused indexes
+- Collections > Schema Anti-patterns:
+  - Gives you details on how to fix issues
+
+Performance Advisor in Atlas:
+
+- tells which indexes are redundant
+- gives us suggestions
+
+## Connecting to MongoDB
+
+Connection Strings allows us to connect to our cluster.
+
+- host
+- options for connecting
+  - shell
+  - compass
+  - applications
+
+Two formats:
+
+- standard format
+  - standalone clusters, replica sets, sharded clusets
+- dns seedless format
+  - provide dns server list to our connection string
+  - more flexibility to deployment
+  - ability to change servers in rotation without reconfiguring our clients
+
+Locating our connections string:
+
+- database menu > connect button > drivers
+
+```js
+const connectionString =
+  "mongodb+srv://myAtlasDBUser:<password>@cluster.usqsf.mongodb.net/?retryWrites=true&w=majority";
+```
+
+- `mongodb` = mongodb connection string (seedless dns entry)
+- `+srv` = sets tls security to true & use dns seedly
+- `username:password`
+- `@cluster.usqsf.mongodb.net` host & optional port (default: 27017)
+- `?retryWrites=true&w=majority";` additional options
+  - auto retry on write fails
+  - connection timeout
+  - tls / ssl
+  - connection pooling
+  - etc.
