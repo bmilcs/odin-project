@@ -477,3 +477,18 @@ Features:
 - Explain Plan: understand performance of queries
 - Indexes: indexes that exist on a collection, understand performance
 - Validation: enforce structure of docs on update/insert
+
+MongoDB Drivers:
+
+- Allow you to connect to MongoDB clusters in your language of choice
+- [NodeJS Drivers Documentation](https://www.mongodb.com/docs/drivers/node/current/usage-examples/)
+- [Developer Center: Code Examples](https://www.mongodb.com/developer/search/?s=&technology=Nodejs&sortMode=0)
+
+## Troubleshooting Connection Errors
+
+- User authentication errors
+  - `MongoServerError: bad auth : Authentication failed.`
+  - Fill in password to connection string
+- Network errors
+  - `MongoServerSelectionError: connection <monitor> to 34.239.188.169:27017 closed`
+  - Add IP address to security > network access in Atlas
