@@ -657,3 +657,147 @@ db.sales.find({
   $or: [{ "items.name": "pens" }, { "items.tags": "writing" }],
 })
 ```
+
+## Replacing Documents
+
+`replaceOne`: replace a single document
+
+- retain the same Id
+- `db.collection.replaceOne(filter, replacement, options)`
+  - filter: A query that matches the document to replace: ObjectId, unique, good option
+  - replacement: new BSON object containing updated data, replaces all fields
+  - options: An object that specifies options for the update.
+
+```sh
+db.books.replaceOne(
+  {
+    _id: ObjectId("6282afeb441a74a98dbbec4e"),
+  },
+  {
+    title: "Data Science Fundamentals for Python and MongoDB",
+    isbn: "1484235967",
+    publishedDate: new Date("2018-5-10"),
+    thumbnailUrl:
+      "https://m.media-amazon.com/images/I/71opmUBc2wL._AC_UY218_.jpg",
+    authors: ["David Paper"],
+    categories: ["Data Science"],
+  }
+)
+
+# lab example
+db.birds.findOne({ common_name: "Northern Cardinal" })
+
+db.birds.replaceOne(
+  { _id: ObjectId("6286809e2f3fa87b7d86dccd") },
+  {
+    common_name: "Morning Dove",
+    scientific_name: "Zenaida macroura",
+    wingspan_cm: 37.23,
+    habitat: ["urban areas", "farms", "grassland"],
+    diet: ["seeds"],
+  }
+)
+```
+
+## Updating Documents
+
+`updateOne` method: updates a single document - IF it exists
+
+- `$set` operator: adds new fields/values OR replaces existing ones
+- `$push` operator: appends element to array OR adds array w/ value as an element
+- `upsert: true` option: update OR insert a document - insert a document w/ provided info IF it doesn't exist
+
+```sh
+# set: replaces field values
+db.podcasts.updateOne(
+  { _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8") },
+  { $set: { subscribers: 98562 }, }
+)
+
+# upsert: creates a new doc if no documents match
+db.podcasts.updateOne(
+  { title: "The Developer Hub" },
+  { $set: { topics: ["databases", "MongoDB"] } },
+  { upsert: true }
+)
+
+# push adds elements to arrays
+db.podcasts.updateOne(
+  { _id: ObjectId("5e8f8f8f8f8f8f8f8f8f8f8") },
+  { $push: { hosts: "Nic Raboy" } }
+)
+
+# example: add new array with values
+db.birds.updateOne(
+  {
+    common_name: "Canada Goose",
+  },
+  {
+    $set: {
+      tags: ["geese", "herbivore", "migration"],
+    },
+  }
+)
+
+# increment sightings +1, set last_updated to a date & create document if it doesn't exist
+db.birds.updateOne(
+  {
+    common_name: "Robin Redbreast",
+  },
+  {
+    $inc: {
+      "sightings": 1,
+    },
+    $set: {
+      last_updated: new Date(),
+    },
+  },
+  {
+    upsert: true,
+  }
+)
+```
+
+## Find & Modify Documents
+
+`findAndModify()`: Returns document that has just been updated
+
+- `updateOne()` increment downloads field
+- `findOne()` return document using \_id
+- problem:
+  - makes 2 round trips to the server
+  - another user could update the same document between operations
+
+```sh
+db.podcasts.findAndModify({
+  query: document to update,
+  update: changes to be made,
+  new: true # true: return updated doc, false: return original doc
+});
+
+# example
+db.podcasts.findAndModify({
+  query: { _id: ObjectId("6261a92dfee1ff300dc80bf1") },
+  update: { $inc: { subscribers: 1 } },
+  new: true,
+})
+```
+
+## Update Several Documents
+
+`updateMany()` method: updates all documents that match a filtered criteria
+
+- Not an all-or-nothing operation
+  - If update fails, the successful updates stick while failed documents will not
+  - Requires running `updateMany()` again to update the remaining documents
+- Lacks isolation
+  - Updates will be visible as soon as they're performed
+  - Not appropriate for some use cases
+    - Business transactions
+
+```sh
+db.books.updateMany(
+  { publishedDate: { $lt: new Date("2019-01-01") } },
+  { $set: { status: "LEGACY" } }
+)
+```
