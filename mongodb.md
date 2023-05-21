@@ -422,6 +422,8 @@ Locating our connections string:
 ```js
 const connectionString =
   "mongodb+srv://myAtlasDBUser:<password>@cluster.usqsf.mongodb.net/?retryWrites=true&w=majority";
+
+const format = `mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]`;
 ```
 
 - `mongodb` = mongodb connection string (seedless dns entry)
@@ -434,6 +436,8 @@ const connectionString =
   - tls / ssl
   - connection pooling
   - etc.
+
+`: / ? # [ ] @` characters must be converted using percent encoding.
 
 ## Connecting To Cluster
 
@@ -492,3 +496,164 @@ MongoDB Drivers:
 - Network errors
   - `MongoServerSelectionError: connection <monitor> to 34.239.188.169:27017 closed`
   - Add IP address to security > network access in Atlas
+
+## Create & Inserts Documents
+
+MongoDB auto creates collections if missing.
+
+- `insertOne()`
+  - example: `db.<collection>.insertOne()`
+  -
+- `insertMany()`
+  - example: `db.<collection>.insertMany()`
+
+```js
+db.grades.insertOne([{student_id: ...}]);
+
+
+db.grades.insertMany([
+  {student_id: ...},
+  {student_id: ...},
+  {student_id: ...}
+]);
+```
+
+Output:
+
+```bson
+{
+  "acknowledged": true,
+  "insertedId": ObjectId("...")
+}
+```
+
+## Find Documents In a Collection
+
+`find` method: `db.collection.find`
+
+```sh
+# select a collection
+use training
+
+# find zip codes in the us
+db.zips.find();
+
+# iterate through results
+it
+```
+
+Retrieve a specific document
+
+```sh
+# documents containing a specific field
+{ field: { $eq: <value> } }
+{ field: <value> }
+
+# example: docs w/ the state AZ
+db.zips.find({ state: "AZ" })
+```
+
+`$in` operator: select all documents that have a field value equal to any of the values specified in an array
+
+```sh
+# format
+db.<collection>.find({
+  <field>: { $in:
+    [<value>, <value>, ...],
+  }
+})
+
+# example: find all documents w/ one of the following cities
+db.zips.find({ city: { $in: ["PHOENIX", "CHICAGO"] } })
+
+# more examples:
+db.zips.find({ _id: ObjectId("5c8eccc1caa187d17ca6ed16") })
+db.sales.find({ _id: ObjectId("5bd761dcae323e45a93ccff4") })
+db.sales.find({ storeLocation: { $in: ["London","New York"] } })
+```
+
+## Find Documents Using Comparison Operators
+
+- `$gt` greater than
+- `$lt` less than
+- `$lte` less than or equal to
+- `$gte` greater than or equal to
+
+Dot notation is used to reference object values
+
+Examples:
+
+```sh
+db.sales.find({ "items.price": { $gt: 50}})
+db.sales.find({ "items.price": { $lt: 50}})
+db.sales.find({ "customer.age": { $lte: 65}})
+db.sales.find({ "customer.age": { $gte: 65}})
+```
+
+Get a single document in collectin: `findOne()`
+
+## Query Array Elements
+
+Search for every document that contains a value (single value OR array)
+
+```sh
+# returns items with an array that contains the investmentStock
+db.accounts.find( { "products": "investmentStock" } )
+```
+
+Find all documents that contain a value **only when inside an array**: `$elemMatch`
+
+> Use the `$elemMatch` operator to find all documents that contain the specified subdocument
+
+```sh
+db.accounts.find({ "products": { $elemMatch: { $eq: "investmentStock" } } } )
+
+db.sales.find({
+  items: {
+    $elemMatch: { name: "laptop", price: { $gt: 800 }, quantity: { $gte: 1 } },
+  },
+})
+
+db.transactions.find({
+    transactions: {
+      $elemMatch: { amount: { $lte: 4500 }, transaction_code: "sell" },
+    },
+  })
+```
+
+## Finding Documents Using Logical Operators
+
+- `$and`: all criteria must match
+  - implicit `$and`: `db.collection.find({ <exp1>, <exp2>})`
+- `$or`: one criteria must match
+
+Examples:
+
+```sh
+# implicit and
+db.routes.find({ "airline.name": "Southwest Airlines", stops: { $gte: 1 } })
+
+# or
+db.routes.find({
+  $or: [{ dst_airport: "SEA" }, { src_airport: "SEA" }],
+})
+
+# and & or operators
+db.routes.find({
+  $and: [
+    { $or: [{ dst_airport: "SEA" }, { src_airport: "SEA" }] },
+    { $or: [{ "airline.name": "American Airlines" }, { airplane: 320 }] },
+  ]
+})
+
+# example
+db.sales.find({
+  couponUsed: true,
+  purchaseMethod: "Online",
+  "customer.age": { $lte: 25 }
+})
+
+db.sales.find({
+  $or: [{ "items.name": "pens" }, { "items.tags": "writing" }],
+})
+```
