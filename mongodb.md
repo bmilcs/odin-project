@@ -452,3 +452,28 @@ sudo apt-get install -y mongodb-mongosh
 Connect to the shell by using the connectionString.
 
 - Create user/password first in Atlas under Security > Database Access
+
+```sh
+# get connection string
+atlas clusters connectionStrings describe myAtlasClusterEDU
+
+# get connection string & store in env variable
+MY_ATLAS_CONNECTION_STRING=$(atlas clusters connectionStrings describe myAtlasClusterEDU | sed "1 d")
+mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING
+
+# output a document describing the role of mongod instance using mongosh
+db.hello()
+```
+
+MongoDB Compass: GUI connection
+
+- Download/install
+- Copy connection string via site
+
+Features:
+
+- Aggregations: can be exported to any language
+- Schema: analyze structure & optimize schema
+- Explain Plan: understand performance of queries
+- Indexes: indexes that exist on a collection, understand performance
+- Validation: enforce structure of docs on update/insert
