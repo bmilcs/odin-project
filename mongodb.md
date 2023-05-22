@@ -818,4 +818,89 @@ db.birds.updateMany(
 
 ## Delete Documents
 
-Left off: https://learn.mongodb.com/learn/course/mongodb-crud-operations-replace-and-delete-documents/lesson-5-deleting-documents-in-mongodb/learn?client=customer
+- `deleteOne()`
+- `deleteMany()`
+  - can be used to delete filtered items OR all docs in a collection
+
+```sh
+# delete a single item
+db.podcasts.find( { uploaded: ISODate("2020-01-01")});
+db.podcasts.deleteOne({ _id: Objectid("6282c9862acb966e76bbf20a") })
+db.birds.deleteOne({ _id: ObjectId("62cddf53c1d62bc45439bebf") })
+
+# delete all docs that match a filter
+db.podcasts.deleteMany({category: “crime”})
+db.birds.deleteMany({ sightings_count: { $lte: 10 } })
+
+# output
+{ acknowledged: true, deletedCount: 1 }
+```
+
+## Sorting & Limiting Query Results
+
+**Cursors**: pointer to result set of a query
+
+- `find()` returns a cursor, points to the documents that match
+
+Cursor Methods:
+
+- chained to queries
+- Perform actions on the result set
+  - `sort()` or `limit()`
+
+`sort()`:
+
+- `sort({ field: 1 })` = ascending order
+- `sort({ field: -1 })` = descending order
+- capital letters first, lowercase letter second
+  - modifiable with options
+
+```sh
+db.collection.find(<query>).sort(<sort>)
+
+# 1 => ascending, -1 => descending | sorting for a property
+db.companies.find({ category_code: "music" },{name: 1}).sort({ name: 1 });
+#                                              ^ PROJECTION: only show name fields
+
+# to ensure consistent sort order, add _id field
+db.companies.find({ category_code: "music" }).sort({ name: 1, _id: 1 });
+
+# sort by sales date
+db.sales.find({}).sort({ saleDate: 1 })
+
+# online purchases w/ coupon used, sorted from newest to oldest
+db.sales.find({ purchaseMethod: "Online", couponUsed: true}).sort({ saleDate: -1 })
+```
+
+`limit()`:
+
+- limiting results count can enhance performance
+
+```sh
+db.companies.find(<query>).limit(<number>)
+
+# get top 3 companies with most number of employees
+db.companies
+  .find({ category_code: "music" })
+  .sort({ number_of_employees: -1, _id: 1 })
+  .limit(3);
+
+# London stores, items containing laptop OR backpack OR printer paper, sorted new > old, last 3
+db.sales.find({ "items.name": { $in: ["laptop", "backpack", "printer paper"] }, "storeLocation": "London", }).sort({ saleDate: -1, }).limit(3)
+```
+
+## Return Selected Fields From A Query
+
+**Projections**: Limit what fields to return
+
+- improves performance and reduces bandwith
+- 2nd argument in a `find()` query:
+  - `field: 1` to INCLUDE the field
+  - `field: -1` to EXCLUDE the field
+
+```sh
+db.inspections.find({ sector: "Restaurant - 818"}, { business_name:1, result:1 } });
+
+# all results w/ a pass or warning result, hide date & address.zip fields
+db.inspections.find({result: { $in: ["Pass","Warning"]}}, {date:0, "address.zip":0})
+```
