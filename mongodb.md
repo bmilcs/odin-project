@@ -889,18 +889,35 @@ db.companies
 db.sales.find({ "items.name": { $in: ["laptop", "backpack", "printer paper"] }, "storeLocation": "London", }).sort({ saleDate: -1, }).limit(3)
 ```
 
-## Return Selected Fields From A Query
+## Projections: Return Selected Fields From A Query
 
-**Projections**: Limit what fields to return
+**Projections**: Limit what fields you get back from a query
 
-- improves performance and reduces bandwith
+- improves performance and reduces bandwidth
 - 2nd argument in a `find()` query:
   - `field: 1` to INCLUDE the field
-  - `field: -1` to EXCLUDE the field
+  - `field: 0` to EXCLUDE the field
+- can't combine include & exclude projections EXCEPT for the `_id` field
 
 ```sh
-db.inspections.find({ sector: "Restaurant - 818"}, { business_name:1, result:1 } });
+# syntax
+db.collection.find( <query>, <projection> )
 
-# all results w/ a pass or warning result, hide date & address.zip fields
-db.inspections.find({result: { $in: ["Pass","Warning"]}}, {date:0, "address.zip":0})
+# include field
+db.collection.find( <query>, { <field> : 1 })
+
+# Return all restaurant inspections - business name, result, and _id fields only
+db.inspections.find(
+  { sector: "Restaurant - 818" },
+  { business_name: 1, result: 1 }
+)
+
+# exclude field
+db.collection.find(query, { <field> : 0, <field>: 0 })
+
+# Return all inspections with result of "Pass" or "Warning" - exclude date and zip code
+db.inspections.find(
+  { result: { $in: ["Pass", "Warning"] } },
+  { date: 0, "address.zip": 0 }
+)
 ```
