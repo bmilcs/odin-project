@@ -921,3 +921,23 @@ db.inspections.find(
   { date: 0, "address.zip": 0 }
 )
 ```
+
+## Counting Documents
+
+Get total result count for a query
+
+```sh
+# syntax
+db.collection.countDocuments( <query>, <options> )
+
+# examples
+
+# Count number of docs in trip collection
+db.trips.countDocuments({})
+
+# Count number of trips over 120 minutes by subscribers
+db.trips.countDocuments({ tripduration: { $gt: 120 }, usertype: "Subscriber" })
+
+
+db.sales.countDocuments({ items: { $elemMatch: { name: "laptop", price: { $lt: 600 } } } } )
+```
