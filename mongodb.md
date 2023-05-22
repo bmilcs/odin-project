@@ -800,4 +800,22 @@ db.books.updateMany(
   { publishedDate: { $lt: new Date("2019-01-01") } },
   { $set: { status: "LEGACY" } }
 )
+
+# lab question
+db.birds.updateMany(
+  {
+    common_name: {
+      $in: ["Blue Jay", "Grackle"],
+    },
+  },
+  {
+    $set: {
+      last_seen: ISODate("2022-01-01"),
+    },
+  }
+)
 ```
+
+## Delete Documents
+
+Left off: https://learn.mongodb.com/learn/course/mongodb-crud-operations-replace-and-delete-documents/lesson-5-deleting-documents-in-mongodb/learn?client=customer
