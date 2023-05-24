@@ -941,3 +941,134 @@ db.trips.countDocuments({ tripduration: { $gt: 120 }, usertype: "Subscriber" })
 
 db.sales.countDocuments({ items: { $elemMatch: { name: "laptop", price: { $lt: 600 } } } } )
 ```
+
+## Aggregation
+
+**Aggregation**: collection and summary of data
+
+**Stage**: built-in method > performed on data & doesn't permanently modify it
+
+**Aggregation Pipeline**: series of stages completed one at a time, in order
+
+Aggregations can:
+
+- filter for relevant data
+- group documents
+- calculate total values from fields across many documents
+
+Data can be:
+
+- Filtered
+- Sorted
+- Grouped
+- Transformed
+
+`$match`: filters data that matches criteria
+
+- expects the same syntax as `.find()` method
+
+`$group`: groups documents based on criteria
+
+`$sort`: puts documents in a specific order
+
+`name: { $concat: ["$first_name" , "$last_name] }`: combine two fields
+
+```sh
+db.collection.aggregate([ <stage>, <stage>, <stage> ])
+
+# aggregation pipeline:
+db.collection.aggregate([
+    {
+        $stage1: {
+            { expression1 },
+            { expression2 }...
+        },
+        $stage2: {
+            { expression1 }...
+        }
+    }
+])
+
+# example
+
+db.collection.aggregate([   # method
+  {
+    $match: { # stage
+      { size: "small" } # expression
+    }
+  }
+])
+```
+
+### `$match` Stage
+
+Match:
+
+- Filters for documents for matching conditions
+- Passes those documents to the next stage in the pipeline
+- Accepts one argument: <query>
+- Place it as early as possible, reducing processing power used by the rest of the pipeline
+
+```sh
+{
+  $match: {
+     "field_name": "value"
+  }
+}
+
+# all zips from CA
+db.zips.aggregate([
+  $match: {
+    state: "CA"
+  }
+])
+```
+
+### `$group` Stage
+
+Group:
+
+- Groups documents by a group key
+- Output: 1 document for each unique value of the group key
+- 2 Arguments: `_id`, `<field>: <accumulator> : <expression>`
+
+```sh
+{
+  $group:
+    {
+      _id: <expression>, // Group key
+      <field>: { <accumulator> : <expression> }
+    }
+ }
+
+{
+  $group: {
+    {
+      _id: "$city", # group key
+      totalZips: { $count: { }}
+    }
+  }
+}
+```
+
+`$count`: adds up instances of a field
+
+### `$match` & `$group` Aggregation Pipeline
+
+```sh
+db.zips.aggregate([
+{
+   $match: {
+      state: "CA"
+    }
+},
+{
+   $group: {
+      _id: "$city",
+      totalZips: { $count : { } }
+   }
+}
+])
+```
+
+<!-- https://learn.mongodb.com/learn/course/mongodb-aggregation/lesson-2-using-match-and-group-stages-in-a-mongodb-aggregation-pipeline/practice?client=customer&page=1 -->
