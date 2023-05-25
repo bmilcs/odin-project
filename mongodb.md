@@ -1088,4 +1088,59 @@ db.sightings.aggregate([
 
 ```
 
-<!-- https://learn.mongodb.com/learn/course/mongodb-aggregation/lesson-2-using-match-and-group-stages-in-a-mongodb-aggregation-pipeline/practice?client=customer&page=1 -->
+### `$sort` & `$limit` Aggregation Pipeline
+
+`$sort`: sorts all input documents & passes them through pipeline in sorted order
+
+- numeric, strings, dates, timestamps
+- `1`: ascending
+- `-1`: descending
+
+`$limit`: limits # of documents that are passed on to the next aggregation stage
+
+- positive integer: how many documents
+
+```sh
+{
+    $sort: {
+        "field_name": 1
+    },
+    {
+      $limit: 5
+    }
+}
+
+
+
+# sort by largest to smallest population, limit to 3 total
+db.zips.aggregate([
+  {
+    $sort: {
+      pop: -1
+    }
+  },
+  {
+    $limit: 3
+  }
+])
+
+# lab
+{
+  ...
+  location: { type: 'Point', coordinates: [ 40, -73 ] }
+  ...
+}
+
+db.sightings.aggregate([
+  {
+    $sort: {
+        'location.coordinates.1': -1
+    }
+  }, {
+    $limit: 4
+  }
+])
+
+```
+
+To access an array index, use `.index` or `.1`.
