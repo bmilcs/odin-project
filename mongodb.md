@@ -1140,7 +1140,96 @@ db.sightings.aggregate([
     $limit: 4
   }
 ])
-
 ```
 
 To access an array index, use `.index` or `.1`.
+
+### `$project`, `$set`, `$count` Stages
+
+`$project` stage: determines output shape
+
+- existing or new fields
+- projection similar to find() operations
+- should be the **last stage to format output**
+- `1`: included
+- `0`: not included
+
+```sh
+{
+  $project: {
+    # include fields:
+    state:1,
+    zip:1,
+    # set population field to $pop's values
+    population:"$pop",
+    # omit id field
+    _id:0
+  }
+}
+
+db.sightings.aggregate([
+  {
+    $project: {
+        _id: 0,
+        species_common: 1,
+        date: 1
+    }
+  }
+])
+```
+
+`$set`: adds or modifies fields in the pipeline
+
+- useful when we want to change existing fields in pipeline or add new ones to be used in upcoming pipeline stages
+
+```sh
+{
+  $set: {
+    pop_2022: {
+      $round: {
+        $multiply: [ 1.0031, "$pop" ]
+      }
+    }
+  }
+}
+
+{
+  $set: {
+      place: {
+          $concat:["$city",",","$state"]
+      },
+      pop:10000
+    }
+}
+```
+
+`$count`: creates a new document & assigns a field name with the total # of documents at the current pipeline stage
+
+- `$count: <fieldname>`
+
+```sh
+{
+  $count: "total_zips"
+}
+```
+
+Lab example:
+
+```sh
+db.sightings.aggregate([
+{
+  $match: {
+    date: {
+      $gt: ISODate('2022-01-01T00:00:00.000Z'),
+      $lt: ISODate('2023-01-01T00:00:00.000Z')
+    },
+    species_common: 'Eastern Bluebird'
+  }
+}, {
+  $count: 'bluebird_sightings_2022'
+}
+])
+
+# outputs:
+[ { bluebird_sightings_2022: 5 } ]
+```
