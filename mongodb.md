@@ -1069,6 +1069,23 @@ db.zips.aggregate([
    }
 }
 ])
+
+# find location with the most Eastern Bluebird sightings
+db.sightings.aggregate([
+  {
+    $match: {
+        species_common: 'Eastern Bluebird'
+    }
+  }, {
+    $group: {
+        _id: '$location.coordinates',
+        number_of_sightings: {
+            $count: {}
+        }
+    }
+  }
+])
+
 ```
 
 <!-- https://learn.mongodb.com/learn/course/mongodb-aggregation/lesson-2-using-match-and-group-stages-in-a-mongodb-aggregation-pipeline/practice?client=customer&page=1 -->
