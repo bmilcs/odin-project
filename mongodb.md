@@ -1408,3 +1408,157 @@ db.customers.createIndex({
   accounts: 1
 })
 ```
+
+### Compound Indexes
+
+Compound indexes are:
+
+- index on multiple fields
+- can be a multikey index if it includes an array
+- maximum one array field per index
+- support queries that match on the prefix of the index fields
+
+In compound indexes:
+
+- Order of the fields matters
+- Follow this order: Equality > Sort > Range
+- Sort order of field values in the index matters
+
+Equality:
+
+- tests exact matches on a single field
+- should be first in a compound index
+- reduces query processing time
+- retrieves fewer documents
+
+Sort:
+
+- determines order of results
+- index sort eliminates need for in memory sorts
+- sort order = important if query results are sorted by more than 1 fields and they mix sort orders
+
+You can create indexes that support a query or cover the query:
+
+- Support: bare minimum fields to acquire the document
+- Cover: all fields that are needed from the final query
+
+Create a compound index:
+
+```sh
+db.customers.createIndex({
+  active:1,
+  birthdate:-1,
+  name:1
+})
+```
+
+Example:
+
+```sh
+# original query:
+db.customers.find({
+  birthdate: {
+    $gte:ISODate("1977-01-01")
+    },
+    active:true
+  }).sort({
+    birthdate:-1,
+    name:1
+  })
+
+# group active customers first (equality), then sort
+db.customers.createIndex({
+  active:1,
+  birthdate:-1,
+  name:1
+})
+```
+
+Covering a query:
+
+- Index covers a query when MongoDB doesn't need to fetch data from memory since all data is returned by the index
+- Most cases: use projections to return only required fields
+  - Make sure fields in projections are in the index
+
+```sh
+db.customers.explain().find({
+  birthdate: {
+    $gte:ISODate("1977-01-01")
+    },
+  active:true
+  },
+  # projection: fields covered by the index above (eliminating the need for fetch)
+  { name:1,
+    birthdate:1,
+    _id:0
+  }).sort({
+    birthdate:-1,
+    name:1
+    })
+
+# output
+...
+winningPlan: {
+  stage: 'PROJECTION COVERED',
+  ...
+  inputStage: {
+    stage: 'IXSCAN'
+    ...
+  }
+}
+```
+
+### Delete Indexes
+
+Indexes:
+
+- Have a write cost
+- Too many indexes in a collection affect system performance
+- Delete unused or redundant indexes
+
+Before deleting an index:
+
+- Make sure it's not being used
+- Deleting an index that's the only index supporting a query will affect performance of the query
+- Recreating an index = extra time & resources
+- Hide the index before deleting it
+  - `db.collection.hideIndex(<index_name or index_key>)`
+  - Does not use hidden indexes in queries BUT keeps their keys up to date
+  - Good for testing the impact of deleting an index
+- Delete an index with `db.collection.dropIndex(<index_name or index_key>)`
+
+```sh
+find({username: "abc123"});
+find({username: "abc123", active: true})
+
+indexes:
+  username_1 # redundant, covered by index below
+  username_1_active_1
+
+# delete index
+db.customers.dropIndex(
+  'active_1_birthdate_-1_name_1'
+)
+
+# or
+
+db.customers.dropIndex({
+  active:1,
+  birthdate:-1,
+  name:1
+})
+
+# delete all indexes:
+db.customers.dropIndexes();
+
+# drop list of indexes
+db.collection.dropIndexes([
+  'index1name', 'index2name', 'index3name'
+  ])
+```
+
+Lab:
+
+```sh
+db.accounts.dropIndex("account_holder_1")
+```
