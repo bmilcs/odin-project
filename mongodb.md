@@ -1391,3 +1391,20 @@ db.accounts.createIndex({ account_id: 1 }, { unique: true });
 # determine if field is indexed
 db.accounts.explain().find({ account_id: "MDB829000996" })
 ```
+
+### Multikey Indexes
+
+Multikey indexes work with array fields in an index
+
+- Any index where one of the indexed fields is an array
+- Array can hold nested objects or other field types
+- In compound index, **only one field can be an array per index**
+- Performs a 'fetch' the document after IXSCAN because each index value is stored separately
+
+Create a single field multikey index:
+
+```sh
+db.customers.createIndex({
+  accounts: 1
+})
+```
