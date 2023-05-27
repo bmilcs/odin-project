@@ -1233,3 +1233,38 @@ db.sightings.aggregate([
 # outputs:
 [ { bluebird_sightings_2022: 5 } ]
 ```
+
+### `$out`
+
+`$out`: writes the documents that are returned by an aggregation pipeline into a collection
+
+- must be the last stage
+- creates a new collection if it doesn't exist
+- **overwrites** & replaces existing collection with new data
+
+```sh
+$out: {
+  db: "<db>",
+  coll: "<newcollection>"
+}
+
+# uses the same db as the pipeline
+$out: <newcollection>
+
+# lab
+db.sightings.aggregate([
+  {
+    $match: {
+      date: {
+        $gte: ISODate('2022-01-01T00:00:00.0Z'),
+        $lt: ISODate('2023-01-01T00:00:00.0Z')
+      }
+    }
+  },
+  {
+    $out: 'sightings_2022'
+  }
+])
+
+db.sightings_2022.findOne()
+```
