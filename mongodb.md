@@ -1328,3 +1328,66 @@ Indexes summary:
   - Single Field
   - Compound
 - Multikey indexes operate on an array field
+
+### Single Field Index
+
+- Support queries & sort on a single field
+- `createIndex({fieldname: 1})`: field name and sort order
+- `getIndexes()`: retrieve indexes on a collection
+  - To view indexes on Atlas, go to collections > indexes tab
+- To find out what indexes are being used with a query, add `explain()` to the query
+  - ie: `db.customers.explain().find();`
+
+Create index in a collection: field & sort order:
+
+```sh
+db.customers.createIndex({
+  birthdate: 1
+})
+```
+
+Create a unique single index field. This prevents future inserts & updates from using a duplicate value.
+
+```sh
+db.customers.createIndex({
+  email: 1
+},
+{
+  unique:true
+})
+```
+
+Check if an index is being used on a query with `explain()`:
+
+- `IXSCAN` = query is using an index & what index is being selected
+- `COLLSCAN` = collection scan is performed, without using any indexes.
+- `FETCH` = documents are being read from the collection
+- `SORT` = documents are being sorted in memory
+
+```sh
+db.customers.explain().find({
+  birthdate: {
+    $gt:ISODate("1995-08-01")
+    }
+  })
+
+db.customers.explain().find({
+  birthdate: {
+    $gt:ISODate("1995-08-01")
+    }
+  }).sort({
+    email:1
+    })
+```
+
+Lab:
+
+```sh
+db.collection.getIndexes();
+
+# create a unique index
+db.accounts.createIndex({ account_id: 1 }, { unique: true });
+
+# determine if field is indexed
+db.accounts.explain().find({ account_id: "MDB829000996" })
+```
