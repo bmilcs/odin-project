@@ -1268,3 +1268,63 @@ db.sightings.aggregate([
 
 db.sightings_2022.findOne()
 ```
+
+## Indexes
+
+Indexes:
+
+- Special data structures
+- Store small portion of the data
+- Ordered & easy to search efficiently
+- Improve query performance
+  - Speed up query
+  - Reduce disk I/O
+  - Reduce resources required
+  - Support equality matches & range-based operations & return sorted results
+
+Without Indexes:
+
+- MongoDB reads **all documents** in a collection scan
+- Sorts results in memory
+
+With Indexes:
+
+- MongoDB only fetches the documents id'ed by the index based on the query
+- Returns results faster
+
+By default:
+
+- 1 Index per collection: `_id` field
+- **Every query should use an index**
+
+Index Costs:
+
+- If we insert/update documents, we need to update the index data structure
+- Write performance can degrade if we have too many indexes in a collection
+- No useless indexes: delete if not used
+
+Common index types:
+
+- Single field
+- Compound indexes: more than 1 field
+- Multi-key indexes operate on an array field
+
+```sh
+db.customers.find([active: true])
+
+db.customers.find({active: true, accounts: 276528})
+```
+
+Indexes summary:
+
+- Ordered data structures for fast data retrieval
+  - Store small amounts of data
+  - Reduce computation
+- Support equality & range based queries
+- Return sorted results
+- Write performance cost
+  - When updated or inserted, the indexes must be updated
+- Common types:
+  - Single Field
+  - Compound
+- Multikey indexes operate on an array field
