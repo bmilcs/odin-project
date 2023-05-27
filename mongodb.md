@@ -1562,3 +1562,127 @@ Lab:
 ```sh
 db.accounts.dropIndex("account_holder_1")
 ```
+
+## Atlas Search
+
+Relevance based search
+
+- surface records based on a search term
+- not a db search for a particular record
+- open source search algorithm based on: apache lucene
+- not a db index
+
+Search indexes:
+
+- specify how records are referenced for relevance based search
+
+### Creating a Search Index w/ Dynamic Mapping
+
+Search Index with Dynamic Mapping:
+
+- All fields are indexed (default)
+  - except: booleans, objectIds, timestamps
+
+Database > Search > Create Search
+
+- Select the correct db/collection
+- Specify options
+- Create search
+
+Searches:
+
+- Score: how prevalent the search query is
+- Option: assign weights to specific fields
+
+Create a search index with Atlas CLI:
+
+- `atlas auth login`
+- Open `search_index.json`
+  - Edit `dynamic` to `true`
+  - Save
+- In the CLI, run the following command to create the search indexes
+  - `atlas clusters search indexes create --clusterName myAtlasClusterEDU -f /app/search_index.json`
+- To verify the index creation has started:
+  - `atlas clusters search indexes list --clusterName myAtlasClusterEDU --db sample_supplies --collection sales`
+
+Using Atlas Search Index w/ Dynamic Mapping:
+
+```sh
+mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING/sample_supplies
+
+db.sales.aggregate([
+  {
+    $search: {
+      index: 'sample_supplies-sales-dynamic',
+      text: {
+        query: 'notepad', path: { 'wildcard': '*' }
+      } } },
+  {
+    $set: {
+      score: { $meta: "searchScore" }
+      }
+  }
+])
+```
+
+### Creating a Search Index w/ Static Indexing
+
+Fields being queried are always the same
+
+- Turn off dynamic mapping
+- Field mappings:
+  - Add field
+  - Select `common_name`
+  - Add data type
+    - Select string
+- Save changes
+- Create search index
+
+To create a static index search in Atlas CLI:
+
+- `atlas auth login`
+- Open `/app/search_index.json`
+- Edit the file (add `storeLocation` in fields as `string`)
+
+```json
+{
+  "name": "sample_supplies-sales-static",
+  "searchAnalyzer": "lucene.standard",
+  "analyzer": "lucene.standard",
+  "collectionName": "sales",
+  "database": "sample_supplies",
+  "mappings": {
+    "dynamic": false,
+    "fields": {
+      "storeLocation": {
+        "type": "string"
+      }
+    }
+  }
+}
+```
+
+- `atlas clusters search indexes create --clusterName myAtlasClusterEDU -f /app/search_index.json`
+- Verify: `atlas clusters search indexes list --clusterName myAtlasClusterEDU --db sample_supplies --collection sales`
+
+Using Atlas Search Index with Static Mapping:
+
+- Connect with mongosh: `mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING/sample_supplies`
+
+```sh
+db.sales.aggregate([
+  {
+    $search: {
+      index: 'sample_supplies-sales-static',
+      text: {
+        query: 'London', path: { 'wildcard': '*' }
+      } } },
+  {
+    $set: {
+      score: { $meta: "searchScore" }
+      }
+  }
+]);
+```
+
+<!-- ### Using `$search` & Compound Operators -->
