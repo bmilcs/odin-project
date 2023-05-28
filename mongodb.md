@@ -1772,3 +1772,72 @@ db.sales.aggregate([
   }
 ])
 ```
+
+### Group Search Results w/ Facets
+
+Facets are buckets that we group search results into.
+
+- Make it easier for users to find search results by grouping them into categories
+- Facebook: People, groups, events, etc.
+
+Steps:
+
+- Update field mappings to include facet fields
+- Use $searchMeta to categorize results
+
+Facet data types:
+
+- Numbers
+- Dates
+- Strings
+
+Create date-based facet in Atlas Web:
+
+- Turn off dynamic mapping
+- Add field mappings
+- Add date from drop down menu
+  - Add data type
+  - Select DateFacet from drop down
+
+`$searchMeta`:
+
+- Allows us to see facets & how many results are in each bucket
+- Buckets are part of the search metadata (not part of the search results themselves)
+  - Information on how the search was carried out
+- Metadata types
+  - Facets
+  - Count (number of results in each facet)
+
+To add searchMeta in Atlas
+
+- Aggregation tab
+- Select `$searchMeta` in drop down
+- Specify facets in the text field
+
+> $searchMeta is an aggregation stage for Atlas Search where the metadata related to the search is shown. This means that if our search results are broken into buckets, using $facet, we can see that in the $searchMeta stage, because those buckets are information about how the search results are formatted.
+
+```sh
+$searchMeta: {
+    "facet": {
+        "operator": {
+            "text": {
+            "query": ["Northern Cardinal"],
+            "path": "common_name"
+            }
+        },
+        "facets": {
+            "sightingWeekFacet": {
+                "type": "date",
+                "path": "sighting",
+                "boundaries": [ISODate("2022-01-01"),
+                    ISODate("2022-01-08"),
+                    ISODate("2022-01-15"),
+                    ISODate("2022-01-22")],
+                "default" : "other"
+            }
+        }
+    }
+}
+```
+
+> "facet" is an operator within $searchMeta. "operator" refers to the search operator - the query itself. "facets" operator is where we put the definition of the buckets for the facets.
