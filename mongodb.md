@@ -1685,4 +1685,90 @@ db.sales.aggregate([
 ]);
 ```
 
-<!-- ### Using `$search` & Compound Operators -->
+### Using `$search` stage & Compound Operators
+
+`compound`: specifies weight of each field in a search
+
+- `must`: required
+- `mustNot`: inverse of required
+- `should`: gives weight to results that meet the criteria so they appear first
+- `filter`: remove results that do not meet the criteria
+
+Weight results are affected by: `must`, `mustNot` & `should`
+
+Atlas Web:
+
+- Navigate to a collection > Aggregation Tab
+- Dropdown > Search
+- Delete boiler plate
+- Enter:
+
+```sh
+$search {
+  "compound": {
+    "must": [{
+      "text": {
+        "query": "field",
+        "path": "habitat"
+      }
+    }],
+    "should": [{
+      "range": {
+        "gte": 45,
+        "path": "wingspan_cm",
+        "score": {"constant": {"value": 5}}
+      }
+    }]
+  }
+}
+```
+
+Lab:
+
+```sh
+# connect to Atlas Cluster
+mongosh -u myAtlasDBUser -p myatlas-001 $MY_ATLAS_CONNECTION_STRING/sample_supplies
+
+# aggregation pipeline w/ 2 stages
+db.sales.aggregate([
+  # search using a specified index
+  {
+    $search: {
+      index: 'sample_supplies-sales-dynamic',
+      "compound": {
+        # filter out sales that were NOT online
+        "filter": [
+          {
+            "text": {
+              "query": "Online",
+              "path": "purchaseMethod"
+            }
+          }
+        ],
+        # search online sales that contain a particular item in the order: notepad
+        # should indicates that the search term appears in the items.name field
+        "should": [
+          {
+            "text": {
+              "query": "notepad",
+              # item name has the highest weight of all fields in the record
+              "path": "items.name",
+              # constant score overwrites the calculated score
+              # ^ desireable when you only care about specific matches
+              "score": { "constant": { "value": 5 } }
+            }
+          }
+      ]
+      }
+    }
+  },
+  # finally, project the fields we're interested in
+  {
+    $project: {
+    "items.name": 1,
+    "purchaseMethod": 1,
+    "score": { $meta: "searchScore" }
+    }
+  }
+])
+```
