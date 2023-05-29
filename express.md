@@ -80,6 +80,8 @@ Non-blocking asynchronous API's are more important on Node than in the browser b
 - Extremely efficient in terms of speed & resources
 - However, expensive synchronous code will block the **current request** & **every other request handled by your web app**
 
+[Fixing Callback Hell](http://callbackhell.com/)
+
 ## Creating Route Handlers
 
 ```js
