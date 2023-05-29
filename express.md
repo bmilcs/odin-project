@@ -360,3 +360,42 @@ Express has a built-in error handler that takes care of any remaining errors.
   - Stack trace is not included in the production environment. Add it using `NODE_ENV='production'`
 - HTTP404 & other error status codes are not treated as errors
   - Add a middleware function for these
+
+## Using Databases
+
+Express can use any database mechanism supported by Node.
+
+- PostgreSQL, MySQL, Redis, SQLite, MongoDB, etc.
+
+To use a database, install the database driver via npm:
+
+```sh
+npm install mongodb
+```
+
+The database can be installed locally or on a cloud server.
+
+```js
+const MongoClient = require("mongodb").MongoClient;
+
+MongoClient.connect("mongodb://localhost:27017/animals", (err, client) => {
+  if (err) throw err;
+
+  const db = client.db("animals");
+  db.collection("mammals")
+    .find()
+    .toArray((err, result) => {
+      if (err) throw err;
+      console.log(result);
+      client.close();
+    });
+});
+```
+
+Another approach is accessing databases indirectly:
+
+- "ORM": Object Relational Mapper
+- Define data as objects or models
+- ORM maps these to database format
+- Allows us to think in terms of JS objects, instead of db semantics
+- Obvious place to perform validation & check incoming data
