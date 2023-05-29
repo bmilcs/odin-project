@@ -115,7 +115,7 @@ These assignments were tackled with a growth mindset and I did not reference the
 - [ ] **NodeJS**
 
   - [x] Introduction to NodeJS
-  - [ ] MongoDB
+  - [x] MongoDB
   - [ ] Express & Mongoose
   - [ ] Authentication
   - [ ] APIs
