@@ -1950,3 +1950,77 @@ Multi-document ACID Transaction:
 - MongoDB "locks" all resources involved in a transaction
 - Incur performance cost & affects latency
 - Precise tool for special circumstances
+
+### Using Multi-Document Transactions
+
+Using Mongo Shell:
+
+- Session: group of db operations that are related to each other and should be run together
+- Transaction has a max runtime of one minute after first write
+  - After 1 min: "MongoServerError: Transaction 1 has been aborted"
+
+Creating a session to transfer 30 from one account to another:
+
+```sh
+const session = db.getMongo().startSession();
+
+session.startTransaction();
+
+const account = session.getDatabase('bank').getCollection('accounts');
+
+account.updateOne({ account_id: "123" }, { $inc: { balance: -30 } });
+
+account.updateOne({ account_id: "321" }, { $inc: { balance: 30 }});
+
+# cancel the transaction
+session.abortTransaction();
+
+# complete the transaction
+session.commitTransaction();
+```
+
+Generic instructions:
+
+```sh
+const session = db.getMongo().startSession()
+
+session.startTransaction()
+
+const account = session.getDatabase('< add database name here>').getCollection('<add collection name here>')
+
+# Add database operations like .updateOne() here
+
+session.commitTransaction()
+```
+
+Lab #1:
+
+```sh
+# Open a new session by creating a session variable that will store the session object with the following command:
+const session = db.getMongo().startSession();
+
+# Start a transaction on the newly created session variable with the following command:
+session.startTransaction();
+
+# Create an account variable to reference the accounts collection with the following command:
+const account = session.getDatabase('bank').getCollection('accounts');
+
+# Insert a new account for account_holder "Florence Taylor" with an account_id of "MDB454252264",
+# an account_type of "savings", a balance of 100.00, and an empty transfers_complete array.
+# You can do this with the following command:
+account.insertOne({
+  account_id: "MDB454252264",
+  account_holder: "Florence Taylor",
+  account_type: "savings",
+  balance: 100.0,
+  transfers_complete: [],
+  last_updated: new Date()
+})
+
+# Fund the account with 100.00 from a checking account with an account_id of "MDB963134500" that belongs
+# to the same account holder. You can do this with the following command:
+account.updateOne( { account_id: "MDB963134500" }, {$inc: { balance: -100.00 }})
+
+# Complete the transaction on the session using the following command:
+session.commitTransaction()
+```
