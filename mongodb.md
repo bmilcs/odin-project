@@ -33,7 +33,7 @@ Load sample data
 atlas clusters loadSampleData myAtlasClusterEDU
 ```
 
-## Clusters
+### Clusters
 
 MongoDB Clusters: replica set or shared cluster
 
@@ -94,7 +94,7 @@ Database > Collections > Documents
 
 MongoDB => Core of Atlas
 
-## Document Model
+### Document Model
 
 The document structure is:
 
@@ -171,7 +171,7 @@ With MongoDB, schema changes can be made by:
 - To add constraints to the structure of the data:
   - Add optional schema validation
 
-## Documents
+### Documents
 
 Field names:
 
@@ -218,7 +218,7 @@ Query filter documents:
 - Update Specification Documents
 - Index Specification Documents
 
-## BSON
+### BSON
 
 BSON is:
 
@@ -240,14 +240,14 @@ Advantages:
 
 - supports `number` alias for integer, decimal, double, long
 
-## Indexes
+### Indexes
 
 Indexes:
 
 - support efficient execution of queries
 - should be considered for fields which your app reads often
 
-## Data Modeling
+### Data Modeling
 
 - data accessed together should be stored together
 - documents in the same collection can contain different structures
@@ -488,7 +488,7 @@ MongoDB Drivers:
 - [NodeJS Drivers Documentation](https://www.mongodb.com/docs/drivers/node/current/usage-examples/)
 - [Developer Center: Code Examples](https://www.mongodb.com/developer/search/?s=&technology=Nodejs&sortMode=0)
 
-## Troubleshooting Connection Errors
+### Troubleshooting Connection Errors
 
 - User authentication errors
   - `MongoServerError: bad auth : Authentication failed.`
