@@ -65,3 +65,111 @@ module.exports = {
 - a variable that gets initialized to the value of `module.exports` before the module is evaluated
 - holds a reference to the same object referenced by `module.exports`
 - **assigning another value to `exports` will make it NO LONGER BOUND to `module.exports`**
+
+## Asynchronous API's
+
+Synchronous code: operation must complete before the next operation can start
+
+Asynchronous code: start an operation & immediately return _before the operation is complete_
+
+Non-blocking asynchronous API's are more important on Node than in the browser because:
+
+- Node is a single-threaded & event-driven execution environment
+- All server requests are run on the same thread
+  - NOT spawned off into separate processes
+- Extremely efficient in terms of speed & resources
+- However, expensive synchronous code will block the **current request** & **every other request handled by your web app**
+
+## Creating Route Handlers
+
+```js
+app.get("/", function (req, res) {
+  res.send("Hello World!");
+});
+```
+
+We define a callback route handler function for HTTP `GET` requests to the site root `/`.
+
+- `req` & `res` objects as arguments
+- `.send()` method on the response object returns a string
+  - Other response methods include: `.json()`, `.sendFile()`
+
+_Express application_ object provides methods to define route handlers _for all other HTTP verbs_:
+
+- `checkout()`
+- `copy()`
+- **`delete()`**
+- **`get()`**
+- `head()`
+- `lock()`
+- `merge()`
+- `mkactivity()`
+- `mkcol()`
+- `move()`
+- `m-search()`
+- `notify()`
+- `options()`
+- `patch()`
+- **`post()`**
+- `purge()`
+- **`put()`**
+- `report()`
+- `search()`
+- `subscribe()`
+- `trace()`
+- `unlock()`
+- `unsubscribe()`
+
+Special method: `app.all()` is called in response to **any HTTP method**
+
+- Used for loading middleware functions at a particular path for all req methods
+
+Example: Handler that will be executed for requests to `/secret`, regardless of the HTTP verb:
+
+```js
+app.all("/secret", function (req, res, next) {
+  console.log("Accessing the secret section…");
+  next(); // pass control to the next handler
+});
+```
+
+**Routes** allow us to:
+
+- match patterns of characters in a URL
+- extract values from the URL
+- pass extracted values to the route handler
+
+Grouping route handlers & accessing them via a common route-prefix is useful:
+
+- Achieved in Express by using `express.Router` object
+- Adding routes to `Router` object is just like using the `app` object
+
+Example: **Wiki route module**
+
+```js
+// wiki.js
+const express = require("express");
+const router = express.Router();
+
+// Home page route
+router.get("/", function (req, res) {
+  res.send("Wiki home page");
+});
+
+// About page route
+router.get("/about", function (req, res) {
+  res.send("About this wiki");
+});
+
+module.exports = router;
+```
+
+**Main app**: Require route model & call `use()` method on Express app to add the router to **the middleware handling path**
+
+- The above paths `/` & `/about` will be accessed from `/wiki/` & `/wiki/about/`
+
+```js
+// app.js
+const wiki = require("./wiki,js");
+app.use("/wiki", wiki);
+```
