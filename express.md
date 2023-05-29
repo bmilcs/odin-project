@@ -218,3 +218,78 @@ module.exports = router;
 const wiki = require("./wiki,js");
 app.use("/wiki", wiki);
 ```
+
+## Using Middleware
+
+Middleware is used extensively in Express apps:
+
+- Serving static files
+- Error handling
+- Compressing HTTP responses
+
+Route functions end the HTTP request-response cycle by returning a response to the HTTP client.
+
+Middleware functions _typically_:
+
+- perform an operation on the request or response object
+- then call the `next()` function in the "stack", which may be more middleware OR a route handler
+- the order = up to the developer
+- _can also end the request-response cycle_
+- if it doesn't end the cycle, it _must_ call `next()` to pass control to the next middleware function
+
+Most apps use **third party middleware** to simplify common web dev tasks:
+
+- cookies
+- sessions
+- user authentication
+- accessing request `POST` & JSON data
+- logging
+- etc.
+
+[Express team's middleware packages](https://expressjs.com/en/resources/middleware.html)
+
+Using third party middlware:
+
+```sh
+npm install morgan
+```
+
+```js
+const express = require("express");
+// import third party middleware
+const logger = require("morgan");
+const app = express();
+
+// use third party middleware
+app.use(logger("dev"));
+```
+
+Middleware/routing functions are called in the order they're declared
+
+- Order is important for some
+- Almost always call middleware before setting routes
+  - or route handlers will not have access to functionality added by middleware
+
+Middleware = Routes, except middleware functions have a third argument `next`
+
+```js
+const express = require("express");
+const app = express();
+
+// example middleware function
+const a_middleware_function = function (req, res, next) {
+  // perform some operations
+  next(); // call next() so Express will call the next middleware function in the chain.
+};
+
+// all routes and verbs: use the middleware
+app.use(a_middleware_function);
+
+// specific route / all verbs: use the middleware
+app.use("/someroute", a_middleware_function);
+
+// specific route and HTTP verb: use the middleware
+app.get("/", a_middleware_function);
+
+app.listen(3000);
+```
