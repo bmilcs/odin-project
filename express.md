@@ -80,7 +80,44 @@ Non-blocking asynchronous API's are more important on Node than in the browser b
 - Extremely efficient in terms of speed & resources
 - However, expensive synchronous code will block the **current request** & **every other request handled by your web app**
 
-[Fixing Callback Hell](http://callbackhell.com/)
+### [**Fixing Callback Hell**](http://callbackhell.com/)
+
+Give anonymous functions names
+
+- Easier to read
+- When exceptions occur, you get a reference to an actual function name (not anonymous)
+- Allows you to move functions & reference them by name
+
+Modularize
+
+- Write small modules that do one thing
+- Assemble them into other modules that do a bigger thing
+- Easier to understand
+
+Handle Every Single Error
+
+- Makes code more stable
+- Plan on them always happening
+- Node.js Style: First argument = error
+  - Helps you remember to handle errors
+
+```js
+function handleFile(error, file) {
+  if (error) return console.error("Uhoh, there was an error", error);
+  // otherwise, continue on and use `file` in your code
+}
+```
+
+Summary
+
+- **Don't Nest Functions**: give them names, top level of your app
+- **Use function hoisting**: move functions _below the fold_
+- **Handle every single error**: use a linter
+- **Create reusable functions & place them in a module**: reduce cognitive load required to understand your code. It helps with:
+  - Error handling
+  - Testing
+  - Forces you to create a stable & documented public API for your code
+  - Refactoring
 
 ## Creating Route Handlers
 
