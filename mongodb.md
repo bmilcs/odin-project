@@ -1911,3 +1911,27 @@ db.sales.aggregate([
   }
 ])
 ```
+
+## Transactions
+
+Transactions = group of db operations that must happen together or not at all, ensuring db safety & consistency
+
+Examples:
+
+- Move funds: mobile payment app
+- Track inventory: online shopping
+- Track payments: billing software
+
+ACID Transactions:
+
+- tool used to solve the above problems
+- group of db operations that are completed as a unit or not at all
+
+A.C.I.D.:
+
+- Atomicity: succeed or fail together
+- Consistency: changes made by operations are consistent with db constraints
+  - IE: Account balance can't drop below $0
+- Isolation: multiple transactions can happen at the same time, without affecting the outcome of the other transaction
+  - Ensures no side effects if other operations are running at the same time
+- Durability: changes made by operations in a transaction will persist, no matter what
