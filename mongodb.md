@@ -1841,3 +1841,73 @@ $searchMeta: {
 ```
 
 > "facet" is an operator within $searchMeta. "operator" refers to the search operator - the query itself. "facets" operator is where we put the definition of the buckets for the facets.
+
+Lab #1: Creating a new field mapping using facets
+
+```sh
+# app/search_index.json
+  {
+      "name": "sample_supplies-sales-facets",
+      "searchAnalyzer": "lucene.standard",
+      "analyzer": "lucene.standard",
+      "collectionName": "sales",
+      "database": "sample_supplies",
+      "mappings": {
+        "dynamic": true,
+        "fields": {
+          "purchaseMethod": [
+            {
+              "dynamic": true,
+              "type": "document"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "storeLocation": [
+            {
+              "dynamic": true,
+              "type": "document"
+            },
+            {
+              "type": "stringFacet"
+            }
+          ]
+        }
+      }
+  }
+```
+
+```sh
+# create indexes based off of json
+atlas clusters search indexes create --clusterName myAtlasClusterEDU -f /app/search_index.json
+
+# verify index creation
+atlas clusters search indexes list --clusterName myAtlasClusterEDU --db sample_supplies --collection sales
+```
+
+Lab #2: Search using $searchMeta, facets & operators
+
+```sh
+db.sales.aggregate([
+  {
+    $searchMeta: {
+      index: 'sample_supplies-sales-facets',
+        "facet": {
+            "operator": {
+                "text": {
+                    "query": "In store",
+                    "path": "purchaseMethod"
+                }
+            },
+            "facets": {
+                "locationFacet": {
+                    "type": "string",
+                    "path": "storeLocation",
+                }
+            }
+        }
+    }
+  }
+])
+```
