@@ -338,3 +338,25 @@ http://localhost:3000/media/images/dog.jpg
 http://localhost:3000/media/video/cat.mp4
 http://localhost:3000/media/cry.mp3
 ```
+
+## Error Handling
+
+Errors are handled by special middleware functions that have **four arguments**, instead of three: `(err, req, res, next)`:
+
+- **Must be the last middleware in the request handling process!!**
+- **At the end of the middlware function stack!**
+
+```js
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+```
+
+Express has a built-in error handler that takes care of any remaining errors.
+
+- If an error is passed to `next()` and you don't handle it, it will be handled by Express
+  - The error is written to the client with the stack trace
+  - Stack trace is not included in the production environment. Add it using `NODE_ENV='production'`
+- HTTP404 & other error status codes are not treated as errors
+  - Add a middleware function for these
