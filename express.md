@@ -399,3 +399,32 @@ Another approach is accessing databases indirectly:
 - ORM maps these to database format
 - Allows us to think in terms of JS objects, instead of db semantics
 - Obvious place to perform validation & check incoming data
+
+## Rendering Views
+
+Template Engines AKA View Engines:
+
+- Specify structure of an output document in a template
+- Use placeholders for data that's filled in when a page is generated
+- Often used to create HTML, but can create other documents as well
+- [Express supports several template engines](https://github.com/expressjs/express/wiki#template-engines)
+
+Example:
+
+```js
+const express = require("express");
+const path = require("path");
+const app = express();
+
+// Set directory to contain the templates ('views')
+app.set("views", path.join(__dirname, "views"));
+
+// Set view engine to use, in this case 'some_template_engine_name'
+app.set("view engine", "some_template_engine_name");
+
+// template file named "index.<template_extension>" that contains
+// placeholders for data variables named 'title' and "message",
+app.get("/", function (req, res) {
+  res.render("index", { title: "About dogs", message: "Dogs rock!" });
+});
+```
