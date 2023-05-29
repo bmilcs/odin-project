@@ -119,6 +119,12 @@ Summary
   - Forces you to create a stable & documented public API for your code
   - Refactoring
 
+### Alternatives to Callbacks
+
+- [`async` module](https://www.npmjs.com/package/async)
+- `Promise`
+- `async`/`await`
+
 ## Creating Route Handlers
 
 ```js
