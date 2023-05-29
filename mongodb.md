@@ -1935,3 +1935,18 @@ A.C.I.D.:
 - Isolation: multiple transactions can happen at the same time, without affecting the outcome of the other transaction
   - Ensures no side effects if other operations are running at the same time
 - Durability: changes made by operations in a transaction will persist, no matter what
+
+### ACID Transactions In MongoDB
+
+All single document operations are atomic.
+
+- No extra steps are needed to provide ACID properties
+- `updateOne()` = ACID transaction. all fields will update or none at all.
+- `updateMany()` = IS NOT ACID transaction.
+
+Multi-document ACID Transaction:
+
+- Requires careful planning and execution
+- MongoDB "locks" all resources involved in a transaction
+- Incur performance cost & affects latency
+- Precise tool for special circumstances
