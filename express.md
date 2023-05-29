@@ -428,3 +428,74 @@ app.get("/", function (req, res) {
   res.render("index", { title: "About dogs", message: "Dogs rock!" });
 });
 ```
+
+## Setting up Node/Express Dev Environment
+
+- Install [node version manager](https://github.com/nvm-sh/nvm#install--update-script)
+- Install LTS version of node: `nvm install --lts`
+- Install latest `npm` version: `npm install -g npm@latest`
+- `nvm list` shows downloaded set of version/current version
+
+Creating a new project:
+
+```sh
+mkdir myapp
+cd myapp
+
+# create package.json
+npm init
+
+# install express
+npm install express
+
+# install dev dependencies
+npm install eslint --save-dev
+```
+
+```js
+// index.js
+const express = require("express");
+const app = express();
+const port = 3000;
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}!`);
+});
+```
+
+```sh
+# run app
+node index.js
+```
+
+### Installing Express Application Generator
+
+Install globally:
+
+```sh
+npm install express-generator -g
+```
+
+Create an Express app
+
+- Makes a subfolder w/ the apps name
+
+```sh
+# view all the options
+express --help
+
+# create the app
+express <app_name>
+
+# install dependencies
+cd <app_name>
+npm install
+
+# run the app
+# Linux/macOS
+DEBUG=helloworld:* npm start
+```
