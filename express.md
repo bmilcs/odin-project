@@ -293,3 +293,48 @@ app.get("/", a_middleware_function);
 
 app.listen(3000);
 ```
+
+## Serving Static Files
+
+`express.static` middleware is used to serve up static files:
+
+- images
+- css
+- javascript
+
+To serve the above files from a directory named `/public`:
+
+```js
+app.use(express.static("public"));
+```
+
+Any files in the public directory are served by adding filenames, relative to the basic directory:
+
+```sh
+http://localhost:3000/images/dog.jpg
+http://localhost:3000/css/style.css
+http://localhost:3000/js/app.js
+http://localhost:3000/about.html
+```
+
+`.static()` can be called multiple times.
+
+- if a file can't be found in one middleware function, it is passed to the next middleware function
+- in the order that they're declared
+
+```js
+app.use(express.static("public"));
+app.use(express.static("media"));
+```
+
+Virtual prefixes can also be used for static URLs:
+
+```js
+app.use("/media", express.static("public"));
+```
+
+```sh
+http://localhost:3000/media/images/dog.jpg
+http://localhost:3000/media/video/cat.mp4
+http://localhost:3000/media/cry.mp3
+```
