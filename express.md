@@ -499,3 +499,59 @@ npm install
 # Linux/macOS
 DEBUG=helloworld:* npm start
 ```
+
+## Express 101
+
+**Templating Engine**: tool, allows you to insert variables & logic into your views
+
+- Header updates w/ user's name once logged in
+
+Options for tutorial:
+
+- [Pug (formally known as Jade)](https://pugjs.org/)
+- [ejs](https://ejs.co/)
+
+Middleware: plain JavaScript function that executes between request & response (or in **the middle**)
+
+- Executed in order
+
+Middleware Examples:
+
+- Logger, prints request details to console
+- Authenticator, checks to see if user is logged in or has permissions
+- Static File Server
+
+```js
+function(req, res, next) {
+  // do stuff!
+}
+```
+
+[`req` or `request`](https://expressjs.com/en/4x/api.html#req): object that contains data about the incoming request:
+
+- exact url visted
+- url parameters
+- body of the request (form w/ data in it)
+
+[`res` or `response`](https://expressjs.com/en/4x/api.html#res): object that repesents the response that Express is going to send back to the user
+
+- use info in `req` to determine what to do with `res`
+- `res.send()`, etc.
+
+`next`: middlware functions that don't send a response require a `next()` function call, forcing it to move to the next middleware in the stack.
+
+```js
+const myLogger = function (req, res, next) {
+  console.log("Request IP: " + req.ip);
+  console.log("Request Method: " + req.method);
+  console.log("Request date: " + new Date());
+
+  next(); // THIS IS IMPORTANT!
+};
+
+app.use(myLogger);
+```
+
+`app.use()` loads middleware functions into Express
+
+- always run in order
