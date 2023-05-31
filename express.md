@@ -555,3 +555,144 @@ app.use(myLogger);
 `app.use()` loads middleware functions into Express
 
 - always run in order
+
+## MDN Express Local Library Notes
+
+```sh
+express express-locallibrary-tutorial --view=pug
+
+cd express-locallibrary-tutorial
+npm install
+
+npm install --save-dev nodemon
+```
+
+```json
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
+  },
+```
+
+Express app breakdown:
+
+- Entry point: `/bin/www`
+  - Sets up error handling
+  - Loads `app.js`
+- Routes: `/routes`
+- Templates: `/views`
+
+Package.json:
+
+- cookie-parser
+- debug
+- morgan
+- http-errors
+
+## Mongoose
+
+Install
+
+```sh
+npm install mongoose
+```
+
+Connecting to a database
+
+```js
+// Import the mongoose module
+const mongoose = require("mongoose");
+
+// Set `strictQuery: false` to globally opt into filtering by properties that aren't in the schema
+// Included because it removes preparatory warnings for Mongoose 7.
+// See: https://mongoosejs.com/docs/migrating_to_6.html#strictquery-is-removed-and-replaced-by-strict
+mongoose.set("strictQuery", false);
+
+// Define the database URL to connect to.
+const mongoDB = "mongodb://127.0.0.1/my_database";
+
+// Wait for database to connect, logging an error if there is a problem
+main().catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect(mongoDB);
+}
+
+// Get the default Connection object
+mongoose.connection;
+
+// Create additional connections & immediately return
+mongoose.createConnection(mongoDB);
+
+// Create additional connections & wait for connection to be established
+mongoose.createConnection(mongoDB).asPromise();
+```
+
+Defining schemas:
+
+```js
+// Require Mongoose
+const mongoose = require("mongoose");
+
+// Define a schema
+const Schema = mongoose.Schema;
+
+// Create a new schema instance with the Schema constructor
+const SomeModelSchema = new Schema({
+  a_string: String,
+  a_date: Date,
+});
+```
+
+Creating a model:
+
+```js
+// Define schema
+const Schema = mongoose.Schema;
+
+const SomeModelSchema = new Schema({
+  a_string: String,
+  a_date: Date,
+});
+
+// Compile model from schema with the model() method
+// Mongoose creates a database collection for SomeModel
+const SomeModel = mongoose.model("SomeModelAkaCollection", SomeModelSchema);
+```
+
+Schema Fields:
+
+- Arbitrary number of fields
+- Each one represents a field in the documents stored in MongoDB
+
+```js
+const schema = new Schema({
+  // field name: type as key
+  name: String,
+  binary: Buffer,
+  living: Boolean,
+  // field name: object, defining type & other options
+  updated: { type: Date, default: Date.now() },
+  age: { type: Number, min: 18, max: 65, required: true },
+  mixed: Schema.Types.Mixed,
+  _someId: Schema.Types.ObjectId,
+  array: [],
+  ofString: [String], // You can also have an array of each of the other types too.
+  nested: { stuff: { type: String, lowercase: true, trim: true } },
+});
+```
+
+Other schema field examples include:
+
+- `ObjectId`
+- `Mixed`: arbitrary schema type
+
+Schema fields can be defined as `fieldname: type` OR an object with options:
+
+- `type: string`
+- `min: 1`, `max: 2`: built-in & custom validators
+- `required: true`: required fields
+- `lowercase: true`, `trim: true`: string field options
+
+Validation
