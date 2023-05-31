@@ -804,3 +804,97 @@ Query methods:
 - `findByIdAndUpdate()`
 - `findOneAndRemove()`
 - `findOneAndUpdate()`
+
+### Working with Related Documents - Population
+
+We can create references between one document/model instance & another using:
+
+- `ObjectId` schema field
+- `ObjectIds` array (one to many)
+
+If you need the actual content of the document, `.populate()` method in a query replaces the id with the actual data.
+
+Example:
+
+- authors & stories
+- author can have multiple stories
+- stories can have 1 author
+
+```js
+const mongoose = require("mongoose");
+
+const Schema = mongoose.Schema;
+
+const authorSchema = Schema({
+  name: String,
+  stories: [{ type: Schema.Types.ObjectId, ref: "Story" }],
+});
+
+const storySchema = Schema({
+  author: { type: Schema.Types.ObjectId, ref: "Author" },
+  title: String,
+});
+
+const Story = mongoose.model("Story", storySchema);
+const Author = mongoose.model("Author", authorSchema);
+
+// Create an author
+const bob = new Author({ name: "Bob Smith" });
+await bob.save();
+
+// Bob now exists, so lets create a story
+const story = new Story({
+  title: "Bob goes sledding",
+  author: bob._id, // assign the _id from our author Bob. This ID is created by default!
+});
+
+await story.save();
+
+// Get author information from the story:
+Story.findOne({ title: "Bob goes sledding" })
+  .populate("author") // Replace the author id with actual author information in results
+  .exec();
+```
+
+The author's `stories` array doesn't contain the new story.
+
+To access the stories for a given author:
+
+1. Add our story to stories array => 2 places where stories/authors needs to be maintained
+2. Better way: get author's `_id` & `find()` to search fir this across the author field across all stories:
+
+```js
+Story.find({ author: bob._id }).exec();
+```
+
+### One Schema/Model Per File
+
+Define each model schema in its own module & export it:
+
+```js
+// File: ./models/somemodel.js
+
+// Require Mongoose
+const mongoose = require("mongoose");
+
+// Define a schema
+const Schema = mongoose.Schema;
+
+const SomeModelSchema = new Schema({
+  a_string: String,
+  a_date: Date,
+});
+
+// Export function to create "SomeModel" model class
+module.exports = mongoose.model("SomeModel", SomeModelSchema);
+```
+
+Then, require it & use the model immediately elsewhere:
+
+```js
+// Create a SomeModel model just by requiring the module
+const SomeModel = require("../models/somemodel");
+
+// Use the SomeModel object (model) to find all SomeModel records
+const modelInstances = await SomeModel.find().exec();
+```
