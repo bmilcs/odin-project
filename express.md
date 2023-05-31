@@ -598,7 +598,7 @@ Install
 npm install mongoose
 ```
 
-Connecting to a database
+### Connecting to a database
 
 ```js
 // Import the mongoose module
@@ -629,7 +629,7 @@ mongoose.createConnection(mongoDB);
 mongoose.createConnection(mongoDB).asPromise();
 ```
 
-Defining schemas:
+### Defining schemas
 
 ```js
 // Require Mongoose
@@ -645,7 +645,7 @@ const SomeModelSchema = new Schema({
 });
 ```
 
-Creating a model:
+### Creating a model
 
 ```js
 // Define schema
@@ -661,7 +661,7 @@ const SomeModelSchema = new Schema({
 const SomeModel = mongoose.model("SomeModelAkaCollection", SomeModelSchema);
 ```
 
-Schema Fields:
+### Schema Fields
 
 - Arbitrary number of fields
 - Each one represents a field in the documents stored in MongoDB
@@ -695,4 +695,112 @@ Schema fields can be defined as `fieldname: type` OR an object with options:
 - `required: true`: required fields
 - `lowercase: true`, `trim: true`: string field options
 
-Validation
+### Validation
+
+- Set custom validators & error messages
+
+```js
+const breakfastSchema = new Schema({
+  eggs: {
+    type: Number,
+    min: [6, "Too few eggs"],
+    max: 12,
+    required: [true, "Why no eggs?"],
+  },
+  drink: {
+    type: String,
+    enum: ["Coffee", "Tea", "Water"],
+  },
+});
+```
+
+With Mongoose, you can add [instance methods, statics & query helpers](https://mongoosejs.com/docs/guide.html#methods) to your models.
+
+### Creating & Modifying Documents
+
+```js
+// Create an instance of model SomeModel
+const awesome_instance = new SomeModel({ name: "awesome" });
+
+// Save the new model instance asynchronously
+await awesome_instance.save();
+```
+
+To create & save an instance at the same time:
+
+```js
+await SomeModel.create({ name: "also_awesome" });
+```
+
+Every model has an associated connection (the default connection when you use `mongoose.model()`)
+
+- Create a new connection
+- Call `.model()` on it to create the documents on a different db
+
+To access the fields in this new record:
+
+```js
+// Access model field values using dot notation
+console.log(awesome_instance.name); //should log 'also_awesome'
+
+// Change record by modifying the fields, then calling save().
+awesome_instance.name = "New cool name";
+await awesome_instance.save();
+```
+
+### Searching for Records
+
+Query methods are used for searching records
+
+```js
+const Athlete = mongoose.model("Athlete", yourSchema);
+
+// find all athletes who play tennis, selecting the 'name' and 'age' fields
+const tennisPlayers = await Athlete.find(
+  { sport: "Tennis" },
+  "name age",
+).exec();
+```
+
+Query APIs (ie: `find()`) return a variable of the type `Query`. You can build up a query in parts before executing it:
+
+```js
+// find all athletes that play tennis
+const query = Athlete.find({ sport: "Tennis" });
+
+// selecting the 'name' and 'age' fields
+query.select("name age");
+
+// limit our results to 5 items
+query.limit(5);
+
+// sort by age
+query.sort({ age: -1 });
+
+// execute the query at a later time
+query.exec();
+```
+
+We can also chain parts of our query together using `.` dot operator:
+
+```js
+Athlete.find()
+  .where("sport")
+  .equals("Tennis")
+  .where("age")
+  .gt(17)
+  .lt(50) // Additional where query
+  .limit(5)
+  .sort({ age: -1 })
+  .select("name age")
+  .exec();
+```
+
+Query methods:
+
+- `find()` = all matching records
+- `findById()` = find a single record by id
+- `findByIdAndRemove()`
+- `findByIdAndUpdate()`
+- `findOneAndRemove()`
+- `findOneAndUpdate()`
