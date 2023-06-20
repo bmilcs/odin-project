@@ -695,6 +695,10 @@ Schema fields can be defined as `fieldname: type` OR an object with options:
 - `required: true`: required fields
 - `lowercase: true`, `trim: true`: string field options
 
+- `enum`: specify allowed values
+  - ie: `["Good", "Bad", "Super"]`
+- `default`: one of the above enum values
+
 ### Validation
 
 - Set custom validators & error messages
@@ -897,4 +901,82 @@ const SomeModel = require("../models/somemodel");
 
 // Use the SomeModel object (model) to find all SomeModel records
 const modelInstances = await SomeModel.find().exec();
+```
+
+### Adding Mongodb to Projects
+
+1. Atlas: Create db & collection
+2. Get connection string:
+
+```sh
+mongodb+srv://<user>:<password>@cluster0.rv32dqm.mongodb.net/?retryWrites=true&w=majority
+```
+
+3. Add the name of the collection to the URL before the options:
+
+```sh
+mongodb+srv://<user>:<password>@cluster0.rv32dqm.mongodb.net/<COLLECTION>?retryWrites=true&w=majority
+
+# with local_library
+mongodb+srv://<user>:<password>@cluster0.rv32dqm.mongodb.net/local_library?retryWrites=true&w=majority
+```
+
+4. Install mongoose
+
+```sh
+npm install mongoose
+```
+
+5. Connect to the db:
+
+```js
+// /app.js
+// Set up mongoose connection
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
+const mongoDB = "insert_your_database_url_here";
+
+main().catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+}
+```
+
+## Express Async Handler
+
+`express-async-handler`: defines a wrapper function that **hides the `try...catch` block**
+
+Install
+
+```sh
+npm install express-async-handler
+```
+
+Instead of writing this:
+
+```js
+exports.get("/about", function (req, res, next) {
+  try {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  }
+  catch (error) {
+    return next(error);
+  }
+};
+```
+
+You can write this:
+
+```js
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  }),
+);
 ```
