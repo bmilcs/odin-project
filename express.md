@@ -1025,3 +1025,39 @@ asyncHandler(async (req, res, next) => {
   }
 });
 ```
+
+## Express 102: CRUD and MVC
+
+CRUD stands for _Create, Read, Update & Delete_.
+
+- Four basic functions built into database driven apps
+- Roughly correlate to HTTP methods you can employ in an Express app
+  - `create` => `POST` or `app.post()`
+  - `read` => `GET` or `app.get()`
+  - `update` => `PUT` or `app.put()`
+  - `delete` => `DELETE` or `app.delete()`
+
+MVC: _Model, View, Controller_.
+
+- Architecture of your code
+- Way of organizing an application by separating actions into 3 main components
+
+Models: building blocks of your database
+
+- Define types of info that get used by views & controllers
+- For every entry in your DB (books, author, etc.), you create a model that holds the details of that entry
+
+Views: generates UI for your app
+
+- Templating engine that uses data supplied by a controller
+
+Controllers: decide what to display & what info is going to be put in it
+
+MVC Example: photo uploading site
+
+- Users can upload & view photos listed on an index
+- Model for photos: define how photos are stored in the DB
+  - Photo objects should have a `filename`, `URL`, `date-created`
+- Two views: index & display-photo view, which displays a single photo
+- Controller: called by Express whenever we get an `app.get()` request
+  - Uses details of the request to determine which view is shown & what image is displayed, depending if the index or specific photo page is requested
