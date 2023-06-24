@@ -1061,3 +1061,32 @@ MVC Example: photo uploading site
 - Two views: index & display-photo view, which displays a single photo
 - Controller: called by Express whenever we get an `app.get()` request
   - Uses details of the request to determine which view is shown & what image is displayed, depending if the index or specific photo page is requested
+
+## Deployment
+
+PaaS: Platform as a Service
+
+- Specific hosting provider
+- Easier & approachable for beginners
+- Manage low level details with underlying server infrastructure
+
+PaaS are like landlords:
+
+- Take care of all utilities, building maintenance & security
+
+## PaaS Instances
+
+Instances are virtual "computers" that run your app.
+
+One instance = single instance of your app running at one time. This is similar to using localhost.
+
+Multiple instances = several copies of your app running simultaneous to handle more traffic.
+
+## PaaS Databases
+
+PaaS provide databases.
+
+- Spin up a DB for you: all configuration & setup
+- Many provide:
+  - auto backups
+  - security patches
