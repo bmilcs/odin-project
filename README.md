@@ -10,9 +10,10 @@ These assignments were tackled with a growth mindset and I did not reference the
 
 ### NodeJS
 
-| Project                          | URL                                                                              | Source Code                                                       |
-| :------------------------------- | :------------------------------------------------------------------------------- | :---------------------------------------------------------------- |
-| **#25 Basic Informational Site** | [Live Demo](https://replit.com/@bmilcsxreplit/odin-basic-informational-site?v=1) | [GitHub](https://github.com/bmilcs/odin-basic-informational-site) |
+| Project                                                  | URL                                                                              | Source Code                                                       |
+| :------------------------------------------------------- | :------------------------------------------------------------------------------- | :---------------------------------------------------------------- |
+| **#26 Mini Message Board** (Express/MongoDB/TailwindCSS) | [Live Demo](https://messageboard.bmilcs.com)                                     | [GitHub](https://github.com/bmilcs/odin-mini-message-board)       |
+| **#25 Basic Informational Site**                         | [Live Demo](https://replit.com/@bmilcsxreplit/odin-basic-informational-site?v=1) | [GitHub](https://github.com/bmilcs/odin-basic-informational-site) |
 
 ### Advanced HTML & CSS
 
