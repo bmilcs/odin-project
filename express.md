@@ -1169,3 +1169,283 @@ Express Async Handler:
 
 - wrapper function that hides the try/catch block & code to forward to the error
 - only need to write code for success cases
+
+## Controllers
+
+To fetch multiple documents from MongoDB in parallel (at the same time):
+
+```js
+// ...
+exports.index = asyncHandler(async (req, res, next) => {
+  // Get details of books, book instances, authors and genre counts (in parallel)
+  const [
+    numBooks,
+    numBookInstances,
+    numAvailableBookInstances,
+    numAuthors,
+    numGenres,
+  ] = await Promise.all([
+    Book.countDocuments({}).exec(),
+    BookInstance.countDocuments({}).exec(),
+    BookInstance.countDocuments({ status: "Available" }).exec(),
+    Author.countDocuments({}).exec(),
+    Genre.countDocuments({}).exec(),
+  ]);
+// ...
+```
+
+Custom error handling:
+
+```js
+// Display detail page for a specific Genre.
+exports.genre_detail = asyncHandler(async (req, res, next) => {
+  // Get details of genre and all associated books (in parallel)
+  const [genre, booksInGenre] = await Promise.all([
+    Genre.findById(req.params.id).exec(),
+    Book.find({ genre: req.params.id }, "title summary").exec(),
+  ]);
+  if (genre === null) {
+    // No results: custom error
+    const err = new Error("Genre not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("genre_detail", {
+    title: "Genre Detail",
+    genre: genre,
+    genre_books: booksInGenre,
+  });
+});
+```
+
+## Forms
+
+- `action`: where form data is sent
+- `method`: post (update db), get (search)
+
+```js
+<form action="/team_name_url/" method="post">
+  <label for="team_name">Enter name: </label>
+  <input
+    id="team_name"
+    type="text"
+    name="name_field"
+    value="Default name for team."
+  />
+  <input type="submit" value="OK" />
+</form>
+```
+
+Order of operations:
+
+- Client requests form page
+- Server sends empty form page to client
+- Client fills out form & submits it
+- Server validates data
+  - If invalid, Server creates form with user entered data & error messages
+  - If valid, Server performs actions on valid data & redirects client to success page
+
+Form Validation: `express-validator` package
+
+```js
+const { body, validationResult } = require("express-validator");
+
+body("name", "Empty name").trim().isLength({ min: 1 }).escape(),
+
+body("age", "Invalid age")
+  .optional({ values: "falsy" })
+  .isISO8601()
+  .toDate(),
+
+body("name")
+  .trim()
+  .isLength({ min: 1 })
+  .withMessage("Name empty.")
+  .isAlpha()
+  .withMessage("Name must be alphabet letters."),
+```
+
+`body([fields, message])`:
+
+- specifies fields in request body (POST parameter)
+- validate and/or sanitizes the data
+- optional error message that can be displayed if test fails
+
+To run the validation & make errors available via a `validation` result object:
+
+```js
+asyncHandler(async (req, res, next) => {
+  // Extract the validation errors from a request.
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    // There are errors. Render form again with sanitized values/errors messages.
+    // Error messages can be returned in an array using `errors.array()`.
+    const errorMsgs = errors.array();
+  } else {
+    // Data from form is valid.
+  }
+});
+```
+
+## Deployment (MDN)
+
+Getting ready for deployment:
+
+- Security
+- Performance
+
+Bare minimum:
+
+- Remove stack traces from error pages
+- Tidy up logging
+- Set appropriate headers to avoid common security threats
+
+[Express Best Practices: performance/reliability](https://expressjs.com/en/advanced/best-practice-performance.html)
+[Express Best Practices: security](https://expressjs.com/en/advanced/best-practice-performance.html)
+
+### NODE_ENV Production
+
+Set NODE_ENV to 'production':
+
+- removes stack traces in error pages
+- caches view templates & css files
+- can improve performance by a factor of 3
+
+Set this by using:
+
+- `export`
+- env file
+- OS initialization system
+
+### Logging Calls
+
+Logging calls = impact on high-traffic sites.
+
+Minimize "debug" logging in production by using `debug` module.
+
+```js
+// require debug package w/ "author"
+const debug = require("debug")("author");
+
+// Display Author update form on GET.
+exports.author_update_get = asyncHandler(async (req, res, next) => {
+  const author = await Author.findById(req.params.id).exec();
+  if (author === null) {
+    // Debug variable: declared w/ author name & prefix "author"
+    debug(`id not found on update: ${req.params.id}`);
+
+    const err = new Error("Author not found");
+    err.status = 404;
+    return next(err);
+  }
+
+  res.render("author_form", { title: "Update Author", author: author });
+});
+```
+
+Enable a set of logs by specifying them as a comma-separated list in the DEBUG environment variable:
+
+```sh
+export DEBUG="author,book"
+```
+
+> Replace any console.log() calls in your code with logging via the debug module.
+
+### Compression
+
+Web servers can often compress the HTTP response sent back to a client, significantly reducing the time required for the client to get and load the page.
+
+Use gzip/deflate compression for responses:
+
+```sh
+npm install compression
+```
+
+```js
+// app.js
+const catalogRouter = require("./routes/catalog"); // Import routes for "catalog" area of site
+const compression = require("compression");
+
+// Create the Express application object
+const app = express();
+
+// …
+
+app.use(compression()); // Compress all routes
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+app.use("/catalog", catalogRouter); // Add catalog routes to middleware chain.
+
+// …
+```
+
+### Helmet: Vulnerability Protection
+
+Helmet is a middleware package. It can set appropriate HTTP headers that help protect your app from well-known web vulnerabilities (see the docs for more information on what headers it sets and vulnerabilities it protects against).
+
+```sh
+npm install helmet
+```
+
+Normally, we just use:
+
+```js
+const helmet = require("helmet");
+
+const app = express();
+
+app.use(helmet());
+```
+
+However, jQuery & bootstrap violate helmet's default Content Security Policy (CSP), which prevents cross-site scripts. To get around this:
+
+```js
+const compression = require("compression");
+const helmet = require("helmet");
+
+// Create the Express application object
+const app = express();
+
+// Add helmet to the middleware chain.
+// Set CSP headers to allow our Bootstrap and Jquery to be served
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "script-src": ["'self'", "code.jquery.com", "cdn.jsdelivr.net"],
+    },
+  }),
+);
+```
+
+### Rate Limiting to API routes
+
+`express-rate-limit` is a middleware package that can be used to limit repeated requests to APIs and endpoints.
+
+```sh
+npm install express-rate-limit
+```
+
+```js
+const compression = require("compression");
+const helmet = require("helmet");
+
+const app = express();
+
+// Set up rate limiter: maximum of twenty requests per minute
+const RateLimit = require("express-rate-limit");
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
+// Apply rate limiter to all requests
+app.use(limiter);
+
+// …
+```
+
+Cloudflare and other 3rd party services provide more advanced protection against DDoS/other attacks.
