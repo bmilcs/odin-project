@@ -613,7 +613,7 @@ mongoose.set("strictQuery", false);
 const mongoDB = "mongodb://127.0.0.1/my_database";
 
 // Wait for database to connect, logging an error if there is a problem
-main().catch((err) => console.log(err));
+main().catch(err => console.log(err));
 
 async function main() {
   await mongoose.connect(mongoDB);
@@ -936,7 +936,7 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 const mongoDB = "insert_your_database_url_here";
 
-main().catch((err) => console.log(err));
+main().catch(err => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
 }
@@ -1074,7 +1074,7 @@ PaaS are like landlords:
 
 - Take care of all utilities, building maintenance & security
 
-## PaaS Instances
+### PaaS Instances
 
 Instances are virtual "computers" that run your app.
 
@@ -1082,7 +1082,7 @@ One instance = single instance of your app running at one time. This is similar 
 
 Multiple instances = several copies of your app running simultaneous to handle more traffic.
 
-## PaaS Databases
+### PaaS Databases
 
 PaaS provide databases.
 
@@ -1090,3 +1090,82 @@ PaaS provide databases.
 - Many provide:
   - auto backups
   - security patches
+
+## Routes
+
+**Routes**: section of Express code that associates HTTP verbs, a URL pattern/path & a function that is called to handle that pattern.
+
+### `express.Routes` Middleware
+
+`express.Routes` allows us to:
+
+- group route handlers for a part of a site together
+- access them w/ a common route prefix
+
+To use a router module, we use the `use` method:
+
+```js
+const wiki = require("./wiki.js");
+// …
+app.use("/wiki", wiki);
+```
+
+Route functions are defined in a route module:
+
+```js
+router.get("/about", function (req, res) {
+  res.send("About this wiki");
+});
+```
+
+Router functions must either:
+
+- Complete the request with a response: `res.send()`, `res.json()`, `res.sendFile()`, `res.render()` etc. or
+- Call `next()`
+
+Route handlers can contain string patterns or regex.
+
+Route parameters:
+
+```js
+app.get("/users/:userId/books/:bookId", (req, res) => {
+  const userId = req.params.userId;
+  const bookId = req.params.bookId;
+  // ...
+  res.send(req.params);
+});
+```
+
+Handling errors:
+
+```js
+router.get("/about", (req, res, next) => {
+  About.find({}).exec((err, queryResults) => {
+    if (err) {
+      return next(err);
+    }
+    // Successful, so render
+    res.render("about_view", { title: "About", list: queryResults });
+  });
+});
+```
+
+Using `express-async-handler`:
+
+```js
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  }),
+);
+```
+
+Express Async Handler:
+
+- wrapper function that hides the try/catch block & code to forward to the error
+- only need to write code for success cases
