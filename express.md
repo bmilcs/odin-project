@@ -1449,3 +1449,224 @@ app.use(limiter);
 ```
 
 Cloudflare and other 3rd party services provide more advanced protection against DDoS/other attacks.
+
+## Authentication
+
+Packages:
+
+```sh
+npm install express express-session mongoose passport passport-local ejs
+```
+
+### App.js
+
+Note: Plain text passwords are a **really bad idea.**
+
+```js
+/////// app.js
+
+const express = require("express");
+const path = require("path");
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const mongoDb = "...";
+mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
+
+const User = mongoose.model(
+  "User",
+  new Schema({
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+  }),
+);
+
+const app = express();
+app.set("views", __dirname);
+app.set("view engine", "ejs");
+
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.urlencoded({ extended: false }));
+
+// sign up
+app
+  .route("/sign-up")
+  .get((req, res) => res.render("sign-up-form"))
+  .post(async (req, res, next) => {
+    try {
+      const user = new User({
+        username: req.body.username,
+        password: req.body.password,
+      });
+      const result = await user.save();
+      res.redirect("/");
+    } catch (err) {
+      return next(err);
+    }
+  });
+
+app.get("/", (req, res) => res.render("index"));
+
+app.listen(3000, () => console.log("app listening on port 3000!"));
+```
+
+`passportJS` uses **Strategies** to authenticate users.
+
+- Over 500 strategies available
+- `LocalStrategy`: username-and-password
+
+To authenticate, we need to add 3 functions to app.js & `app.post` for `/log-in`.
+
+### Function 1: Setup LocalStrategy
+
+- Called when we use `passport.authenticate()`
+- Takes user/pass & tries to find it in our DB
+- Makes sure the user password matches given password
+  - If it works out, it authenticates our user and moves on
+- - Not called directly, so we don't have to supply the `done()` function
+  * `done()` acts like middleware and is called when we ask passport to do authentication later
+
+```js
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username: username });
+      if (!user) {
+        return done(null, false, { message: "Incorrect username" });
+      }
+      if (user.password !== password) {
+        return done(null, false, { message: "Incorrect password" });
+      }
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  }),
+);
+```
+
+### Functions 2 & 3: Session & Serialization
+
+Passport needs to create a **cookie** stored in the user browser to make sure our user:
+
+- is logged in
+- allow them to **stay** logged in
+
+These functions define info needed by passport when it **creates** & **decodes** the cookie
+
+- Required so we can make sure the data it's looking for is in our database
+- NOT called by us on our own
+- Used in the background by passport
+
+```js
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async function (id, done) {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
+```
+
+Example form & route:
+
+```html
+<!-- index.ejs -->
+<h1>please log in</h1>
+<form action="/log-in" method="POST">
+  <label for="username">Username</label>
+  <input name="username" placeholder="username" type="text" />
+  <label for="password">Password</label>
+  <input name="password" type="password" />
+  <button>Log In</button>
+</form>
+```
+
+```js
+app.post(
+  "/log-in",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/",
+  }),
+);
+```
+
+All we have to do is call `passport.authenticate()`.
+
+- Middleware: performs numerous functions behind the scene
+- Looks at `req.body` for parameters: `username` & `password`
+- Runs `LocalStrategy`: looks for user/pass in the database
+- Creates a session cookie & stores it in user's browser
+  - Cookie can be accessed in all future requests to see if the user is logged in
+- Can also redirect to different routes based on login result: success/fail
+
+```js
+app.get("/", (req, res) => {
+  res.render("index", { user: req.user });
+});
+```
+
+```ejs
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <% if (user) {%>
+    <h1>WELCOME BACK <%= user.username %></h1>
+    <a href="/log-out">LOG OUT</a>
+  <% } else { %>
+    <h1>please log in</h1>
+    <form action="/log-in" method="POST">
+      <label for="username">Username</label>
+      <input name="username" placeholder="username" type="text" />
+      <label for="password">Password</label>
+      <input name="password" type="password" />
+      <button>Log In</button>
+    </form>
+  <%}%>
+</body>
+</html>
+```
+
+```js
+app.get("/log-out", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
+```
+
+You can set/access local variables throughout your entire app (even views) with the `locals` object.
+
+- Write custom middleware
+- Simplify how we access our current user in our views
+
+```js
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+```
+
+- Insert this code somewhere **between instantiating passport middleware & BEFORE you render your views**
+- Gives access to `currentUser` variable in all views
+- Won't have to manually pass it
