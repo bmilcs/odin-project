@@ -1565,6 +1565,11 @@ These functions define info needed by passport when it **creates** & **decodes**
 - NOT called by us on our own
 - Used in the background by passport
 
+Summary:
+
+- `serializeUser`: stores a minimal amount of user information: user ID in the session
+- `deserializeUser` retrieves the user's full information based on the stored ID during subsequent requests
+
 ```js
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -1655,6 +1660,8 @@ app.get("/log-out", (req, res, next) => {
 });
 ```
 
+### Local Variables
+
 You can set/access local variables throughout your entire app (even views) with the `locals` object.
 
 - Write custom middleware
@@ -1670,3 +1677,261 @@ app.use(function (req, res, next) {
 - Insert this code somewhere **between instantiating passport middleware & BEFORE you render your views**
 - Gives access to `currentUser` variable in all views
 - Won't have to manually pass it
+
+### Encrypting Passwords
+
+Securely storing passwords with encryption
+
+- **INSANELY IMPORTANT** for apps of all sizes
+- Failsafe in case something goes wrong
+- Or if someone gains access to our db
+
+```sh
+npm install bcryptjs
+
+# alternative, written in c++, sometimes difficult to install but
+# is technically faster
+npm install bcrypt
+```
+
+**Password hashes**: result of passing pw through one-way hash function
+
+- Maps variable size inputs TO **fixed size pseudo-random output**
+
+```js
+bcrypt.hash("somePassword", 10, async (err, hashedPassword) => {
+  // if err, do something
+  // otherwise, store hashedPassword in DB
+});
+```
+
+2nd Argument `10`: length of the `salt` (adds extra random characters)
+
+- Password PLUS extra random characters are fed into the hashing function
+- Makes password hash output unique, even for users who use the same password
+- Protects against rainbow table & dictionary attacks
+
+Salt typically gets stored in the database in the clear next to the hashed value
+
+- Not necessary with `bcryptjs`: includes salt automatically with the hash
+
+Hash function: somewhat slow
+
+- DB stuff needs to go inside the callback
+
+```js
+// hashed password in the db:
+"password": "$2a$10$/i.uaI79rWYTEWkqZwu3guvtLc1VOfQ4rjB0waCUmXFVvId4lLP2i",
+```
+
+Comparing hashed passwords: `bcrypt.compare()`.
+
+- Validate password input
+- Compares plain-text pw in `req` object to the hashed password
+
+```js
+// inside LocalStrategy
+bcrypt.compare(password, user.password, (err, res) => {
+  if (res) {
+    // passwords match! log user in
+    return done(null, user);
+  } else {
+    // passwords do not match!
+    return done(null, false, { message: "Incorrect password" });
+  }
+});
+```
+
+## [Authentication In Depth](https://levelup.gitconnected.com/everything-you-need-to-know-about-the-passport-local-passport-js-strategy-633bbab6195)
+
+![Authentication Choices](img/authentication_choices.webp)
+
+- Session Based: Browser cookies & backend sessions to manage logged in/out users
+- JWT (JSON Web Token): Stored in browser (`localStorage`) & decoded using a secret stored on server
+- OAuth / OpenID Connect: Modern - Apps use 'claims' generated from other apps to authenticate
+  - Google, Facebook, Etc.
+  - Existing services handles auth & storage of users
+  - Your app leverages this flow
+
+### Session Based Auth
+
+- Oldest of all auth methods
+- Not obselete
+- At the root of `passport-local` strategy
+- Server side: Express app & db work together to keep users authenticated
+
+HTTP Headers: key:value pairs, provide additional data to browser to complete requests
+
+- General headers
+  - Request URL, Request Method, Status Code
+- Request headers
+  - Contains headers included with the request object
+  - Instructions for the server
+  - "Hey Google Server, please send me HTML or text data. I’m either incapable or not interested in reading anything else right now!"
+- Response headers
+  - Set by the server
+  - `Set-Cookie` header: used by session based auth
+
+### How Cookies Work
+
+Without cookies, users would have to login every time they refreshed the page
+
+- HTTP protocol is "**stateless**" by default
+- Cookies introduce **persistent state**, allowing the browser to remember something
+
+Example response header:
+
+```
+Set-Cookie: made_up_cookie_name=some value; expires=Thu, 28-Dec-2020 20:44:50 GMT;
+```
+
+- Server: “Hey client! I want you to set a cookie called made_up_cookie_name and set it equal to some value.
+- Client: “Hey server, I will set this on the Cookie header of all my requests to this domain until Dec 28, 2020!”
+
+> Visible in Chrome DevTools: `Application > Storage > Cookies`
+
+All new requests will now have this cookie set to the **`Cookie` Request Header**
+
+Example:
+
+- Person visits site & fills out form w/ user/pass
+- Browser submits `POST` request w/ login data to server
+- Server receives info, checks db, validates login info, creates response header w/ `Set-Cookie: user_authenticated=true; expires=...`
+- Browser receives response and sets browser cookie
+- User goes to another page & request headers have the cookie attached
+- Server sees request with the cookie, remembers it had authenticed not long ago and allows the user to visit the page
+
+Without encryption, this is very insecure. The server would create a hash from the pw & validate the hash with a crypto library.
+
+### Sessions
+
+Sessions & cookies are similar & often used together.
+
+- Difference: location of their storage
+- Cookie: set by the server & stored in browser
+- Session: stored in database on server
+  - can contain sensitive info
+
+Example with persistent storage for session data:
+
+```sh
+npm install --save express mongoose dotenv connect-mongo express-session passport passport-local
+```
+
+```js
+const express = require("express");
+const mongoose = require("mongoose");
+const session = require("express-session");
+// Package documentation - https://www.npmjs.com/package/connect-mongo
+const MongoStore = require("connect-mongo")(session);
+
+//
+// general setup
+//
+
+// Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
+require("dotenv").config();
+// Create the Express application
+var app = express();
+
+// Middleware that allows Express to parse through both JSON and x-www-form-urlencoded request bodies
+// These are the same as `bodyParser` - you probably would see bodyParser put here in most apps
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+//
+// database
+//
+
+const connection = mongoose.createConnection(process.env.DB_STRING);
+// Creates simple schema for a User.  The hash and salt are derived from the user's given password when they register
+const UserSchema = new mongoose.Schema({
+  username: String,
+  hash: String,
+  salt: String,
+});
+// Defines the model that we will use in the app
+mongoose.model("User", UserSchema);
+
+//
+// session setup
+//
+
+const sessionStore = new MongoStore({
+  mongooseConnection: connection,
+  collection: "sessions",
+});
+
+// secret = random string to authenticate session, long
+// resave = force session to save if nothing changed
+// saveUnitialized = force session to save if uninitialized
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+  }),
+);
+
+//
+// routes
+//
+
+// When you visit http://localhost:3000/login, you will see "Login Page"
+app.get("/login", (req, res, next) => {
+  res.send("<h1>Login Page</h1>");
+});
+app.post("/login", (req, res, next) => {});
+// When you visit http://localhost:3000/register, you will see "Register Page"
+app.get("/register", (req, res, next) => {
+  res.send("<h1>Register Page</h1>");
+});
+app.post("/register", (req, res, next) => {});
+
+//
+// server
+//
+
+app.listen(3000);
+```
+
+### Expression Session Middleware
+
+1. when route is loaded, middleware checks if a session is established in the session store (mongodb db via `connect-mongo` custom store)
+2. if session exists, middlware validates it cryptographically & tells browser if valid or not. if valid, browser auto attaches `connect.sid` cookie to the request
+3. if no session exists, middleware creates a new session, takes hash of session & stores that value in a cookie called `connect.sid`. it attaches `Set-Cookie` header to `res` object with the hashed value
+   1. `Set-Cookie: connect.sid=hashed value``
+
+Why is this useful?
+
+- Newly created sessions add properties to `req` object
+
+  - `req.sessionID` = random UUID, which can be customized:
+
+    ```js
+    app.use(
+      session({
+        genid: function (req) {
+          // Put your UUID implementation here
+        },
+      }),
+    );
+    ```
+
+  - `req.session` = session object: info about session & is available for setting custom properties - ie: track how many times a page is loaded in a single session
+
+    ```js
+    app.get("/tracking-route", (req, res, next) => {
+      if (req.session.viewCount) {
+        req.session.viewCount = req.session.viewCount + 1;
+      } else {
+        req.session.viewCount = 1;
+      }
+      res.send("<p>View count is: " + req.session.viewCount + "</p>");
+    });
+    ```
+
+  - `req.session.cookie` = cookie object: defines cookie behavior that stores hashed session ID in the browser. all future requests will automatically include this until it expires.
+
+LEFT OFF ON: [How Passport JS Local Strategy works](https://levelup.gitconnected.com/everything-you-need-to-know-about-the-passport-local-passport-js-strategy-633bbab6195)
