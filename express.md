@@ -2440,3 +2440,21 @@ function genPassword(password) {
   };
 }
 ```
+
+## Security Configuration
+
+Keep it safe, keep it secret:
+
+- encrypt user passwords
+- Express sessions
+- MongoDB URL, especially if it has user/pw
+- API keys
+
+Common: `dotenv` w/ `.env` files
+
+More robust: `nconf`
+
+- in place or in combination with dotenv
+- allows you to define configuration files
+- more flexible
+- example: config.js to store secrets
